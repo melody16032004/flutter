@@ -47,8 +47,8 @@ const String _kIntegrationTestDirectory = 'integration_test';
 /// the `*_test.dart` suffix, and run them in a single invocation.
 ///
 /// See:
-/// - https://flutter.dev/to/unit-testing
-/// - https://flutter.dev/to/widget-testing
+/// - https://flutter.dev/docs/cookbook/testing/unit/introduction
+/// - https://flutter.dev/docs/cookbook/testing/widget/introduction
 ///
 /// ## Integration Tests
 ///
@@ -60,7 +60,7 @@ const String _kIntegrationTestDirectory = 'integration_test';
 /// your package. To run these tests, use `flutter test integration_test`.
 ///
 /// See:
-/// - https://flutter.dev/to/integration-testing
+/// - https://flutter.dev/docs/testing/integration-tests
 class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
   TestCommand({
     bool verboseHelp = false,
@@ -120,10 +120,17 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
             'Instructions for connecting with a debugger are printed to the '
             'console once the test has started.',
       )
+<<<<<<< HEAD
       ..addFlag('fail-fast', help: 'Stop running tests after the first failure.')
       ..addFlag('run-skipped', help: 'Run skipped tests instead of skipping them.')
       ..addFlag(
         'disable-service-auth-codes',
+=======
+      ..addFlag('run-skipped',
+        help: 'Run skipped tests instead of skipping them.',
+      )
+      ..addFlag('disable-service-auth-codes',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         negatable: false,
         hide: !verboseHelp,
         help:
@@ -249,6 +256,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       ..addOption(
         'reporter',
         abbr: 'r',
+<<<<<<< HEAD
         help:
             'Set how to print test results. If unset, value will default to either compact or expanded.',
         allowed: <String>['compact', 'expanded', 'failures-only', 'github', 'json', 'silent'],
@@ -262,6 +270,15 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
           'json': 'A machine-readable format. See: https://dart.dev/go/test-docs/json_reporter.md',
           'silent':
               'A reporter with no output. May be useful when only the exit code is meaningful.',
+=======
+        help: 'Set how to print test results. If unset, value will default to either compact or expanded.',
+        allowed: <String>['compact', 'expanded', 'github', 'json'],
+        allowedHelp: <String, String>{
+          'compact':  'A single line that updates dynamically (The default reporter).',
+          'expanded': 'A separate line for each update. May be preferred when logging to a file or in continuous integration.',
+          'github':   'A custom reporter for GitHub Actions (the default reporter when running on GitHub Actions).',
+          'json':     'A machine-readable format. See: https://dart.dev/go/test-docs/json_reporter.md',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         },
       )
       ..addOption(
@@ -379,6 +396,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
     return super.verifyThenRunCommand(commandPath);
   }
 
+<<<<<<< HEAD
   // Keep in sync with the [RunCommandBase.webRenderer] getter.
   WebRendererMode get webRenderer {
     final List<String> dartDefines = extractDartDefines(
@@ -387,6 +405,8 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
     return WebRendererMode.fromDartDefines(dartDefines, useWasm: useWasm);
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   Future<FlutterCommandResult> runCommand() async {
     if (!globals.fs.isFileSync('pubspec.yaml')) {
@@ -449,6 +469,10 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       );
     }
 
+    final String? webRendererString = stringArg('web-renderer');
+    final WebRendererMode webRenderer = (webRendererString != null)
+        ? WebRendererMode.values.byName(webRendererString)
+        : WebRendererMode.auto;
     final DebuggingOptions debuggingOptions = DebuggingOptions.enabled(
       buildInfo,
       startPaused: startPaused,
@@ -462,13 +486,17 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       enableImpeller: ImpellerStatus.fromBool(argResults!['enable-impeller'] as bool?),
       debugLogsDirectoryPath: debugLogsDirectoryPath,
       webRenderer: webRenderer,
+<<<<<<< HEAD
       printDtd: boolArg(FlutterGlobalOptions.kPrintDtd, global: true),
       webUseWasm: useWasm,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     final Uri? nativeAssetsJson = await nativeAssetsBuilder?.build(buildInfo);
     String? testAssetPath;
     if (buildTestAssets) {
+<<<<<<< HEAD
       await _buildTestAsset(
         flavor: buildInfo.flavor,
         impellerStatus: debuggingOptions.enableImpeller,
@@ -490,6 +518,11 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       }
       final File nativeAssetsManifest = testAssetDirectory.childFile('NativeAssetsManifest.json');
       await globals.fs.file(nativeAssetsJson).copy(nativeAssetsManifest.path);
+=======
+      await _buildTestAsset(flavor: buildInfo.flavor, impellerStatus: debuggingOptions.enableImpeller);
+      testAssetDirectory = globals.fs.path.
+        join(flutterProject.directory.path, 'build', 'unit_test_assets');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
     final String? concurrencyString = stringArg('concurrency');
@@ -570,8 +603,8 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       collector = CoverageCollector(
         verbose: !machine,
         libraryNames: packagesToInclude,
-        packagesPath: buildInfo.packageConfigPath,
-        resolver: await CoverageCollector.getResolver(buildInfo.packageConfigPath),
+        packagesPath: buildInfo.packagesPath,
+        resolver: await CoverageCollector.getResolver(buildInfo.packagesPath),
         testTimeRecorder: testTimeRecorder,
         branchCoverage: boolArg('branch-coverage'),
       );
@@ -588,6 +621,7 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       throwToolExit('--wasm is only supported on the web platform');
     }
 
+<<<<<<< HEAD
     if (webRenderer == WebRendererMode.skwasm && !useWasm) {
       throwToolExit('Skwasm renderer requires --wasm');
     }
@@ -596,6 +630,8 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
       globals.logger.printWarning(webRenderer.deprecationWarning);
     }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     Device? integrationTestDevice;
     if (_isIntegrationTest) {
       integrationTestDevice = await findTargetDevice();
@@ -653,7 +689,6 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
         reporter: stringArg('reporter'),
         fileReporter: stringArg('file-reporter'),
         timeout: stringArg('timeout'),
-        failFast: boolArg('fail-fast'),
         runSkipped: boolArg('run-skipped'),
         shardIndex: shardIndex,
         totalShards: totalShards,
@@ -677,11 +712,11 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
         testAssetDirectory: testAssetPath,
         flutterProject: flutterProject,
         web: isWeb,
+        useWasm: useWasm,
         randomSeed: stringArg('test-randomize-ordering-seed'),
         reporter: stringArg('reporter'),
         fileReporter: stringArg('file-reporter'),
         timeout: stringArg('timeout'),
-        failFast: boolArg('fail-fast'),
         runSkipped: boolArg('run-skipped'),
         shardIndex: shardIndex,
         totalShards: totalShards,
@@ -755,8 +790,11 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
   Future<void> _buildTestAsset({
     required String? flavor,
     required ImpellerStatus impellerStatus,
+<<<<<<< HEAD
     required BuildMode buildMode,
     required String packageConfigPath,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) async {
     final AssetBundle assetBundle = AssetBundleFactory.instance.createBundle();
     final int build = await assetBundle.build(packageConfigPath: packageConfigPath, flavor: flavor);
@@ -774,7 +812,6 @@ class TestCommand extends FlutterCommand with DeviceBasedDevelopmentArtifacts {
         artifacts: globals.artifacts!,
         logger: globals.logger,
         projectDir: globals.fs.currentDirectory,
-        buildMode: buildMode,
       );
 
       final File cachedFlavorFile = globals.fs.file(

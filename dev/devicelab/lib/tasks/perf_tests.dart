@@ -626,6 +626,7 @@ TaskFunction createAnimatedAdvancedBlendPerfTest({bool? enableImpeller, bool? fo
   ).run;
 }
 
+<<<<<<< HEAD
 TaskFunction createRRectBlurPerfTest({bool? enableImpeller, bool? forceOpenGLES}) {
   return PerfTest(
     '${flutterDirectory.path}/dev/benchmarks/macrobenchmarks',
@@ -639,6 +640,12 @@ TaskFunction createRRectBlurPerfTest({bool? enableImpeller, bool? forceOpenGLES}
 }
 
 TaskFunction createAnimatedBlurBackropFilterPerfTest({bool? enableImpeller, bool? forceOpenGLES}) {
+=======
+TaskFunction createAnimatedBlurBackropFilterPerfTest({
+  bool? enableImpeller,
+  bool? forceOpenGLES,
+}) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   return PerfTest(
     '${flutterDirectory.path}/dev/benchmarks/macrobenchmarks',
     'test_driver/run_app.dart',
@@ -1917,12 +1924,11 @@ class CompileTest {
 
 /// Measure application memory usage.
 class MemoryTest {
-  MemoryTest(this.project, this.test, this.package, {this.requiresTapToStart = false});
+  MemoryTest(this.project, this.test, this.package);
 
   final String project;
   final String test;
   final String package;
-  final bool requiresTapToStart;
 
   /// Completes when the log line specified in the last call to
   /// [prepareForNextMessage] is seen by `adb logcat`.
@@ -2006,6 +2012,7 @@ class MemoryTest {
     await receivedNextMessage;
   }
 
+<<<<<<< HEAD
   /// Taps the application and looks for acknowledgement.
   ///
   /// This is used by several tests to ensure scrolling gestures are installed.
@@ -2038,6 +2045,8 @@ class MemoryTest {
     ]);
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// To change the behavior of the test, override this.
   ///
   /// Make sure to call recordStart() and recordEnd() once each in that order.
@@ -2047,11 +2056,10 @@ class MemoryTest {
   Future<void> useMemory() async {
     await launchApp();
     await recordStart();
-    if (requiresTapToStart) {
-      await tapNotification();
-    }
 
     prepareForNextMessage('DONE');
+    print('tapping device...');
+    await device!.tap(100, 100);
     print('awaiting "done" message...');
     await receivedNextMessage;
 

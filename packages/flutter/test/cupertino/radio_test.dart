@@ -10,7 +10,6 @@ library;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -154,7 +153,10 @@ void main() {
         ],
         actions: <SemanticsAction>[
           SemanticsAction.tap,
+<<<<<<< HEAD
           if (defaultTargetPlatform != TargetPlatform.iOS) SemanticsAction.focus,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ],
       ),
     );
@@ -170,6 +172,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -180,15 +183,54 @@ void main() {
         hasFocusAction: true,
         isFocusable: true,
         isInMutuallyExclusiveGroup: true,
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+      isInMutuallyExclusiveGroup: true,
+    ));
+
+    await tester.pumpWidget(CupertinoApp(
+      home: Center(
+        child: CupertinoRadio<int>(
+          value: 2,
+          groupValue: 2,
+          onChanged: (int? i) { },
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       CupertinoApp(
         home: Center(child: CupertinoRadio<int>(value: 2, groupValue: 2, onChanged: (int? i) {})),
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+      isInMutuallyExclusiveGroup: true,
+      isChecked: true,
+    ));
+
+    await tester.pumpWidget(const CupertinoApp(
+      home: Center(
+        child: CupertinoRadio<int>(
+          value: 1,
+          groupValue: 2,
+          onChanged: null,
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -219,6 +261,14 @@ void main() {
         hasFocusAction: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isFocusable: true,
+      isInMutuallyExclusiveGroup: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pump();
 
@@ -464,6 +514,7 @@ void main() {
     // Release pointer after widget disappeared.
     await gesture.up();
   });
+<<<<<<< HEAD
 
   testWidgets('Radio has correct default active/inactive/fill/border colors in light mode', (
     WidgetTester tester,
@@ -947,4 +998,6 @@ class _RadioMouseCursor extends WidgetStateMouseCursor {
 
   @override
   String get debugDescription => '_RadioMouseCursor()';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

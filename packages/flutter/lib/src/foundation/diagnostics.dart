@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'dart:developer';
 ///
 /// @docImport 'package:flutter/rendering.dart';
@@ -9,6 +10,8 @@
 library;
 
 import 'dart:collection';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:math' as math;
 import 'dart:ui' show clampDouble;
 
@@ -2216,12 +2219,26 @@ class FlagProperty extends DiagnosticsProperty<bool> {
   final String? ifFalse;
 
   @override
+<<<<<<< HEAD
   String valueToString({TextTreeConfiguration? parentConfiguration}) {
     return switch (value) {
       true when ifTrue != null => ifTrue!,
       false when ifFalse != null => ifFalse!,
       _ => super.valueToString(parentConfiguration: parentConfiguration),
     };
+=======
+  String valueToString({ TextTreeConfiguration? parentConfiguration }) {
+    if (value ?? false) {
+      if (ifTrue != null) {
+        return ifTrue!;
+      }
+    } else if (value == false) {
+      if (ifFalse != null) {
+        return ifFalse!;
+      }
+    }
+    return super.valueToString(parentConfiguration: parentConfiguration);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -2239,11 +2256,27 @@ class FlagProperty extends DiagnosticsProperty<bool> {
   }
 
   @override
+<<<<<<< HEAD
   DiagnosticLevel get level => switch (value) {
     true when ifTrue == null => DiagnosticLevel.hidden,
     false when ifFalse == null => DiagnosticLevel.hidden,
     _ => super.level,
   };
+=======
+  DiagnosticLevel get level {
+    if (value ?? false) {
+      if (ifTrue == null) {
+        return DiagnosticLevel.hidden;
+      }
+    }
+    if (value == false) {
+      if (ifFalse == null) {
+        return DiagnosticLevel.hidden;
+      }
+    }
+    return super.level;
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Property with an `Iterable<T>` [value] that can be displayed with

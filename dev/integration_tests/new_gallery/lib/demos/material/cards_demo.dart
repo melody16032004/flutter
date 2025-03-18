@@ -394,6 +394,7 @@ class _CardsDemoState extends State<CardsDemo> with RestorationMixin {
             for (final TravelDestination destination in destinations(context))
               Container(
                 margin: const EdgeInsets.only(bottom: 8),
+<<<<<<< HEAD
                 child: switch (destination.cardType) {
                   CardType.standard => TravelDestinationItem(destination: destination),
                   CardType.tappable => TappableTravelDestinationItem(destination: destination),
@@ -406,6 +407,22 @@ class _CardsDemoState extends State<CardsDemo> with RestorationMixin {
                         }),
                   ),
                 },
+=======
+                child: (destination.cardType == CardType.standard)
+                    ? TravelDestinationItem(destination: destination)
+                    : destination.cardType == CardType.tappable
+                        ? TappableTravelDestinationItem(
+                            destination: destination)
+                        : SelectableTravelDestinationItem(
+                            destination: destination,
+                            isSelected: _isSelected.value,
+                            onSelected: () {
+                              setState(() {
+                                _isSelected.value = !_isSelected.value;
+                              });
+                            },
+                          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               ),
           ],
         ),

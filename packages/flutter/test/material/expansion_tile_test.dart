@@ -753,7 +753,6 @@ void main() {
       matchesSemantics(
         isButton: true,
         hasTapAction: true,
-        hasFocusAction: true,
         hasEnabledState: true,
         isEnabled: true,
         isFocused: true,
@@ -769,7 +768,6 @@ void main() {
       matchesSemantics(
         isButton: true,
         hasTapAction: true,
-        hasFocusAction: true,
         hasEnabledState: true,
         isEnabled: true,
         isFocusable: true,
@@ -1223,6 +1221,7 @@ void main() {
     await tester.pumpAndSettle();
 
     // Override the animation curve.
+<<<<<<< HEAD
     await tester.pumpWidget(
       buildExpansionTile(
         animationStyle: AnimationStyle(
@@ -1231,6 +1230,9 @@ void main() {
         ),
       ),
     );
+=======
+    await tester.pumpWidget(buildExpansionTile(animationStyle: AnimationStyle(curve: Easing.emphasizedDecelerate)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.pumpAndSettle();
 
     // Test the overridden animation curve.
@@ -1252,8 +1254,9 @@ void main() {
 
     expect(getHeight(expansionTileKey), 158.0);
 
-    // Test the overridden reverse (collapse) animation curve.
+    // Tap to collapse the ExpansionTile.
     await tester.tap(find.text('title'));
+<<<<<<< HEAD
     await tester.pump();
     await tester.pump(
       const Duration(milliseconds: 50),
@@ -1270,6 +1273,8 @@ void main() {
     await tester.pumpAndSettle(); // Advance the animation to the end.
 
     expect(getHeight(expansionTileKey), 58.0);
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Test no animation.
     await tester.pumpWidget(buildExpansionTile(animationStyle: AnimationStyle.noAnimation));
@@ -1659,6 +1664,7 @@ void main() {
     expect(find.text('Child 0'), findsOneWidget);
     expect(controller.isExpanded, isTrue);
   });
+<<<<<<< HEAD
 
   testWidgets(
     'ExpansionTile does not include the default trailing icon when showTrailingIcon: false (#145268)',
@@ -1731,4 +1737,6 @@ void main() {
     final Offset offsetPlatform = tester.getTopLeft(platform);
     expect(offsetPlatform, const Offset(16.0, 17.0));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

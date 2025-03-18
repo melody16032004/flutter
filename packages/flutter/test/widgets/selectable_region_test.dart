@@ -123,6 +123,7 @@ void main() {
       expect(selectionEvent.globalPosition, const Offset(200.0, 200.0));
     });
 
+<<<<<<< HEAD
     testWidgets('touch double click sends select-word event', (WidgetTester tester) async {
       final UniqueKey spy = UniqueKey();
 
@@ -154,6 +155,8 @@ void main() {
       expect(selectionEvent.globalPosition, const Offset(200.0, 200.0));
     });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     testWidgets('Does not crash when using Navigator pages', (WidgetTester tester) async {
       // Regression test for https://github.com/flutter/flutter/issues/119776
       await tester.pumpWidget(
@@ -282,7 +285,7 @@ void main() {
                               SemanticsFlag.isEnabled,
                               SemanticsFlag.isFocusable,
                             ],
-                            actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
                             label: 'Button',
                             textDirection: TextDirection.ltr,
                           ),
@@ -780,6 +783,7 @@ void main() {
   );
 
   group('SelectionArea integration', () {
+<<<<<<< HEAD
     testWidgets(
       'selection is not cleared when app loses focus on desktop',
       (WidgetTester tester) async {
@@ -1422,6 +1426,11 @@ void main() {
     ) async {
       final UniqueKey outerText = UniqueKey();
       addTearDown(tester.view.reset);
+=======
+    testWidgets('mouse can select single text on desktop platforms', (WidgetTester tester) async {
+      final FocusNode focusNode = FocusNode();
+      addTearDown(focusNode.dispose);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await tester.pumpWidget(
         MaterialApp(
@@ -1921,6 +1930,7 @@ void main() {
       await gesture.up();
     }, skip: kIsWeb); // https://github.com/flutter/flutter/issues/125582.
 
+<<<<<<< HEAD
     testWidgets('mouse can select paragraph-by-paragraph on triple click drag', (
       WidgetTester tester,
     ) async {
@@ -2317,6 +2327,8 @@ void main() {
       await gesture.up();
     }, skip: kIsWeb); // https://github.com/flutter/flutter/issues/125582.
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     testWidgets('mouse can select multiple widgets', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -5180,6 +5192,7 @@ void main() {
     skip: kIsWeb, // [intended] Web uses its native context menu.
   );
 
+<<<<<<< HEAD
   // Regression test for https://github.com/flutter/flutter/issues/121053.
   testWidgets(
     'Ensure SelectionArea does not affect the layout of its children',
@@ -5204,6 +5217,12 @@ void main() {
     'the selection behavior when clicking `Copy` item in mobile platforms',
     (WidgetTester tester) async {
       List<ContextMenuButtonItem> buttonItems = <ContextMenuButtonItem>[];
+=======
+  testWidgets('the selection behavior when clicking `Copy` item in mobile platforms', (WidgetTester tester) async {
+    List<ContextMenuButtonItem> buttonItems = <ContextMenuButtonItem>[];
+    final FocusNode focusNode = FocusNode();
+    addTearDown(focusNode.dispose);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await tester.pumpWidget(
         MaterialApp(

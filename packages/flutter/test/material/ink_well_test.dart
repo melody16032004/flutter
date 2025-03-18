@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/src/services/keyboard_key.g.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 
 void main() {
   RenderObject getInkFeatures(WidgetTester tester) {
@@ -1352,6 +1352,7 @@ void main() {
         textDirection: TextDirection.ltr,
         child: Material(child: InkWell(onTap: () {}, child: const Text('Button'))),
       ),
+<<<<<<< HEAD
     );
     expect(
       semantics,
@@ -1360,6 +1361,10 @@ void main() {
         actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
       ),
     );
+=======
+    ));
+    expect(semantics, includesNodeWith(label: 'Button', actions: <SemanticsAction>[SemanticsAction.tap]));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       Directionality(
@@ -1368,6 +1373,7 @@ void main() {
           child: InkWell(onTap: () {}, excludeFromSemantics: true, child: const Text('Button')),
         ),
       ),
+<<<<<<< HEAD
     );
     expect(
       semantics,
@@ -1378,6 +1384,10 @@ void main() {
         ),
       ),
     );
+=======
+    ));
+    expect(semantics, isNot(includesNodeWith(label: 'Button', actions: <SemanticsAction>[SemanticsAction.tap])));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });
@@ -2150,6 +2160,7 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       expect(
         tester.getSemantics(find.bySemanticsLabel('Foo')),
         matchesSemantics(
@@ -2160,6 +2171,14 @@ void main() {
           textDirection: TextDirection.ltr,
         ),
       );
+=======
+    expect(tester.getSemantics(find.bySemanticsLabel('Foo')), matchesSemantics(
+      label: 'Foo',
+      hasLongPressAction: true,
+      isFocusable: true,
+      textDirection: TextDirection.ltr,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Add tap handler and confirm addition to semantic actions.
       await tester.pumpWidget(
@@ -2173,6 +2192,7 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       expect(
         tester.getSemantics(find.bySemanticsLabel('Foo')),
         matchesSemantics(
@@ -2186,6 +2206,16 @@ void main() {
       );
     },
   );
+=======
+    expect(tester.getSemantics(find.bySemanticsLabel('Foo')), matchesSemantics(
+      label: 'Foo',
+      hasTapAction: true,
+      hasLongPressAction: true,
+      isFocusable: true,
+      textDirection: TextDirection.ltr,
+    ));
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testWidgets('InkWell highlight should not survive after [onTapDown, onDoubleTap] sequence', (
     WidgetTester tester,

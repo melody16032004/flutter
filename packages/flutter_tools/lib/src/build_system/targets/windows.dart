@@ -145,12 +145,15 @@ abstract class BundleWindowsAssets extends Target {
       environment,
       outputDirectory,
       targetPlatform: targetPlatform,
+<<<<<<< HEAD
       buildMode: buildMode,
       additionalContent: <String, DevFSContent>{
         'NativeAssetsManifest.json': DevFSFileContent(
           environment.buildDir.childFile('native_assets.json'),
         ),
       },
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     environment.depFileService.writeToFile(
       depfile,

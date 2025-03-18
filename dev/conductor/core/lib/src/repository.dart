@@ -178,10 +178,22 @@ abstract class Repository {
       workingDirectory: (await checkoutDirectory).path,
     );
 
+<<<<<<< HEAD
     return <String>[
       for (final String line in output.split('\n'))
         if (_lsRemotePattern.firstMatch(line) case final RegExpMatch match) match.group(1)!,
     ];
+=======
+    final List<String> remoteBranches = <String>[];
+    for (final String line in output.split('\n')) {
+      final RegExpMatch? match = _lsRemotePattern.firstMatch(line);
+      if (match != null) {
+        remoteBranches.add(match.group(1)!);
+      }
+    }
+
+    return remoteBranches;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Ensure the repository is cloned to disk and initialized with proper state.
@@ -496,7 +508,8 @@ class FrameworkRepository extends Repository {
   FrameworkRepository(
     this.checkouts, {
     super.name = 'framework',
-    super.upstreamRemote = const Remote.upstream(FrameworkRepository.defaultUpstream),
+    super.upstreamRemote = const Remote(
+        name: RemoteName.upstream, url: FrameworkRepository.defaultUpstream),
     super.localUpstream,
     super.previousCheckoutLocation,
     String super.initialRef = FrameworkRepository.defaultBranch,
@@ -525,7 +538,10 @@ class FrameworkRepository extends Repository {
     return FrameworkRepository(
       checkouts,
       name: name,
-      upstreamRemote: Remote.upstream('file://$upstreamPath/'),
+      upstreamRemote: Remote(
+        name: RemoteName.upstream,
+        url: 'file://$upstreamPath/',
+      ),
       previousCheckoutLocation: previousCheckoutLocation,
       initialRef: initialRef,
     );
@@ -546,7 +562,9 @@ class FrameworkRepository extends Repository {
     return FrameworkRepository(
       checkouts,
       name: cloneName,
-      upstreamRemote: Remote.upstream('file://${(await checkoutDirectory).path}/'),
+      upstreamRemote: Remote(
+          name: RemoteName.upstream,
+          url: 'file://${(await checkoutDirectory).path}/'),
     );
   }
 
@@ -723,11 +741,22 @@ class HostFrameworkRepository extends FrameworkRepository {
     String name = 'host-framework',
     required String upstreamPath,
   }) : super(
+<<<<<<< HEAD
          checkouts,
          name: name,
          upstreamRemote: Remote.upstream('file://$upstreamPath/'),
          localUpstream: false,
        ) {
+=======
+          checkouts,
+          name: name,
+          upstreamRemote: Remote(
+            name: RemoteName.upstream,
+            url: 'file://$upstreamPath/',
+          ),
+          localUpstream: false,
+        ) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     _checkoutDirectory = checkouts.fileSystem.directory(upstreamPath);
   }
 
@@ -775,7 +804,8 @@ class EngineRepository extends Repository {
     this.checkouts, {
     super.name = 'engine',
     String super.initialRef = EngineRepository.defaultBranch,
-    super.upstreamRemote = const Remote.upstream(EngineRepository.defaultUpstream),
+    super.upstreamRemote = const Remote(
+        name: RemoteName.upstream, url: EngineRepository.defaultUpstream),
     super.localUpstream,
     super.previousCheckoutLocation,
     super.mirrorRemote,
@@ -823,7 +853,9 @@ class EngineRepository extends Repository {
     return EngineRepository(
       checkouts,
       name: cloneName,
-      upstreamRemote: Remote.upstream('file://${(await checkoutDirectory).path}/'),
+      upstreamRemote: Remote(
+          name: RemoteName.upstream,
+          url: 'file://${(await checkoutDirectory).path}/'),
     );
   }
 }

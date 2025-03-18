@@ -1224,11 +1224,30 @@ void main() {
       final Rect hitRect = tester.getRect(gestureDetector);
       final Rect textFieldRect = tester.getRect(find.byType(TextField));
 
+<<<<<<< HEAD
       expect(hitRect.size.width, lessThanOrEqualTo(textFieldRect.size.width));
       expect(hitRect.size.height, lessThanOrEqualTo(textFieldRect.size.height));
     },
     variant: const TargetPlatformVariant(<TargetPlatform>{TargetPlatform.iOS}),
   );
+=======
+    final Finder gestureDetector = find.descendant(
+      of: find.byType(CompositedTransformFollower),
+      matching: find.descendant(
+        of: find.byType(FadeTransition),
+        matching: find.byType(RawGestureDetector),
+      ),
+    );
+
+    expect(gestureDetector, findsOneWidget);
+    // The GestureDetector's size should not exceed that of the TextField.
+    final Rect hitRect = tester.getRect(gestureDetector);
+    final Rect textFieldRect = tester.getRect(find.byType(TextField));
+
+    expect(hitRect.size.width, lessThan(textFieldRect.size.width));
+    expect(hitRect.size.height, lessThan(textFieldRect.size.height));
+  }, variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.iOS }));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   group('SelectionOverlay', () {
     Future<SelectionOverlay> pumpApp(
@@ -1517,12 +1536,11 @@ void main() {
 
     testWidgets('can show magnifier when no handles exist', (WidgetTester tester) async {
       final GlobalKey magnifierKey = GlobalKey();
-      Offset? builtGlobalGesturePosition;
-      Rect? builtFieldBounds;
       final SelectionOverlay selectionOverlay = await pumpApp(
         tester,
         magnifierConfiguration: TextMagnifierConfiguration(
           shouldDisplayHandlesInMagnifier: false,
+<<<<<<< HEAD
           magnifierBuilder: (
             BuildContext context,
             MagnifierController controller,
@@ -1531,18 +1549,22 @@ void main() {
             builtGlobalGesturePosition = notifier?.value.globalGesturePosition;
             builtFieldBounds = notifier?.value.fieldBounds;
             return SizedBox.shrink(key: magnifierKey);
+=======
+          magnifierBuilder: (BuildContext context, MagnifierController controller, ValueNotifier<MagnifierInfo>? notifier) {
+            return SizedBox.shrink(
+              key: magnifierKey,
+            );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           },
         ),
       );
 
       expect(find.byKey(magnifierKey), findsNothing);
 
-      const Offset globalGesturePosition = Offset(10.0, 10.0);
-      final Rect fieldBounds = Offset.zero & const Size(200.0, 50.0);
       final MagnifierInfo info = MagnifierInfo(
-        globalGesturePosition: globalGesturePosition,
+        globalGesturePosition: Offset.zero,
         caretRect: Offset.zero & const Size(5.0, 20.0),
-        fieldBounds: fieldBounds,
+        fieldBounds: Offset.zero & const Size(200.0, 50.0),
         currentLineBoundaries: Offset.zero & const Size(200.0, 50.0),
       );
       selectionOverlay.showMagnifier(info);
@@ -1550,8 +1572,6 @@ void main() {
 
       expect(tester.takeException(), isNull);
       expect(find.byKey(magnifierKey), findsOneWidget);
-      expect(builtFieldBounds, fieldBounds);
-      expect(builtGlobalGesturePosition, globalGesturePosition);
 
       selectionOverlay.dispose();
       await tester.pumpAndSettle();
@@ -1788,12 +1808,13 @@ void main() {
       final LayerLink endHandleLayerLink = LayerLink();
       final LayerLink toolbarLayerLink = LayerLink();
 
-      final UniqueKey editableTextKey = UniqueKey();
+      final UniqueKey editableText = UniqueKey();
       final TextEditingController controller = TextEditingController();
       addTearDown(controller.dispose);
       final FocusNode focusNode = FocusNode();
       addTearDown(focusNode.dispose);
 
+<<<<<<< HEAD
       await tester.pumpWidget(
         MaterialApp(
           home: Column(
@@ -1808,12 +1829,36 @@ void main() {
               CompositedTransformTarget(link: toolbarLayerLink, child: const Text('toolbar')),
             ],
           ),
+=======
+      await tester.pumpWidget(MaterialApp(
+        home: Column(
+          key: column,
+          children: <Widget>[
+            FakeEditableText(
+              key: editableText,
+              controller: controller,
+              focusNode: focusNode,
+            ),
+            CompositedTransformTarget(
+              link: startHandleLayerLink,
+              child: const Text('start handle'),
+            ),
+            CompositedTransformTarget(
+              link: endHandleLayerLink,
+              child: const Text('end handle'),
+            ),
+            CompositedTransformTarget(
+              link: toolbarLayerLink,
+              child: const Text('toolbar'),
+            ),
+          ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       );
 
       return TextSelectionOverlay(
         value: TextEditingValue.empty,
-        renderObject: tester.state<EditableTextState>(find.byKey(editableTextKey)).renderEditable,
+        renderObject: tester.state<EditableTextState>(find.byKey(editableText)).renderEditable,
         context: tester.element(find.byKey(column)),
         onSelectionHandleTapped: () {},
         startHandleLayerLink: startHandleLayerLink,

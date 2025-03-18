@@ -21,7 +21,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/semantics.dart';
 
-import 'binding.dart';
 import 'debug.dart';
 import 'layer.dart';
 
@@ -341,8 +340,8 @@ class PaintingContext extends ClipContext {
   void _startRecording() {
     assert(!_isRecording);
     _currentLayer = PictureLayer(estimatedBounds);
-    _recorder = RendererBinding.instance.createPictureRecorder();
-    _canvas = RendererBinding.instance.createCanvas(_recorder!);
+    _recorder = ui.PictureRecorder();
+    _canvas = Canvas(_recorder!);
     _containerLayer.append(_currentLayer!);
   }
 
@@ -1290,8 +1289,9 @@ class PipelineOwner with DiagnosticableTreeMixin {
   SemanticsOwner? get semanticsOwner => _semanticsOwner;
   SemanticsOwner? _semanticsOwner;
 
-  /// Deprecated.
+  /// The number of clients registered to listen for semantics.
   ///
+<<<<<<< HEAD
   /// Use [SemanticsBinding.debugOutstandingSemanticsHandles] instead. This
   /// API is broken because an outstanding semantics handle on a given pipeline
   /// owner doesn't mean that semantics are actually produced.
@@ -1300,11 +1300,17 @@ class PipelineOwner with DiagnosticableTreeMixin {
     'This API is broken (see ensureSemantics). '
     'This feature was deprecated after v3.22.0-23.0.pre.',
   )
+=======
+  /// The number is increased whenever [ensureSemantics] is called and decreased
+  /// when [SemanticsHandle.dispose] is called.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   int get debugOutstandingSemanticsHandles => _outstandingSemanticsHandles;
   int _outstandingSemanticsHandles = 0;
 
-  /// Deprecated.
+  /// Opens a [SemanticsHandle] and calls [listener] whenever the semantics tree
+  /// generated from the render tree owned by this [PipelineOwner] updates.
   ///
+<<<<<<< HEAD
   /// Call [SemanticsBinding.ensureSemantics] instead and optionally add a
   /// listener to [PipelineOwner.semanticsOwner]. This API is broken as calling
   /// it does not guarantee that semantics are produced.
@@ -1314,6 +1320,23 @@ class PipelineOwner with DiagnosticableTreeMixin {
     'This feature was deprecated after v3.22.0-23.0.pre.',
   )
   SemanticsHandle ensureSemantics({VoidCallback? listener}) {
+=======
+  /// Calling this method only ensures that this particular [PipelineOwner] will
+  /// generate a semantics tree. Consider calling
+  /// [SemanticsBinding.ensureSemantics] instead to turn on semantics globally
+  /// for the entire app.
+  ///
+  /// The [PipelineOwner] updates the semantics tree only when there are clients
+  /// that wish to use the semantics tree. These clients express their interest
+  /// by holding [SemanticsHandle] objects that notify them whenever the
+  /// semantics tree updates.
+  ///
+  /// Clients can close their [SemanticsHandle] by calling
+  /// [SemanticsHandle.dispose]. Once all the outstanding [SemanticsHandle]
+  /// objects for a given [PipelineOwner] are closed, the [PipelineOwner] stops
+  /// maintaining the semantics tree.
+  SemanticsHandle ensureSemantics({ VoidCallback? listener }) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     _outstandingSemanticsHandles += 1;
     _updateSemanticsOwner();
     return _LocalSemanticsHandle._(this, listener);
@@ -1940,7 +1963,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
     assert(child._parent == this);
     assert(child.attached == attached);
     assert(child.parentData != null);
-    _cleanChildRelayoutBoundary(child);
+    child._cleanRelayoutBoundary();
     child.parentData!.detach();
     child.parentData = null;
     child._parent = null;
@@ -2092,7 +2115,8 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
         }
 
         if (!activeLayoutRoot._debugMutationsLocked) {
-          activeLayoutRoot = activeLayoutRoot.debugLayoutParent;
+          final RenderObject? p = activeLayoutRoot.debugLayoutParent;
+          activeLayoutRoot = p is RenderObject ? p : null;
         } else {
           // activeLayoutRoot found.
           break;
@@ -2286,32 +2310,6 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
 
   bool _needsLayout = true;
 
-  /// The nearest relayout boundary enclosing this render object, if known.
-  ///
-  /// When a render object is marked as needing layout, its parent may
-  /// as a result also need to be marked as needing layout.
-  /// For details, see [markNeedsLayout].
-  /// A render object where relayout does not require relayout of the parent
-  /// (because its size cannot change on relayout, or because
-  /// its parent does not use the child's size for its own layout)
-  /// is a "relayout boundary".
-  ///
-  /// This property is set in [layout], and consulted by [markNeedsLayout] in
-  /// deciding whether to recursively mark the parent as also needing layout.
-  ///
-  /// This property is initially null, and becomes null again if this
-  /// render object is removed from the tree (with [dropChild]);
-  /// it remains null until the first layout of this render object
-  /// after it was most recently added to the tree.
-  /// This property can also be null while an ancestor in the tree is
-  /// currently doing layout, until this render object itself does layout.
-  ///
-  /// When not null, the relayout boundary is either this render object itself
-  /// or one of its ancestors, and all the render objects in the ancestry chain
-  /// up through that ancestor have the same [_relayoutBoundary].
-  /// Equivalently: when not null, the relayout boundary is either this render
-  /// object itself or the same as that of its parent.  (So [_relayoutBoundary]
-  /// is one of `null`, `this`, or `parent!._relayoutBoundary!`.)
   RenderObject? _relayoutBoundary;
 
   /// Whether [invokeLayoutCallback] for this render object is currently running.
@@ -2332,11 +2330,11 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
 
   Constraints? _constraints;
 
-  /// Verify that the object's constraints are being met. Override this function
-  /// in a subclass to verify that your state matches the constraints object.
-  /// This function is only called when asserts are enabled (i.e. in debug mode)
-  /// and only when needsLayout is false. If the constraints are not met, it
-  /// should assert or throw an exception.
+  /// Verify that the object's constraints are being met. Override
+  /// this function in a subclass to verify that your state matches
+  /// the constraints object. This function is only called in checked
+  /// mode and only when needsLayout is false. If the constraints are
+  /// not met, it should assert or throw an exception.
   @protected
   void debugAssertDoesMeetConstraints();
 
@@ -2350,7 +2348,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
   /// (where it will always be false).
   static bool debugCheckingIntrinsics = false;
 
-  bool _debugRelayoutBoundaryAlreadyMarkedNeedsLayout() {
+  bool _debugSubtreeRelayoutRootAlreadyMarkedNeedsLayout() {
     if (_relayoutBoundary == null) {
       // We don't know where our relayout boundary is yet.
       return true;
@@ -2409,7 +2407,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
   void markNeedsLayout() {
     assert(_debugCanPerformMutations);
     if (_needsLayout) {
-      assert(_debugRelayoutBoundaryAlreadyMarkedNeedsLayout());
+      assert(_debugSubtreeRelayoutRootAlreadyMarkedNeedsLayout());
       return;
     }
     if (_relayoutBoundary == null) {
@@ -2474,36 +2472,32 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
     markParentNeedsLayout();
   }
 
-  /// Set [_relayoutBoundary] to null throughout this render object's subtree,
-  /// stopping at relayout boundaries.
-  // This is a static method to reduce closure allocation with visitChildren.
-  static void _cleanChildRelayoutBoundary(RenderObject child) {
-    if (child._relayoutBoundary != child) {
-      child.visitChildren(_cleanChildRelayoutBoundary);
-      child._relayoutBoundary = null;
+  void _cleanRelayoutBoundary() {
+    if (_relayoutBoundary != this) {
+      _relayoutBoundary = null;
+      visitChildren(_cleanChildRelayoutBoundary);
     }
   }
 
-  // This is a static method to reduce closure allocation with visitChildren.
-  static void _propagateRelayoutBoundaryToChild(RenderObject child) {
-    if (child._relayoutBoundary == child) {
+  void _propagateRelayoutBoundary() {
+    if (_relayoutBoundary == this) {
       return;
     }
-    final RenderObject? parentRelayoutBoundary = child.parent?._relayoutBoundary;
+    final RenderObject? parentRelayoutBoundary = parent?._relayoutBoundary;
     assert(parentRelayoutBoundary != null);
-    assert(parentRelayoutBoundary != child._relayoutBoundary);
-    child._setRelayoutBoundary(parentRelayoutBoundary!);
+    if (parentRelayoutBoundary != _relayoutBoundary) {
+      _relayoutBoundary = parentRelayoutBoundary;
+      visitChildren(_propagateRelayoutBoundaryToChild);
+    }
   }
 
-  /// Set [_relayoutBoundary] to [value] throughout this render object's
-  /// subtree, including this render object but stopping at relayout boundaries
-  /// thereafter.
-  void _setRelayoutBoundary(RenderObject value) {
-    assert(value != _relayoutBoundary);
-    // This may temporarily break the _relayoutBoundary invariant at children;
-    // the visitChildren restores the invariant.
-    _relayoutBoundary = value;
-    visitChildren(_propagateRelayoutBoundaryToChild);
+  // Reduces closure allocation for visitChildren use cases.
+  static void _cleanChildRelayoutBoundary(RenderObject child) {
+    child._cleanRelayoutBoundary();
+  }
+
+  static void _propagateRelayoutBoundaryToChild(RenderObject child) {
+    child._propagateRelayoutBoundary();
   }
 
   /// Bootstrap the rendering pipeline by scheduling the very first layout.
@@ -2528,7 +2522,6 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
 
   @pragma('vm:notify-debugger-on-exception')
   void _layoutWithoutResize() {
-    assert(_needsLayout);
     assert(_relayoutBoundary == this);
     RenderObject? debugPreviousActiveLayout;
     assert(!_debugMutationsLocked);
@@ -2656,7 +2649,8 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
       }());
 
       if (relayoutBoundary != _relayoutBoundary) {
-        _setRelayoutBoundary(relayoutBoundary);
+        _relayoutBoundary = relayoutBoundary;
+        visitChildren(_propagateRelayoutBoundaryToChild);
       }
 
       if (!kReleaseMode && debugProfileLayoutsEnabled) {
@@ -2665,7 +2659,6 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
       return;
     }
     _constraints = constraints;
-
     if (_relayoutBoundary != null && relayoutBoundary != _relayoutBoundary) {
       // The local relayout boundary has changed, must notify children in case
       // they also need updating. Otherwise, they will be confused about what
@@ -2673,7 +2666,6 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
       visitChildren(_cleanChildRelayoutBoundary);
     }
     _relayoutBoundary = relayoutBoundary;
-
     assert(!_debugMutationsLocked);
     assert(!_doingThisLayoutWithCallback);
     assert(() {
@@ -3149,7 +3141,7 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
         owner!._nodesNeedingPaint.add(this);
         owner!.requestVisualUpdate();
       }
-    } else if (parent != null) {
+    } else if (parent is RenderObject) {
       parent!.markNeedsPaint();
     } else {
       assert(() {
@@ -3165,7 +3157,9 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
       //
       // Trees rooted at a RenderView do not go through this
       // code path because RenderViews are repaint boundaries.
-      owner?.requestVisualUpdate();
+      if (owner != null) {
+        owner!.requestVisualUpdate();
+      }
     }
   }
 
@@ -3449,21 +3443,12 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
   }
 
   /// {@template flutter.rendering.RenderObject.getTransformTo}
-  /// Applies the paint transform from this [RenderObject] to the `target`
-  /// [RenderObject].
+  /// Applies the paint transform up the tree to `ancestor`.
   ///
   /// Returns a matrix that maps the local paint coordinate system to the
-  /// coordinate system of `target`, or a [Matrix4.zero] if the paint transform
-  /// can not be computed.
+  /// coordinate system of `ancestor`.
   ///
-  /// This method throws an exception when the `target` is not in the same render
-  /// tree as this [RenderObject], as the behavior is undefined.
-  ///
-  /// This method ignores [RenderObject.paintsChild]. This means it will still
-  /// try to compute the paint transform even if this [RenderObject] or
-  /// `target` is currently not visible.
-  ///
-  /// If `target` is null, this method returns a matrix that maps from the
+  /// If `ancestor` is null, this method returns a matrix that maps from the
   /// local paint coordinate system to the coordinate system of the
   /// [PipelineOwner.rootNode].
   /// {@endtemplate}
@@ -3473,8 +3458,10 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
   /// the global coordinate system in logical pixels. To get physical pixels,
   /// use [applyPaintTransform] from the [RenderView] to further transform the
   /// coordinate.
-  Matrix4 getTransformTo(RenderObject? target) {
+  Matrix4 getTransformTo(RenderObject? ancestor) {
+    final bool ancestorSpecified = ancestor != null;
     assert(attached);
+<<<<<<< HEAD
     // The paths from to fromRenderObject and toRenderObject's common ancestor.
     // Each list's length is greater than 1 if not null.
     //
@@ -3508,33 +3495,37 @@ abstract class RenderObject with DiagnosticableTreeMixin implements HitTestTarge
         );
         (toPath ??= <RenderObject>[target!]).add(toParent);
         to = toParent;
+=======
+    if (ancestor == null) {
+      final RenderObject? rootNode = owner!.rootNode;
+      if (rootNode is RenderObject) {
+        ancestor = rootNode;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
     }
-
-    Matrix4? fromTransform;
-    if (fromPath != null) {
-      assert(fromPath.length > 1);
-      fromTransform = Matrix4.identity();
-      final int lastIndex = target == null ? fromPath.length - 2 : fromPath.length - 1;
-      for (int index = lastIndex; index > 0; index -= 1) {
-        fromPath[index].applyPaintTransform(fromPath[index - 1], fromTransform);
-      }
+    final List<RenderObject> renderers = <RenderObject>[];
+    for (RenderObject renderer = this; renderer != ancestor; renderer = renderer.parent!) {
+      renderers.add(renderer);
+      assert(renderer.parent != null); // Failed to find ancestor in parent chain.
     }
-    if (toPath == null) {
-      return fromTransform ?? Matrix4.identity();
+    if (ancestorSpecified) {
+      renderers.add(ancestor!);
     }
-
-    assert(toPath.length > 1);
-    final Matrix4 toTransform = Matrix4.identity();
-    for (int index = toPath.length - 1; index > 0; index -= 1) {
-      toPath[index].applyPaintTransform(toPath[index - 1], toTransform);
+    final Matrix4 transform = Matrix4.identity();
+    for (int index = renderers.length - 1; index > 0; index -= 1) {
+      renderers[index].applyPaintTransform(renderers[index - 1], transform);
     }
+<<<<<<< HEAD
     if (toTransform.invert() == 0) {
       // If the matrix is singular then `invert()` doesn't do anything.
       return Matrix4.zero();
     }
     return (fromTransform?..multiply(toTransform)) ?? toTransform;
+=======
+    return transform;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
+
 
   /// Returns a rect in this object's coordinate system that describes
   /// the approximate bounding box of the clip rect that would be

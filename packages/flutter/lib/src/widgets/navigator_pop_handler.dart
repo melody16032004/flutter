@@ -106,9 +106,15 @@ class _NavigatorPopHandlerState<T> extends State<NavigatorPopHandler<T>> {
   Widget build(BuildContext context) {
     // When the widget subtree indicates it can handle a pop, disable popping
     // here, so that it can be manually handled in canPop.
+<<<<<<< HEAD
     return PopScope<T>(
       canPop: !widget.enabled || _canPop,
       onPopInvokedWithResult: (bool didPop, T? result) {
+=======
+    return PopScope(
+      canPop: !widget.enabled || _canPop,
+      onPopInvoked: (bool didPop) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (didPop) {
           return;
         }

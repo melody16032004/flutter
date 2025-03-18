@@ -7,12 +7,16 @@
 // bool _lights = false;
 // void setState(VoidCallback fn) { }
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/material.dart';
 ///
 /// @docImport 'list_tile.dart';
 library;
 
 import 'dart:ui';
+=======
+import 'dart:ui' show lerpDouble;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -468,9 +472,33 @@ class CupertinoSwitch extends StatefulWidget {
   }
 }
 
+<<<<<<< HEAD
 class _CupertinoSwitchState extends State<CupertinoSwitch>
     with TickerProviderStateMixin, ToggleableStateMixin {
   final _SwitchPainter _painter = _SwitchPainter();
+=======
+class _CupertinoSwitchState extends State<CupertinoSwitch> with TickerProviderStateMixin {
+  late TapGestureRecognizer _tap;
+  late HorizontalDragGestureRecognizer _drag;
+
+  late AnimationController _positionController;
+  late CurvedAnimation position;
+
+  late AnimationController _reactionController;
+  late Animation<double> _reaction;
+
+  late bool isFocused;
+
+  bool get isInteractive => widget.onChanged != null;
+
+  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
+    ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _handleTap),
+  };
+
+  // A non-null boolean value that changes to true at the end of a drag if the
+  // switch must be animated to the position indicated by the widget's value.
+  bool needsPositionAnimation = false;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   void initState() {
@@ -754,6 +782,19 @@ class _CupertinoSwitchState extends State<CupertinoSwitch>
       ),
     );
   }
+<<<<<<< HEAD
+=======
+
+  @override
+  void dispose() {
+    _tap.dispose();
+    _drag.dispose();
+
+    _positionController.dispose();
+    _reactionController.dispose();
+    super.dispose();
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _SwitchPainter extends ToggleablePainter {

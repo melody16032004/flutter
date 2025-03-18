@@ -8,6 +8,7 @@ import 'package:path/path.dart' as path;
 
 import '../utils.dart';
 
+<<<<<<< HEAD
 /// To run this test locally:
 ///
 /// 1. Connect an Android device or emulator.
@@ -32,6 +33,15 @@ Future<void> androidJava11IntegrationToolTestsRunner() async {
           .map<String>((FileSystemEntity entry) => path.relative(entry.path, from: toolsPath))
           .where((String testPath) => path.basename(testPath).endsWith('_test.dart'))
           .toList();
+=======
+Future<void> androidJava11IntegrationToolTestsRunner() async {
+  final String toolsPath = path.join(flutterRoot, 'packages', 'flutter_tools');
+
+  final List<String> allTests = Directory(path.join(toolsPath, 'test', 'android_java11_integration.shard'))
+      .listSync(recursive: true).whereType<File>()
+      .map<String>((FileSystemEntity entry) => path.relative(entry.path, from: toolsPath))
+      .where((String testPath) => path.basename(testPath).endsWith('_test.dart')).toList();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   await runDartTest(
     toolsPath,

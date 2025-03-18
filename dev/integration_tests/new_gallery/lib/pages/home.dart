@@ -1072,6 +1072,7 @@ class _StudyWrapperState extends State<StudyWrapper> {
             sortKey: const OrdinalSortKey(1),
             child: RestorationScope(restorationId: 'study_wrapper', child: widget.study),
           ),
+<<<<<<< HEAD
           SafeArea(
             child: Align(
               alignment: widget.alignment,
@@ -1101,12 +1102,45 @@ class _StudyWrapperState extends State<StudyWrapper> {
                     label: Text(
                       MaterialLocalizations.of(context).backButtonTooltip,
                       style: textTheme.labelLarge!.apply(color: colorScheme.onPrimary),
+=======
+          if (!isDisplayFoldable(context))
+            SafeArea(
+              child: Align(
+                alignment: widget.alignment,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: widget.hasBottomNavBar
+                          ? kBottomNavigationBarHeight + 16.0
+                          : 16.0),
+                  child: Semantics(
+                    sortKey: const OrdinalSortKey(0),
+                    label: GalleryLocalizations.of(context)!.backToGallery,
+                    button: true,
+                    enabled: true,
+                    excludeSemantics: true,
+                    child: FloatingActionButton.extended(
+                      heroTag: _BackButtonHeroTag(),
+                      key: const ValueKey<String>('Back'),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .popUntil((Route<void> route) => route.settings.name == '/');
+                      },
+                      icon: IconTheme(
+                        data: IconThemeData(color: colorScheme.onPrimary),
+                        child: const BackButtonIcon(),
+                      ),
+                      label: Text(
+                        MaterialLocalizations.of(context).backButtonTooltip,
+                        style: textTheme.labelLarge!
+                            .apply(color: colorScheme.onPrimary),
+                      ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                     ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

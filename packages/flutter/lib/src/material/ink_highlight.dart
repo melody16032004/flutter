@@ -95,7 +95,7 @@ class InkHighlight extends InteractiveInkFeature {
   }
 
   void _handleAlphaStatusChanged(AnimationStatus status) {
-    if (status.isDismissed && !_active) {
+    if (status == AnimationStatus.dismissed && !_active) {
       dispose();
     }
   }

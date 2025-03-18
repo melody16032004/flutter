@@ -11,26 +11,33 @@ void main() => runApp(const AnimatedPositionedExampleApp());
 class AnimatedPositionedExampleApp extends StatelessWidget {
   const AnimatedPositionedExampleApp({super.key});
 
-  static const Duration duration = Duration(seconds: 2);
-  static const Curve curve = Curves.fastOutSlowIn;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('AnimatedPositioned Sample')),
+<<<<<<< HEAD
         body: const Center(child: AnimatedPositionedExample(duration: duration, curve: curve)),
+=======
+        body: const Center(
+          child: AnimatedPositionedExample(),
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
   }
 }
 
 class AnimatedPositionedExample extends StatefulWidget {
+<<<<<<< HEAD
   const AnimatedPositionedExample({required this.duration, required this.curve, super.key});
 
   final Duration duration;
 
   final Curve curve;
+=======
+  const AnimatedPositionedExample({super.key});
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   State<AnimatedPositionedExample> createState() => _AnimatedPositionedExampleState();
@@ -50,8 +57,8 @@ class _AnimatedPositionedExampleState extends State<AnimatedPositionedExample> {
             width: selected ? 200.0 : 50.0,
             height: selected ? 50.0 : 200.0,
             top: selected ? 50.0 : 150.0,
-            duration: widget.duration,
-            curve: widget.curve,
+            duration: const Duration(seconds: 2),
+            curve: Curves.fastOutSlowIn,
             child: GestureDetector(
               onTap: () {
                 setState(() {

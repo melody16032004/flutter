@@ -12,7 +12,6 @@ import '../base/file_system.dart';
 import '../base/os.dart';
 import '../build_info.dart';
 import '../cache.dart';
-import '../globals.dart' as globals;
 import '../project.dart';
 import '../reporting/reporting.dart';
 import '../runner/flutter_command.dart' show FlutterCommandResult;
@@ -73,7 +72,6 @@ class BuildAarCommand extends BuildSubCommand {
     DevelopmentArtifact.androidGenSnapshot,
   };
 
-  @override
   late final FlutterProject project = _getProject();
 
   @override
@@ -117,7 +115,7 @@ class BuildAarCommand extends BuildSubCommand {
       'Build a repository containing an AAR and a POM file.\n\n'
       'By default, AARs are built for `release`, `debug` and `profile`.\n'
       'The POM file is used to include the dependencies that the AAR was compiled against.\n'
-      'To learn more about how to use these artifacts, see: https://flutter.dev/to/integrate-android-archive\n'
+      'To learn more about how to use these artifacts, see: https://flutter.dev/go/build-aar\n'
       'This command assumes that the entrypoint is "lib/main.dart". '
       'This cannot currently be configured.';
 
@@ -174,6 +172,7 @@ class BuildAarCommand extends BuildSubCommand {
       outputDirectoryPath: stringArg('output'),
       buildNumber: buildNumber,
     );
+<<<<<<< HEAD
 
     // When an aar is successfully built, record to analytics whether Impeller
     // is enabled or disabled. Note that 'computeImpellerEnabled' will default
@@ -183,6 +182,8 @@ class BuildAarCommand extends BuildSubCommand {
         impellerEnabled ? 'manifest-aar-impeller-enabled' : 'manifest-aar-impeller-disabled';
     globals.analytics.send(Event.flutterBuildInfo(label: buildLabel, buildType: 'android'));
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return FlutterCommandResult.success();
   }
 
@@ -191,7 +192,7 @@ class BuildAarCommand extends BuildSubCommand {
   FlutterProject _getProject() {
     final List<String> remainingArguments = argResults!.rest;
     if (remainingArguments.isEmpty) {
-      return super.project;
+      return FlutterProject.current();
     }
     final File mainFile = _fileSystem.file(remainingArguments.first);
     final String path;

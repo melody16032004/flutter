@@ -107,6 +107,7 @@ void main() {
         )!.resolve(enabled)!;
     expect(textStyle.fontSize, 20.0);
   });
+<<<<<<< HEAD
 
   test('WidgetStateBorderSide.lerp()', () {
     const WidgetStateProperty<BorderSide?> borderSide1 = WidgetStatePropertyAll<BorderSide?>(
@@ -238,6 +239,8 @@ void main() {
     expect(style1 == style2, isTrue);
     expect(style1 == style3, isFalse);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 const Set<WidgetState> enabled = <WidgetState>{};

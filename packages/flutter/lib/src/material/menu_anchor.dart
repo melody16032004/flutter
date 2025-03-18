@@ -124,13 +124,6 @@ typedef MenuAnchorChildBuilder =
 ///
 /// ** See code in examples/api/lib/material/menu_anchor/menu_anchor.1.dart **
 /// {@end-tool}
-///
-/// {@tool dartpad}
-/// This example demonstrates a simplified cascading menu using the [MenuAnchor]
-/// widget.
-///
-/// ** See code in examples/api/lib/material/menu_anchor/menu_anchor.3.dart **
-/// {@end-tool}
 class MenuAnchor extends StatefulWidget {
   /// Creates a const [MenuAnchor].
   ///
@@ -353,10 +346,8 @@ class _MenuAnchorState extends State<MenuAnchor> {
     assert(_debugMenuInfo('Disposing of $this'));
     if (_isOpen) {
       _close(inDispose: true);
+      _parent?._removeChild(this);
     }
-
-    _parent?._removeChild(this);
-    _parent = null;
     _anchorChildren.clear();
     _menuController._detach(this);
     _internalMenuController = null;
@@ -862,17 +853,14 @@ class MenuItemButton extends StatefulWidget {
     this.requestFocusOnHover = true,
     this.onFocusChange,
     this.focusNode,
-    this.autofocus = false,
     this.shortcut,
-    this.semanticsLabel,
     this.style,
     this.statesController,
     this.clipBehavior = Clip.none,
     this.leadingIcon,
     this.trailingIcon,
     this.closeOnActivate = true,
-    this.overflowAxis = Axis.horizontal,
-    this.child,
+    required this.child,
   });
 
   /// Called when the button is tapped or otherwise activated.
@@ -904,14 +892,12 @@ class MenuItemButton extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// {@macro flutter.widgets.Focus.autofocus}
-  final bool autofocus;
-
   /// The optional shortcut that selects this [MenuItemButton].
   ///
   /// {@macro flutter.material.MenuBar.shortcuts_note}
   final MenuSerializableShortcut? shortcut;
 
+<<<<<<< HEAD
   /// An optional Semantics label, applied to the entire [MenuItemButton].
   ///
   /// A screen reader will default to reading the derived text on the
@@ -927,6 +913,8 @@ class MenuItemButton extends StatefulWidget {
   /// Null by default.
   final String? semanticsLabel;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding properties in
@@ -959,6 +947,7 @@ class MenuItemButton extends StatefulWidget {
   /// {@endtemplate}
   final bool closeOnActivate;
 
+<<<<<<< HEAD
   /// The direction in which the menu item expands.
   ///
   /// If the menu item button is a descendent of [MenuAnchor] or [MenuBar], then
@@ -971,6 +960,8 @@ class MenuItemButton extends StatefulWidget {
   /// Defaults to [Axis.horizontal].
   final Axis overflowAxis;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// The widget displayed in the center of this button.
   ///
   /// Typically this is the button's label, using a [Text] widget.
@@ -1050,7 +1041,6 @@ class MenuItemButton extends StatefulWidget {
     double? iconSize,
     Color? disabledIconColor,
     TextStyle? textStyle,
-    Color? overlayColor,
     double? elevation,
     EdgeInsetsGeometry? padding,
     Size? minimumSize,
@@ -1078,7 +1068,6 @@ class MenuItemButton extends StatefulWidget {
       iconSize: iconSize,
       disabledIconColor: disabledIconColor,
       textStyle: textStyle,
-      overlayColor: overlayColor,
       elevation: elevation,
       padding: padding,
       minimumSize: minimumSize,
@@ -1121,8 +1110,11 @@ class _MenuItemButtonState extends State<MenuItemButton> {
   // If a focus node isn't given to the widget, then we have to manage our own.
   FocusNode? _internalFocusNode;
   FocusNode get _focusNode => widget.focusNode ?? _internalFocusNode!;
+<<<<<<< HEAD
   _MenuAnchorState? get _anchor => _MenuAnchorState._maybeOf(context);
   bool _isHovered = false;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   void initState() {
@@ -1170,18 +1162,15 @@ class _MenuItemButtonState extends State<MenuItemButton> {
       onFocusChange: widget.enabled ? widget.onFocusChange : null,
       focusNode: _focusNode,
       style: mergedStyle,
-      autofocus: widget.enabled && widget.autofocus,
       statesController: widget.statesController,
       clipBehavior: widget.clipBehavior,
       isSemanticButton: null,
       child: _MenuItemLabel(
         leadingIcon: widget.leadingIcon,
         shortcut: widget.shortcut,
-        semanticsLabel: widget.semanticsLabel,
         trailingIcon: widget.trailingIcon,
         hasSubmenu: false,
-        overflowAxis: _anchor?._orientation ?? widget.overflowAxis,
-        child: widget.child,
+        child: widget.child!,
       ),
     );
 
@@ -1853,7 +1842,6 @@ class SubmenuButton extends StatefulWidget {
     double? iconSize,
     Color? disabledIconColor,
     TextStyle? textStyle,
-    Color? overlayColor,
     double? elevation,
     EdgeInsetsGeometry? padding,
     Size? minimumSize,
@@ -1881,7 +1869,6 @@ class SubmenuButton extends StatefulWidget {
       disabledIconColor: disabledIconColor,
       iconSize: iconSize,
       textStyle: textStyle,
-      overlayColor: overlayColor,
       elevation: elevation,
       padding: padding,
       minimumSize: minimumSize,
@@ -1995,6 +1982,7 @@ class _SubmenuButtonState extends State<SubmenuButton> {
       (Axis.vertical, TextDirection.rtl) => Offset(0, -menuPadding.top),
       (Axis.vertical, TextDirection.ltr) => Offset(0, -menuPadding.top),
     };
+<<<<<<< HEAD
     final Set<MaterialState> states = <MaterialState>{
       if (!_enabled) MaterialState.disabled,
       if (_isHovered) MaterialState.hovered,
@@ -2006,6 +1994,82 @@ class _SubmenuButtonState extends State<SubmenuButton> {
         const Icon(
           Icons.arrow_right, // Automatically switches with text direction.
           size: _kDefaultSubmenuIconSize,
+=======
+
+    return MenuAnchor(
+      controller: _menuController,
+      childFocusNode: _buttonFocusNode,
+      alignmentOffset: menuPaddingOffset,
+      clipBehavior: widget.clipBehavior,
+      onClose: widget.onClose,
+      onOpen: () {
+        if (!_waitingToFocusMenu) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            _menuController._anchor?._focusButton();
+            _waitingToFocusMenu = false;
+          }, debugLabel: 'MenuAnchor.focus');
+          _waitingToFocusMenu = true;
+        }
+        setState(() { /* Rebuild with updated controller.isOpen value */ });
+        widget.onOpen?.call();
+      },
+      style: widget.menuStyle,
+      builder: (BuildContext context, MenuController controller, Widget? child) {
+        // Since we don't want to use the theme style or default style from the
+        // TextButton, we merge the styles, merging them in the right order when
+        // each type of style exists. Each "*StyleOf" function is only called
+        // once.
+        ButtonStyle mergedStyle = widget.themeStyleOf(context)?.merge(widget.defaultStyleOf(context))
+          ?? widget.defaultStyleOf(context);
+        mergedStyle = widget.style?.merge(mergedStyle) ?? mergedStyle;
+
+        void toggleShowMenu(BuildContext context) {
+          if (controller._anchor == null) {
+            return;
+          }
+          if (controller.isOpen) {
+            controller.close();
+          } else {
+            controller.open();
+          }
+        }
+
+        // Called when the pointer is hovering over the menu button.
+        void handleHover(bool hovering, BuildContext context) {
+          widget.onHover?.call(hovering);
+          // Don't open the root menu bar menus on hover unless something else
+          // is already open. This means that the user has to first click to
+          // open a menu on the menu bar before hovering allows them to traverse
+          // it.
+          if (controller._anchor!._root._orientation == Axis.horizontal && !controller._anchor!._root._isOpen) {
+            return;
+          }
+
+          if (hovering) {
+            controller.open();
+            controller._anchor!._focusButton();
+          }
+        }
+        child = MergeSemantics(
+          child: Semantics(
+            expanded: _enabled && controller.isOpen,
+            child: TextButton(
+              style: mergedStyle,
+              focusNode: _buttonFocusNode,
+              onFocusChange: _enabled ? widget.onFocusChange : null,
+              onHover: _enabled ? (bool hovering) => handleHover(hovering, context) : null,
+              onPressed: _enabled ? () => toggleShowMenu(context) : null,
+              isSemanticButton: null,
+              child: _MenuItemLabel(
+                leadingIcon: widget.leadingIcon,
+                trailingIcon: widget.trailingIcon,
+                hasSubmenu: true,
+                showDecoration: (controller._anchor!._parent?._orientation ?? Axis.horizontal) == Axis.vertical,
+                child: child ?? const SizedBox(),
+              ),
+            ),
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         );
 
     return Actions(
@@ -2381,7 +2445,9 @@ class _LocalizedShortcutLabeler {
       keySeparator = '+';
     }
     if (serialized.trigger != null) {
+      final List<String> modifiers = <String>[];
       final LogicalKeyboardKey trigger = serialized.trigger!;
+<<<<<<< HEAD
       final List<String> modifiers = <String>[
         if (_usesSymbolicModifiers) ...<String>[
           // macOS/iOS platform convention uses this ordering, with ⌘ always last.
@@ -2397,6 +2463,37 @@ class _LocalizedShortcutLabeler {
           if (serialized.shift!) _getModifierLabel(LogicalKeyboardKey.shift, localizations),
         ],
       ];
+=======
+      if (_usesSymbolicModifiers) {
+        // macOS/iOS platform convention uses this ordering, with ⌘ always last.
+        if (serialized.control!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.control, localizations));
+        }
+        if (serialized.alt!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.alt, localizations));
+        }
+        if (serialized.shift!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.shift, localizations));
+        }
+        if (serialized.meta!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.meta, localizations));
+        }
+      } else {
+        // These should be in this order, to match the LogicalKeySet version.
+        if (serialized.alt!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.alt, localizations));
+        }
+        if (serialized.control!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.control, localizations));
+        }
+        if (serialized.meta!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.meta, localizations));
+        }
+        if (serialized.shift!) {
+          modifiers.add(_getModifierLabel(LogicalKeyboardKey.shift, localizations));
+        }
+      }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       String? shortcutTrigger;
       final int logicalKeyId = trigger.keyId;
       if (_shortcutGraphicEquivalents.containsKey(trigger)) {
@@ -3075,10 +3172,14 @@ class _MenuItemLabel extends StatelessWidget {
     this.leadingIcon,
     this.trailingIcon,
     this.shortcut,
+<<<<<<< HEAD
     this.semanticsLabel,
     this.overflowAxis = Axis.vertical,
     this.submenuIcon,
     this.child,
+=======
+    required this.child,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   /// Whether or not this menu has a submenu.
@@ -3101,6 +3202,7 @@ class _MenuItemLabel extends StatelessWidget {
   /// the shortcut.
   final MenuSerializableShortcut? shortcut;
 
+<<<<<<< HEAD
   /// An optional Semantics label, which replaces the generated string when
   /// read by a screen reader.
   final String? semanticsLabel;
@@ -3113,6 +3215,10 @@ class _MenuItemLabel extends StatelessWidget {
 
   /// An optional child widget that is displayed in the label.
   final Widget? child;
+=======
+  /// The required label child widget.
+  final Widget child;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Widget build(BuildContext context) {
@@ -3121,6 +3227,7 @@ class _MenuItemLabel extends StatelessWidget {
       _kLabelItemMinSpacing,
       _kLabelItemDefaultSpacing + density.horizontal * 2,
     );
+<<<<<<< HEAD
     Widget leadings;
     if (overflowAxis == Axis.vertical) {
       leadings = Expanded(
@@ -3151,6 +3258,15 @@ class _MenuItemLabel extends StatelessWidget {
         children: <Widget>[
           if (leadingIcon != null) leadingIcon!,
           if (child != null)
+=======
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            if (leadingIcon != null) leadingIcon!,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             Padding(
               padding:
                   leadingIcon != null
@@ -3158,14 +3274,8 @@ class _MenuItemLabel extends StatelessWidget {
                       : EdgeInsets.zero,
               child: child,
             ),
-        ],
-      );
-    }
-
-    Widget menuItemLabel = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        leadings,
+          ],
+        ),
         if (trailingIcon != null)
           Padding(
             padding: EdgeInsetsDirectional.only(start: horizontalPadding),
@@ -3188,6 +3298,7 @@ class _MenuItemLabel extends StatelessWidget {
           ),
       ],
     );
+<<<<<<< HEAD
     if (semanticsLabel != null) {
       menuItemLabel = Semantics(
         label: semanticsLabel,
@@ -3196,6 +3307,8 @@ class _MenuItemLabel extends StatelessWidget {
       );
     }
     return menuItemLabel;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -3509,6 +3622,7 @@ class _MenuPanelState extends State<_MenuPanel> {
       }
     }
 
+<<<<<<< HEAD
     // If the menu panel is horizontal, then the children should be wrapped in
     // an IntrinsicWidth widget to ensure that the children are as wide as the
     // widest child.
@@ -3520,6 +3634,8 @@ class _MenuPanelState extends State<_MenuPanel> {
           }).toList();
     }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     Widget menuPanel = _intrinsicCrossSize(
       child: Material(
         elevation: elevation,
@@ -3549,7 +3665,7 @@ class _MenuPanelState extends State<_MenuPanel> {
                     textDirection: Directionality.of(context),
                     direction: widget.orientation,
                     mainAxisSize: MainAxisSize.min,
-                    children: children,
+                    children: widget.children,
                   ),
                 ),
               ),
@@ -3755,7 +3871,7 @@ bool _debugMenuInfo(String message, [Iterable<String>? details]) {
 }
 
 /// Whether [defaultTargetPlatform] is an Apple platform (Mac or iOS).
-bool get _isCupertino {
+bool get _isApple {
   switch (defaultTargetPlatform) {
     case TargetPlatform.iOS:
     case TargetPlatform.macOS:
@@ -3774,7 +3890,7 @@ bool get _isCupertino {
 /// render them in a particular order defined by Apple's human interface
 /// guidelines, and format them so that the modifier keys always align.
 bool get _usesSymbolicModifiers {
-  return _isCupertino;
+  return _isApple;
 }
 
 bool get _platformSupportsAccelerators {
@@ -3782,7 +3898,7 @@ bool get _platformSupportsAccelerators {
   // different set of characters to be generated, and the native menus don't
   // support accelerators anyhow, so we just disable accelerators on these
   // platforms.
-  return !_isCupertino;
+  return !_isApple;
 }
 
 // BEGIN GENERATED TOKEN PROPERTIES - Menu

@@ -43,7 +43,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   void _closeSettingId(AnimationStatus status) {
-    if (status.isDismissed) {
+    if (status == AnimationStatus.dismissed) {
       setState(() {
         _expandedSettingId = null;
       });

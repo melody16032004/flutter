@@ -504,6 +504,7 @@ void main() {
       // At least 2 lines.
       expect(constrainedHeight, greaterThanOrEqualTo(2 * unconstrainedHeight));
     });
+<<<<<<< HEAD
 
     test('paints even when its size is empty', () {
       // Regression test for https://github.com/flutter/flutter/issues/146840.
@@ -522,6 +523,8 @@ void main() {
       layout(box, constraints: BoxConstraints.tight(Size.zero), phase: EnginePhase.paint);
       expect(box, paints..paragraph());
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   test('getMinIntrinsicWidth error handling', () {

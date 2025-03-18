@@ -63,6 +63,7 @@ class RenderListBody extends RenderBox
   Axis get mainAxis => axisDirectionToAxis(axisDirection);
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     assert(_debugCheckConstraints(constraints));
     RenderBox? child;
@@ -100,6 +101,8 @@ class RenderListBody extends RenderBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @protected
   Size computeDryLayout(covariant BoxConstraints constraints) {
     assert(_debugCheckConstraints(constraints));

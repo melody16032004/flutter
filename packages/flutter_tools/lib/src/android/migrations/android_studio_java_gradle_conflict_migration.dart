@@ -85,7 +85,7 @@ class AndroidStudioJavaGradleConflictMigration extends ProjectMigrator {
   final Java? _java;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     try {
       if (!_gradleWrapperPropertiesFile.existsSync()) {
         logger.printTrace(gradleWrapperNotFound);

@@ -303,6 +303,7 @@ void main() {
               BottomNavigationBarItem(label: '', icon: Text('2')),
             ],
           ),
+<<<<<<< HEAD
           tabBuilder:
               (_, int i) => PopScope<Object?>(
                 canPop: false,
@@ -311,6 +312,15 @@ void main() {
                   builder: (BuildContext context) => const Text('first route'),
                 ),
               ),
+=======
+          tabBuilder: (_, int i) => PopScope(
+            canPop: false,
+            child: CupertinoTabView(
+              navigatorKey: key,
+              builder: (BuildContext context) => const Text('first route'),
+            ),
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       ),
     );

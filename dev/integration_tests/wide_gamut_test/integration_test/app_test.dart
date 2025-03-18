@@ -118,6 +118,7 @@ bool _findBGR10Color(
   return foundDeepRed;
 }
 
+<<<<<<< HEAD
 bool _findColor(List<dynamic> result, List<double> color, {double epsilon = 0.01}) {
   expect(result, isNotNull);
   expect(result.length, 4);
@@ -128,6 +129,23 @@ bool _findColor(List<dynamic> result, List<double> color, {double epsilon = 0.01
     'MTLPixelFormatRGBA16Float' => _findRGBAF16Color(bytes, width, height, color, epsilon: epsilon),
     _ => fail('Unsupported pixel format: $format'),
   };
+=======
+bool _findColor(List<Object?> result, List<double> color) {
+  expect(result, isNotNull);
+  expect(result.length, 4);
+  final int width = (result[0] as int?)!;
+  final int height = (result[1] as int?)!;
+  final String format = (result[2] as String?)!;
+  if (format == 'MTLPixelFormatBGR10_XR') {
+    return _findBGR10Color((result[3] as Uint8List?)!, width, height, color);
+  } else if (format == 'MTLPixelFormatBGRA10_XR') {
+    return _findBGRA10Color((result[3] as Uint8List?)!, width, height, color);
+  } else if (format == 'MTLPixelFormatRGBA16Float') {
+    return _findRGBAF16Color((result[3] as Uint8List?)!, width, height, color);
+  } else {
+    fail('Unsupported pixel format: $format');
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 void main() {

@@ -4,7 +4,6 @@
 
 import 'dart:async';
 
-import 'package:fake_async/fake_async.dart';
 import 'package:file/memory.dart';
 import 'package:flutter_tools/src/application_package.dart';
 import 'package:flutter_tools/src/base/file_system.dart';
@@ -15,13 +14,12 @@ import 'package:flutter_tools/src/desktop_device.dart';
 import 'package:flutter_tools/src/devfs.dart';
 import 'package:flutter_tools/src/device.dart';
 import 'package:flutter_tools/src/device_port_forwarder.dart';
-import 'package:flutter_tools/src/macos/macos_device.dart';
 import 'package:flutter_tools/src/project.dart';
 
 import 'package:test/fake.dart';
 
 import '../src/common.dart';
-import '../src/context.dart';
+import '../src/fake_process_manager.dart';
 
 void main() {
   group('Basic info', () {
@@ -373,6 +371,7 @@ void main() {
       ),
     );
   });
+<<<<<<< HEAD
 
   testUsingContext(
     'macOS devices print warning if Dart VM not found within timeframe in CI',
@@ -406,6 +405,8 @@ void main() {
       });
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 FakeDesktopDevice setUpDesktopDevice({
@@ -466,7 +467,6 @@ class FakeDesktopDevice extends DesktopDevice {
   Future<void> buildForDevice({
     String? mainPath,
     BuildInfo? buildInfo,
-    bool usingCISystem = false,
   }) async {
     lastBuiltMainPath = mainPath;
     lastBuildInfo = buildInfo;
@@ -488,6 +488,7 @@ class FakeOperatingSystemUtils extends Fake implements OperatingSystemUtils {
   @override
   String get name => 'Example';
 }
+<<<<<<< HEAD
 
 class FakeMacOSDevice extends MacOSDevice {
   FakeMacOSDevice({
@@ -522,3 +523,5 @@ class FakeMacOSDevice extends MacOSDevice {
     return buildInfo.mode.cliName;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

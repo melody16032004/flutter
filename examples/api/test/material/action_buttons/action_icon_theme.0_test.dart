@@ -8,7 +8,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Action Icon Buttons', (WidgetTester tester) async {
-    await tester.pumpWidget(const example.ActionIconThemeExampleApp());
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ActionIconThemeExampleApp(),
+        ),
+      ),
+    );
+
 
     expect(find.byType(DrawerButton), findsOneWidget);
     final Icon drawerButtonIcon = tester.widget(

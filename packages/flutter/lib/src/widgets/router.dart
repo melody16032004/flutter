@@ -716,6 +716,7 @@ class _RouterState<T> extends State<Router<T>> with RestorationMixin {
     // The super.didChangeDependencies may have parsed the route information.
     // This can happen if the didChangeDependencies is triggered by state
     // restoration or first build.
+<<<<<<< HEAD
     final RouteInformation? currentRouteInformation =
         _routeInformation.value ?? widget.routeInformationProvider?.value;
     if (currentRouteInformation != null && _routeParsePending) {
@@ -723,6 +724,10 @@ class _RouterState<T> extends State<Router<T>> with RestorationMixin {
         currentRouteInformation,
         () => widget.routerDelegate.setNewRoutePath,
       );
+=======
+    if (widget.routeInformationProvider != null && _routeParsePending) {
+      _processRouteInformation(widget.routeInformationProvider!.value, () => widget.routerDelegate.setNewRoutePath);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     _routeParsePending = false;
     _maybeNeedToReportRouteInformation();
@@ -1522,19 +1527,23 @@ class PlatformRouteInformationProvider extends RouteInformationProvider
   }
 
   @override
+<<<<<<< HEAD
   void routerReportsNewRouteInformation(
     RouteInformation routeInformation, {
     RouteInformationReportingType type = RouteInformationReportingType.none,
   }) {
+=======
+  void routerReportsNewRouteInformation(RouteInformation routeInformation, {RouteInformationReportingType type = RouteInformationReportingType.none}) {
+    final bool replace =
+      type == RouteInformationReportingType.neglect ||
+      (type == RouteInformationReportingType.none &&
+      _equals(_valueInEngine.uri, routeInformation.uri));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     SystemNavigator.selectMultiEntryHistory();
     SystemNavigator.routeInformationUpdated(
       uri: routeInformation.uri,
       state: routeInformation.state,
-      replace: switch (type) {
-        RouteInformationReportingType.neglect => true,
-        RouteInformationReportingType.navigate => false,
-        RouteInformationReportingType.none => _equals(_valueInEngine.uri, routeInformation.uri),
-      },
+      replace: replace,
     );
     _value = routeInformation;
     _valueInEngine = routeInformation;

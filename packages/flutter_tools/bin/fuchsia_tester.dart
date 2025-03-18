@@ -163,8 +163,19 @@ Future<void> run(List<String> args) async {
     exitCode = await const FlutterTestRunner().runTests(
       const TestWrapper(),
       tests.keys.map(Uri.file).toList(),
+<<<<<<< HEAD
       debuggingOptions: DebuggingOptions.enabled(buildInfo),
       buildInfo: buildInfo,
+=======
+      debuggingOptions: DebuggingOptions.enabled(
+        BuildInfo(
+          BuildMode.debug,
+          '',
+          treeShakeIcons: false,
+          packagesPath: globals.fs.path.normalize(globals.fs.path.absolute(argResults[_kOptionPackages] as String)),
+        ),
+      ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       watcher: collector,
       enableVmService: collector != null,
       precompiledDillFiles: tests,

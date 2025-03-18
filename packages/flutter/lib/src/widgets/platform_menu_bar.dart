@@ -668,12 +668,22 @@ class PlatformMenuItemGroup extends PlatformMenuItem {
     PlatformMenuDelegate delegate, {
     required MenuItemSerializableIdGenerator getId,
   }) {
-    return <Map<String, Object?>>[
-      <String, Object?>{_kIdKey: getId(group), _kIsDividerKey: true},
-      for (final PlatformMenuItem item in group.members)
-        ...item.toChannelRepresentation(delegate, getId: getId),
-      <String, Object?>{_kIdKey: getId(group), _kIsDividerKey: true},
-    ];
+    final List<Map<String, Object?>> result = <Map<String, Object?>>[];
+    result.add(<String, Object?>{
+      _kIdKey: getId(group),
+      _kIsDividerKey: true,
+    });
+    for (final PlatformMenuItem item in group.members) {
+      result.addAll(item.toChannelRepresentation(
+        delegate,
+        getId: getId,
+      ));
+    }
+    result.add(<String, Object?>{
+      _kIdKey: getId(group),
+      _kIsDividerKey: true,
+    });
+    return result;
   }
 
   @override

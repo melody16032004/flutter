@@ -206,10 +206,6 @@ class UndoHistoryState<T> extends State<UndoHistory<T>> with UndoManagerClient {
 
   void _handleFocus() {
     if (!widget.focusNode.hasFocus) {
-      if (UndoManager.client == this) {
-        UndoManager.client = null;
-      }
-
       return;
     }
     UndoManager.client = this;
@@ -271,10 +267,6 @@ class UndoHistoryState<T> extends State<UndoHistory<T>> with UndoManagerClient {
   @protected
   @override
   void dispose() {
-    if (UndoManager.client == this) {
-      UndoManager.client = null;
-    }
-
     widget.value.removeListener(_push);
     widget.focusNode.removeListener(_handleFocus);
     _effectiveController.onUndo.removeListener(undo);

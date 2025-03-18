@@ -879,13 +879,9 @@ void main() {
       // Test switch button position.
       final Finder switchButtonM3 = find.widgetWithIcon(IconButton, Icons.edit_outlined);
       final Offset switchButtonTopLeft = tester.getTopLeft(switchButtonM3);
-      final Offset switchButtonBottomLeft = tester.getBottomLeft(switchButtonM3);
       final Offset headerTextBottomLeft = tester.getBottomLeft(headerText);
-      final Offset dialogBottomLeft = tester.getBottomLeft(find.byType(AnimatedContainer));
-      expect(switchButtonTopLeft.dx, dialogTopLeft.dx + 8.0);
+      expect(switchButtonTopLeft.dx, dialogTopLeft.dx + 4.0);
       expect(switchButtonTopLeft.dy, headerTextBottomLeft.dy);
-      expect(switchButtonBottomLeft.dx, dialogTopLeft.dx + 8.0);
-      expect(switchButtonBottomLeft.dy, dialogBottomLeft.dy - 6.0);
 
       // Test vertical divider position.
       final Finder divider = find.byType(VerticalDivider);
@@ -898,9 +894,14 @@ void main() {
       final Offset subHeaderTextTopLeft = tester.getTopLeft(subHeaderText);
       final Offset dividerTopRight = tester.getTopRight(divider);
       expect(subHeaderTextTopLeft.dx, dividerTopRight.dx + 24.0);
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
         expect(subHeaderTextTopLeft.dy, dialogTopLeft.dy + 16.0);
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+        expect(subHeaderTextTopLeft.dy,  dialogTopLeft.dy + 16.0);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
 
       // Test sub header icon position.
@@ -915,8 +916,12 @@ void main() {
       final Offset calendarPageViewTopLeft = tester.getTopLeft(calendarPageView);
       final Offset subHeaderTextBottomLeft = tester.getBottomLeft(subHeaderText);
       expect(calendarPageViewTopLeft.dx, dividerTopRight.dx);
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         expect(calendarPageViewTopLeft.dy, subHeaderTextBottomLeft.dy + 16.0);
       }
 
@@ -982,8 +987,12 @@ void main() {
       final Offset headerTextTextTopLeft = tester.getTopLeft(headerText);
       final Offset helpTextBottomLeft = tester.getBottomLeft(helpText);
       expect(headerTextTextTopLeft.dx, dialogTopLeft.dx + 24.0);
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         expect(headerTextTextTopLeft.dy, helpTextBottomLeft.dy + 28.0);
       }
 
@@ -1005,8 +1014,12 @@ void main() {
       final Offset subHeaderTextTopLeft = tester.getTopLeft(subHeaderText);
       final Offset dividerBottomLeft = tester.getBottomLeft(divider);
       expect(subHeaderTextTopLeft.dx, dialogTopLeft.dx + 24.0);
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         expect(subHeaderTextTopLeft.dy, dividerBottomLeft.dy + 16.0);
       }
 
@@ -1031,8 +1044,12 @@ void main() {
       final Offset calendarPageViewTopLeft = tester.getTopLeft(calendarPageView);
       final Offset subHeaderTextBottomLeft = tester.getBottomLeft(subHeaderText);
       expect(calendarPageViewTopLeft.dx, dialogTopLeft.dx);
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         expect(calendarPageViewTopLeft.dy, subHeaderTextBottomLeft.dy + 16.0);
       }
 
@@ -1726,6 +1743,7 @@ void main() {
           matchesSemantics(label: 'SELECT DATE\nFri, Jan 15'),
         );
 
+<<<<<<< HEAD
         expect(
           tester.getSemantics(find.text('3')),
           matchesSemantics(
@@ -1750,10 +1768,29 @@ void main() {
             isFocusable: true,
           ),
         );
+=======
+        expect(tester.getSemantics(find.text('3')), matchesSemantics(
+          label: '3, Sunday, January 3, 2016, Today',
+          isButton: true,
+          hasTapAction: true,
+          isFocusable: true,
+        ));
+
+        // Input mode toggle button
+        expect(tester.getSemantics(switchToInputIcon), matchesSemantics(
+          tooltip: 'Switch to input',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         // The semantics of the CalendarDatePicker are tested in its tests.
 
         // Ok/Cancel buttons
+<<<<<<< HEAD
         expect(
           tester.getSemantics(find.text('OK')),
           matchesSemantics(
@@ -1778,6 +1815,24 @@ void main() {
             isFocusable: true,
           ),
         );
+=======
+        expect(tester.getSemantics(find.text('OK')), matchesSemantics(
+          label: 'OK',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+        expect(tester.getSemantics(find.text('CANCEL')), matchesSemantics(
+          label: 'CANCEL',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       });
       semantics.dispose();
     });
@@ -1809,6 +1864,7 @@ void main() {
         );
 
         // Input mode toggle button
+<<<<<<< HEAD
         expect(
           tester.getSemantics(switchToCalendarIcon),
           matchesSemantics(
@@ -1821,6 +1877,16 @@ void main() {
             isFocusable: true,
           ),
         );
+=======
+        expect(tester.getSemantics(switchToCalendarIcon), matchesSemantics(
+          tooltip: 'Switch to calendar',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(
           tester.getSemantics(find.byType(EditableText)),
@@ -1844,6 +1910,7 @@ void main() {
         );
 
         // Ok/Cancel buttons
+<<<<<<< HEAD
         expect(
           tester.getSemantics(find.text('OK')),
           matchesSemantics(
@@ -1868,6 +1935,24 @@ void main() {
             isFocusable: true,
           ),
         );
+=======
+        expect(tester.getSemantics(find.text('OK')), matchesSemantics(
+          label: 'OK',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+        expect(tester.getSemantics(find.text('CANCEL')), matchesSemantics(
+          label: 'CANCEL',
+          isButton: true,
+          hasTapAction: true,
+          isEnabled: true,
+          hasEnabledState: true,
+          isFocusable: true,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       });
       semantics.dispose();
     });

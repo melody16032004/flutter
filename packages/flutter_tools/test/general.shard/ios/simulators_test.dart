@@ -158,6 +158,28 @@ void main() {
     );
   });
 
+  group('compareIosVersions', () {
+    testWithoutContext('compares correctly', () {
+      // This list must be sorted in ascending preference order
+      final List<String> testList = <String>[
+        '8', '8.0', '8.1', '8.2',
+        '9', '9.0', '9.1', '9.2',
+        '10', '10.0', '10.1',
+      ];
+
+      for (int i = 0; i < testList.length; i++) {
+        expect(compareIosVersions(testList[i], testList[i]), 0);
+      }
+
+      for (int i = 0; i < testList.length - 1; i++) {
+        for (int j = i + 1; j < testList.length; j++) {
+          expect(compareIosVersions(testList[i], testList[j]), lessThan(0));
+          expect(compareIosVersions(testList[j], testList[i]), greaterThan(0));
+        }
+      }
+    });
+  });
+
   group('sdkMajorVersion', () {
     late FakeSimControl simControl;
 
@@ -1221,6 +1243,7 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           applicationPackage: mockDir,
         );
 
+<<<<<<< HEAD
         const BuildInfo mockInfo = BuildInfo(
           BuildMode.debug,
           'flavor',
@@ -1229,6 +1252,11 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
         );
         final DebuggingOptions mockOptions = DebuggingOptions.disabled(mockInfo);
         await device.startApp(package, prebuiltApplication: true, debuggingOptions: mockOptions);
+=======
+      const BuildInfo mockInfo = BuildInfo(BuildMode.debug, 'flavor', treeShakeIcons: false);
+      final DebuggingOptions mockOptions = DebuggingOptions.disabled(mockInfo);
+      await device.startApp(package, prebuiltApplication: true, debuggingOptions: mockOptions);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(simControl.requests.single.appIdentifier, 'correct');
       },
@@ -1259,6 +1287,7 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           applicationPackage: mockDir,
         );
 
+<<<<<<< HEAD
         const BuildInfo mockInfo = BuildInfo(
           BuildMode.debug,
           'flavor',
@@ -1271,6 +1300,11 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           prebuiltApplication: true,
           debuggingOptions: mockOptions,
         );
+=======
+      const BuildInfo mockInfo = BuildInfo(BuildMode.debug, 'flavor', treeShakeIcons: false);
+      final DebuggingOptions mockOptions = DebuggingOptions.disabled(mockInfo);
+      final LaunchResult result = await device.startApp(package, prebuiltApplication: true, debuggingOptions: mockOptions);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(result.started, isFalse);
         expect(simControl.requests, isEmpty);
@@ -1308,6 +1342,7 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           applicationPackage: mockDir,
         );
 
+<<<<<<< HEAD
         const BuildInfo mockInfo = BuildInfo(
           BuildMode.debug,
           'flavor',
@@ -1336,6 +1371,31 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           nullAssertions: true,
           hostVmServicePort: 0,
         );
+=======
+      const BuildInfo mockInfo = BuildInfo(BuildMode.debug, 'flavor', treeShakeIcons: false);
+      final DebuggingOptions mockOptions = DebuggingOptions.enabled(
+        mockInfo,
+        enableSoftwareRendering: true,
+        traceSystrace: true,
+        traceToFile: 'path/to/trace.binpb',
+        startPaused: true,
+        disableServiceAuthCodes: true,
+        skiaDeterministicRendering: true,
+        useTestFonts: true,
+        traceSkia: true,
+        traceAllowlist: 'foo,bar',
+        traceSkiaAllowlist: 'skia.a,skia.b',
+        endlessTraceBuffer: true,
+        dumpSkpOnShaderCompilation: true,
+        verboseSystemLogs: true,
+        cacheSkSL: true,
+        purgePersistentCache: true,
+        dartFlags: '--baz',
+        enableImpeller: ImpellerStatus.disabled,
+        nullAssertions: true,
+        hostVmServicePort: 0,
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         await device.startApp(package, prebuiltApplication: true, debuggingOptions: mockOptions);
         expect(
@@ -1393,6 +1453,7 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           applicationPackage: mockDir,
         );
 
+<<<<<<< HEAD
         const BuildInfo mockInfo = BuildInfo(
           BuildMode.debug,
           'flavor',
@@ -1409,6 +1470,11 @@ Dec 20 17:04:32 md32-11-vm1 Another App[88374]: Ignore this text''',
           debuggingOptions: mockOptions,
           route: '/animation',
         );
+=======
+      const BuildInfo mockInfo = BuildInfo(BuildMode.debug, 'flavor', treeShakeIcons: false);
+      final DebuggingOptions mockOptions = DebuggingOptions.enabled(mockInfo, enableSoftwareRendering: true);
+      await device.startApp(package, prebuiltApplication: true, debuggingOptions: mockOptions, route: '/animation');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(simControl.requests.single.launchArgs, contains('--route=/animation'));
       },

@@ -96,7 +96,10 @@ void main() {
       const FakeCommand(
         command: <String>['adb', 'devices', '-l'],
         exitCode: 1,
+<<<<<<< HEAD
         stderr: '<stderr from adb>',
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     ]);
     final AndroidDevices androidDevices = AndroidDevices(
@@ -109,6 +112,7 @@ void main() {
       userMessages: UserMessages(),
     );
 
+<<<<<<< HEAD
     expect(
       androidDevices.pollingGetDevices(),
       throwsToolExit(
@@ -118,6 +122,10 @@ void main() {
             '<stderr from adb>',
       ),
     );
+=======
+    expect(androidDevices.pollingGetDevices(),
+      throwsToolExit(message: RegExp('Unable to run "adb"')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWithoutContext('AndroidDevices is disabled if feature is disabled', () {

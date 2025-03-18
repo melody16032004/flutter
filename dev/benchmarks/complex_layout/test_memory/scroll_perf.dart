@@ -21,6 +21,7 @@ const Duration pauses = Duration(milliseconds: 500);
 
 Future<void> main() async {
   final Completer<void> ready = Completer<void>();
+<<<<<<< HEAD
   runApp(
     GestureDetector(
       onTap: () {
@@ -29,16 +30,28 @@ Future<void> main() async {
       },
       behavior: HitTestBehavior.opaque,
       child: const IgnorePointer(child: ComplexLayoutApp()),
+=======
+  runApp(GestureDetector(
+    onTap: () {
+      debugPrint('Received tap.');
+      ready.complete();
+    },
+    behavior: HitTestBehavior.opaque,
+    child: const IgnorePointer(
+      child: ComplexLayoutApp(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ),
   );
   await SchedulerBinding.instance.endOfFrame;
+
+  /// Wait 50ms to allow the raster thread to actually put up the frame. (The
+  /// endOfFrame future ends when we send the data to the engine, before
+  /// the raster thread has had a chance to rasterize, etc.)
+  await Future<void>.delayed(const Duration(milliseconds: 50));
   debugPrint('==== MEMORY BENCHMARK ==== READY ====');
 
   await ready.future; // waits for tap sent by devicelab task
   debugPrint('Continuing...');
-
-  // Wait out any errant taps due to synchronization
-  await Future<void>.delayed(const Duration(milliseconds: 200));
 
   // remove onTap handler, enable pointer events for app
   runApp(GestureDetector(child: const IgnorePointer(ignoring: false, child: ComplexLayoutApp())));

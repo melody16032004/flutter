@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:collection/collection.dart' show ListEquality, MapEquality;
 
 import 'package:flutter_devicelab/framework/devices.dart';
@@ -23,7 +18,8 @@ void main() {
       device = FakeDevice(deviceId: 'fakeDeviceId');
     });
 
-    tearDown(() {});
+    tearDown(() {
+    });
 
     group('cpu check', () {
       test('arm64', () async {
@@ -200,12 +196,13 @@ void main() {
 
     group('adb', () {
       test('tap', () async {
-        FakeDevice.resetLog();
         await device.tap(100, 200);
         expectLog(<CommandArgs>[
+          cmd(command: 'getprop', arguments: <String>['ro.bootimage.build.fingerprint', ';', 'getprop', 'ro.build.version.release', ';', 'getprop', 'ro.build.version.sdk']),
           cmd(command: 'input', arguments: <String>['tap', '100', '200']),
         ]);
       });
+<<<<<<< HEAD
 
       test('awaitDevice', () async {
         FakeDevice.resetLog();
@@ -261,6 +258,8 @@ void main() {
           ),
         ]);
       });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 }
@@ -314,8 +313,6 @@ class CommandArgs {
 class FakeDevice extends AndroidDevice {
   FakeDevice({required super.deviceId});
 
-  static const String canFailKey = 'canFail';
-
   static String output = '';
 
   static List<CommandArgs> commandLog = <CommandArgs>[];
@@ -349,6 +346,7 @@ class FakeDevice extends AndroidDevice {
   }
 
   @override
+<<<<<<< HEAD
   Future<String> adb(
     List<String> arguments, {
     Map<String, String>? environment,
@@ -375,6 +373,14 @@ class FakeDevice extends AndroidDevice {
     bool silent = false,
   }) async {
     commandLog.add(CommandArgs(command: command, arguments: arguments, environment: environment));
+=======
+  Future<String> shellEval(String command, List<String> arguments, { Map<String, String>? environment, bool silent = false }) async {
+    commandLog.add(CommandArgs(
+      command: command,
+      arguments: arguments,
+      environment: environment,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return output;
   }
 
@@ -387,66 +393,4 @@ class FakeDevice extends AndroidDevice {
   }) async {
     commandLog.add(CommandArgs(command: command, arguments: arguments, environment: environment));
   }
-}
-
-/// An IOSink that collects whatever is written to it.
-/// Inspired by packages/flutter_tools/lib/src/base/net.dart
-class _MemoryIOSink implements IOSink {
-  @override
-  Encoding encoding = utf8;
-
-  final BytesBuilder writes = BytesBuilder(copy: false);
-
-  @override
-  void add(List<int> data) {
-    writes.add(data);
-  }
-
-  @override
-  Future<void> addStream(Stream<List<int>> stream) {
-    final Completer<void> completer = Completer<void>();
-    stream.listen(add).onDone(completer.complete);
-    return completer.future;
-  }
-
-  @override
-  void writeCharCode(int charCode) {
-    add(<int>[charCode]);
-  }
-
-  @override
-  void write(Object? obj) {
-    add(encoding.encode('$obj'));
-  }
-
-  @override
-  void writeln([Object? obj = '']) {
-    add(encoding.encode('$obj\n'));
-  }
-
-  @override
-  void writeAll(Iterable<dynamic> objects, [String separator = '']) {
-    bool addSeparator = false;
-    for (final dynamic object in objects) {
-      if (addSeparator) {
-        write(separator);
-      }
-      write(object);
-      addSeparator = true;
-    }
-  }
-
-  @override
-  void addError(dynamic error, [StackTrace? stackTrace]) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> get done => close();
-
-  @override
-  Future<void> close() async {}
-
-  @override
-  Future<void> flush() async {}
 }

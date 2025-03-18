@@ -3,17 +3,18 @@
 // found in the LICENSE file.
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+<<<<<<< HEAD
   RenderObject getOverlayColor(WidgetTester tester) {
     return tester.allRenderObjects.firstWhere(
       (RenderObject object) => object.runtimeType.toString() == '_RenderInkFeatures',
     );
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('SegmentedButtonThemeData copyWith, ==, hashCode basics', () {
     expect(const SegmentedButtonThemeData(), const SegmentedButtonThemeData().copyWith());
@@ -492,6 +493,7 @@ void main() {
       expect(selectedIcon, findsNothing);
     }
   });
+<<<<<<< HEAD
 
   testWidgets(
     'SegmentedButtonTheme SegmentedButton.styleFrom overlayColor overrides default overlay color',
@@ -576,4 +578,6 @@ void main() {
       expect(getOverlayColor(tester), paints..rect(color: overlayColor.withOpacity(0.1)));
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

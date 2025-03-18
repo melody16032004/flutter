@@ -3,14 +3,12 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dds/dap.dart';
 import 'package:file/memory.dart';
 import 'package:flutter_tools/src/base/file_system.dart';
 import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/cache.dart';
-import 'package:flutter_tools/src/debug_adapters/error_formatter.dart';
 import 'package:flutter_tools/src/debug_adapters/flutter_adapter.dart';
 import 'package:flutter_tools/src/debug_adapters/flutter_adapter_args.dart';
 import 'package:flutter_tools/src/globals.dart' as globals show fs, platform;
@@ -315,6 +313,7 @@ void main() {
           ]),
         );
       });
+<<<<<<< HEAD
 
       test('handles app.stop errors during launch', () async {
         final MockFlutterDebugAdapter adapter = MockFlutterDebugAdapter(
@@ -380,6 +379,8 @@ void main() {
         // Also ensure we got console output with the error.
         expect(consoleOutputMessages, contains('App stopped due to an error\n'));
       });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     group('attachRequest', () {
@@ -780,6 +781,7 @@ void main() {
 
       test('dart:core URI to file path', () async {
         expect(
+<<<<<<< HEAD
           adapter.convertOrgDartlangSdkToPath(
             Uri.parse('org-dartlang-sdk:///flutter/third_party/dart/sdk/lib/core/core.dart'),
           ),
@@ -795,11 +797,16 @@ void main() {
               'core.dart',
             ),
           ),
+=======
+          adapter.convertOrgDartlangSdkToPath(Uri.parse('org-dartlang-sdk:///third_party/dart/sdk/lib/core/core.dart')),
+          Uri.file(fs.path.join(flutterRoot, 'bin', 'cache', 'pkg', 'sky_engine', 'lib', 'core', 'core.dart')),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         );
       });
 
       test('dart:core file path to URI', () async {
         expect(
+<<<<<<< HEAD
           adapter.convertUriToOrgDartlangSdk(
             Uri.file(
               fs.path.join(
@@ -815,6 +822,10 @@ void main() {
             ),
           ),
           Uri.parse('org-dartlang-sdk:///flutter/third_party/dart/sdk/lib/core/core.dart'),
+=======
+          adapter.convertUriToOrgDartlangSdk(Uri.file(fs.path.join(flutterRoot, 'bin', 'cache', 'pkg', 'sky_engine', 'lib', 'core', 'core.dart'))),
+          Uri.parse('org-dartlang-sdk:///third_party/dart/sdk/lib/core/core.dart'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         );
       });
     });
@@ -868,6 +879,7 @@ void main() {
         expect(adapter.processArgs, contains('tool_args'));
       });
     });
+<<<<<<< HEAD
 
     group('error formatter', () {
       /// Helpers to build a string representation of the DAP OutputEvents for
@@ -918,6 +930,8 @@ stderr "════════════════════════
 ''');
       });
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }
 

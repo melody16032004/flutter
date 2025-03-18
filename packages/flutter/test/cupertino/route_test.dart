@@ -773,26 +773,10 @@ void main() {
     await tester.pump(const Duration(milliseconds: 40));
     expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(7.4, epsilon: 0.1));
 
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(3, epsilon: 0.1));
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(0, epsilon: 0.1));
-
-    // Give time to the animation to finish and update its status to
-    // AnimationState.completed, so the reverse curved can be used in the next
-    // step.
-    await tester.pumpAndSettle(const Duration(milliseconds: 1));
 
     // Exit animation
     await tester.tap(find.text('Close'));
     await tester.pump();
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(156.3, epsilon: 0.1));
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(308.1, epsilon: 0.1));
 
     await tester.pump(const Duration(milliseconds: 40));
     expect(tester.getTopLeft(find.byType(Placeholder)).dy, moreOrLessEquals(411.03, epsilon: 0.1));
@@ -899,26 +883,9 @@ void main() {
     await tester.pump(const Duration(milliseconds: 40));
     expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-263.0, epsilon: 1.0));
 
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-265.0, epsilon: 1.0));
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-266.0, epsilon: 1.0));
-
-    // Give time to the animation to finish and update its status to
-    // AnimationState.completed, so the reverse curved can be used in the next
-    // step.
-    await tester.pumpAndSettle(const Duration(milliseconds: 1));
-
     // Exit animation
     await tester.tap(find.text('Close'));
     await tester.pump();
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-197.0, epsilon: 1.0));
-
-    await tester.pump(const Duration(milliseconds: 50));
-    expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-129.0, epsilon: 1.0));
 
     await tester.pump(const Duration(milliseconds: 40));
     expect(tester.getTopLeft(find.byType(Placeholder)).dx, moreOrLessEquals(-83.0, epsilon: 1.0));
@@ -940,6 +907,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   group('Interrupted push', () {
     Future<void> testParallax(WidgetTester tester, {required bool fromFullscreenDialog}) async {
       await tester.pumpWidget(
@@ -1120,6 +1088,9 @@ void main() {
   });
 
   Future<void> testNoParallax(WidgetTester tester, {required bool fromFullscreenDialog}) async {
+=======
+  Future<void> testNoParallax(WidgetTester tester, {required bool fromFullscreenDialog}) async{
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.pumpWidget(
       CupertinoApp(
         onGenerateRoute:
@@ -1229,10 +1200,13 @@ void main() {
     tester.state<NavigatorState>(find.byType(Navigator)).push(route2);
     // The whole transition is 500ms based on CupertinoPageRoute.transitionDuration.
     // Break it up into small chunks.
+<<<<<<< HEAD
     //
     // The screen width is 800.
     // The top left corner of the text 1 will go from 0 to -800 / 3 = - 266.67.
     // The top left corner of the text 2 will go from 800 to 0.
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 50));
@@ -1250,14 +1224,8 @@ void main() {
 
     // Finish the rest of the animation
     await tester.pump(const Duration(milliseconds: 350));
-    // Give time to the animation to finish and update its status to
-    // AnimationState.completed, so the reverse curved can be used in the next
-    // step.
-    await tester.pumpAndSettle(const Duration(milliseconds: 1));
 
     tester.state<NavigatorState>(find.byType(Navigator)).pop();
-    // The top left corner of the text 1 will go from -800 / 3 = - 266.67 to 0.
-    // The top left corner of the text 2 will go from 0 to 800.
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 50));
     expect(tester.getTopLeft(find.text('1')).dx, moreOrLessEquals(-197, epsilon: 1));
@@ -1588,11 +1556,11 @@ void main() {
       final RenderBox box = tester.firstRenderObject<RenderBox>(find.byType(CustomPaint));
 
       // Animation starts with effectively no shadow
-      expect(box, paintsShadowRect(dx: 795, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 785, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 775, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 765, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 755, color: CupertinoColors.transparent));
+      expect(box, paintsShadowRect(dx: 795, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 785, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 775, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 765, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 755, color: const Color(0x00000000)));
 
       await tester.pump(const Duration(milliseconds: 100));
 
@@ -1600,8 +1568,8 @@ void main() {
       expect(box, paintsShadowRect(dx: 296, color: const Color(0x03000000)));
       expect(box, paintsShadowRect(dx: 286, color: const Color(0x02000000)));
       expect(box, paintsShadowRect(dx: 276, color: const Color(0x01000000)));
-      expect(box, paintsShadowRect(dx: 266, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 266, color: CupertinoColors.transparent));
+      expect(box, paintsShadowRect(dx: 266, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 266, color: const Color(0x00000000)));
 
       await tester.pumpAndSettle();
 
@@ -1611,7 +1579,7 @@ void main() {
       expect(box, paintsShadowRect(dx: -10, color: const Color(0x03000000)));
       expect(box, paintsShadowRect(dx: -20, color: const Color(0x02000000)));
       expect(box, paintsShadowRect(dx: -30, color: const Color(0x01000000)));
-      expect(box, paintsShadowRect(dx: -40, color: CupertinoColors.transparent));
+      expect(box, paintsShadowRect(dx: -40, color: const Color(0x00000000)));
 
       // Start animation in reverse
       tester.state<NavigatorState>(find.byType(Navigator)).pop();
@@ -1622,16 +1590,16 @@ void main() {
       expect(box, paintsShadowRect(dx: 488, color: const Color(0x03000000)));
       expect(box, paintsShadowRect(dx: 478, color: const Color(0x02000000)));
       expect(box, paintsShadowRect(dx: 468, color: const Color(0x01000000)));
-      expect(box, paintsShadowRect(dx: 458, color: CupertinoColors.transparent));
+      expect(box, paintsShadowRect(dx: 458, color: const Color(0x00000000)));
 
       await tester.pump(const Duration(milliseconds: 150));
 
       // At the end of the animation, the shadow approaches full transparency
       expect(box, paintsShadowRect(dx: 794, color: const Color(0x01000000)));
-      expect(box, paintsShadowRect(dx: 784, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 774, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 764, color: CupertinoColors.transparent));
-      expect(box, paintsShadowRect(dx: 754, color: CupertinoColors.transparent));
+      expect(box, paintsShadowRect(dx: 784, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 774, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 764, color: const Color(0x00000000)));
+      expect(box, paintsShadowRect(dx: 754, color: const Color(0x00000000)));
     });
 
     testWidgets(
@@ -2064,6 +2032,7 @@ void main() {
     await tester.tap(find.text('tap'));
     await tester.pumpAndSettle();
 
+<<<<<<< HEAD
     expect(
       semantics,
       isNot(
@@ -2073,6 +2042,12 @@ void main() {
         ),
       ),
     );
+=======
+    expect(semantics, isNot(includesNodeWith(
+      actions: <SemanticsAction>[SemanticsAction.tap],
+      label: 'Dismiss',
+    )));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     debugDefaultTargetPlatformOverride = null;
     semantics.dispose();
   });
@@ -2155,6 +2130,7 @@ void main() {
     expect(routeSettingsObserver.routeName, '/modal');
   });
 
+<<<<<<< HEAD
   testWidgets('showCupertinoModalPopup transparent barrier color is transparent', (
     WidgetTester tester,
   ) async {
@@ -2172,6 +2148,20 @@ void main() {
                   );
                 },
                 child: const Text('tap'),
+=======
+  testWidgets('showCupertinoModalPopup transparent barrier color is transparent', (WidgetTester tester) async {
+    const Color kTransparentColor = Color(0x00000000);
+
+    await tester.pumpWidget(CupertinoApp(
+      home: CupertinoPageScaffold(
+        child: Builder(builder: (BuildContext context) {
+          return GestureDetector(
+            onTap: () async {
+              await showCupertinoModalPopup<void>(
+                context: context,
+                builder: (BuildContext context) => const SizedBox(),
+                barrierColor: kTransparentColor,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               );
             },
           ),
@@ -2753,6 +2743,7 @@ void main() {
       expect(tester.getBottomRight(find.byType(Placeholder)).dx, 390.0);
     });
   });
+<<<<<<< HEAD
 
   testWidgets('Fullscreen route does not leak CurveAnimation', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -3111,6 +3102,8 @@ void main() {
       expect(focusScopeNode.hasFocus, isFalse);
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class MockNavigatorObserver extends NavigatorObserver {

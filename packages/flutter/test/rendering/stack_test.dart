@@ -10,6 +10,7 @@ import 'rendering_tester.dart';
 void main() {
   TestRenderingFlutterBinding.ensureInitialized();
 
+<<<<<<< HEAD
   test('StackParentData basic test', () {
     final StackParentData parentData = StackParentData();
     const Size stackSize = Size(800.0, 600.0);
@@ -61,6 +62,8 @@ void main() {
     );
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('Stack can layout with top, right, bottom, left 0.0', () {
     final RenderBox size = RenderConstrainedBox(
       additionalConstraints: BoxConstraints.tight(const Size(100.0, 100.0)),

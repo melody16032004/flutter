@@ -2,12 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'dart:ui';
 ///
 /// @docImport 'package:flutter/widgets.dart';
 /// @docImport 'package:flutter_driver/driver_extension.dart';
 library;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:ui' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show ServicesBinding;
@@ -65,7 +68,7 @@ mixin PaintingBinding on BindingBase, ServicesBinding {
   /// See also:
   ///
   ///  * [ShaderWarmUp], the interface for implementing custom warm-up scenes.
-  ///  * <https://docs.flutter.dev/perf/shader>
+  ///  * <https://flutter.dev/docs/perf/rendering/shader>
   static ShaderWarmUp? shaderWarmUp;
 
   /// The singleton that implements the Flutter framework's image cache.

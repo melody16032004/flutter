@@ -39,6 +39,7 @@ void main() {
     expect(find.text('update'), findsOneWidget);
   });
 
+<<<<<<< HEAD
   testWidgets('Router respects update order', (WidgetTester tester) async {
     final SimpleRouteInformationProvider provider = SimpleRouteInformationProvider();
     addTearDown(provider.dispose);
@@ -79,6 +80,8 @@ void main() {
     expect(delegate.currentConfiguration!.uri.toString(), 'update');
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Simple router basic functionality - asynchronized', (WidgetTester tester) async {
     final SimpleRouteInformationProvider provider = SimpleRouteInformationProvider();
     addTearDown(provider.dispose);
@@ -1970,6 +1973,7 @@ class RedirectingInformationParser extends RouteInformationParser<RouteInformati
     return configuration;
   }
 }
+<<<<<<< HEAD
 
 class MutableRouterDelegate extends RouterDelegate<RouteInformation> with ChangeNotifier {
   MutableRouterDelegate() {
@@ -2010,3 +2014,5 @@ class IntInheritedNotifier extends InheritedNotifier<ValueListenable<int>> {
     return context.dependOnInheritedWidgetOfExactType<IntInheritedNotifier>()!.notifier!.value;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

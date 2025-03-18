@@ -7,7 +7,6 @@ import 'dart:convert';
 import 'dart:io' as io;
 
 import 'package:args/command_runner.dart';
-import 'package:file/file.dart';
 import 'package:file/memory.dart';
 import 'package:file_testing/file_testing.dart';
 import 'package:flutter_tools/src/android/gradle_utils.dart'
@@ -718,6 +717,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testUsingContext(
     'kotlin/swift plugin project without Swift Package Manager',
     () async {
@@ -825,6 +825,34 @@ void main() {
     },
   );
 
+=======
+  testUsingContext('kotlin/swift plugin project', () async {
+    return _createProject(
+      projectDir,
+      <String>['--no-pub', '--template=plugin', '-a', 'kotlin', '--ios-language', 'swift', '--platforms', 'ios,android'],
+      <String>[
+        'analysis_options.yaml',
+        'android/src/main/kotlin/com/example/flutter_project/FlutterProjectPlugin.kt',
+        'example/android/app/src/main/kotlin/com/example/flutter_project_example/MainActivity.kt',
+        'example/ios/Runner/AppDelegate.swift',
+        'example/ios/Runner/Runner-Bridging-Header.h',
+        'example/lib/main.dart',
+        'ios/Classes/FlutterProjectPlugin.swift',
+        'lib/flutter_project.dart',
+      ],
+      unexpectedPaths: <String>[
+        'android/src/main/java/com/example/flutter_project/FlutterProjectPlugin.java',
+        'example/android/app/src/main/java/com/example/flutter_project_example/MainActivity.java',
+        'example/ios/Runner/AppDelegate.h',
+        'example/ios/Runner/AppDelegate.m',
+        'example/ios/Runner/main.m',
+        'ios/Classes/FlutterProjectPlugin.h',
+        'ios/Classes/FlutterProjectPlugin.m',
+      ],
+    );
+  });
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testUsingContext('plugin project with custom org', () async {
     return _createProject(
       projectDir,
@@ -1033,6 +1061,7 @@ void main() {
       // Import for the new embedding class.
       expect(mainActivity.contains('import io.flutter.embedding.android.FlutterActivity'), true);
 
+<<<<<<< HEAD
       expect(
         logger.statusText,
         isNot(
@@ -1044,6 +1073,18 @@ void main() {
     },
     overrides: <Type, Generator>{Logger: () => logger},
   );
+=======
+    final String mainActivity = await globals.fs.file(
+      '${projectDir.path}/android/app/src/main/kotlin/com/example/flutter_project/MainActivity.kt'
+    ).readAsString();
+    // Import for the new embedding class.
+    expect(mainActivity.contains('import io.flutter.embedding.android.FlutterActivity'), true);
+
+    expect(logger.statusText, isNot(contains('https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects')));
+  }, overrides: <Type, Generator>{
+    Logger: () => logger,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext('app supports android and ios by default', () async {
     final CreateCommand command = CreateCommand();
@@ -2541,6 +2582,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   testUsingContext(
     'does not remove an existing test/ directory when recreating an application project with the --empty flag',
     () async {
@@ -2555,6 +2597,32 @@ void main() {
       );
 
       expect(projectDir.childDirectory('test').childFile('example_test.dart'), exists);
+=======
+  testUsingContext('can create a sample-based project', () async {
+    await _createAndAnalyzeProject(
+      projectDir,
+      <String>['--no-pub', '--sample=foo.bar.Baz'],
+      <String>[
+        'lib/main.dart',
+        'flutter_project.iml',
+        'android/app/src/main/AndroidManifest.xml',
+        'ios/Flutter/AppFrameworkInfo.plist',
+      ],
+      unexpectedPaths: <String>['test'],
+    );
+    expect(projectDir.childDirectory('lib').childFile('main.dart').readAsStringSync(),
+      contains('void main() {}'));
+  }, overrides: <Type, Generator>{
+    HttpClientFactory: () {
+      return () {
+        return FakeHttpClient.list(<FakeRequest>[
+          FakeRequest(
+            Uri.parse('https://main-api.flutter.dev/snippets/foo.bar.Baz.dart'),
+            response: FakeResponse(body: utf8.encode('void main() {}')),
+          ),
+        ]);
+      };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     },
   );
 
@@ -3786,6 +3854,7 @@ void main() {
     final CreateCommand command = CreateCommand();
     final CommandRunner<void> runner = createTestCommandRunner(command);
 
+<<<<<<< HEAD
     await runner.run(<String>[
       'create',
       '--no-pub',
@@ -3796,6 +3865,292 @@ void main() {
       '-a',
       'java',
       '--platforms=android',
+=======
+    const String projectName = 'foo_BarBaz';
+    final Directory projectDir = tempDir.childDirectory(projectName);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=linux', '--skip-name-checks', projectDir.path]);
+    final Directory platformDir = projectDir.childDirectory('linux');
+
+    const String classFilenameBase = 'foo_bar_baz_plugin';
+    const String headerName = '$classFilenameBase.h';
+    final File headerFile = platformDir
+        .childDirectory('include')
+        .childDirectory(projectName)
+        .childFile(headerName);
+    final File implFile = platformDir.childFile('$classFilenameBase.cc');
+    // Ensure that the files have the right names.
+    expect(headerFile, exists);
+    expect(implFile, exists);
+    // Ensure that the include is correct.
+    expect(implFile.readAsStringSync(), contains(headerName));
+    // Ensure that the CMake file has the right target and source values.
+    final String cmakeContents = platformDir.childFile('CMakeLists.txt').readAsStringSync();
+    expect(cmakeContents, contains('"$classFilenameBase.cc"'));
+    expect(cmakeContents, contains('set(PLUGIN_NAME "foo_BarBaz_plugin")'));
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isLinuxEnabled: true),
+  });
+
+  testUsingContext('Windows plugins handle partially camel-case project names correctly', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    const String projectName = 'foo_BarBaz';
+    final Directory projectDir = tempDir.childDirectory(projectName);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=windows', '--skip-name-checks', projectDir.path]);
+    final Directory platformDir = projectDir.childDirectory('windows');
+
+    const String classFilenameBase = 'foo_bar_baz_plugin';
+    const String cApiHeaderName = '${classFilenameBase}_c_api.h';
+    const String pluginClassHeaderName = '$classFilenameBase.h';
+    final File cApiHeaderFile = platformDir
+        .childDirectory('include')
+        .childDirectory(projectName)
+        .childFile(cApiHeaderName);
+    final File cApiImplFile = platformDir.childFile('${classFilenameBase}_c_api.cpp');
+    final File pluginClassHeaderFile = platformDir.childFile(pluginClassHeaderName);
+    final File pluginClassImplFile = platformDir.childFile('$classFilenameBase.cpp');
+    // Ensure that the files have the right names.
+    expect(cApiHeaderFile, exists);
+    expect(cApiImplFile, exists);
+    expect(pluginClassHeaderFile, exists);
+    expect(pluginClassImplFile, exists);
+    // Ensure that the includes are correct.
+    expect(cApiImplFile.readAsLinesSync(), containsAllInOrder(<Matcher>[
+      contains('#include "include/$projectName/$cApiHeaderName"'),
+      contains('#include "$pluginClassHeaderName"'),
+    ]));
+    expect(pluginClassImplFile.readAsLinesSync(), contains('#include "$pluginClassHeaderName"'));
+    // Ensure that the plugin target name matches the post-processed version.
+    // Ensure that the CMake file has the right target and source values.
+    final String cmakeContents = platformDir.childFile('CMakeLists.txt').readAsStringSync();
+    expect(cmakeContents, contains('"$classFilenameBase.cpp"'));
+    expect(cmakeContents, contains('"$classFilenameBase.h"'));
+    expect(cmakeContents, contains('"${classFilenameBase}_c_api.cpp"'));
+    expect(cmakeContents, contains('"include/$projectName/${classFilenameBase}_c_api.h"'));
+    expect(cmakeContents, contains('set(PLUGIN_NAME "foo_BarBaz_plugin")'));
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true),
+  });
+
+  testUsingContext('Linux plugins handle project names ending in _plugin correctly', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    const String projectName = 'foo_bar_plugin';
+    final Directory projectDir = tempDir.childDirectory(projectName);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=linux', projectDir.path]);
+    final Directory platformDir = projectDir.childDirectory('linux');
+
+    // If the project already ends in _plugin, it shouldn't be added again.
+    const String classFilenameBase = projectName;
+    const String headerName = '$classFilenameBase.h';
+    final File headerFile = platformDir
+        .childDirectory('include')
+        .childDirectory(projectName)
+        .childFile(headerName);
+    final File implFile = platformDir.childFile('$classFilenameBase.cc');
+    // Ensure that the files have the right names.
+    expect(headerFile, exists);
+    expect(implFile, exists);
+    // Ensure that the include is correct.
+    expect(implFile.readAsStringSync(), contains(headerName));
+    // Ensure that the CMake file has the right target and source values.
+    final String cmakeContents = platformDir.childFile('CMakeLists.txt').readAsStringSync();
+    expect(cmakeContents, contains('"$classFilenameBase.cc"'));
+    // The "_plugin_plugin" suffix is intentional; because the target names must
+    // be unique across the ecosystem, no canonicalization can be done,
+    // otherwise plugins called "foo_bar" and "foo_bar_plugin" would collide in
+    // builds.
+    expect(cmakeContents, contains('set(PLUGIN_NAME "foo_bar_plugin_plugin")'));
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isLinuxEnabled: true),
+  });
+
+  testUsingContext('Windows plugins handle project names ending in _plugin correctly', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    const String projectName = 'foo_bar_plugin';
+    final Directory projectDir = tempDir.childDirectory(projectName);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=windows', projectDir.path]);
+    final Directory platformDir = projectDir.childDirectory('windows');
+
+    // If the project already ends in _plugin, it shouldn't be added again.
+    const String classFilenameBase = projectName;
+    const String cApiHeaderName = '${classFilenameBase}_c_api.h';
+    const String pluginClassHeaderName = '$classFilenameBase.h';
+    final File cApiHeaderFile = platformDir
+        .childDirectory('include')
+        .childDirectory(projectName)
+        .childFile(cApiHeaderName);
+    final File cApiImplFile = platformDir.childFile('${classFilenameBase}_c_api.cpp');
+    final File pluginClassHeaderFile = platformDir.childFile(pluginClassHeaderName);
+    final File pluginClassImplFile = platformDir.childFile('$classFilenameBase.cpp');
+    // Ensure that the files have the right names.
+    expect(cApiHeaderFile, exists);
+    expect(cApiImplFile, exists);
+    expect(pluginClassHeaderFile, exists);
+    expect(pluginClassImplFile, exists);
+    // Ensure that the includes are correct.
+    expect(cApiImplFile.readAsLinesSync(), containsAllInOrder(<Matcher>[
+      contains('#include "include/$projectName/$cApiHeaderName"'),
+      contains('#include "$pluginClassHeaderName"'),
+    ]));
+    expect(pluginClassImplFile.readAsLinesSync(), contains('#include "$pluginClassHeaderName"'));
+    // Ensure that the CMake file has the right target and source values.
+    final String cmakeContents = platformDir.childFile('CMakeLists.txt').readAsStringSync();
+    expect(cmakeContents, contains('"$classFilenameBase.cpp"'));
+    // The "_plugin_plugin" suffix is intentional; because the target names must
+    // be unique across the ecosystem, no canonicalization can be done,
+    // otherwise plugins called "foo_bar" and "foo_bar_plugin" would collide in
+    // builds.
+    expect(cmakeContents, contains('set(PLUGIN_NAME "foo_bar_plugin_plugin")'));
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true),
+  });
+
+  testUsingContext('created plugin supports no platforms should print `no platforms` message', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', projectDir.path]);
+    expect(logger.errorText, contains(_kNoPlatformsMessage));
+    expect(logger.statusText, contains('To add platforms, run `flutter create -t plugin --platforms <platforms> .` under ${globals.fs.path.normalize(globals.fs.path.relative(projectDir.path))}.'));
+    expect(logger.statusText, contains('For more information, see https://flutter.dev/go/plugin-platforms.'));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(),
+    Logger: ()=> logger,
+  });
+
+  testUsingContext('created FFI plugin supports no platforms should print `no platforms` message', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin_ffi', projectDir.path]);
+    expect(logger.errorText, contains(_kNoPlatformsMessage));
+    expect(logger.statusText, contains('To add platforms, run `flutter create -t plugin_ffi --platforms <platforms> .` under ${globals.fs.path.normalize(globals.fs.path.relative(projectDir.path))}.'));
+    expect(logger.statusText, contains('For more information, see https://flutter.dev/go/plugin-platforms.'));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(),
+    Logger: ()=> logger,
+  });
+
+  testUsingContext('created plugin with no --platforms flag should not print `no platforms` message if the existing plugin supports a platform.', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=ios', projectDir.path]);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', projectDir.path]);
+    expect(logger.errorText, isNot(contains(_kNoPlatformsMessage)));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(),
+    Logger: () => logger,
+  });
+
+  testUsingContext('should show warning when disabled platforms are selected while creating a plugin', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platforms=android,ios,web,windows,macos,linux', projectDir.path]);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', projectDir.path]);
+    expect(logger.statusText, contains(_kDisabledPlatformRequestedMessage));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(),
+    Logger: () => logger,
+  });
+
+  testUsingContext("shouldn't show warning when only enabled platforms are selected while creating a plugin", () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platforms=android,ios,windows', projectDir.path]);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', projectDir.path]);
+    expect(logger.statusText, isNot(contains(_kDisabledPlatformRequestedMessage)));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true),
+    Logger: () => logger,
+  });
+
+  testUsingContext('should show warning when disabled platforms are selected while creating a app', () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--platforms=android,ios,web,windows,macos,linux', projectDir.path]);
+    await runner.run(<String>['create', '--no-pub', projectDir.path]);
+    expect(logger.statusText, contains(_kDisabledPlatformRequestedMessage));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(),
+    Logger: () => logger,
+  });
+
+  testUsingContext("shouldn't show warning when only enabled platforms are selected while creating a app", () async {
+    Cache.flutterRoot = '../..';
+
+    final CreateCommand command = CreateCommand();
+    final CommandRunner<void> runner = createTestCommandRunner(command);
+
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', '--platform=windows', projectDir.path]);
+    await runner.run(<String>['create', '--no-pub', '--template=plugin', projectDir.path]);
+    expect(logger.statusText, isNot(contains(_kDisabledPlatformRequestedMessage)));
+
+  }, overrides: <Type, Generator>{
+    FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true, isAndroidEnabled: false, isIOSEnabled: false),
+    Logger: () => logger,
+  });
+
+  testUsingContext('default project has analysis_options.yaml set up correctly', () async {
+    await _createProject(
+        projectDir,
+        <String>[],
+        <String>[
+          'analysis_options.yaml',
+        ],
+    );
+    final String dataPath = globals.fs.path.join(
+      getFlutterRoot(),
+      'packages',
+      'flutter_tools',
+      'test',
+      'commands.shard',
+      'permeable',
+      'data',
+    );
+    final File toAnalyze = await globals.fs.file(globals.fs.path.join(dataPath, 'to_analyze.dart.test'))
+        .copy(globals.fs.path.join(projectDir.path, 'lib', 'to_analyze.dart'));
+    final String relativePath = globals.fs.path.join('lib', 'to_analyze.dart');
+    final List<String> expectedFailures = <String>[
+      '$relativePath:11:7: use_key_in_widget_constructors',
+      '$relativePath:20:3: prefer_const_constructors_in_immutables',
+      '$relativePath:31:26: use_full_hex_values_for_flutter_colors',
+    ];
+    expect(expectedFailures.length, '// LINT:'.allMatches(toAnalyze.readAsStringSync()).length);
+    await _analyzeProject(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       projectDir.path,
     ]);
 
@@ -4276,6 +4631,7 @@ void main() {
     expect(pubspec.description, 'a: b');
   });
 
+<<<<<<< HEAD
   testUsingContext('should use caret syntax in SDK version', () async {
     await _createProject(projectDir, <String>['--no-pub'], <String>['pubspec.yaml']);
 
@@ -4312,6 +4668,10 @@ void main() {
           ),
     },
   );
+=======
+  testUsingContext('create an FFI plugin with ios, then add macos', () async {
+    Cache.flutterRoot = '../..';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'create an FFI plugin with ios, then add macos',
@@ -5006,6 +5366,7 @@ To keep the default AGP version $templateAndroidGradlePluginVersion, download a 
 
     expect(rawManifestJson.contains(expectedDescription), isTrue);
   });
+<<<<<<< HEAD
 
   testUsingContext(
     'flutter create should tool exit if the template manifest cannot be read',
@@ -5074,6 +5435,8 @@ To keep the default AGP version $templateAndroidGradlePluginVersion, download a 
       Logger: () => logger,
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Future<void> _createProject(

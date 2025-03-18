@@ -131,8 +131,11 @@ class InputChip extends StatelessWidget
     this.avatarBorder = const CircleBorder(),
     this.avatarBoxConstraints,
     this.deleteIconBoxConstraints,
+<<<<<<< HEAD
     this.chipAnimationStyle,
     this.mouseCursor,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : assert(pressElevation == null || pressElevation >= 0.0),
        assert(elevation == null || elevation >= 0.0);
 
@@ -208,10 +211,13 @@ class InputChip extends StatelessWidget
   final BoxConstraints? avatarBoxConstraints;
   @override
   final BoxConstraints? deleteIconBoxConstraints;
+<<<<<<< HEAD
   @override
   final ChipAnimationStyle? chipAnimationStyle;
   @override
   final MouseCursor? mouseCursor;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Widget build(BuildContext context) {
@@ -258,8 +264,11 @@ class InputChip extends StatelessWidget
       iconTheme: iconTheme,
       avatarBoxConstraints: avatarBoxConstraints,
       deleteIconBoxConstraints: deleteIconBoxConstraints,
+<<<<<<< HEAD
       chipAnimationStyle: chipAnimationStyle,
       mouseCursor: mouseCursor,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }

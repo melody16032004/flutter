@@ -102,9 +102,9 @@ class ErrorHandlingFileSystem extends ForwardingFileSystem {
       }
       if (entity.existsSync()) {
         throwToolExit(
-          'Unable to delete file or directory at "${entity.path}". '
-          'This may be due to the project being in a read-only '
-          'volume. Consider relocating the project and trying again.',
+          'The Flutter tool tried to delete the file or directory ${entity.path} but was '
+          "unable to. This may be due to the file and/or project's location on a read-only "
+          'volume. Consider relocating the project and trying again',
         );
       }
     }
@@ -130,6 +130,7 @@ class ErrorHandlingFileSystem extends ForwardingFileSystem {
   }
 
   @override
+<<<<<<< HEAD
   Directory get systemTempDirectory {
     return _runSync(() => directory(delegate.systemTempDirectory), platform: _platform);
   }
@@ -137,6 +138,13 @@ class ErrorHandlingFileSystem extends ForwardingFileSystem {
   @override
   File file(dynamic path) =>
       ErrorHandlingFile(platform: _platform, fileSystem: this, delegate: delegate.file(path));
+=======
+  File file(dynamic path) => ErrorHandlingFile(
+    platform: _platform,
+    fileSystem: this,
+    delegate: delegate.file(path),
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Directory directory(dynamic path) => ErrorHandlingDirectory(
@@ -700,7 +708,7 @@ void _handlePosixException(
   // From:
   // https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno.h
   // https://github.com/torvalds/linux/blob/master/include/uapi/asm-generic/errno-base.h
-  // https://github.com/apple/darwin-xnu/blob/main/bsd/dev/dtrace/scripts/errno.d
+  // https://github.com/apple/darwin-xnu/blob/master/bsd/dev/dtrace/scripts/errno.d
   const int eperm = 1;
   const int enospc = 28;
   const int eacces = 13;
@@ -735,6 +743,7 @@ void _handlePosixException(
   _throwFileSystemException(errorMessage);
 }
 
+<<<<<<< HEAD
 void _handleMacOSException(
   Exception e,
   String? message,
@@ -742,6 +751,10 @@ void _handleMacOSException(
   String? posixPermissionSuggestion,
 ) {
   // https://github.com/apple/darwin-xnu/blob/main/bsd/dev/dtrace/scripts/errno.d
+=======
+void _handleMacOSException(Exception e, String? message, int errorCode, String? posixPermissionSuggestion) {
+  // https://github.com/apple/darwin-xnu/blob/master/bsd/dev/dtrace/scripts/errno.d
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   const int ebadarch = 86;
   const int eagain = 35;
   if (errorCode == ebadarch) {

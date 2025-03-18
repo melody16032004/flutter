@@ -747,6 +747,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -767,6 +768,26 @@ void main() {
           ],
         ),
         ignoreId: true,
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics.rootChild(
+            actions: <SemanticsAction>[
+              SemanticsAction.tap,
+            ],
+            label: 'ABC',
+            rect: const Rect.fromLTRB(0.0, 0.0, 88.0, 48.0),
+            transform: Matrix4.translationValues(356.0, 276.0, 0.0),
+            flags: <SemanticsFlag>[
+              SemanticsFlag.hasEnabledState,
+              SemanticsFlag.isButton,
+              SemanticsFlag.isEnabled,
+              SemanticsFlag.isFocusable,
+            ],
+          ),
+        ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -827,7 +848,7 @@ void main() {
 
     expect(tester.getSize(find.byType(TextButton)), const Size(134.0, 48.0));
     expect(tester.getSize(find.byType(Text)), const Size(126.0, 42.0));
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/61016
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/61016
 
   testWidgets('TextButton size is configurable by ThemeData.materialTapTargetSize', (
     WidgetTester tester,
@@ -2430,6 +2451,7 @@ void main() {
     // The icon is aligned to the left of the button.
     expect(buttonTopLeft.dx, iconTopLeft.dx - 16.0); // 16.0 - padding between icon and button edge.
   });
+<<<<<<< HEAD
 
   testWidgets('TextButton icon alignment respects ButtonStyle.iconAlignment', (
     WidgetTester tester,
@@ -2508,6 +2530,9 @@ void main() {
     expect(overlayColor(), paints..rect(color: theme.colorScheme.primary.withOpacity(0.08)));
     expect(hasBeenHovered, isTrue);
   });
+=======
+}
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   // Regression test for https://github.com/flutter/flutter/issues/154798.
   testWidgets('TextButton.styleFrom can customize the button icon', (WidgetTester tester) async {

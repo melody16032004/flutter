@@ -56,6 +56,7 @@ class _${blockName}DefaultsM3 extends FloatingActionButtonThemeData {
   @override Color? get hoverColor => ${componentColor("md.comp.fab.primary.hover.state-layer")};
 
   @override
+<<<<<<< HEAD
   ShapeBorder? get shape => switch (type) {
     _FloatingActionButtonType.regular  => ${shape("md.comp.fab.primary.container")},
     _FloatingActionButtonType.small    => ${shape("md.comp.fab.primary.small.container")},
@@ -70,6 +71,30 @@ class _${blockName}DefaultsM3 extends FloatingActionButtonThemeData {
     _FloatingActionButtonType.large    => ${getToken("md.comp.fab.primary.large.icon.size")},
     _FloatingActionButtonType.extended => ${getToken("md.comp.extended-fab.primary.icon.size")},
   };
+=======
+  ShapeBorder? get shape {
+    switch (type) {
+      case _FloatingActionButtonType.regular:
+       return ${shape("md.comp.fab.primary.container")};
+      case _FloatingActionButtonType.small:
+       return ${shape("md.comp.fab.primary.small.container")};
+      case _FloatingActionButtonType.large:
+       return ${shape("md.comp.fab.primary.large.container")};
+      case _FloatingActionButtonType.extended:
+       return ${shape("md.comp.extended-fab.primary.container")};
+     }
+  }
+
+  @override
+  double? get iconSize {
+    switch (type) {
+      case _FloatingActionButtonType.regular: return ${getToken("md.comp.fab.primary.icon.size")};
+      case _FloatingActionButtonType.small: return  ${getToken("md.comp.fab.primary.small.icon.size")};
+      case _FloatingActionButtonType.large: return ${getToken("md.comp.fab.primary.large.icon.size")};
+      case _FloatingActionButtonType.extended: return ${getToken("md.comp.extended-fab.primary.icon.size")};
+    }
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override EdgeInsetsGeometry? get extendedPadding => EdgeInsetsDirectional.only(start: hasChild && _isExtended ? 16.0 : 20.0, end: 20.0);
   @override TextStyle? get extendedTextStyle => ${textStyle("md.comp.extended-fab.primary.label-text")};

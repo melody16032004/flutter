@@ -87,19 +87,11 @@ import 'dialog.dart';
 ///  * [Card], at the bottom of which it is common to place a [ButtonBar].
 ///  * [Dialog], which uses a [ButtonBar] for its actions.
 ///  * [ButtonBarTheme], which configures the [ButtonBar].
-@Deprecated(
-  'Use OverflowBar instead. '
-  'This feature was deprecated after v3.21.0-10.0.pre.',
-)
 class ButtonBar extends StatelessWidget {
   /// Creates a button bar.
   ///
   /// Both [buttonMinWidth] and [buttonHeight] must be non-negative if they
   /// are not null.
-  @Deprecated(
-    'Use OverflowBar instead. '
-    'This feature was deprecated after v3.21.0-10.0.pre.',
-  )
   const ButtonBar({
     super.key,
     this.alignment,
@@ -249,12 +241,11 @@ class ButtonBar extends StatelessWidget {
           child: child,
         );
       case ButtonBarLayoutBehavior.constrained:
-        return ConstrainedBox(
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: paddingUnit),
           constraints: const BoxConstraints(minHeight: 52.0),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: paddingUnit),
-            child: Center(child: child),
-          ),
+          alignment: Alignment.center,
+          child: child,
         );
     }
   }

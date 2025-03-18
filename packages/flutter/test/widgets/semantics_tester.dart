@@ -286,6 +286,7 @@ class TestSemantics {
       return fail('expected node id $id to have flags $flags but found flags ${nodeData.flags}.');
     }
 
+<<<<<<< HEAD
     final int actionsBitmask =
         actions is int
             ? actions as int
@@ -297,6 +298,13 @@ class TestSemantics {
       return fail(
         'expected node id $id to have actions $actions but found actions ${nodeData.actions}.',
       );
+=======
+    final int actionsBitmask = actions is int
+        ? actions as int
+        : (actions as List<SemanticsAction>).fold<int>(0, (int bitmask, SemanticsAction action) => bitmask | action.index);
+    if (actionsBitmask != nodeData.actions) {
+      return fail('expected node id $id to have actions $actions but found actions ${nodeData.actions}.');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
     if (label != nodeData.label) {
@@ -605,12 +613,15 @@ class SemanticsTester {
       if (textDirection != null && node.textDirection != textDirection) {
         return false;
       }
-
       if (actions != null) {
+<<<<<<< HEAD
         final int expectedActions = actions.fold<int>(
           0,
           (int value, SemanticsAction action) => value | action.index,
         );
+=======
+        final int expectedActions = actions.fold<int>(0, (int value, SemanticsAction action) => value | action.index);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         final int actualActions = node.getSemanticsData().actions;
         if (expectedActions != actualActions) {
           return false;
@@ -736,9 +747,14 @@ class SemanticsTester {
   static String _actionsToSemanticsActionExpression(dynamic actions) {
     Iterable<SemanticsAction> list;
     if (actions is int) {
+<<<<<<< HEAD
       list = SemanticsAction.values.where(
         (SemanticsAction action) => (action.index & actions) != 0,
       );
+=======
+      list = SemanticsAction.values
+          .where((SemanticsAction action) => (action.index & actions) != 0);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     } else {
       list = actions as List<SemanticsAction>;
     }

@@ -95,10 +95,16 @@ void main() {
 
       expect(paragraph.getMaxIntrinsicHeight(double.infinity), 10);
 
+<<<<<<< HEAD
       paragraph.strutStyle = const StrutStyle(fontSize: 100, forceStrutHeight: true);
       expect(paragraph.getMaxIntrinsicHeight(double.infinity), 100);
     },
     // [intended] strut support for HTML renderer https://github.com/flutter/flutter/issues/32243.
     skip: kIsWeb && !isSkiaWeb,
   );
+=======
+    paragraph.strutStyle = const StrutStyle(fontSize: 100, forceStrutHeight: true);
+    expect(paragraph.getMaxIntrinsicHeight(double.infinity), 100);
+  }, skip: kIsWeb && !isCanvasKit); // [intended] strut spport for HTML renderer https://github.com/flutter/flutter/issues/32243.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

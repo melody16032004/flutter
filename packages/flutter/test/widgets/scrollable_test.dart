@@ -105,6 +105,7 @@ void resetScrollOffset(WidgetTester tester) {
 }
 
 void main() {
+<<<<<<< HEAD
   testWidgets('hitTestBehavior is respected', (WidgetTester tester) async {
     HitTestBehavior? getBehavior(Type of) {
       final RawGestureDetector widget = tester.widget(
@@ -177,6 +178,8 @@ void main() {
     expect(tapped, isTrue);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Flings on different platforms', (WidgetTester tester) async {
     await pumpTest(tester, TargetPlatform.android);
     await tester.fling(find.byType(Scrollable), const Offset(0.0, -dragOffset), 1000.0);
@@ -517,6 +520,7 @@ void main() {
     expect(getScrollOffset(tester), 0.0);
   });
 
+<<<<<<< HEAD
   testWidgets(
     'Engine is notified of ignored pointer signals (no scroll physics)',
     (WidgetTester tester) async {
@@ -591,6 +595,10 @@ void main() {
     'Holding scroll and Scroll pointer signal will update ScrollDirection.forward / ScrollDirection.reverse',
     (WidgetTester tester) async {
       ScrollDirection? lastUserScrollingDirection;
+=======
+  testWidgets('Holding scroll and Scroll pointer signal will update ScrollDirection.forward / ScrollDirection.reverse', (WidgetTester tester) async {
+    ScrollDirection? lastUserScrollingDirection;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       final ScrollController controller = ScrollController();
       addTearDown(controller.dispose);

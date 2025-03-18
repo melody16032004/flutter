@@ -41,8 +41,6 @@ $license2
 ''';
 
 class TestBinding extends BindingBase with SchedulerBinding, ServicesBinding {
-  ViewFocusEvent? lastFocusEvent;
-
   @override
   TestDefaultBinaryMessenger get defaultBinaryMessenger =>
       super.defaultBinaryMessenger as TestDefaultBinaryMessenger;
@@ -57,12 +55,6 @@ class TestBinding extends BindingBase with SchedulerBinding, ServicesBinding {
       super.createBinaryMessenger(),
       outboundHandlers: <String, MessageHandler>{'flutter/keyboard': keyboardHandler},
     );
-  }
-
-  @override
-  void handleViewFocusChanged(ViewFocusEvent event) {
-    super.handleViewFocusChanged(event);
-    lastFocusEvent = event;
   }
 }
 
@@ -190,6 +182,7 @@ void main() {
     expect(physicalKeys.first, const PhysicalKeyboardKey(1));
     expect(logicalKeys.first, const LogicalKeyboardKey(1));
   });
+<<<<<<< HEAD
 
   test('Default handleViewFocusChanged propagates event', () async {
     const ViewFocusEvent event = ViewFocusEvent(
@@ -200,4 +193,6 @@ void main() {
     PlatformDispatcher.instance.onViewFocusChange?.call(event);
     expect(binding.lastFocusEvent, equals(event));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

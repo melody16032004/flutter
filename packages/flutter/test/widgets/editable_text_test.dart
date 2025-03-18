@@ -190,6 +190,7 @@ void main() {
     skip: kIsWeb, // [intended]
   );
 
+<<<<<<< HEAD
   group('Check the passed groupId value', () {
     testWidgets('The value of the passed-in groupId should match the groupId of the EditableText', (
       WidgetTester tester,
@@ -262,6 +263,8 @@ void main() {
     );
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   // Regression test for https://github.com/flutter/flutter/issues/126312.
   testWidgets('when open input connection in didUpdateWidget, should not throw', (
     WidgetTester tester,
@@ -15619,6 +15622,7 @@ void main() {
         isNull,
       );
     });
+<<<<<<< HEAD
 
     testWidgets('magnifier is in correct position when EditableText is scaled', (
       WidgetTester tester,
@@ -15722,6 +15726,8 @@ void main() {
 
       await tester.pumpAndSettle();
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   // Regression test for: https://github.com/flutter/flutter/issues/117418.
@@ -16597,6 +16603,7 @@ void main() {
     expect(scrollController.offset, 75.0);
   });
 
+<<<<<<< HEAD
   testWidgets(
     'getPositionForPoint is correct when EditableText is scaled',
     (WidgetTester tester) async {
@@ -16808,9 +16815,9 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Can implement TextEditingController', (WidgetTester tester) async {
-    final _TextEditingControllerImpl controller = _TextEditingControllerImpl();
-    addTearDown(controller.dispose);
     await tester.pumpWidget(
       MediaQuery(
         data: const MediaQueryData(),
@@ -16819,7 +16826,7 @@ void main() {
           child: EditableText(
             autofocus: true,
             backgroundCursorColor: Colors.grey,
-            controller: controller,
+            controller: _TextEditingControllerImpl(),
             focusNode: focusNode,
             style: textStyle,
             cursorColor: cursorColor,

@@ -156,7 +156,7 @@ void main() {
     expect(() => data3.detach(), throwsAssertionError);
   });
 
-  test('RenderObject.getTransformTo asserts if target not in the same render tree', () {
+  test('RenderObject.getTransformTo asserts is argument is not descendant', () {
     final PipelineOwner owner = PipelineOwner();
     final TestRenderObject renderObject1 = TestRenderObject();
     renderObject1.attach(owner);
@@ -165,6 +165,7 @@ void main() {
     expect(() => renderObject1.getTransformTo(renderObject2), throwsAssertionError);
   });
 
+<<<<<<< HEAD
   test('RenderObject.getTransformTo works for siblings and descendants', () {
     final PipelineOwner owner = PipelineOwner();
     final TestRenderObject renderObject1 = TestRenderObject()..attach(owner);
@@ -231,6 +232,8 @@ void main() {
     expect(renderObject11.getTransformTo(renderObject21), equals(Matrix4.zero()));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('PaintingContext.pushClipRect reuses the layer', () {
     _testPaintingContextLayerReuse<ClipRectLayer>((
       PaintingContextCallback painter,
@@ -547,11 +550,15 @@ class _TestCustomLayerBox extends RenderBox {
 
 class TestParentData extends ParentData with ContainerParentDataMixin<RenderBox> {}
 
+<<<<<<< HEAD
 class TestRenderObjectParentData extends ParentData
     with ContainerParentDataMixin<TestRenderObject> {}
 
 class TestRenderObject extends RenderObject
     with ContainerRenderObjectMixin<TestRenderObject, TestRenderObjectParentData> {
+=======
+class TestRenderObject extends RenderObject {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   TestRenderObject({this.allowPaintBounds = false});
 
   final bool allowPaintBounds;
@@ -566,20 +573,6 @@ class TestRenderObject extends RenderObject
   Rect get paintBounds {
     assert(allowPaintBounds); // For some tests, this should not get called.
     return Rect.zero;
-  }
-
-  Matrix4 paintTransform = Matrix4.identity();
-  @override
-  void applyPaintTransform(covariant RenderObject child, Matrix4 transform) {
-    super.applyPaintTransform(child, transform);
-    transform.multiply(paintTransform);
-  }
-
-  @override
-  void setupParentData(RenderObject child) {
-    if (child.parentData is! TestRenderObjectParentData) {
-      child.parentData = TestRenderObjectParentData();
-    }
   }
 
   @override

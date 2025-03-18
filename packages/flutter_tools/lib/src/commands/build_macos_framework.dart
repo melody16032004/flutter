@@ -92,12 +92,7 @@ class BuildMacOSFrameworkCommand extends BuildFrameworkCommand {
       await _produceAppFramework(buildInfo, modeDirectory, buildOutput);
 
       // Build and copy plugins.
-      await processPodsIfNeeded(
-        project.macos,
-        getMacOSBuildDirectory(),
-        buildInfo.mode,
-        forceCocoaPodsOnly: true,
-      );
+      await processPodsIfNeeded(project.macos, getMacOSBuildDirectory(), buildInfo.mode);
       if (boolArg('plugins') && hasPlugins(project)) {
         await _producePlugins(xcodeBuildConfiguration, buildOutput, modeDirectory);
       }
@@ -198,7 +193,7 @@ LICENSE
   }
   s.author                = { 'Flutter Dev Team' => 'flutter-dev@googlegroups.com' }
   s.source                = { :http => '${cache.storageBaseUrl}/flutter_infra_release/flutter/${cache.engineRevision}/$artifactsMode/FlutterMacOS.framework.zip' }
-  s.documentation_url     = 'https://docs.flutter.dev'
+  s.documentation_url     = 'https://flutter.dev/docs'
   s.osx.deployment_target = '10.14'
   s.vendored_frameworks   = 'FlutterMacOS.framework'
   s.prepare_command       = 'unzip FlutterMacOS.framework -d FlutterMacOS.framework'

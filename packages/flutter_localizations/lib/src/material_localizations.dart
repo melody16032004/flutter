@@ -67,7 +67,7 @@ import 'widgets_localizations.dart';
 /// See also:
 ///
 ///  * The Flutter Internationalization Tutorial,
-///    <https://flutter.dev/to/internationalization/>.
+///    <https://flutter.dev/tutorials/internationalization/>.
 ///  * [DefaultMaterialLocalizations], which only provides US English translations.
 abstract class GlobalMaterialLocalizations implements MaterialLocalizations {
   /// Initializes an object that defines the material widgets' localized strings
@@ -229,10 +229,12 @@ abstract class GlobalMaterialLocalizations implements MaterialLocalizations {
   }
 
   String? _formatDayPeriod(TimeOfDay timeOfDay) {
-    return switch (timeOfDay.period) {
-      DayPeriod.am => anteMeridiemAbbreviation,
-      DayPeriod.pm => postMeridiemAbbreviation,
-    };
+    switch (timeOfDay.period) {
+      case DayPeriod.am:
+        return anteMeridiemAbbreviation;
+      case DayPeriod.pm:
+        return postMeridiemAbbreviation;
+    }
   }
 
   /// The raw version of [dateRangeStartDateSemanticLabel], with `$formattedDate` verbatim

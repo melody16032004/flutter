@@ -17,6 +17,7 @@
 library;
 
 import 'dart:collection';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
@@ -292,11 +293,11 @@ class OverlayEntry implements Listenable {
 
 class _OverlayEntryWidget extends StatefulWidget {
   const _OverlayEntryWidget({
-    required Key super.key,
+    required Key key,
     required this.entry,
     required this.overlayState,
     this.tickerEnabled = true,
-  });
+  }) : super(key: key);
 
   final OverlayEntry entry;
   final OverlayState overlayState;
@@ -1029,6 +1030,7 @@ mixin _RenderTheaterMixin on RenderBox {
     }
   }
 
+<<<<<<< HEAD
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
     assert(!debugNeedsLayout);
@@ -1069,6 +1071,8 @@ mixin _RenderTheaterMixin on RenderBox {
     return baselineOffset + y;
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void layoutChild(RenderBox child, BoxConstraints nonPositionedChildConstraints) {
     final StackParentData childParentData = child.parentData! as StackParentData;
     final Alignment alignment = theater._resolvedAlignment;
@@ -1328,6 +1332,7 @@ class _RenderTheater extends RenderBox
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(BoxConstraints constraints, TextBaseline baseline) {
     final Size size =
         constraints.biggest.isFinite
@@ -1349,8 +1354,27 @@ class _RenderTheater extends RenderBox
           ),
         ),
       );
+=======
+  double? computeDistanceToActualBaseline(TextBaseline baseline) {
+    assert(!debugNeedsLayout);
+    double? result;
+    RenderBox? child = _firstOnstageChild;
+    while (child != null) {
+      assert(!child.debugNeedsLayout);
+      final StackParentData childParentData = child.parentData! as StackParentData;
+      double? candidate = child.getDistanceToActualBaseline(baseline);
+      if (candidate != null) {
+        candidate += childParentData.offset.dy;
+        if (result != null) {
+          result = math.min(result, candidate);
+        } else {
+          result = candidate;
+        }
+      }
+      child = childParentData.nextSibling;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return baselineOffset.offset;
+    return result;
   }
 
   @override
@@ -2064,7 +2088,7 @@ final class _OverlayEntryLocation extends LinkedListEntry<_OverlayEntryLocation>
   //
   // Generally, `assert(_debugIsLocationValid())` should be used to prevent
   // invalid accesses to an invalid `_OverlayEntryLocation` object. Exceptions
-  // to this rule are _removeChild, _deactivate, which will be called when the
+  // to this rule are _removeChild, _deactive, which will be called when the
   // OverlayPortal is being removed from the widget tree and may use the
   // location information to perform cleanup tasks.
   //
@@ -2393,6 +2417,7 @@ final class _RenderDeferredLayoutBox extends RenderProxyBox
   }
 
   @override
+<<<<<<< HEAD
   RenderObject? get semanticsParent => _layoutSurrogate;
 
   @override
@@ -2411,6 +2436,8 @@ final class _RenderDeferredLayoutBox extends RenderProxyBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   RenderObject? get debugLayoutParent => _layoutSurrogate;
 
   void layoutByLayoutSurrogate() {

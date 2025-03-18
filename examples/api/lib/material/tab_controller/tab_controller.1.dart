@@ -11,6 +11,7 @@ void main() => runApp(const TabControllerExampleApp());
 class TabControllerExampleApp extends StatelessWidget {
   const TabControllerExampleApp({super.key});
 
+<<<<<<< HEAD
   static const List<Tab> tabs = <Tab>[Tab(text: 'Zeroth'), Tab(text: 'First'), Tab(text: 'Second')];
 
   @override
@@ -21,19 +22,54 @@ class TabControllerExampleApp extends StatelessWidget {
 
 class TabControllerExample extends StatelessWidget {
   const TabControllerExample({required this.tabs, super.key});
+=======
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: TabControllerExample(),
+    );
+  }
+}
 
-  final List<Tab> tabs;
+const List<Tab> tabs = <Tab>[
+  Tab(text: 'Zeroth'),
+  Tab(text: 'First'),
+  Tab(text: 'Second'),
+];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
+
+class TabControllerExample extends StatelessWidget {
+  const TabControllerExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
+<<<<<<< HEAD
       child: DefaultTabControllerListener(
         onTabChanged: (int index) {
           debugPrint('tab changed: $index');
         },
         child: Scaffold(
           appBar: AppBar(bottom: TabBar(tabs: tabs)),
+=======
+      // The Builder widget is used to have a different BuildContext to access
+      // closest DefaultTabController.
+      child: Builder(builder: (BuildContext context) {
+        final TabController tabController = DefaultTabController.of(context);
+        tabController.addListener(() {
+          if (!tabController.indexIsChanging) {
+            // Your code goes here.
+            // To get index of current tab use tabController.index
+          }
+        });
+        return Scaffold(
+          appBar: AppBar(
+            bottom: const TabBar(
+              tabs: tabs,
+            ),
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           body: TabBarView(
             children:
                 tabs.map((Tab tab) {
@@ -45,11 +81,12 @@ class TabControllerExample extends StatelessWidget {
                   );
                 }).toList(),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
+<<<<<<< HEAD
 
 class DefaultTabControllerListener extends StatefulWidget {
   const DefaultTabControllerListener({required this.onTabChanged, required this.child, super.key});
@@ -110,3 +147,5 @@ class _DefaultTabControllerListenerState extends State<DefaultTabControllerListe
     return widget.child;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

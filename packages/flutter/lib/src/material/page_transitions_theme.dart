@@ -51,7 +51,7 @@ class _FadeUpwardsPageTransition extends StatelessWidget {
 }
 
 // This transition is intended to match the default for Android P.
-class _OpenUpwardsPageTransition extends StatefulWidget {
+class _OpenUpwardsPageTransition extends StatelessWidget {
   const _OpenUpwardsPageTransition({
     required this.animation,
     required this.secondaryAnimation,
@@ -82,6 +82,7 @@ class _OpenUpwardsPageTransition extends StatefulWidget {
   final Widget child;
 
   @override
+<<<<<<< HEAD
   State<_OpenUpwardsPageTransition> createState() => _OpenUpwardsPageTransitionState();
 }
 
@@ -130,17 +131,26 @@ class _OpenUpwardsPageTransitionState extends State<_OpenUpwardsPageTransition> 
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         final Size size = constraints.biggest;
 
+        final CurvedAnimation primaryAnimation = CurvedAnimation(
+          parent: animation,
+          curve: _transitionCurve,
+          reverseCurve: _transitionCurve.flipped,
+        );
+
         // Gradually expose the new page from bottom to top.
         final Animation<double> clipAnimation = Tween<double>(
           begin: 0.0,
           end: size.height,
-        ).animate(_primaryAnimation);
+        ).animate(primaryAnimation);
 
+<<<<<<< HEAD
         final Animation<double> opacityAnimation = _OpenUpwardsPageTransition._scrimOpacityTween
             .animate(_primaryAnimation);
         final Animation<Offset> primaryTranslationAnimation = _OpenUpwardsPageTransition
@@ -150,9 +160,21 @@ class _OpenUpwardsPageTransitionState extends State<_OpenUpwardsPageTransition> 
         final Animation<Offset> secondaryTranslationAnimation = _OpenUpwardsPageTransition
             ._secondaryTranslationTween
             .animate(_secondaryTranslationCurvedAnimation);
+=======
+        final Animation<double> opacityAnimation = _scrimOpacityTween.animate(primaryAnimation);
+        final Animation<Offset> primaryTranslationAnimation = _primaryTranslationTween.animate(primaryAnimation);
+
+        final Animation<Offset> secondaryTranslationAnimation = _secondaryTranslationTween.animate(
+          CurvedAnimation(
+            parent: secondaryAnimation,
+            curve: _transitionCurve,
+            reverseCurve: _transitionCurve.flipped,
+          ),
+        );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         return AnimatedBuilder(
-          animation: widget.animation,
+          animation: animation,
           builder: (BuildContext context, Widget? child) {
             return ColoredBox(
               color: Colors.black.withOpacity(opacityAnimation.value),
@@ -172,10 +194,10 @@ class _OpenUpwardsPageTransitionState extends State<_OpenUpwardsPageTransition> 
             );
           },
           child: AnimatedBuilder(
-            animation: widget.secondaryAnimation,
+            animation: secondaryAnimation,
             child: FractionalTranslation(
               translation: primaryTranslationAnimation.value,
-              child: widget.child,
+              child: child,
             ),
             builder: (BuildContext context, Widget? child) {
               return FractionalTranslation(
@@ -1228,10 +1250,16 @@ void _drawImageScaledAndCentered(
   if (scale <= 0.0 || opacity <= 0.0) {
     return;
   }
+<<<<<<< HEAD
   final Paint paint =
       Paint()
         ..filterQuality = ui.FilterQuality.medium
         ..color = Color.fromRGBO(0, 0, 0, opacity);
+=======
+  final Paint paint = Paint()
+    ..filterQuality = ui.FilterQuality.low
+    ..color = Color.fromRGBO(0, 0, 0, opacity);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final double logicalWidth = image.width / pixelRatio;
   final double logicalHeight = image.height / pixelRatio;
   final double scaledLogicalWidth = logicalWidth * scale;
@@ -1281,7 +1309,10 @@ mixin _ZoomTransitionBase<S extends StatefulWidget> on State<S> {
   }
 
   void onAnimationStatusChange(AnimationStatus status) {
-    controller.allowSnapshotting = status.isAnimating && useSnapshot;
+    controller.allowSnapshotting = switch (status) {
+      AnimationStatus.dismissed || AnimationStatus.completed => false,
+      AnimationStatus.forward   || AnimationStatus.reverse   => useSnapshot,
+    };
   }
 
   @override
@@ -1331,7 +1362,7 @@ class _ZoomEnterTransitionPainter extends SnapshotPainter {
     // instead of checking that it is `forward` is that this allows
     // the interrupted reversal of the forward transition to smoothly fade
     // the scrim away. This prevents a disjointed removal of the scrim.
-    if (!reverse && !animation.isCompleted) {
+    if (!reverse && animation.status != AnimationStatus.completed) {
       scrimOpacity = _ZoomEnterTransitionState._scrimOpacityTween.evaluate(animation)!;
     }
     assert(!reverse || scrimOpacity == 0.0);
@@ -1344,6 +1375,7 @@ class _ZoomEnterTransitionPainter extends SnapshotPainter {
   }
 
   @override
+<<<<<<< HEAD
   void paint(
     PaintingContext context,
     ui.Offset offset,
@@ -1352,6 +1384,15 @@ class _ZoomEnterTransitionPainter extends SnapshotPainter {
   ) {
     if (!animation.isAnimating) {
       return painter(context, offset);
+=======
+  void paint(PaintingContext context, ui.Offset offset, Size size, PaintingContextCallback painter) {
+    switch (animation.status) {
+      case AnimationStatus.completed:
+      case AnimationStatus.dismissed:
+        return painter(context, offset);
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
     _drawScrim(context, offset, size);
@@ -1439,6 +1480,7 @@ class _ZoomExitTransitionPainter extends SnapshotPainter {
   }
 
   @override
+<<<<<<< HEAD
   void paint(
     PaintingContext context,
     ui.Offset offset,
@@ -1447,6 +1489,16 @@ class _ZoomExitTransitionPainter extends SnapshotPainter {
   ) {
     if (!animation.isAnimating) {
       return painter(context, offset);
+=======
+  void paint(PaintingContext context, ui.Offset offset, Size size, PaintingContextCallback painter) {
+    switch (animation.status) {
+      case AnimationStatus.completed:
+      case AnimationStatus.dismissed:
+        return painter(context, offset);
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+        break;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
     _updateScaledTransform(_transform, scale.value, size);
@@ -1566,7 +1618,7 @@ class _ZoomEnterTransitionNoCache extends StatelessWidget {
     // instead of checking that it is `forward` is that this allows
     // the interrupted reversal of the forward transition to smoothly fade
     // the scrim away. This prevents a disjointed removal of the scrim.
-    if (!reverse && !animation.isCompleted) {
+    if (!reverse && animation.status != AnimationStatus.completed) {
       opacity = _ZoomEnterTransitionState._scrimOpacityTween.evaluate(animation)!;
     }
 
@@ -1589,7 +1641,7 @@ class _ZoomEnterTransitionNoCache extends StatelessWidget {
         opacity: fadeTransition,
         child: ScaleTransition(
           scale: scaleTransition,
-          filterQuality: FilterQuality.medium,
+          filterQuality: FilterQuality.none,
           child: child,
         ),
       ),
@@ -1619,7 +1671,7 @@ class _ZoomExitTransitionNoCache extends StatelessWidget {
       opacity: fadeTransition,
       child: ScaleTransition(
         scale: scaleTransition,
-        filterQuality: FilterQuality.medium,
+        filterQuality: FilterQuality.none,
         child: child,
       ),
     );

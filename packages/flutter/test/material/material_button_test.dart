@@ -702,6 +702,7 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       expect(
         semantics,
         hasSemantics(
@@ -719,14 +720,50 @@ void main() {
                 ],
                 actions: <SemanticsAction>[SemanticsAction.focus],
               ),
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics.rootChild(
+            id: 1,
+            rect: expectedButtonSize,
+            transform: expectedButtonTransform,
+            label: 'Button',
+            actions: <SemanticsAction>[
+              SemanticsAction.tap,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ],
           ),
         ),
       );
 
+<<<<<<< HEAD
       semantics.dispose();
     },
   );
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics.rootChild(
+            id: 1,
+            rect: expectedButtonSize,
+            transform: expectedButtonTransform,
+            label: 'Button',
+            flags: <SemanticsFlag>[
+              SemanticsFlag.hasEnabledState,
+              SemanticsFlag.isButton,
+              SemanticsFlag.isFocusable,
+            ],
+          ),
+        ],
+      ),
+    ));
+
+
+    semantics.dispose();
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testWidgets('MaterialButton minWidth and height parameters', (WidgetTester tester) async {
     Widget buildFrame({

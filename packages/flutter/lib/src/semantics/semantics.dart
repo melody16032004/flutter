@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'dart:ui';
 ///
 /// @docImport 'package:flutter/material.dart';
@@ -9,6 +10,8 @@
 /// @docImport 'package:flutter_test/flutter_test.dart';
 library;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:math' as math;
 import 'dart:ui'
     show
@@ -480,6 +483,7 @@ class SemanticsData with Diagnosticable {
     required this.platformViewId,
     required this.maxValueLength,
     required this.currentValueLength,
+<<<<<<< HEAD
     required this.headingLevel,
     required this.linkUrl,
     required this.role,
@@ -515,6 +519,17 @@ class SemanticsData with Diagnosticable {
          linkUrl == null || (flags & SemanticsFlag.isLink.index) != 0,
          'A SemanticsData object with a linkUrl must have the isLink flag set to true',
        );
+=======
+    this.tags,
+    this.transform,
+    this.customSemanticsActionIds,
+  }) : assert(tooltip == '' || textDirection != null, 'A SemanticsData object with tooltip "$tooltip" had a null textDirection.'),
+       assert(attributedLabel.string == '' || textDirection != null, 'A SemanticsData object with label "${attributedLabel.string}" had a null textDirection.'),
+       assert(attributedValue.string == '' || textDirection != null, 'A SemanticsData object with value "${attributedValue.string}" had a null textDirection.'),
+       assert(attributedDecreasedValue.string == '' || textDirection != null, 'A SemanticsData object with decreasedValue "${attributedDecreasedValue.string}" had a null textDirection.'),
+       assert(attributedIncreasedValue.string == '' || textDirection != null, 'A SemanticsData object with increasedValue "${attributedIncreasedValue.string}" had a null textDirection.'),
+       assert(attributedHint.string == '' || textDirection != null, 'A SemanticsData object with hint "${attributedHint.string}" had a null textDirection.');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// A bit field of [SemanticsFlag]s that apply to this node.
   final int flags;
@@ -606,12 +621,6 @@ class SemanticsData with Diagnosticable {
   ///
   /// The reading direction is given by [textDirection].
   final String tooltip;
-
-  /// Indicates that this subtree represents a heading.
-  ///
-  /// A value of 0 indicates that it is not a heading. The value should be a
-  /// number between 1 and 6, indicating the hierarchical level as a heading.
-  final int headingLevel;
 
   /// The reading direction for the text in [label], [value],
   /// [increasedValue], [decreasedValue], and [hint].
@@ -798,12 +807,16 @@ class SemanticsData with Diagnosticable {
     properties.add(DoubleProperty('scrollExtentMin', scrollExtentMin, defaultValue: null));
     properties.add(DoubleProperty('scrollPosition', scrollPosition, defaultValue: null));
     properties.add(DoubleProperty('scrollExtentMax', scrollExtentMax, defaultValue: null));
+<<<<<<< HEAD
     properties.add(IntProperty('headingLevel', headingLevel, defaultValue: 0));
     properties.add(DiagnosticsProperty<Uri>('linkUrl', linkUrl, defaultValue: null));
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
   bool operator ==(Object other) {
+<<<<<<< HEAD
     return other is SemanticsData &&
         other.flags == flags &&
         other.actions == actions &&
@@ -833,6 +846,34 @@ class SemanticsData with Diagnosticable {
         other.linkUrl == linkUrl &&
         other.role == role &&
         _sortedListsEqual(other.customSemanticsActionIds, customSemanticsActionIds);
+=======
+    return other is SemanticsData
+        && other.flags == flags
+        && other.actions == actions
+        && other.identifier == identifier
+        && other.attributedLabel == attributedLabel
+        && other.attributedValue == attributedValue
+        && other.attributedIncreasedValue == attributedIncreasedValue
+        && other.attributedDecreasedValue == attributedDecreasedValue
+        && other.attributedHint == attributedHint
+        && other.tooltip == tooltip
+        && other.textDirection == textDirection
+        && other.rect == rect
+        && setEquals(other.tags, tags)
+        && other.scrollChildCount == scrollChildCount
+        && other.scrollIndex == scrollIndex
+        && other.textSelection == textSelection
+        && other.scrollPosition == scrollPosition
+        && other.scrollExtentMax == scrollExtentMax
+        && other.scrollExtentMin == scrollExtentMin
+        && other.platformViewId == platformViewId
+        && other.maxValueLength == maxValueLength
+        && other.currentValueLength == currentValueLength
+        && other.transform == transform
+        && other.elevation == elevation
+        && other.thickness == thickness
+        && _sortedListsEqual(other.customSemanticsActionIds, customSemanticsActionIds);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -862,8 +903,11 @@ class SemanticsData with Diagnosticable {
       transform,
       elevation,
       thickness,
+<<<<<<< HEAD
       headingLevel,
       linkUrl,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       customSemanticsActionIds == null ? null : Object.hashAll(customSemanticsActionIds!),
       role,
     ),
@@ -978,7 +1022,6 @@ class SemanticsProperties extends DiagnosticableTree {
     this.link,
     this.linkUrl,
     this.header,
-    this.headingLevel,
     this.textField,
     this.slider,
     this.keyboardKey,
@@ -1030,9 +1073,9 @@ class SemanticsProperties extends DiagnosticableTree {
     this.onSetText,
     this.onDidGainAccessibilityFocus,
     this.onDidLoseAccessibilityFocus,
-    this.onFocus,
     this.onDismiss,
     this.customSemanticsActions,
+<<<<<<< HEAD
     this.role,
   }) : assert(
          label == null || attributedLabel == null,
@@ -1059,6 +1102,13 @@ class SemanticsProperties extends DiagnosticableTree {
          'Heading level must be between 1 and 6',
        ),
        assert(linkUrl == null || (link ?? false), 'If linkUrl is set then link must be true');
+=======
+  }) : assert(label == null || attributedLabel == null, 'Only one of label or attributedLabel should be provided'),
+       assert(value == null || attributedValue == null, 'Only one of value or attributedValue should be provided'),
+       assert(increasedValue == null || attributedIncreasedValue == null, 'Only one of increasedValue or attributedIncreasedValue should be provided'),
+       assert(decreasedValue == null || attributedDecreasedValue == null, 'Only one of decreasedValue or attributedDecreasedValue should be provided'),
+       assert(hint == null || attributedHint == null, 'Only one of hint or attributedHint should be provided');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// If non-null, indicates that this subtree represents something that can be
   /// in an enabled or disabled state.
@@ -1474,17 +1524,6 @@ class SemanticsProperties extends DiagnosticableTree {
   /// [Directionality] or an explicit [textDirection] should be provided.
   final String? tooltip;
 
-  /// The heading level in the DOM document structure.
-  ///
-  /// This is only applied to web semantics and is ignored on other platforms.
-  ///
-  /// Screen readers will use this value to determine which part of the page
-  /// structure this heading represents. A level 1 heading, indicated
-  /// with aria-level="1", usually indicates the main heading of a page,
-  /// a level 2 heading, defined with aria-level="2" the first subsection,
-  /// a level 3 is a subsection of that, and so on.
-  final int? headingLevel;
-
   /// Provides hint values which override the default hints on supported
   /// platforms.
   ///
@@ -1738,8 +1777,6 @@ class SemanticsProperties extends DiagnosticableTree {
   ///
   ///  * [onDidLoseAccessibilityFocus], which is invoked when the accessibility
   ///    focus is removed from the node.
-  ///  * [onFocus], which is invoked when the assistive technology requests that
-  ///    the input focus is gained by a widget.
   ///  * [FocusNode], [FocusScope], [FocusManager], which manage the input focus.
   final VoidCallback? onDidGainAccessibilityFocus;
 
@@ -1762,6 +1799,7 @@ class SemanticsProperties extends DiagnosticableTree {
   ///  * [FocusNode], [FocusScope], [FocusManager], which manage the input focus.
   final VoidCallback? onDidLoseAccessibilityFocus;
 
+<<<<<<< HEAD
   /// {@template flutter.semantics.SemanticsProperties.onFocus}
   /// The handler for [SemanticsAction.focus].
   ///
@@ -1786,6 +1824,8 @@ class SemanticsProperties extends DiagnosticableTree {
   /// {@endtemplate}
   final VoidCallback? onFocus;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// The handler for [SemanticsAction.dismiss].
   ///
   /// This is a request to dismiss the currently focused node.
@@ -2391,6 +2431,7 @@ class SemanticsNode with DiagnosticableTreeMixin {
   }
 
   bool _isDifferentFromCurrentSemanticAnnotation(SemanticsConfiguration config) {
+<<<<<<< HEAD
     return _attributedLabel != config.attributedLabel ||
         _attributedHint != config.attributedHint ||
         _elevation != config.elevation ||
@@ -2416,6 +2457,30 @@ class SemanticsNode with DiagnosticableTreeMixin {
         _headingLevel != config._headingLevel ||
         _linkUrl != config._linkUrl ||
         _linkUrl != config._linkUrl;
+=======
+    return _attributedLabel != config.attributedLabel
+        || _attributedHint != config.attributedHint
+        || _elevation != config.elevation
+        || _thickness != config.thickness
+        || _attributedValue != config.attributedValue
+        || _attributedIncreasedValue != config.attributedIncreasedValue
+        || _attributedDecreasedValue != config.attributedDecreasedValue
+        || _tooltip != config.tooltip
+        || _flags != config._flags
+        || _textDirection != config.textDirection
+        || _sortKey != config._sortKey
+        || _textSelection != config._textSelection
+        || _scrollPosition != config._scrollPosition
+        || _scrollExtentMax != config._scrollExtentMax
+        || _scrollExtentMin != config._scrollExtentMin
+        || _actionsAsBits != config._actionsAsBits
+        || indexInParent != config.indexInParent
+        || platformViewId != config.platformViewId
+        || _maxValueLength != config._maxValueLength
+        || _currentValueLength != config._currentValueLength
+        || _mergeAllDescendantsIntoThisNode != config.isMergingSemanticsOfDescendants
+        || _areUserActionsBlocked != config.isBlockingUserActions;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   // TAGS, LABELS, ACTIONS
@@ -2721,6 +2786,7 @@ class SemanticsNode with DiagnosticableTreeMixin {
   int? get currentValueLength => _currentValueLength;
   int? _currentValueLength;
 
+<<<<<<< HEAD
   /// The level of the widget as a heading within the structural hierarchy
   /// of the screen. A value of 1 indicates the highest level of structural
   /// hierarchy. A value of 2 indicates the next level, and so on.
@@ -2742,6 +2808,8 @@ class SemanticsNode with DiagnosticableTreeMixin {
   SemanticsRole get role => _role;
   SemanticsRole _role = _kEmptyConfig.role;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool _canPerformAction(SemanticsAction action) => _actions.containsKey(action);
 
   static final SemanticsConfiguration _kEmptyConfig = SemanticsConfiguration();
@@ -2805,9 +2873,12 @@ class SemanticsNode with DiagnosticableTreeMixin {
     _maxValueLength = config._maxValueLength;
     _currentValueLength = config._currentValueLength;
     _areUserActionsBlocked = config.isBlockingUserActions;
+<<<<<<< HEAD
     _headingLevel = config._headingLevel;
     _linkUrl = config._linkUrl;
     _role = config._role;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     _replaceChildren(childrenInInversePaintOrder ?? const <SemanticsNode>[]);
 
     if (mergeAllDescendantsIntoThisNodeValueChanged) {
@@ -2852,7 +2923,6 @@ class SemanticsNode with DiagnosticableTreeMixin {
     int? platformViewId = _platformViewId;
     int? maxValueLength = _maxValueLength;
     int? currentValueLength = _currentValueLength;
-    int headingLevel = _headingLevel;
     final double elevation = _elevation;
     double thickness = _thickness;
     Uri? linkUrl = _linkUrl;
@@ -2894,12 +2964,15 @@ class SemanticsNode with DiagnosticableTreeMixin {
         platformViewId ??= node._platformViewId;
         maxValueLength ??= node._maxValueLength;
         currentValueLength ??= node._currentValueLength;
+<<<<<<< HEAD
         linkUrl ??= node._linkUrl;
         headingLevel = _mergeHeadingLevels(
           sourceLevel: node._headingLevel,
           targetLevel: headingLevel,
         );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (identifier == '') {
           identifier = node._identifier;
         }
@@ -2986,9 +3059,12 @@ class SemanticsNode with DiagnosticableTreeMixin {
       maxValueLength: maxValueLength,
       currentValueLength: currentValueLength,
       customSemanticsActionIds: customSemanticsActionIds.toList()..sort(),
+<<<<<<< HEAD
       headingLevel: headingLevel,
       linkUrl: linkUrl,
       role: role,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 
@@ -3064,9 +3140,12 @@ class SemanticsNode with DiagnosticableTreeMixin {
       childrenInTraversalOrder: childrenInTraversalOrder,
       childrenInHitTestOrder: childrenInHitTestOrder,
       additionalActions: customSemanticsActionIds ?? _kEmptyCustomSemanticsActionsList,
+<<<<<<< HEAD
       headingLevel: data.headingLevel,
       linkUrl: data.linkUrl?.toString() ?? '',
       role: data.role,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     _dirty = false;
   }
@@ -3982,9 +4061,14 @@ class SemanticsConfiguration {
   ///
   /// See also:
   ///
+<<<<<<< HEAD
   ///  * [_addAction] to add an action.
   final Map<SemanticsAction, SemanticsActionHandler> _actions =
       <SemanticsAction, SemanticsActionHandler>{};
+=======
+  ///  * [addAction] to add an action.
+  final Map<SemanticsAction, SemanticsActionHandler> _actions = <SemanticsAction, SemanticsActionHandler>{};
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   int get _effectiveActionsAsBits =>
       isBlockingUserActions ? _actionsAsBits & _kUnblockedUserActions : _actionsAsBits;
@@ -4168,8 +4252,9 @@ class SemanticsConfiguration {
   /// This is a request to increase the value represented by the widget. For
   /// example, this action might be recognized by a slider control.
   ///
-  /// If [value] is set, [increasedValue] must also be provided and
-  /// [onIncrease] must ensure that [value] will be set to [increasedValue].
+  /// If [this.value] is set, [increasedValue] must also be provided and
+  /// [onIncrease] must ensure that [this.value] will be set to
+  /// [increasedValue].
   ///
   /// VoiceOver users on iOS can trigger this action by swiping up with one
   /// finger. TalkBack users on Android can trigger this action by pressing the
@@ -4186,8 +4271,9 @@ class SemanticsConfiguration {
   /// This is a request to decrease the value represented by the widget. For
   /// example, this action might be recognized by a slider control.
   ///
-  /// If [value] is set, [decreasedValue] must also be provided and
-  /// [onDecrease] must ensure that [value] will be set to [decreasedValue].
+  /// If [this.value] is set, [decreasedValue] must also be provided and
+  /// [onDecrease] must ensure that [this.value] will be set to
+  /// [decreasedValue].
   ///
   /// VoiceOver users on iOS can trigger this action by swiping down with one
   /// finger. TalkBack users on Android can trigger this action by pressing the
@@ -4412,14 +4498,6 @@ class SemanticsConfiguration {
   set onDidLoseAccessibilityFocus(VoidCallback? value) {
     _addArgumentlessAction(SemanticsAction.didLoseAccessibilityFocus, value!);
     _onDidLoseAccessibilityFocus = value;
-  }
-
-  /// {@macro flutter.semantics.SemanticsProperties.onFocus}
-  VoidCallback? get onFocus => _onFocus;
-  VoidCallback? _onFocus;
-  set onFocus(VoidCallback? value) {
-    _addArgumentlessAction(SemanticsAction.focus, value!);
-    _onFocus = value;
   }
 
   /// A delegate that decides how to handle [SemanticsConfiguration]s produced
@@ -5062,21 +5140,6 @@ class SemanticsConfiguration {
     _setFlag(SemanticsFlag.isHeader, value);
   }
 
-  /// Indicates the heading level in the document structure.
-  ///
-  /// This is only used for web semantics, and is ignored on other platforms.
-  int get headingLevel => _headingLevel;
-  int _headingLevel = 0;
-
-  set headingLevel(int value) {
-    assert(value >= 0 && value <= 6);
-    if (value == headingLevel) {
-      return;
-    }
-    _headingLevel = value;
-    _hasBeenAnnotated = true;
-  }
-
   /// Whether the owning [RenderObject] is a slider (true) or not (false).
   bool get isSlider => _hasFlag(SemanticsFlag.isSlider);
   set isSlider(bool value) {
@@ -5125,11 +5188,11 @@ class SemanticsConfiguration {
     _setFlag(SemanticsFlag.isReadOnly, value);
   }
 
-  /// Whether [value] should be obscured.
+  /// Whether [this.value] should be obscured.
   ///
   /// This option is usually set in combination with [isTextField] to indicate
   /// that the text field contains a password (or other sensitive information).
-  /// Doing so instructs screen readers to not read out [value].
+  /// Doing so instructs screen readers to not read out [this.value].
   bool get isObscured => _hasFlag(SemanticsFlag.isObscured);
   set isObscured(bool value) {
     _setFlag(SemanticsFlag.isObscured, value);
@@ -5157,7 +5220,7 @@ class SemanticsConfiguration {
   }
 
   /// The currently selected text (or the position of the cursor) within
-  /// [value] if this node represents a text field.
+  /// [this.value] if this node represents a text field.
   TextSelection? get textSelection => _textSelection;
   TextSelection? _textSelection;
   set textSelection(TextSelection? value) {
@@ -5418,10 +5481,14 @@ class SemanticsConfiguration {
       .._currentValueLength = _currentValueLength
       .._actions.addAll(_actions)
       .._customSemanticsActions.addAll(_customSemanticsActions)
+<<<<<<< HEAD
       ..isBlockingUserActions = isBlockingUserActions
       .._headingLevel = _headingLevel
       .._linkUrl = _linkUrl
       .._role = _role;
+=======
+      ..isBlockingUserActions = isBlockingUserActions;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

@@ -242,11 +242,11 @@ void main() {
     expect(theme.colorScheme.brightness, Brightness.light);
 
     expect(theme.primaryColor, theme.colorScheme.primary);
-    expect(theme.canvasColor, theme.colorScheme.surface);
-    expect(theme.scaffoldBackgroundColor, theme.colorScheme.surface);
+    expect(theme.canvasColor, theme.colorScheme.background);
+    expect(theme.scaffoldBackgroundColor, theme.colorScheme.background);
     expect(theme.cardColor, theme.colorScheme.surface);
     expect(theme.dividerColor, theme.colorScheme.outline);
-    expect(theme.dialogBackgroundColor, theme.colorScheme.surface);
+    expect(theme.dialogBackgroundColor, theme.colorScheme.background);
     expect(theme.indicatorColor, theme.colorScheme.onPrimary);
     expect(theme.applyElevationOverlayColor, false);
   });
@@ -306,11 +306,11 @@ void main() {
     expect(theme.colorScheme.brightness, Brightness.dark);
 
     expect(theme.primaryColor, theme.colorScheme.surface);
-    expect(theme.canvasColor, theme.colorScheme.surface);
-    expect(theme.scaffoldBackgroundColor, theme.colorScheme.surface);
+    expect(theme.canvasColor, theme.colorScheme.background);
+    expect(theme.scaffoldBackgroundColor, theme.colorScheme.background);
     expect(theme.cardColor, theme.colorScheme.surface);
     expect(theme.dividerColor, theme.colorScheme.outline);
-    expect(theme.dialogBackgroundColor, theme.colorScheme.surface);
+    expect(theme.dialogBackgroundColor, theme.colorScheme.background);
     expect(theme.indicatorColor, theme.colorScheme.onSurface);
     expect(theme.applyElevationOverlayColor, true);
   });
@@ -368,11 +368,11 @@ void main() {
     expect(theme.colorScheme.brightness, Brightness.light);
 
     expect(theme.primaryColor, theme.colorScheme.primary);
-    expect(theme.canvasColor, theme.colorScheme.surface);
-    expect(theme.scaffoldBackgroundColor, theme.colorScheme.surface);
+    expect(theme.canvasColor, theme.colorScheme.background);
+    expect(theme.scaffoldBackgroundColor, theme.colorScheme.background);
     expect(theme.cardColor, theme.colorScheme.surface);
     expect(theme.dividerColor, theme.colorScheme.outline);
-    expect(theme.dialogBackgroundColor, theme.colorScheme.surface);
+    expect(theme.dialogBackgroundColor, theme.colorScheme.background);
     expect(theme.indicatorColor, theme.colorScheme.onPrimary);
     expect(theme.applyElevationOverlayColor, false);
   });
@@ -382,6 +382,7 @@ void main() {
     () {
       final ThemeData theme = ThemeData.light(useMaterial3: true);
 
+<<<<<<< HEAD
       expect(theme.colorScheme.primary, const Color(0xff6750a4));
       expect(theme.colorScheme.onPrimary, const Color(0xffffffff));
       expect(theme.colorScheme.primaryContainer, const Color(0xffeaddff));
@@ -430,6 +431,69 @@ void main() {
       expect(theme.colorScheme.shadow, const Color(0xff000000));
       expect(theme.colorScheme.surfaceTint, const Color(0xff6750a4));
       expect(theme.colorScheme.brightness, Brightness.light);
+=======
+  test('ThemeData.light() can generate a default M3 light colorScheme when useMaterial3 is true', () {
+    final ThemeData theme = ThemeData.light(useMaterial3: true);
+
+    expect(theme.colorScheme.primary, const Color(0xff6750a4));
+    expect(theme.colorScheme.onPrimary, const Color(0xffffffff));
+    expect(theme.colorScheme.primaryContainer, const Color(0xffeaddff));
+    expect(theme.colorScheme.onPrimaryContainer, const Color(0xff21005d));
+    expect(theme.colorScheme.primaryFixed, const Color(0xffeaddff));
+    expect(theme.colorScheme.primaryFixedDim, const Color(0xffd0bcff));
+    expect(theme.colorScheme.onPrimaryFixed, const Color(0xff21005d));
+    expect(theme.colorScheme.onPrimaryFixedVariant, const Color(0xff4f378b));
+    expect(theme.colorScheme.secondary, const Color(0xff625b71));
+    expect(theme.colorScheme.onSecondary, const Color(0xffffffff));
+    expect(theme.colorScheme.secondaryContainer, const Color(0xffe8def8));
+    expect(theme.colorScheme.onSecondaryContainer, const Color(0xff1d192b));
+    expect(theme.colorScheme.secondaryFixed, const Color(0xffe8def8));
+    expect(theme.colorScheme.secondaryFixedDim, const Color(0xffccc2dc));
+    expect(theme.colorScheme.onSecondaryFixed, const Color(0xff1d192b));
+    expect(theme.colorScheme.onSecondaryFixedVariant, const Color(0xff4a4458));
+    expect(theme.colorScheme.tertiary, const Color(0xff7d5260));
+    expect(theme.colorScheme.onTertiary, const Color(0xffffffff));
+    expect(theme.colorScheme.tertiaryContainer, const Color(0xffffd8e4));
+    expect(theme.colorScheme.onTertiaryContainer, const Color(0xff31111d));
+    expect(theme.colorScheme.tertiaryFixed, const Color(0xffffd8e4));
+    expect(theme.colorScheme.tertiaryFixedDim, const Color(0xffefb8c8));
+    expect(theme.colorScheme.onTertiaryFixed, const Color(0xff31111d));
+    expect(theme.colorScheme.onTertiaryFixedVariant, const Color(0xff633b48));
+    expect(theme.colorScheme.error, const Color(0xffb3261e));
+    expect(theme.colorScheme.onError, const Color(0xffffffff));
+    expect(theme.colorScheme.errorContainer, const Color(0xfff9dedc));
+    expect(theme.colorScheme.onErrorContainer, const Color(0xff410e0b));
+    expect(theme.colorScheme.outline, const Color(0xff79747e));
+    expect(theme.colorScheme.background, const Color(0xfffef7ff));
+    expect(theme.colorScheme.onBackground, const Color(0xff1d1b20));
+    expect(theme.colorScheme.surface, const Color(0xfffef7ff));
+    expect(theme.colorScheme.onSurface, const Color(0xff1d1b20));
+    expect(theme.colorScheme.surfaceVariant, const Color(0xffe7e0ec));
+    expect(theme.colorScheme.onSurfaceVariant, const Color(0xff49454f));
+    expect(theme.colorScheme.surfaceBright, const Color(0xfffef7ff));
+    expect(theme.colorScheme.surfaceDim, const Color(0xffded8e1));
+    expect(theme.colorScheme.surfaceContainer, const Color(0xfff3edf7));
+    expect(theme.colorScheme.surfaceContainerHighest, const Color(0xffe6e0e9));
+    expect(theme.colorScheme.surfaceContainerHigh, const Color(0xffece6f0));
+    expect(theme.colorScheme.surfaceContainerLowest, const Color(0xffffffff));
+    expect(theme.colorScheme.surfaceContainerLow, const Color(0xfff7f2fa));
+    expect(theme.colorScheme.inverseSurface, const Color(0xff322f35));
+    expect(theme.colorScheme.onInverseSurface, const Color(0xfff5eff7));
+    expect(theme.colorScheme.inversePrimary, const Color(0xffd0bcff));
+    expect(theme.colorScheme.shadow, const Color(0xff000000));
+    expect(theme.colorScheme.surfaceTint, const Color(0xff6750a4));
+    expect(theme.colorScheme.brightness, Brightness.light);
+
+    expect(theme.primaryColor, theme.colorScheme.primary);
+    expect(theme.canvasColor, theme.colorScheme.background);
+    expect(theme.scaffoldBackgroundColor, theme.colorScheme.background);
+    expect(theme.cardColor, theme.colorScheme.surface);
+    expect(theme.dividerColor, theme.colorScheme.outline);
+    expect(theme.dialogBackgroundColor, theme.colorScheme.background);
+    expect(theme.indicatorColor, theme.colorScheme.onPrimary);
+    expect(theme.applyElevationOverlayColor, false);
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(theme.primaryColor, theme.colorScheme.primary);
       expect(theme.canvasColor, theme.colorScheme.surface);
@@ -494,11 +558,11 @@ void main() {
     expect(theme.colorScheme.brightness, Brightness.dark);
 
     expect(theme.primaryColor, theme.colorScheme.surface);
-    expect(theme.canvasColor, theme.colorScheme.surface);
-    expect(theme.scaffoldBackgroundColor, theme.colorScheme.surface);
+    expect(theme.canvasColor, theme.colorScheme.background);
+    expect(theme.scaffoldBackgroundColor, theme.colorScheme.background);
     expect(theme.cardColor, theme.colorScheme.surface);
     expect(theme.dividerColor, theme.colorScheme.outline);
-    expect(theme.dialogBackgroundColor, theme.colorScheme.surface);
+    expect(theme.dialogBackgroundColor, theme.colorScheme.background);
     expect(theme.indicatorColor, theme.colorScheme.onSurface);
     expect(theme.applyElevationOverlayColor, true);
   });
@@ -512,9 +576,9 @@ void main() {
     expect(theme.brightness, equals(Brightness.light));
     expect(theme.primaryColor, equals(lightColors.primary));
     expect(theme.cardColor, equals(lightColors.surface));
-    expect(theme.canvasColor, equals(lightColors.surface));
-    expect(theme.scaffoldBackgroundColor, equals(lightColors.surface));
-    expect(theme.dialogBackgroundColor, equals(lightColors.surface));
+    expect(theme.canvasColor, equals(lightColors.background));
+    expect(theme.scaffoldBackgroundColor, equals(lightColors.background));
+    expect(theme.dialogBackgroundColor, equals(lightColors.background));
     expect(theme.applyElevationOverlayColor, isFalse);
   });
 
@@ -528,9 +592,9 @@ void main() {
     // in dark theme's the color used for main components is surface instead of primary
     expect(theme.primaryColor, equals(darkColors.surface));
     expect(theme.cardColor, equals(darkColors.surface));
-    expect(theme.canvasColor, equals(darkColors.surface));
-    expect(theme.scaffoldBackgroundColor, equals(darkColors.surface));
-    expect(theme.dialogBackgroundColor, equals(darkColors.surface));
+    expect(theme.canvasColor, equals(darkColors.background));
+    expect(theme.scaffoldBackgroundColor, equals(darkColors.background));
+    expect(theme.dialogBackgroundColor, equals(darkColors.background));
     expect(theme.applyElevationOverlayColor, isTrue);
   });
 
@@ -1344,9 +1408,9 @@ void main() {
     expect(theme.colorScheme.brightness, equals(Brightness.dark));
     expect(theme.primaryColor, equals(lightColors.primary));
     expect(theme.cardColor, equals(lightColors.surface));
-    expect(theme.canvasColor, equals(lightColors.surface));
-    expect(theme.scaffoldBackgroundColor, equals(lightColors.surface));
-    expect(theme.dialogBackgroundColor, equals(lightColors.surface));
+    expect(theme.canvasColor, equals(lightColors.background));
+    expect(theme.scaffoldBackgroundColor, equals(lightColors.background));
+    expect(theme.dialogBackgroundColor, equals(lightColors.background));
     expect(theme.applyElevationOverlayColor, isFalse);
   });
 

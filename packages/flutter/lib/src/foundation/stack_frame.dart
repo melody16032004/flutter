@@ -89,9 +89,7 @@ class StackFrame {
   ///
   /// Returns null if format is not as expected.
   static StackFrame? _tryParseWebFrame(String line) {
-    // dart2wasm doesn't emit stack frames in the same way DDC does, so we need
-    // to do the less clever non-debug path here when compiled to wasm.
-    if (kDebugMode && !kIsWasm) {
+    if (kDebugMode) {
       return _tryParseWebDebugFrame(line);
     } else {
       return _tryParseWebNonDebugFrame(line);

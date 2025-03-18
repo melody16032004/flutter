@@ -14,8 +14,11 @@ import 'package:flutter_tools/src/build_info.dart';
 import 'package:flutter_tools/src/cache.dart';
 import 'package:flutter_tools/src/dart/pub.dart';
 import 'package:flutter_tools/src/device.dart';
+<<<<<<< HEAD
 import 'package:flutter_tools/src/features.dart';
 import 'package:flutter_tools/src/flutter_manifest.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter_tools/src/ios/code_signing.dart';
 import 'package:flutter_tools/src/ios/mac.dart';
 import 'package:flutter_tools/src/ios/xcresult.dart';
@@ -24,7 +27,6 @@ import 'package:test/fake.dart';
 import 'package:unified_analytics/unified_analytics.dart';
 
 import '../../src/common.dart';
-import '../../src/context.dart';
 import '../../src/fake_process_manager.dart';
 import '../../src/fake_pub_deps.dart';
 import '../../src/fakes.dart';
@@ -200,6 +202,7 @@ void main() {
           buildSettings: buildSettings,
         ),
       );
+<<<<<<< HEAD
       final MemoryFileSystem fs = MemoryFileSystem.test();
       await diagnoseXcodeBuildFailure(
         buildResult,
@@ -209,6 +212,21 @@ void main() {
         platform: SupportedPlatform.ios,
         project: FakeFlutterProject(fileSystem: fs),
       );
+=======
+
+      await diagnoseXcodeBuildFailure(buildResult, testUsage, logger, fakeAnalytics);
+      expect(testUsage.events, contains(
+        TestUsageEvent(
+          'build',
+          'ios',
+          label: 'xcode-bitcode-failure',
+          parameters: CustomDimensions(
+            buildEventCommand: buildCommands.toString(),
+            buildEventSettings: buildSettings.toString(),
+          ),
+        ),
+      ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(
         fakeAnalytics.sentEvents,
         contains(
@@ -291,6 +309,7 @@ Error launching application on iPhone.''',
           buildSettings: buildSettingsWithDevTeam,
         ),
       );
+<<<<<<< HEAD
       final MemoryFileSystem fs = MemoryFileSystem.test();
       await diagnoseXcodeBuildFailure(
         buildResult,
@@ -301,6 +320,14 @@ Error launching application on iPhone.''',
         project: FakeFlutterProject(fileSystem: fs),
       );
       expect(logger.errorText, contains(noProvisioningProfileInstruction));
+=======
+
+      await diagnoseXcodeBuildFailure(buildResult, testUsage, logger, fakeAnalytics);
+      expect(
+        logger.errorText,
+        contains(noProvisioningProfileInstruction),
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWithoutContext('fallback to stdout: Ineligible destinations', () async {
@@ -333,6 +360,7 @@ Error launching application on iPhone.''',
           buildSettings: buildSettingsWithDevTeam,
         ),
       );
+<<<<<<< HEAD
       final MemoryFileSystem fs = MemoryFileSystem.test();
       await diagnoseXcodeBuildFailure(
         buildResult,
@@ -343,6 +371,14 @@ Error launching application on iPhone.''',
         project: FakeFlutterProject(fileSystem: fs),
       );
       expect(logger.errorText, contains(missingPlatformInstructions('iOS 17.0')));
+=======
+
+      await diagnoseXcodeBuildFailure(buildResult, testUsage, logger, fakeAnalytics);
+      expect(
+        logger.errorText,
+        contains(missingPlatformInstructions('iOS 17.0')),
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWithoutContext('No development team shows message', () async {
@@ -377,6 +413,7 @@ Could not build the precompiled application for the device.''',
           buildSettings: buildSettings,
         ),
       );
+<<<<<<< HEAD
       final MemoryFileSystem fs = MemoryFileSystem.test();
       await diagnoseXcodeBuildFailure(
         buildResult,
@@ -386,6 +423,10 @@ Could not build the precompiled application for the device.''',
         platform: SupportedPlatform.ios,
         project: FakeFlutterProject(fileSystem: fs),
       );
+=======
+
+      await diagnoseXcodeBuildFailure(buildResult, testUsage, logger, fakeAnalytics);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(
         logger.errorText,
         contains(
@@ -434,6 +475,7 @@ Could not build the precompiled application for the device.''',
           ),
         );
 
+<<<<<<< HEAD
         final MemoryFileSystem fs = MemoryFileSystem.test();
         await diagnoseXcodeBuildFailure(
           buildResult,
@@ -687,6 +729,12 @@ duplicate symbol '_$s29plugin_1_name23PluginNamePluginC9setDouble3key5valueySS_S
         Pub: FakePubWithPrimedDeps.new,
       },
     );
+=======
+      await diagnoseXcodeBuildFailure(buildResult, testUsage, logger, fakeAnalytics);
+      expect(logger.errorText, contains('Error (Xcode): Target aot_assembly_release failed'));
+      expect(logger.errorText, isNot(contains('Building a deployable iOS app requires a selected Development Team')));
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   group('Upgrades project.pbxproj for old asset usage', () {
@@ -705,11 +753,17 @@ duplicate symbol '_$s29plugin_1_name23PluginNamePluginC9setDouble3key5valueySS_S
         'another line';
 
     testWithoutContext('upgradePbxProjWithFlutterAssets', () async {
+<<<<<<< HEAD
       final FakeIosProject project = FakeIosProject(fileSystem: MemoryFileSystem.test());
       final File pbxprojFile =
           project.xcodeProjectInfoFile
             ..createSync(recursive: true)
             ..writeAsStringSync(flutterAssetPbxProjLines);
+=======
+      final File pbxprojFile = MemoryFileSystem.test().file('project.pbxproj')
+        ..writeAsStringSync(flutterAssetPbxProjLines);
+      final FakeIosProject project = FakeIosProject(pbxprojFile);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       bool result = upgradePbxProjWithFlutterAssets(project, logger);
       expect(result, true);
@@ -770,6 +824,7 @@ duplicate symbol '_$s29plugin_1_name23PluginNamePluginC9setDouble3key5valueySS_S
   });
 }
 
+<<<<<<< HEAD
 void addToPackageConfig(FlutterProject flutterProject, String name, Directory packageDir) {
   final File packageConfigFile = flutterProject.directory
       .childDirectory('.dart_tool')
@@ -824,16 +879,18 @@ class FakeIosProject extends Fake implements IosProject {
   FakeIosProject({required MemoryFileSystem fileSystem, this.usesSwiftPackageManager = false})
     : hostAppRoot = fileSystem.directory('app_name').childDirectory('ios');
 
+=======
+class FakeIosProject extends Fake implements IosProject {
+  FakeIosProject(this.xcodeProjectInfoFile);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
-  Directory hostAppRoot;
-
-  @override
-  File get xcodeProjectInfoFile => xcodeProject.childFile('project.pbxproj');
+  final File xcodeProjectInfoFile;
 
   @override
   Future<String> productName(BuildInfo? buildInfo) async => 'UnitTestRunner';
 
   @override
+<<<<<<< HEAD
   Directory get xcodeProject => hostAppRoot.childDirectory('Runner.xcodeproj');
 
   @override
@@ -878,4 +935,7 @@ class FakeFlutterProject extends Fake implements FlutterProject {
 class FakeFlutterManifest extends Fake implements FlutterManifest {
   @override
   Set<String> get dependencies => <String>{};
+=======
+  Directory get xcodeProject => xcodeProjectInfoFile.fileSystem.directory('Runner.xcodeproj');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

@@ -33,6 +33,7 @@ class MailboxBody extends StatelessWidget {
     return Consumer<EmailStore>(
       builder: (BuildContext context, EmailStore model, Widget? child) {
         final MailboxPageType destination = model.selectedMailboxPage;
+<<<<<<< HEAD
         final String destinationString = destination.toString().substring(
           destination.toString().indexOf('.') + 1,
         );
@@ -45,6 +46,45 @@ class MailboxBody extends StatelessWidget {
           MailboxPageType.spam => model.spamEmails,
           MailboxPageType.drafts => model.draftEmails,
         };
+=======
+        final String destinationString = destination
+            .toString()
+            .substring(destination.toString().indexOf('.') + 1);
+        late List<Email> emails;
+
+        switch (destination) {
+          case MailboxPageType.inbox:
+            {
+              emails = model.inboxEmails;
+              break;
+            }
+          case MailboxPageType.sent:
+            {
+              emails = model.outboxEmails;
+              break;
+            }
+          case MailboxPageType.starred:
+            {
+              emails = model.starredEmails;
+              break;
+            }
+          case MailboxPageType.trash:
+            {
+              emails = model.trashEmails;
+              break;
+            }
+          case MailboxPageType.spam:
+            {
+              emails = model.spamEmails;
+              break;
+            }
+          case MailboxPageType.drafts:
+            {
+              emails = model.draftEmails;
+              break;
+            }
+        }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         return SafeArea(
           bottom: false,

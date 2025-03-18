@@ -52,9 +52,29 @@ const List<VmServiceExpectation> kAttachLogExpectations = <VmServiceExpectation>
   FakeVmServiceRequest(method: 'streamListen', args: <String, Object>{'streamId': 'Stderr'}),
 ];
 
+<<<<<<< HEAD
 const List<VmServiceExpectation> kAttachIsolateExpectations = <VmServiceExpectation>[
   FakeVmServiceRequest(method: 'streamListen', args: <String, Object>{'streamId': 'Service'}),
   FakeVmServiceRequest(method: 'streamListen', args: <String, Object>{'streamId': 'Isolate'}),
+=======
+const List<VmServiceExpectation> kAttachIsolateExpectations =
+    <VmServiceExpectation>[
+  FakeVmServiceRequest(method: 'streamListen', args: <String, Object>{
+    'streamId': 'Isolate',
+  }),
+  FakeVmServiceRequest(method: 'registerService', args: <String, Object>{
+    'service': kReloadSourcesServiceName,
+    'alias': kFlutterToolAlias,
+  }),
+  FakeVmServiceRequest(method: 'registerService', args: <String, Object>{
+    'service': kFlutterVersionServiceName,
+    'alias': kFlutterToolAlias,
+  }),
+  FakeVmServiceRequest(method: 'registerService', args: <String, Object>{
+    'service': kFlutterMemoryInfoServiceName,
+    'alias': kFlutterToolAlias,
+  }),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   FakeVmServiceRequest(
     method: 'registerService',
     args: <String, Object>{'service': kReloadSourcesServiceName, 'alias': kFlutterToolAlias},
@@ -87,7 +107,7 @@ void main() {
   late FakeWebServerDevice webServerDevice;
   late FakeDevice mockDevice;
   late FakeVmServiceHost fakeVmServiceHost;
-  late MemoryFileSystem fileSystem;
+  late FileSystem fileSystem;
   late ProcessManager processManager;
   late TestUsage testUsage;
   late FakeAnalytics fakeAnalytics;
@@ -215,6 +235,7 @@ void main() {
         systemClock: globals.systemClock,
       );
 
+<<<<<<< HEAD
       expect(profileResidentWebRunner.supportsServiceProtocol, false);
       expect(residentWebRunner.supportsServiceProtocol, true);
     },
@@ -223,6 +244,70 @@ void main() {
       ProcessManager: () => processManager,
     },
   );
+=======
+    expect(profileResidentWebRunner.supportsServiceProtocol, false);
+    expect(residentWebRunner.supportsServiceProtocol, true);
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    ProcessManager: () => processManager,
+  });
+
+  testUsingContext('Can successfully run and connect to vmservice', () async {
+    final BufferLogger logger = BufferLogger.test();
+    final ResidentRunner residentWebRunner =
+        setUpResidentRunner(flutterDevice, logger: logger);
+    fakeVmServiceHost =
+        FakeVmServiceHost(requests: kAttachExpectations.toList());
+    setupMocks();
+
+    final Completer<DebugConnectionInfo> connectionInfoCompleter =
+        Completer<DebugConnectionInfo>();
+    unawaited(residentWebRunner.run(
+      connectionInfoCompleter: connectionInfoCompleter,
+    ));
+    final DebugConnectionInfo debugConnectionInfo =
+        await connectionInfoCompleter.future;
+
+    expect(appConnection.ranMain, true);
+    expect(logger.statusText,
+        contains('Debug service listening on ws://127.0.0.1/abcd/'));
+    expect(debugConnectionInfo.wsUri.toString(), 'ws://127.0.0.1/abcd/');
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    ProcessManager: () => processManager,
+  });
+
+  testUsingContext('WebRunner copies compiled app.dill to cache during startup',
+      () async {
+    final DebuggingOptions debuggingOptions = DebuggingOptions.enabled(
+      const BuildInfo(BuildMode.debug, null, treeShakeIcons: false),
+    );
+    final ResidentRunner residentWebRunner =
+        setUpResidentRunner(flutterDevice, debuggingOptions: debuggingOptions);
+    fakeVmServiceHost =
+        FakeVmServiceHost(requests: kAttachExpectations.toList());
+    setupMocks();
+
+    residentWebRunner.artifactDirectory
+        .childFile('app.dill')
+        .writeAsStringSync('ABC');
+    final Completer<DebugConnectionInfo> connectionInfoCompleter =
+        Completer<DebugConnectionInfo>();
+    unawaited(residentWebRunner.run(
+      connectionInfoCompleter: connectionInfoCompleter,
+    ));
+    await connectionInfoCompleter.future;
+
+    expect(
+        await fileSystem
+            .file(fileSystem.path.join('build', 'cache.dill'))
+            .readAsString(),
+        'ABC');
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    ProcessManager: () => processManager,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Can successfully run and connect to vmservice',

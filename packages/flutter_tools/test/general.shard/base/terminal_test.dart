@@ -5,7 +5,6 @@
 import 'package:flutter_tools/src/base/io.dart';
 import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/platform.dart';
-import 'package:flutter_tools/src/base/process.dart';
 import 'package:flutter_tools/src/base/terminal.dart';
 import 'package:test/fake.dart';
 
@@ -514,6 +513,7 @@ void main() {
                   );
     terminal.singleCharMode = true;
   });
+<<<<<<< HEAD
 
   testWithoutContext('singleCharMode is reset by shutdown hook', () {
     final ShutdownHooks shutdownHooks = ShutdownHooks();
@@ -530,6 +530,8 @@ void main() {
     shutdownHooks.runShutdownHooks(BufferLogger.test());
     expect(terminal.singleCharMode, false);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 late Stream<String> mockStdInStream;

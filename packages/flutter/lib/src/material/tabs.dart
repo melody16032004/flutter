@@ -479,9 +479,12 @@ class _IndicatorPainter extends CustomPainter {
     this.dividerColor,
     this.dividerHeight,
     required this.showDivider,
+<<<<<<< HEAD
     this.devicePixelRatio,
     required this.indicatorAnimation,
     required this.textDirection,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : super(repaint: controller.animation) {
     // TODO(polina-c): stop duplicating code across disposables
     // https://github.com/flutter/flutter/issues/137435
@@ -506,9 +509,12 @@ class _IndicatorPainter extends CustomPainter {
   final Color? dividerColor;
   final double? dividerHeight;
   final bool showDivider;
+<<<<<<< HEAD
   final double? devicePixelRatio;
   final TabIndicatorAnimation indicatorAnimation;
   final TextDirection textDirection;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   // _currentTabOffsets and _currentTextDirection are set each time TabBar
   // layout is completed. These values can be null when TabBar contains no
@@ -597,7 +603,6 @@ class _IndicatorPainter extends CustomPainter {
     final ImageConfiguration configuration = ImageConfiguration(
       size: _currentRect!.size,
       textDirection: _currentTextDirection,
-      devicePixelRatio: devicePixelRatio,
     );
     if (showDivider && dividerHeight! > 0) {
       final Paint dividerPaint =
@@ -658,7 +663,7 @@ class _IndicatorPainter extends CustomPainter {
     // If the tab animation is completed, there is no need to stretch the indicator
     // This only works for the tab change animation via tab index, not when
     // dragging a [TabBarView], but it's still ok, to avoid unnecessary calculations.
-    if (controller.animation!.isCompleted) {
+    if (controller.animation!.status == AnimationStatus.completed) {
       return rect;
     }
 
@@ -949,8 +954,11 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
     this.splashFactory,
     this.splashBorderRadius,
     this.tabAlignment,
+<<<<<<< HEAD
     this.textScaler,
     this.indicatorAnimation,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : _isPrimary = true,
        assert(indicator != null || (indicatorWeight > 0.0));
 
@@ -1002,8 +1010,11 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
     this.splashFactory,
     this.splashBorderRadius,
     this.tabAlignment,
+<<<<<<< HEAD
     this.textScaler,
     this.indicatorAnimation,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : _isPrimary = false,
        assert(indicator != null || (indicatorWeight > 0.0));
 
@@ -1112,18 +1123,26 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
 
   /// The color of the divider.
   ///
+<<<<<<< HEAD
   /// If the [dividerColor] is [Colors.transparent], then the divider will not be drawn.
   ///
   /// If null and [ThemeData.useMaterial3] is false, [TabBarThemeData.dividerColor]
+=======
+  /// If null and [ThemeData.useMaterial3] is false, [TabBarTheme.dividerColor]
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// color is used. If that is null and [ThemeData.useMaterial3] is true,
   /// [ColorScheme.outlineVariant] will be used, otherwise divider will not be drawn.
   final Color? dividerColor;
 
   /// The height of the divider.
   ///
+<<<<<<< HEAD
   /// If the [dividerHeight] is zero or negative, then the divider will not be drawn.
   ///
   /// If null and [ThemeData.useMaterial3] is true, [TabBarThemeData.dividerHeight] is used.
+=======
+  /// If null and [ThemeData.useMaterial3] is true, [TabBarTheme.dividerHeight] is used.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// If that is also null and [ThemeData.useMaterial3] is true, 1.0 will be used.
   /// Otherwise divider will not be drawn.
   final double? dividerHeight;
@@ -1334,6 +1353,7 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
   /// otherwise [TabAlignment.fill] is used.
   final TabAlignment? tabAlignment;
 
+<<<<<<< HEAD
   /// Specifies the text scaling behavior for the [Tab] label.
   ///
   /// If this is null, then the value of [TabBarThemeData.textScaler] is used. If that is
@@ -1363,6 +1383,8 @@ class TabBar extends StatefulWidget implements PreferredSizeWidget {
   ///  * [TabIndicatorAnimation], which specifies the animation behavior of the tab indicator.
   final TabIndicatorAnimation? indicatorAnimation;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// A size whose height depends on if the tabs have both icons and text.
   ///
   /// [AppBar] uses this size to compute its own preferred size.
@@ -1543,6 +1565,7 @@ class _TabBarState extends State<TabBar> {
 
     final _IndicatorPainter? oldPainter = _indicatorPainter;
 
+<<<<<<< HEAD
     final TabIndicatorAnimation defaultTabIndicatorAnimation = switch (indicatorSize) {
       TabBarIndicatorSize.label => TabIndicatorAnimation.elastic,
       TabBarIndicatorSize.tab => TabIndicatorAnimation.linear,
@@ -1572,6 +1595,21 @@ class _TabBarState extends State<TabBar> {
                   defaultTabIndicatorAnimation,
               textDirection: Directionality.of(context),
             );
+=======
+    _indicatorPainter = !_controllerIsValid ? null : _IndicatorPainter(
+      controller: _controller!,
+      indicator: _getIndicator(indicatorSize),
+      indicatorSize: indicatorSize,
+      indicatorPadding: widget.indicatorPadding,
+      tabKeys: _tabKeys,
+      // Passing old painter so that the constructor can copy some values from it.
+      old: oldPainter,
+      labelPaddings: _labelPaddings,
+      dividerColor: widget.dividerColor ?? tabBarTheme.dividerColor ?? _defaults.dividerColor,
+      dividerHeight: widget.dividerHeight ?? tabBarTheme.dividerHeight ?? _defaults.dividerHeight,
+      showDivider: theme.useMaterial3 && !widget.isScrollable,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     oldPainter?.dispose();
   }
@@ -1678,6 +1716,7 @@ class _TabBarState extends State<TabBar> {
 
     final double index = _controller!.index.toDouble();
     final double value = _controller!.animation!.value;
+<<<<<<< HEAD
     final double offset = switch (value - index) {
       -1.0 => leadingPosition ?? middlePosition,
       1.0 => trailingPosition ?? middlePosition,
@@ -1691,6 +1730,20 @@ class _TabBarState extends State<TabBar> {
             ? middlePosition
             : lerpDouble(middlePosition, trailingPosition, value - index)!,
     };
+=======
+    final double offset;
+    if (value == index - 1.0) {
+      offset = leadingPosition ?? middlePosition;
+    } else if (value == index + 1.0) {
+      offset = trailingPosition ?? middlePosition;
+    } else if (value == index) {
+      offset = middlePosition;
+    } else if (value < index) {
+      offset = leadingPosition == null ? middlePosition : lerpDouble(middlePosition, leadingPosition, index - value)!;
+    } else {
+      offset = trailingPosition == null ? middlePosition : lerpDouble(middlePosition, trailingPosition, value - index)!;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     _scrollController!.jumpTo(offset);
   }
@@ -1985,21 +2038,34 @@ class _TabBarState extends State<TabBar> {
           TabAlignment.fill => AlignmentDirectional.centerStart,
         };
 
+<<<<<<< HEAD
         final Color dividerColor =
             widget.dividerColor ?? tabBarTheme.dividerColor ?? _defaults.dividerColor!;
         final double dividerHeight =
             widget.dividerHeight ?? tabBarTheme.dividerHeight ?? _defaults.dividerHeight!;
+=======
+        final Color dividerColor = widget.dividerColor ?? tabBarTheme.dividerColor ?? _defaults.dividerColor!;
+        final double dividerHeight = widget.dividerHeight ?? tabBarTheme.dividerHeight ?? _defaults.dividerHeight!;
+        final bool showDivider = dividerColor != Colors.transparent && dividerHeight > 0;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         tabBar = Align(
           heightFactor: 1.0,
-          widthFactor: dividerHeight > 0 ? null : 1.0,
+          widthFactor: showDivider ? null : 1.0,
           alignment: effectiveAlignment,
           child: tabBar,
         );
 
-        if (dividerColor != Colors.transparent && dividerHeight > 0) {
+        if (showDivider) {
           tabBar = CustomPaint(
+<<<<<<< HEAD
             painter: _DividerPainter(dividerColor: dividerColor, dividerHeight: dividerHeight),
+=======
+            painter: _DividerPainter(
+              dividerColor: widget.dividerColor ?? tabBarTheme.dividerColor ?? _defaults.dividerColor!,
+              dividerHeight: widget.dividerHeight ?? tabBarTheme.dividerHeight ?? _defaults.dividerHeight!,
+            ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             child: tabBar,
           );
         }
@@ -2008,12 +2074,16 @@ class _TabBarState extends State<TabBar> {
       tabBar = Padding(padding: widget.padding!, child: tabBar);
     }
 
+<<<<<<< HEAD
     return MediaQuery(
       data: MediaQuery.of(
         context,
       ).copyWith(textScaler: widget.textScaler ?? tabBarTheme.textScaler),
       child: tabBar,
     );
+=======
+    return tabBar;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 
@@ -2408,7 +2478,7 @@ class TabPageSelectorIndicator extends StatelessWidget {
 ///
 /// If a [TabController] is not provided, then there must be a
 /// [DefaultTabController] ancestor.
-class TabPageSelector extends StatefulWidget {
+class TabPageSelector extends StatelessWidget {
   /// Creates a compact widget that indicates which tab has been selected.
   const TabPageSelector({
     super.key,
@@ -2445,6 +2515,7 @@ class TabPageSelector extends StatefulWidget {
   /// Defaults to [BorderStyle.solid] if value is not specified.
   final BorderStyle? borderStyle;
 
+<<<<<<< HEAD
   @override
   State<TabPageSelector> createState() => _TabPageSelectorState();
 }
@@ -2503,6 +2574,8 @@ class _TabPageSelectorState extends State<TabPageSelector> {
     super.dispose();
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Widget _buildTabIndicator(
     int tabIndex,
     TabController tabController,
@@ -2537,22 +2610,44 @@ class _TabPageSelectorState extends State<TabPageSelector> {
     return TabPageSelectorIndicator(
       backgroundColor: background,
       borderColor: selectedColorTween.end!,
-      size: widget.indicatorSize,
-      borderStyle: widget.borderStyle ?? BorderStyle.solid,
+      size: indicatorSize,
+      borderStyle: borderStyle ?? BorderStyle.solid,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final Color fixColor = widget.color ?? Colors.transparent;
-    final Color fixSelectedColor = widget.selectedColor ?? Theme.of(context).colorScheme.secondary;
+    final Color fixColor = color ?? Colors.transparent;
+    final Color fixSelectedColor = selectedColor ?? Theme.of(context).colorScheme.secondary;
     final ColorTween selectedColorTween = ColorTween(begin: fixColor, end: fixSelectedColor);
     final ColorTween previousColorTween = ColorTween(begin: fixSelectedColor, end: fixColor);
+<<<<<<< HEAD
     final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+=======
+    final TabController? tabController = controller ?? DefaultTabController.maybeOf(context);
+	  final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    assert(() {
+      if (tabController == null) {
+        throw FlutterError(
+          'No TabController for $runtimeType.\n'
+          'When creating a $runtimeType, you must either provide an explicit TabController '
+          'using the "controller" property, or you must ensure that there is a '
+          'DefaultTabController above the $runtimeType.\n'
+          'In this case, there was neither an explicit controller nor a default controller.',
+        );
+      }
+      return true;
+    }());
+    final Animation<double> animation = CurvedAnimation(
+      parent: tabController!.animation!,
+      curve: Curves.fastOutSlowIn,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return AnimatedBuilder(
-      animation: _animation!,
+      animation: animation,
       builder: (BuildContext context, Widget? child) {
         return Semantics(
+<<<<<<< HEAD
           label: localizations.tabLabel(
             tabIndex: _tabController.index + 1,
             tabCount: _tabController.length,
@@ -2568,6 +2663,14 @@ class _TabPageSelectorState extends State<TabPageSelector> {
                     previousColorTween,
                   );
                 }).toList(),
+=======
+          label: localizations.tabLabel(tabIndex: tabController.index + 1, tabCount: tabController.length),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: List<Widget>.generate(tabController.length, (int tabIndex) {
+              return _buildTabIndicator(tabIndex, tabController, selectedColorTween, previousColorTween);
+            }).toList(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         );
       },
@@ -2681,7 +2784,7 @@ class _TabsPrimaryDefaultsM3 extends TabBarThemeData {
   static double indicatorWeight(TabBarIndicatorSize indicatorSize) {
     return switch (indicatorSize) {
       TabBarIndicatorSize.label => 3.0,
-      TabBarIndicatorSize.tab   => 2.0,
+      TabBarIndicatorSize.tab => 2.0,
     };
   }
 

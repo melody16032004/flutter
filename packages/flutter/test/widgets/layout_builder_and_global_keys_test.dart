@@ -57,6 +57,7 @@ void main() {
     expect(tester.takeException(), null);
   });
 
+<<<<<<< HEAD
   testWidgets('Moving GlobalKeys out of LayoutBuilder', (WidgetTester tester) async {
     // Regression test for https://github.com/flutter/flutter/issues/146379.
     final GlobalKey widgetKey = GlobalKey(debugLabel: 'widget key');
@@ -98,6 +99,8 @@ void main() {
     expect(find.byKey(widgetKey), findsOneWidget);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Moving global key inside a SliverLayoutBuilder', (WidgetTester tester) async {
     final GlobalKey<StatefulWrapperState> key = GlobalKey<StatefulWrapperState>();
 

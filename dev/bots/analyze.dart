@@ -12,7 +12,6 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
-import 'package:collection/equality.dart';
 import 'package:crypto/crypto.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
@@ -27,6 +26,8 @@ import 'custom_rules/render_box_intrinsics.dart';
 import 'run_command.dart';
 import 'utils.dart';
 
+final String flutterRoot = path.dirname(path.dirname(path.dirname(path.fromUri(Platform.script))));
+final String flutter = path.join(flutterRoot, 'bin', Platform.isWindows ? 'flutter.bat' : 'flutter');
 final String flutterPackages = path.join(flutterRoot, 'packages');
 final String flutterExamples = path.join(flutterRoot, 'examples');
 
@@ -111,11 +112,8 @@ Future<void> run(List<String> arguments) async {
   printProgress('Debug mode instead of checked mode...');
   await verifyNoCheckedMode(flutterRoot);
 
-  printProgress('Links for creating GitHub issues...');
+  printProgress('Links for creating GitHub issues');
   await verifyIssueLinks(flutterRoot);
-
-  printProgress('Links to repositories...');
-  await verifyRepositoryLinks(flutterRoot);
 
   printProgress('Unexpected binaries...');
   await verifyNoBinaries(flutterRoot);
@@ -163,9 +161,6 @@ Future<void> run(List<String> arguments) async {
 
   printProgress('Taboo words...');
   await verifyTabooDocumentation(flutterRoot);
-
-  printProgress('Lint Kotlin files...');
-  await lintKotlinFiles(flutterRoot);
 
   // Ensure that all package dependencies are in sync.
   printProgress('Package dependencies...');
@@ -277,10 +272,6 @@ Future<void> run(List<String> arguments) async {
   // Ensure gen_default links the correct files
   printProgress('Correct file names in gen_defaults.dart...');
   await verifyTokenTemplatesUpdateCorrectFiles(flutterRoot);
-
-  // Ensure material library files are up-to-date with the token template files.
-  printProgress('Material library files are up-to-date with token template files...');
-  await verifyMaterialFilesAreUpToDateWithTemplateFiles(flutterRoot, dart);
 
   // Ensure integration test files are up-to-date with the app template.
   printProgress('Up to date integration test template files...');
@@ -443,6 +434,7 @@ Future<void> verifyTokenTemplatesUpdateCorrectFiles(String workingDirectory) asy
   }
 }
 
+<<<<<<< HEAD
 /// Verify Material library files are up-to-date with the token template files
 /// when running /dev/tools/gen_defaults/bin/gen_defaults.dart.
 Future<void> verifyMaterialFilesAreUpToDateWithTemplateFiles(
@@ -520,6 +512,8 @@ Future<void> verifyMaterialFilesAreUpToDateWithTemplateFiles(
   }
 }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// Verify tool test files end in `_test.dart`.
 ///
 /// The test runner will only recognize files ending in `_test.dart` as tests to
@@ -601,7 +595,7 @@ Future<void> verifyNoSyncAsyncStar(String workingDirectory, {int minimumMatches 
   }
   if (errors.isNotEmpty) {
     foundError(<String>[
-      '${bold}Do not use sync*/async* methods. See https://github.com/flutter/flutter/blob/main/docs/contributing/Style-guide-for-Flutter-repo.md#avoid-syncasync for details.$reset',
+      '${bold}Do not use sync*/async* methods. See https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#avoid-syncasync for details.$reset',
       ...errors,
     ]);
   }
@@ -676,7 +670,7 @@ Future<void> verifyGoldenTags(String workingDirectory, {int minimumMatches = 200
   if (errors.isNotEmpty) {
     foundError(<String>[
       ...errors,
-      '${bold}See: https://github.com/flutter/flutter/blob/main/docs/contributing/testing/Writing-a-golden-file-test-for-package-flutter.md$reset',
+      '${bold}See: https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter$reset',
     ]);
   }
 }
@@ -720,6 +714,7 @@ class _DeprecationMessagesVisitor extends RecursiveAstVisitor<void> {
     if (!shouldCheckAnnotation) {
       return;
     }
+<<<<<<< HEAD
     final NodeList<Expression>? arguments = node.arguments?.arguments;
     if (arguments == null || arguments.length != 1) {
       _addErrorWithLineInfo(
@@ -768,6 +763,85 @@ class _DeprecationMessagesVisitor extends RecursiveAstVisitor<void> {
               'Deprecation notice does not accurately indicate a beta branch version number; please see https://flutter.dev/docs/development/tools/sdk/releases to find the latest beta build version number.',
         );
         return;
+=======
+    for (int lineNumber in linesWithDeprecations) {
+      try {
+        final RegExpMatch? startMatch = _deprecationStartPattern.firstMatch(lines[lineNumber]);
+        if (startMatch == null) {
+          throw 'Deprecation notice does not match required pattern.';
+        }
+        final String indent = startMatch.namedGroup('indent')!;
+        lineNumber += 1;
+        if (lineNumber >= lines.length) {
+          throw 'Incomplete deprecation notice.';
+        }
+        RegExpMatch? versionMatch;
+        String? message;
+        do {
+          final RegExpMatch? messageMatch = _deprecationMessagePattern.firstMatch(lines[lineNumber]);
+          if (messageMatch == null) {
+            String possibleReason = '';
+            if (lines[lineNumber].trimLeft().startsWith('"')) {
+              possibleReason = ' You might have used double quotes (") for the string instead of single quotes (\').';
+            } else if (!lines[lineNumber].contains("'")) {
+              possibleReason = ' It might be missing the line saying "This feature was deprecated after...".';
+            } else if (!lines[lineNumber].trimRight().endsWith(" '")) {
+              if (lines[lineNumber].contains('This feature was deprecated')) {
+                possibleReason = ' There might not be an explanatory message.';
+              } else {
+                possibleReason = ' There might be a missing space character at the end of the line.';
+              }
+            }
+            throw 'Deprecation notice does not match required pattern.$possibleReason';
+          }
+          if (!lines[lineNumber].startsWith("$indent  '")) {
+            throw 'Unexpected deprecation notice indent.';
+          }
+          if (message == null) {
+            message = messageMatch.namedGroup('message');
+            final String firstChar = String.fromCharCode(message!.runes.first);
+            if (firstChar.toUpperCase() != firstChar) {
+              throw 'Deprecation notice should be a grammatically correct sentence and start with a capital letter; see style guide: https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo';
+            }
+          } else {
+            message += messageMatch.namedGroup('message')!;
+          }
+          lineNumber += 1;
+          if (lineNumber >= lines.length) {
+            throw 'Incomplete deprecation notice.';
+          }
+          versionMatch = _deprecationVersionPattern.firstMatch(lines[lineNumber]);
+        } while (versionMatch == null);
+        final int major = int.parse(versionMatch.namedGroup('major')!);
+        final int minor = int.parse(versionMatch.namedGroup('minor')!);
+        final int patch = int.parse(versionMatch.namedGroup('patch')!);
+        final bool hasBuild = versionMatch.namedGroup('build') != null;
+        // There was a beta release that was mistakenly labeled 3.1.0 without a build.
+        final bool specialBeta = major == 3 && minor == 1 && patch == 0;
+        if (!specialBeta && (major > 1 || (major == 1 && minor >= 20))) {
+          if (!hasBuild) {
+            throw 'Deprecation notice does not accurately indicate a beta branch version number; please see https://flutter.dev/docs/development/tools/sdk/releases to find the latest beta build version number.';
+          }
+        }
+        if (!message.endsWith('.') && !message.endsWith('!') && !message.endsWith('?')) {
+          throw 'Deprecation notice should be a grammatically correct sentence and end with a period; notice appears to be "$message".';
+        }
+        if (!lines[lineNumber].startsWith("$indent  '")) {
+          throw 'Unexpected deprecation notice indent.';
+        }
+        lineNumber += 1;
+        if (lineNumber >= lines.length) {
+          throw 'Incomplete deprecation notice.';
+        }
+        if (!lines[lineNumber].contains(_deprecationEndPattern)) {
+          throw 'End of deprecation notice does not match required pattern.';
+        }
+        if (!lines[lineNumber].startsWith('$indent)')) {
+          throw 'Unexpected deprecation notice indent.';
+        }
+      } catch (error) {
+        errors.add('${file.path}:${lineNumber + 1}: $error');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
     }
 
@@ -844,7 +918,7 @@ Future<void> verifyDeprecations(String workingDirectory, {int minimumMatches = 2
   if (errors.isNotEmpty) {
     foundError(<String>[
       ...errors,
-      '${bold}See: https://github.com/flutter/flutter/blob/main/docs/contributing/Tree-hygiene.md#handling-breaking-changes$reset',
+      '${bold}See: https://github.com/flutter/flutter/wiki/Tree-hygiene#handling-breaking-changes$reset',
     ]);
   }
 }
@@ -977,9 +1051,6 @@ Future<void> _verifyNoMissingLicenseForExtension(
     if (contents.isEmpty) {
       continue; // let's not go down the /bin/true rabbit hole
     }
-    if (path.basename(file.path) == 'Package.swift') {
-      continue;
-    }
     if (!contents.startsWith(RegExp(header + licensePattern))) {
       errors.add(file.path);
     }
@@ -1070,7 +1141,7 @@ Future<void> verifySkipTestComments(String workingDirectory) async {
   if (errors.isNotEmpty) {
     foundError(<String>[
       ...errors,
-      '\n${bold}See: https://github.com/flutter/flutter/blob/main/docs/contributing/Tree-hygiene.md#skipped-tests$reset',
+      '\n${bold}See: https://github.com/flutter/flutter/wiki/Tree-hygiene#skipped-tests$reset',
     ]);
   }
 }
@@ -1522,10 +1593,15 @@ String _bullets(String value) => ' * $value';
 
 Future<void> verifyIssueLinks(String workingDirectory) async {
   const String issueLinkPrefix = 'https://github.com/flutter/flutter/issues/new';
+<<<<<<< HEAD
   const Set<String> stops = <String>{'\n', ' ', "'", '"', r'\', ')', '>'};
   assert(
     !stops.contains('.'),
   ); // instead of "visit https://foo." say "visit: https://foo", it copy-pastes better
+=======
+  const Set<String> stops = <String>{ '\n', ' ', "'", '"', r'\', ')', '>' };
+  assert(!stops.contains('.')); // instead of "visit https://foo." say "visit: https://", it copy-pastes better
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   const String kGiveTemplates =
       'Prefer to provide a link either to $issueLinkPrefix/choose (the list of issue '
       'templates) or to a specific template directly ($issueLinkPrefix?template=...).\n';
@@ -1610,6 +1686,7 @@ Future<void> verifyIssueLinks(String workingDirectory) async {
   }
 }
 
+<<<<<<< HEAD
 Future<void> verifyRepositoryLinks(String workingDirectory) async {
   const Set<String> stops = <String>{'\n', ' ', "'", '"', r'\', ')', '>'};
   assert(
@@ -1679,6 +1756,8 @@ Future<void> verifyRepositoryLinks(String workingDirectory) async {
   }
 }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 @immutable
 class Hash256 {
   const Hash256(this.a, this.b, this.c, this.d);
@@ -2131,7 +2210,7 @@ Future<void> verifyNoBinaries(String workingDirectory, {Set<Hash256>? legacyBina
         'to which you need access, you should consider how to fetch it from another repository;',
         'for example, the "assets-for-api-docs" repository is used for images in API docs.',
         'To add assets to flutter_tools templates, see the instructions in the wiki:',
-        'https://github.com/flutter/flutter/blob/main/docs/tool/Managing-template-image-assets.md',
+        'https://github.com/flutter/flutter/wiki/Managing-template-image-assets',
       ]);
     }
   }
@@ -2205,9 +2284,14 @@ Stream<File> _allFiles(
       if (_isGeneratedPluginRegistrant(entity)) {
         continue;
       }
-      switch (path.basename(entity.path)) {
-        case 'flutter_export_environment.sh' || 'gradlew.bat' || '.DS_Store':
-          continue;
+      if (path.basename(entity.path) == 'flutter_export_environment.sh') {
+        continue;
+      }
+      if (path.basename(entity.path) == 'gradlew.bat') {
+        continue;
+      }
+      if (path.basename(entity.path) == '.DS_Store') {
+        continue;
       }
       if (extension == null || path.extension(entity.path) == '.$extension') {
         matches += 1;
@@ -2217,9 +2301,23 @@ Stream<File> _allFiles(
       if (File(path.join(entity.path, '.dartignore')).existsSync()) {
         continue;
       }
-      switch (path.basename(entity.path)) {
-        case '.git' || '.idea' || '.gradle' || '.dart_tool' || 'build':
-          continue;
+      if (path.basename(entity.path) == '.git') {
+        continue;
+      }
+      if (path.basename(entity.path) == '.idea') {
+        continue;
+      }
+      if (path.basename(entity.path) == '.gradle') {
+        continue;
+      }
+      if (path.basename(entity.path) == '.dart_tool') {
+        continue;
+      }
+      if (path.basename(entity.path) == '.idea') {
+        continue;
+      }
+      if (path.basename(entity.path) == 'build') {
+        continue;
       }
       pending.addAll(entity.listSync());
     }
@@ -2450,15 +2548,23 @@ Future<void> verifyTabooDocumentation(String workingDirectory, {int minimumMatch
   }
   if (errors.isNotEmpty) {
     foundError(<String>[
+<<<<<<< HEAD
       ...errors,
       '',
       '${bold}Avoid the word "simply" in documentation. See https://github.com/flutter/flutter/blob/main/docs/contributing/Style-guide-for-Flutter-repo.md#use-the-passive-voice-recommend-do-not-require-never-say-things-are-simple for details.$reset',
       '${bold}In many cases these words can be omitted without loss of generality; in other cases it may require a bit of rewording to avoid implying that the task is simple.$reset',
       '${bold}Similarly, avoid using "note:" or the phrase "note that". See https://github.com/flutter/flutter/blob/main/docs/contributing/Style-guide-for-Flutter-repo.md#avoid-empty-prose for details.$reset',
+=======
+      '${bold}Avoid the word "simply" in documentation. See https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#use-the-passive-voice-recommend-do-not-require-never-say-things-are-simple for details.$reset',
+      '${bold}In many cases these words can be omitted without loss of generality; in other cases it may require a bit of rewording to avoid implying that the task is simple.$reset',
+      '${bold}Similarly, avoid using "note:" or the phrase "note that". See https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#avoid-empty-prose for details.$reset',
+      ...errors,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
   }
 }
 
+<<<<<<< HEAD
 Future<void> lintKotlinFiles(String workingDirectory) async {
   const String baselineRelativePath = 'dev/bots/test/analyze-test-input/ktlint-baseline.xml';
   const String editorConfigRelativePath = 'dev/bots/test/analyze-test-input/.editorconfig';
@@ -2479,6 +2585,12 @@ Future<void> lintKotlinFiles(String workingDirectory) async {
 }
 
 const List<String> _kIgnoreList = <String>['Runner.rc.tmpl', 'flutter_window.cpp'];
+=======
+const List<String> _kIgnoreList = <String>[
+  'Runner.rc.tmpl',
+  'flutter_window.cpp',
+];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 final String _kIntegrationTestsRelativePath = path.join('dev', 'integration_tests');
 final String _kTemplateRelativePath = path.join(
   'packages',

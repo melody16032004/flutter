@@ -237,11 +237,25 @@ class AnalysisError implements Comparable<AnalysisError> {
 
   String get _separator => _platform.isWindows ? '-' : '•';
 
+<<<<<<< HEAD
   String get colorSeverity => switch (writtenError.severityLevel) {
     AnalysisSeverity.error => _terminal.color(writtenError.severity, TerminalColor.red),
     AnalysisSeverity.warning => _terminal.color(writtenError.severity, TerminalColor.yellow),
     AnalysisSeverity.info || AnalysisSeverity.none => writtenError.severity,
   };
+=======
+  String get colorSeverity {
+    switch (writtenError.severityLevel) {
+      case AnalysisSeverity.error:
+        return _terminal.color(writtenError.severity, TerminalColor.red);
+      case AnalysisSeverity.warning:
+        return _terminal.color(writtenError.severity, TerminalColor.yellow);
+      case AnalysisSeverity.info:
+      case AnalysisSeverity.none:
+        return writtenError.severity;
+    }
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   String get type => writtenError.type;
   String get code => writtenError.code;

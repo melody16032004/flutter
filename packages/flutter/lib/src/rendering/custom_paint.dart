@@ -972,9 +972,6 @@ class RenderCustomPaint extends RenderProxyBox {
     if (properties.header != null) {
       config.isHeader = properties.header!;
     }
-    if (properties.headingLevel != null) {
-      config.headingLevel = properties.headingLevel!;
-    }
     if (properties.scopesRoute != null) {
       config.scopesRoute = properties.scopesRoute!;
     }
@@ -1070,9 +1067,6 @@ class RenderCustomPaint extends RenderProxyBox {
     }
     if (properties.onDidLoseAccessibilityFocus != null) {
       config.onDidLoseAccessibilityFocus = properties.onDidLoseAccessibilityFocus;
-    }
-    if (properties.onFocus != null) {
-      config.onFocus = properties.onFocus;
     }
     if (properties.onDismiss != null) {
       config.onDismiss = properties.onDismiss;

@@ -33,9 +33,7 @@ class RenderTestBox extends RenderBox {
 
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
-    if (!RenderObject.debugCheckingIntrinsics) {
-      calls += 1;
-    }
+    calls += 1;
     return boxSize.height / 2.0;
   }
 }
@@ -45,9 +43,7 @@ class RenderDryBaselineTestBox extends RenderTestBox {
 
   @override
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    if (!RenderObject.debugCheckingIntrinsics) {
-      calls += 1;
-    }
+    calls += 1;
     return baselineOverride ?? constraints.biggest.height / 2.0;
   }
 }
@@ -241,11 +237,17 @@ void main() {
       );
     });
 
+<<<<<<< HEAD
     test(
       'Catches inconsistencies between computeDryBaseline and computeDistanceToActualBaseline',
       () {
         final RenderDryBaselineTestBox test = RenderDryBaselineTestBox();
         layout(test, phase: EnginePhase.composite);
+=======
+    test('Cactches inconsistencies between computeDryBaseline and computeDistanceToActualBaseline', () {
+      final RenderDryBaselineTestBox test = RenderDryBaselineTestBox();
+      layout(test, phase: EnginePhase.composite);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         FlutterErrorDetails? error;
         test.markNeedsLayout();

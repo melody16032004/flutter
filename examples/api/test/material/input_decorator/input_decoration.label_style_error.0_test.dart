@@ -12,9 +12,13 @@ void main() {
     await tester.pumpWidget(const example.LabelStyleErrorExampleApp());
     final Theme theme = tester.firstWidget(find.byType(Theme));
 
+<<<<<<< HEAD
     final AnimatedDefaultTextStyle label = tester.firstWidget(
       find.ancestor(of: find.text('Name'), matching: find.byType(AnimatedDefaultTextStyle)),
     );
+=======
+    final AnimatedDefaultTextStyle label = tester.firstWidget(find.ancestor(of: find.text('Name'), matching: find.byType(AnimatedDefaultTextStyle)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(label.style.color, theme.data.colorScheme.error);
   });
 }

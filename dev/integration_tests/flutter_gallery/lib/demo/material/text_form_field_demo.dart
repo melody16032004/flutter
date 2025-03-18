@@ -140,7 +140,7 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
     return null;
   }
 
-  Future<void> _handlePopInvoked(bool didPop, Object? result) async {
+  Future<void> _handlePopInvoked(bool didPop) async {
     if (didPop) {
       return;
     }
@@ -192,9 +192,14 @@ class TextFormFieldDemoState extends State<TextFormFieldDemo> {
         child: Form(
           key: _formKey,
           autovalidateMode: _autovalidateMode,
+<<<<<<< HEAD
           canPop:
               _formKey.currentState == null || !_formWasEdited || _formKey.currentState!.validate(),
           onPopInvokedWithResult: _handlePopInvoked,
+=======
+          canPop: _formKey.currentState == null || !_formWasEdited || _formKey.currentState!.validate(),
+          onPopInvoked: _handlePopInvoked,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           child: Scrollbar(
             child: SingleChildScrollView(
               primary: true,

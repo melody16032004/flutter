@@ -24,7 +24,16 @@ void main() {
     tryToDelete(tempDir);
   });
 
+<<<<<<< HEAD
   test('plugins use individualized build directories based on their name.', () async {
+=======
+  test("error logged when plugin's build output dir was not private.", () async {
+    final String flutterBin = fileSystem.path.join(
+      getFlutterRoot(),
+      'bin',
+      'flutter',
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     // create flutter module project
     ProcessResult result = processManager.runSync(<String>[
       flutterBin,

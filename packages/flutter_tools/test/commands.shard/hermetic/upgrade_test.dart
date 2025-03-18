@@ -190,10 +190,53 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testUsingContext(
     'do not push people from beta to anything else',
     () async {
       final Completer<void> reEntryCompleter = Completer<void>();
+=======
+      const FakeCommand(
+        command: <String>['git', 'tag', '--points-at', 'HEAD'],
+        stdout: latestUpstreamTag,
+      ),
+      const FakeCommand(
+        command: <String>['bin/flutter', '--no-color', '--no-version-check', 'precache'],
+      ),
+      const FakeCommand(
+        command: <String>['bin/flutter', '--no-version-check', 'doctor'],
+      ),
+    ]);
+    await runner.run(<String>['upgrade']);
+    expect(processManager, hasNoRemainingExpectations);
+    expect(logger.statusText,
+      'Upgrading Flutter to 3.1.0 from 3.0.0 in ${Cache.flutterRoot}...\n'
+      '\n'
+      'Upgrading engine...\n'
+      '\n'
+      "Instance of 'FakeFlutterVersion'\n" // the real FlutterVersion has a better toString, heh
+      '\n'
+      'Running flutter doctor...\n'
+      '\n'
+      'This channel is intended for Flutter contributors. This channel is not as thoroughly '
+      'tested as the "beta" and "stable" channels. We do not recommend using this channel '
+      'for normal use as it more likely to contain serious regressions.\n'
+      '\n'
+      'For information on contributing to Flutter, see our contributing guide:\n'
+      '    https://github.com/flutter/flutter/blob/master/CONTRIBUTING.md\n'
+      '\n'
+      'For the most up to date stable version of flutter, consider using the "beta" channel '
+      'instead. The Flutter "beta" channel enjoys all the same automated testing as the '
+      '"stable" channel, but is updated roughly once a month instead of once a quarter.\n'
+      'To change channel, run the "flutter channel beta" command.\n'
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    FlutterVersion: () => FakeFlutterVersion(frameworkVersion: startingTag, engineRevision: 'engine'),
+    Logger: () => logger,
+    ProcessManager: () => processManager,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       Future<void> reEnterTool(List<String> command) async {
         await runner.run(<String>['upgrade', '--continue', '--no-version-check']);

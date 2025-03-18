@@ -171,9 +171,8 @@ void main() {
 
         await showMagnifier(context, tester, magnifierInfo);
 
-        // Should show two red crossed-out squares: the original in the center,
-        // and one in the magnifier, in the upper half of the image, surrounded
-        // by a faint offset rounded rectangle shadow.
+        // Should show two red squares; original, and one in the magnifier,
+        // directly ontop of one another.
         await expectLater(
           find.byType(MaterialApp),
           matchesGoldenFile('magnifier.position.default.png'),

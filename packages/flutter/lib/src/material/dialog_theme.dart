@@ -335,7 +335,6 @@ class DialogThemeData with Diagnosticable {
     this.actionsPadding,
     this.barrierColor,
     this.insetPadding,
-    this.clipBehavior,
   });
 
   /// Overrides the default value for [Dialog.backgroundColor].
@@ -376,9 +375,6 @@ class DialogThemeData with Diagnosticable {
   /// Overrides the default value for [Dialog.insetPadding].
   final EdgeInsets? insetPadding;
 
-  /// Overrides the default value of [Dialog.clipBehavior].
-  final Clip? clipBehavior;
-
   /// Creates a copy of this object but with the given fields replaced with the
   /// new values.
   DialogThemeData copyWith({
@@ -394,7 +390,6 @@ class DialogThemeData with Diagnosticable {
     EdgeInsetsGeometry? actionsPadding,
     Color? barrierColor,
     EdgeInsets? insetPadding,
-    Clip? clipBehavior,
   }) {
     return DialogThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -409,7 +404,6 @@ class DialogThemeData with Diagnosticable {
       actionsPadding: actionsPadding ?? this.actionsPadding,
       barrierColor: barrierColor ?? this.barrierColor,
       insetPadding: insetPadding ?? this.insetPadding,
-      clipBehavior: clipBehavior ?? this.clipBehavior,
     );
   }
 
@@ -433,7 +427,6 @@ class DialogThemeData with Diagnosticable {
       actionsPadding: EdgeInsetsGeometry.lerp(a?.actionsPadding, b?.actionsPadding, t),
       barrierColor: Color.lerp(a?.barrierColor, b?.barrierColor, t),
       insetPadding: EdgeInsets.lerp(a?.insetPadding, b?.insetPadding, t),
-      clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
     );
   }
 
@@ -451,7 +444,10 @@ class DialogThemeData with Diagnosticable {
     actionsPadding,
     barrierColor,
     insetPadding,
+<<<<<<< HEAD
     clipBehavior,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ]);
 
   @override
@@ -462,6 +458,7 @@ class DialogThemeData with Diagnosticable {
     if (other.runtimeType != runtimeType) {
       return false;
     }
+<<<<<<< HEAD
     return other is DialogThemeData &&
         other.backgroundColor == backgroundColor &&
         other.elevation == elevation &&
@@ -476,6 +473,21 @@ class DialogThemeData with Diagnosticable {
         other.barrierColor == barrierColor &&
         other.insetPadding == insetPadding &&
         other.clipBehavior == clipBehavior;
+=======
+    return other is DialogTheme
+        && other.backgroundColor == backgroundColor
+        && other.elevation == elevation
+        && other.shadowColor == shadowColor
+        && other.surfaceTintColor == surfaceTintColor
+        && other.shape == shape
+        && other.alignment == alignment
+        && other.iconColor == iconColor
+        && other.titleTextStyle == titleTextStyle
+        && other.contentTextStyle == contentTextStyle
+        && other.actionsPadding == actionsPadding
+        && other.barrierColor == barrierColor
+        && other.insetPadding == insetPadding;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -486,6 +498,7 @@ class DialogThemeData with Diagnosticable {
     properties.add(ColorProperty('shadowColor', shadowColor, defaultValue: null));
     properties.add(ColorProperty('surfaceTintColor', surfaceTintColor, defaultValue: null));
     properties.add(DiagnosticsProperty<ShapeBorder>('shape', shape, defaultValue: null));
+<<<<<<< HEAD
     properties.add(
       DiagnosticsProperty<AlignmentGeometry>('alignment', alignment, defaultValue: null),
     );
@@ -504,5 +517,14 @@ class DialogThemeData with Diagnosticable {
       DiagnosticsProperty<EdgeInsets>('insetPadding', insetPadding, defaultValue: null),
     );
     properties.add(DiagnosticsProperty<Clip>('clipBehavior', clipBehavior, defaultValue: null));
+=======
+    properties.add(DiagnosticsProperty<AlignmentGeometry>('alignment', alignment, defaultValue: null));
+    properties.add(ColorProperty('iconColor', iconColor));
+    properties.add(DiagnosticsProperty<TextStyle>('titleTextStyle', titleTextStyle, defaultValue: null));
+    properties.add(DiagnosticsProperty<TextStyle>('contentTextStyle', contentTextStyle, defaultValue: null));
+    properties.add(DiagnosticsProperty<EdgeInsetsGeometry>('actionsPadding', actionsPadding, defaultValue: null));
+    properties.add(ColorProperty('barrierColor', barrierColor));
+    properties.add(DiagnosticsProperty<EdgeInsets>('insetPadding', insetPadding, defaultValue: null));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }

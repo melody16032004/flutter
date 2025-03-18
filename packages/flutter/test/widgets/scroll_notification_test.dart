@@ -283,6 +283,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(notification, isNull);
   });
+<<<<<<< HEAD
 
   testWidgets('ScrollBar thumb drag triggers scroll start-update-end notifications', (
     WidgetTester tester,
@@ -343,4 +344,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(notification, isA<ScrollEndNotification>());
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

@@ -49,7 +49,17 @@ void main() {
       processManager: processManager,
       stdio: stdio,
     );
+<<<<<<< HEAD
     framework = FrameworkRepository(checkouts, mirrorRemote: const Remote.mirror(mirrorUrl));
+=======
+    framework = FrameworkRepository(
+      checkouts,
+      mirrorRemote: const Remote(
+        name: RemoteName.mirror,
+        url: mirrorUrl,
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     autoroller = PackageAutoroller(
       githubClient: githubClient,

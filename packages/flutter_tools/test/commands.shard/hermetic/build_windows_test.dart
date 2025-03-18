@@ -41,7 +41,7 @@ final Platform notWindowsPlatform = FakePlatform(
 );
 
 void main() {
-  late MemoryFileSystem fileSystem;
+  late FileSystem fileSystem;
   late ProcessManager processManager;
   late FakeAnalytics fakeAnalytics;
 
@@ -151,6 +151,7 @@ void main() {
       )..visualStudioOverride = fakeVisualStudio;
       setUpMockCoreProjectFiles();
 
+<<<<<<< HEAD
       expect(
         createTestCommandRunner(command).run(const <String>['windows', '--no-pub']),
         throwsToolExit(
@@ -168,6 +169,19 @@ void main() {
       FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true),
     },
   );
+=======
+    expect(createTestCommandRunner(command).run(
+      const <String>['windows', '--no-pub']
+    ), throwsToolExit(message: 'No Windows desktop project configured. See '
+      'https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding Windows support to a project.'));
+  }, overrides: <Type, Generator>{
+    Platform: () => windowsPlatform,
+    FileSystem: () => fileSystem,
+    ProcessManager: () => FakeProcessManager.any(),
+    FeatureFlags: () => TestFeatureFlags(isWindowsEnabled: true),
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Windows build fails on non windows platform',

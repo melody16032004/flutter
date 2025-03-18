@@ -195,6 +195,7 @@ class StartContext extends Context {
     required super.stateFile,
     this.force = false,
     this.versionOverride,
+<<<<<<< HEAD
   }) : git = Git(processManager),
        engine = EngineRepository(
          checkouts,
@@ -208,6 +209,33 @@ class StartContext extends Context {
          upstreamRemote: Remote.upstream(frameworkUpstream),
          mirrorRemote: Remote.mirror(frameworkMirror),
        );
+=======
+  })  : git = Git(processManager),
+        engine = EngineRepository(
+          checkouts,
+          initialRef: 'upstream/$candidateBranch',
+          upstreamRemote: Remote(
+            name: RemoteName.upstream,
+            url: engineUpstream,
+          ),
+          mirrorRemote: Remote(
+            name: RemoteName.mirror,
+            url: engineMirror,
+          ),
+        ),
+        framework = FrameworkRepository(
+          checkouts,
+          initialRef: 'upstream/$candidateBranch',
+          upstreamRemote: Remote(
+            name: RemoteName.upstream,
+            url: frameworkUpstream,
+          ),
+          mirrorRemote: Remote(
+            name: RemoteName.mirror,
+            url: frameworkMirror,
+          ),
+        );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final String candidateBranch;
   final String? dartRevision;
@@ -236,16 +264,25 @@ class StartContext extends Context {
     if (atBranchPoint) {
       return ReleaseType.BETA_INITIAL;
     }
-    if (releaseChannel != 'stable') {
-      return ReleaseType.BETA_HOTFIX;
+
+    if (releaseChannel == 'stable') {
+      if (lastVersion.type == VersionType.stable) {
+        return ReleaseType.STABLE_HOTFIX;
+      } else {
+        return ReleaseType.STABLE_INITIAL;
+      }
     }
 
+<<<<<<< HEAD
     return switch (lastVersion.type) {
       VersionType.stable => ReleaseType.STABLE_HOTFIX,
       VersionType.development ||
       VersionType.gitDescribe ||
       VersionType.latest => ReleaseType.STABLE_INITIAL,
     };
+=======
+    return ReleaseType.BETA_HOTFIX;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   Future<void> run() async {
@@ -366,6 +403,7 @@ class StartContext extends Context {
 
   /// Determine this release's version number from the [lastVersion] and the [incrementLetter].
   Version calculateNextVersion(Version lastVersion, ReleaseType releaseType) {
+<<<<<<< HEAD
     return switch (releaseType) {
       ReleaseType.STABLE_INITIAL => Version(
         x: lastVersion.x,
@@ -377,6 +415,25 @@ class StartContext extends Context {
       ReleaseType.BETA_INITIAL => Version.fromCandidateBranch(candidateBranch),
       ReleaseType.BETA_HOTFIX || _ => Version.increment(lastVersion, 'n'),
     };
+=======
+    late final Version nextVersion;
+    switch (releaseType) {
+      case ReleaseType.STABLE_INITIAL:
+        nextVersion = Version(
+          x: lastVersion.x,
+          y: lastVersion.y,
+          z: 0,
+          type: VersionType.stable,
+        );
+      case ReleaseType.STABLE_HOTFIX:
+        nextVersion = Version.increment(lastVersion, 'z');
+      case ReleaseType.BETA_INITIAL:
+        nextVersion = Version.fromCandidateBranch(candidateBranch);
+      case ReleaseType.BETA_HOTFIX:
+        nextVersion = Version.increment(lastVersion, 'n');
+    }
+    return nextVersion;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Ensures the branch point [candidateBranch] and `master` has a version tag.

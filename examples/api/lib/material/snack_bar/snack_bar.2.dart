@@ -15,7 +15,19 @@ class SnackBarExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return MaterialApp(theme: ThemeData(useMaterial3: true), home: const SnackBarExample());
+=======
+    return MaterialApp(
+      theme: ThemeData(useMaterial3: true),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('SnackBar Sample')),
+        body: const Center(
+          child: SnackBarExample(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 
@@ -34,25 +46,24 @@ class _SnackBarExampleState extends State<SnackBarExample> {
   bool _longActionLabel = false;
   double _sliderValue = 0.25;
 
+  Padding _padRow(List<Widget> children) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(children: children),
+      );
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('SnackBar Sample')),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(_snackBar());
-        },
-        icon: const Icon(Icons.play_arrow),
-        label: const Text('Show Snackbar'),
-      ),
-      body: ListView(
+    return Padding(
+      padding: const EdgeInsets.only(left: 50.0),
+      child: Column(
         children: <Widget>[
-          ExpansionTile(
-            title: const Text('Behavior'),
-            initiallyExpanded: true,
-            children: <Widget>[
-              RadioListTile<SnackBarBehavior>(
-                title: const Text('Fixed'),
+          _padRow(<Widget>[
+            Text('Snack Bar configuration', style: Theme.of(context).textTheme.bodyLarge),
+          ]),
+          _padRow(
+            <Widget>[
+              const Text('Fixed'),
+              Radio<SnackBarBehavior>(
                 value: SnackBarBehavior.fixed,
                 groupValue: _snackBarBehavior,
                 onChanged: (SnackBarBehavior? value) {
@@ -61,8 +72,8 @@ class _SnackBarExampleState extends State<SnackBarExample> {
                   });
                 },
               ),
-              RadioListTile<SnackBarBehavior>(
-                title: const Text('Floating'),
+              const Text('Floating'),
+              Radio<SnackBarBehavior>(
                 value: SnackBarBehavior.floating,
                 groupValue: _snackBarBehavior,
                 onChanged: (SnackBarBehavior? value) {
@@ -73,40 +84,35 @@ class _SnackBarExampleState extends State<SnackBarExample> {
               ),
             ],
           ),
-          ExpansionTile(
-            title: const Text('Content'),
-            initiallyExpanded: true,
-            children: <Widget>[
-              SwitchListTile(
-                title: const Text('Include close Icon'),
+          _padRow(
+            <Widget>[
+              const Text('Include Icon '),
+              Switch(
                 value: _withIcon,
                 onChanged: (bool value) {
                   setState(() {
-                    _withIcon = value;
+                    _withIcon = !_withIcon;
                   });
                 },
               ),
-              SwitchListTile(
-                title: const Text('Multi Line Text'),
-                value: _multiLine,
-                onChanged: (bool value) {
-                  setState(() {
-                    _multiLine = value;
-                  });
-                },
-              ),
-              SwitchListTile(
-                title: const Text('Include Action'),
+            ],
+          ),
+          _padRow(
+            <Widget>[
+              const Text('Include Action '),
+              Switch(
                 value: _withAction,
                 onChanged: (bool value) {
                   setState(() {
-                    _withAction = value;
+                    _withAction = !_withAction;
                   });
                 },
               ),
-              SwitchListTile(
-                title: const Text('Long Action Label'),
+              const SizedBox(width: 16.0),
+              const Text('Long Action Label '),
+              Switch(
                 value: _longActionLabel,
+<<<<<<< HEAD
                 onChanged:
                     !_withAction
                         ? null
@@ -133,12 +139,62 @@ class _SnackBarExampleState extends State<SnackBarExample> {
           ),
           // Avoid hiding content behind the floating action button
           const SizedBox(height: 100),
+=======
+                onChanged: !_withAction
+                    ? null
+                    : (bool value) {
+                        setState(() {
+                          _longActionLabel = !_longActionLabel;
+                        });
+                      },
+              ),
+            ],
+          ),
+          _padRow(
+            <Widget>[
+              const Text('Multi Line Text'),
+              Switch(
+                value: _multiLine,
+                onChanged: _snackBarBehavior == SnackBarBehavior.fixed
+                    ? null
+                    : (bool value) {
+                        setState(() {
+                          _multiLine = !_multiLine;
+                        });
+                      },
+              ),
+            ],
+          ),
+          _padRow(<Widget>[
+            const Text('Action new-line overflow threshold'),
+            Slider(
+              value: _sliderValue,
+              divisions: 20,
+              label: _sliderValue.toStringAsFixed(2),
+              onChanged: _snackBarBehavior == SnackBarBehavior.fixed
+                  ? null
+                  : (double value) {
+                      setState(() {
+                        _sliderValue = value;
+                      });
+                    },
+            ),
+          ]),
+          const SizedBox(height: 16.0),
+          ElevatedButton(
+            child: const Text('Show Snackbar'),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(_snackBar());
+            },
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ],
       ),
     );
   }
 
   SnackBar _snackBar() {
+<<<<<<< HEAD
     final SnackBarAction? action =
         _withAction
             ? SnackBarAction(
@@ -155,6 +211,19 @@ class _SnackBarExampleState extends State<SnackBarExample> {
                 'lines. You can look at how the Action Label moves around when trying '
                 'to layout this text.'
             : 'Single Line Snack Bar';
+=======
+    final SnackBarAction? action = _withAction
+        ? SnackBarAction(
+            label: _longActionLabel ? 'Long Action Text' : 'Action',
+            onPressed: () {
+              // Code to execute.
+            },
+          )
+        : null;
+    final double? width = _snackBarBehavior == SnackBarBehavior.floating && _multiLine ? 400.0 : null;
+    final String label =
+        _multiLine ? 'A Snack Bar with quite a lot of text which spans across multiple lines' : 'Single Line Snack Bar';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return SnackBar(
       content: Text(label),
       showCloseIcon: _withIcon,

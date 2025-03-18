@@ -649,9 +649,17 @@ void main() {
         final TestImageProvider placeholderProvider = TestImageProvider(placeholderImage);
         final TestImageProvider imageProvider = TestImageProvider(targetImage);
 
+<<<<<<< HEAD
         await tester.pumpWidget(
           FadeInImage(placeholder: placeholderProvider, image: imageProvider),
         );
+=======
+        await tester.pumpWidget(FadeInImage(
+          placeholder: placeholderProvider,
+          image: imageProvider,
+          filterQuality: FilterQuality.medium,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(
           findFadeInImage(tester).placeholder!.filterQuality,
@@ -664,6 +672,7 @@ void main() {
         final TestImageProvider placeholderProvider = TestImageProvider(placeholderImage);
         final TestImageProvider imageProvider = TestImageProvider(targetImage);
 
+<<<<<<< HEAD
         await tester.pumpWidget(
           FadeInImage(
             placeholder: placeholderProvider,
@@ -671,6 +680,14 @@ void main() {
             placeholderFilterQuality: FilterQuality.high,
           ),
         );
+=======
+        await tester.pumpWidget(FadeInImage(
+          placeholder: placeholderProvider,
+          image: imageProvider,
+          filterQuality: FilterQuality.medium,
+          placeholderFilterQuality: FilterQuality.high,
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         expect(findFadeInImage(tester).target.filterQuality, equals(FilterQuality.medium));
         expect(findFadeInImage(tester).placeholder!.filterQuality, equals(FilterQuality.high));

@@ -133,14 +133,20 @@ class KernelSnapshot extends Target {
   const KernelSnapshot();
 
   @override
-  String get name => 'kernel_snapshot_program';
+  String get name => 'kernel_snapshot';
 
   @override
   List<Source> get inputs => const <Source>[
+<<<<<<< HEAD
     Source.pattern('{WORKSPACE_DIR}/.dart_tool/package_config_subset'),
     Source.pattern(
       '{FLUTTER_ROOT}/packages/flutter_tools/lib/src/build_system/targets/common.dart',
     ),
+=======
+    Source.pattern('{BUILD_DIR}/native_assets.yaml'),
+    Source.pattern('{PROJECT_DIR}/.dart_tool/package_config_subset'),
+    Source.pattern('{FLUTTER_ROOT}/packages/flutter_tools/lib/src/build_system/targets/common.dart'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     Source.artifact(Artifact.platformKernelDill),
     Source.artifact(Artifact.engineDartBinary),
     Source.artifact(Artifact.engineDartAotRuntime),
@@ -148,6 +154,7 @@ class KernelSnapshot extends Target {
   ];
 
   @override
+<<<<<<< HEAD
   List<Source> get outputs => const <Source>[
     Source.pattern('{BUILD_DIR}/${KernelSnapshot.dillName}'),
     // TODO(mosuem): Should output resources.json. https://github.com/flutter/flutter/issues/146263
@@ -157,15 +164,27 @@ class KernelSnapshot extends Target {
 
   @override
   List<String> get depfiles => const <String>[depfile];
+=======
+  List<Source> get outputs => const <Source>[];
+
+  @override
+  List<String> get depfiles => <String>[
+    'kernel_snapshot.d',
+  ];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   List<Target> get dependencies => const <Target>[
+    NativeAssets(),
     GenerateLocalizationsTarget(),
     DartPluginRegistrantTarget(),
   ];
 
+<<<<<<< HEAD
   static const String dillName = 'app.dill';
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   Future<void> build(Environment environment) async {
     final KernelCompiler compiler = KernelCompiler(
@@ -200,6 +219,13 @@ class KernelSnapshot extends Target {
     );
     final List<String>? fileSystemRoots = environment.defines[kFileSystemRoots]?.split(',');
     final String? fileSystemScheme = environment.defines[kFileSystemScheme];
+
+    final File nativeAssetsFile = environment.buildDir.childFile('native_assets.yaml');
+    final String nativeAssets = nativeAssetsFile.path;
+    if (!await nativeAssetsFile.exists()) {
+      throwToolExit("$nativeAssets doesn't exist.");
+    }
+    environment.logger.printTrace('Embedding native assets mapping $nativeAssets in kernel.');
 
     TargetModel targetModel = TargetModel.flutter;
     if (targetPlatform == TargetPlatform.fuchsia_x64 ||
@@ -249,8 +275,6 @@ class KernelSnapshot extends Target {
       logger: environment.logger,
     );
 
-    final String dillPath = environment.buildDir.childFile(dillName).path;
-
     final CompilerOutput? output = await compiler.compile(
       sdkRoot: environment.artifacts.getArtifactPath(
         Artifact.flutterPatchedSdkPath,
@@ -261,12 +285,13 @@ class KernelSnapshot extends Target {
       buildMode: buildMode,
       trackWidgetCreation: trackWidgetCreation && buildMode != BuildMode.release,
       targetModel: targetModel,
-      outputFilePath: dillPath,
-      initializeFromDill: buildMode.isPrecompiled ? null : dillPath,
+      outputFilePath: environment.buildDir.childFile('app.dill').path,
+      initializeFromDill: buildMode.isPrecompiled ? null :
+          environment.buildDir.childFile('app.dill').path,
       packagesPath: packagesFile.path,
       linkPlatformKernelIn: forceLinkPlatform || buildMode.isPrecompiled,
       mainPath: targetFileAbsolute,
-      depFilePath: environment.buildDir.childFile(depfile).path,
+      depFilePath: environment.buildDir.childFile('kernel_snapshot.d').path,
       frontendServerStarterPath: frontendServerStarterPath,
       extraFrontEndOptions: extraFrontEndOptions,
       fileSystemRoots: fileSystemRoots,
@@ -276,6 +301,10 @@ class KernelSnapshot extends Target {
       buildDir: environment.buildDir,
       targetOS: targetOS,
       checkDartPluginRegistry: environment.generateDartPluginRegistry,
+<<<<<<< HEAD
+=======
+      nativeAssets: nativeAssets,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     if (output == null || output.errorCount != 0) {
       throw Exception();

@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/widgets.dart';
 /// @docImport 'package:flutter_test/flutter_test.dart';
 library;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'dart:ui' as ui show lerpDouble;
 
@@ -431,10 +434,9 @@ class AnimationController extends Animation<double>
     } else if (_value == upperBound) {
       _status = AnimationStatus.completed;
     } else {
-      _status = switch (_direction) {
-        _AnimationDirection.forward => AnimationStatus.forward,
-        _AnimationDirection.reverse => AnimationStatus.reverse,
-      };
+      _status = (_direction == _AnimationDirection.forward) ?
+        AnimationStatus.forward :
+        AnimationStatus.reverse;
     }
   }
 
@@ -451,11 +453,14 @@ class AnimationController extends Animation<double>
   /// controller's ticker might get muted, in which case the animation
   /// controller's callbacks will no longer fire even though time is continuing
   /// to pass. See [Ticker.muted] and [TickerMode].
+<<<<<<< HEAD
   ///
   /// If the animation was stopped (e.g. with [stop] or by setting a new [value]),
   /// [isAnimating] will return `false` but the [status] will not change,
   /// so the value of [AnimationStatus.isAnimating] might still be `true`.
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool get isAnimating => _ticker != null && _ticker!.isActive;
 
   _AnimationDirection _direction;
@@ -467,9 +472,6 @@ class AnimationController extends Animation<double>
   /// Starts running this animation forwards (towards the end).
   ///
   /// Returns a [TickerFuture] that completes when the animation is complete.
-  ///
-  /// If [from] is non-null, it will be set as the current [value] before running
-  /// the animation.
   ///
   /// The most recently returned [TickerFuture], if any, is marked as having been
   /// canceled, meaning the future never completes and its [TickerFuture.orCancel]
@@ -505,9 +507,6 @@ class AnimationController extends Animation<double>
   ///
   /// Returns a [TickerFuture] that completes when the animation is dismissed.
   ///
-  /// If [from] is non-null, it will be set as the current [value] before running
-  /// the animation.
-  ///
   /// The most recently returned [TickerFuture], if any, is marked as having been
   /// canceled, meaning the future never completes and its [TickerFuture.orCancel]
   /// derivative future completes with a [TickerCanceled] error.
@@ -538,6 +537,7 @@ class AnimationController extends Animation<double>
     return _animateToInternal(lowerBound);
   }
 
+<<<<<<< HEAD
   /// Toggles the direction of this animation, based on whether it [isForwardOrCompleted].
   ///
   /// Specifically, this function acts the same way as [reverse] if the [status] is
@@ -581,6 +581,9 @@ class AnimationController extends Animation<double>
   }
 
   /// Drives the animation from its current value to the given target, "forward".
+=======
+  /// Drives the animation from its current value to target.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ///
   /// Returns a [TickerFuture] that completes when the animation is complete.
   ///
@@ -1011,11 +1014,13 @@ class _InterpolationSimulation extends Simulation {
   @override
   double x(double timeInSeconds) {
     final double t = clampDouble(timeInSeconds / _durationInSeconds, 0.0, 1.0);
-    return switch (t) {
-      0.0 => _begin,
-      1.0 => _end,
-      _ => _begin + (_end - _begin) * _curve.transform(t),
-    };
+    if (t == 0.0) {
+      return _begin;
+    } else if (t == 1.0) {
+      return _end;
+    } else {
+      return _begin + (_end - _begin) * _curve.transform(t);
+    }
   }
 
   @override

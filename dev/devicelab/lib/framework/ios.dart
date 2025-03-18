@@ -155,13 +155,6 @@ Future<bool> runXcodeTests({
     codeSignStyle = environment['FLUTTER_XCODE_CODE_SIGN_STYLE'];
     provisioningProfile = environment['FLUTTER_XCODE_PROVISIONING_PROFILE_SPECIFIER'];
   }
-  File? disabledSandboxEntitlementFile;
-  if (platformDirectory.endsWith('macos')) {
-    disabledSandboxEntitlementFile = _createDisabledSandboxEntitlementFile(
-      platformDirectory,
-      configuration,
-    );
-  }
   final String resultBundleTemp = Directory.systemTemp.createTempSync('flutter_xcresult.').path;
   final String resultBundlePath = path.join(resultBundleTemp, 'result');
   final int testResultExit = await exec(
@@ -179,11 +172,20 @@ Future<bool> runXcodeTests({
       resultBundlePath,
       'test',
       'COMPILER_INDEX_STORE_ENABLE=NO',
+<<<<<<< HEAD
       if (developmentTeam != null) 'DEVELOPMENT_TEAM=$developmentTeam',
       if (codeSignStyle != null) 'CODE_SIGN_STYLE=$codeSignStyle',
       if (provisioningProfile != null) 'PROVISIONING_PROFILE_SPECIFIER=$provisioningProfile',
       if (disabledSandboxEntitlementFile != null)
         'CODE_SIGN_ENTITLEMENTS=${disabledSandboxEntitlementFile.path}',
+=======
+      if (developmentTeam != null)
+        'DEVELOPMENT_TEAM=$developmentTeam',
+      if (codeSignStyle != null)
+        'CODE_SIGN_STYLE=$codeSignStyle',
+      if (provisioningProfile != null)
+        'PROVISIONING_PROFILE_SPECIFIER=$provisioningProfile',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ],
     workingDirectory: platformDirectory,
     canFail: true,
@@ -213,6 +215,7 @@ Future<bool> runXcodeTests({
   }
   return true;
 }
+<<<<<<< HEAD
 
 /// Finds and copies macOS entitlements file. In the copy, disables sandboxing.
 /// If entitlements file is not found, returns null.
@@ -267,3 +270,5 @@ File? _createDisabledSandboxEntitlementFile(String platformDirectory, String con
 Future<String> dumpSymbolTable(String filePath) {
   return eval('nm', <String>['--extern-only', '--just-symbol-name', filePath, '-arch', 'arm64']);
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

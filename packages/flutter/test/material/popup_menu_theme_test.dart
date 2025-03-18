@@ -26,7 +26,6 @@ PopupMenuThemeData _popupMenuThemeM3() {
   return PopupMenuThemeData(
     color: Colors.orange,
     shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
-    menuPadding: const EdgeInsets.symmetric(vertical: 9.0),
     elevation: 12.0,
     shadowColor: const Color(0xff00ff00),
     surfaceTintColor: const Color(0xff00ff00),
@@ -63,7 +62,6 @@ void main() {
     const PopupMenuThemeData popupMenuTheme = PopupMenuThemeData();
     expect(popupMenuTheme.color, null);
     expect(popupMenuTheme.shape, null);
-    expect(popupMenuTheme.menuPadding, null);
     expect(popupMenuTheme.elevation, null);
     expect(popupMenuTheme.shadowColor, null);
     expect(popupMenuTheme.surfaceTintColor, null);
@@ -91,7 +89,6 @@ void main() {
     PopupMenuThemeData(
       color: const Color(0xfffffff1),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(2.0))),
-      menuPadding: const EdgeInsets.symmetric(vertical: 12.0),
       elevation: 2.0,
       shadowColor: const Color(0xfffffff2),
       surfaceTintColor: const Color(0xfffffff3),
@@ -118,7 +115,6 @@ void main() {
     expect(description, <String>[
       'color: ${const Color(0xfffffff1)}',
       'shape: RoundedRectangleBorder(BorderSide(width: 0.0, style: none), BorderRadius.circular(2.0))',
-      'menuPadding: EdgeInsets(0.0, 12.0, 0.0, 12.0)',
       'elevation: 2.0',
       'shadowColor: ${const Color(0xfffffff2)}',
       'surfaceTintColor: ${const Color(0xfffffff3)}',
@@ -242,12 +238,15 @@ void main() {
     // Test checked CheckedPopupMenuItem label.
     listTile = tester.widget<ListTile>(find.byType(ListTile).last);
     expect(listTile.titleTextStyle?.color, theme.colorScheme.onSurface);
+<<<<<<< HEAD
 
     // Check popup menu padding.
     final SingleChildScrollView popupMenu = tester.widget<SingleChildScrollView>(
       find.byType(SingleChildScrollView),
     );
     expect(popupMenu.padding, const EdgeInsets.symmetric(vertical: 8.0));
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWidgets('Popup menu uses values from PopupMenuThemeData', (WidgetTester tester) async {
@@ -357,12 +356,15 @@ void main() {
     // Test checked CheckedPopupMenuItem label.
     listTile = tester.widget<ListTile>(find.byType(ListTile).last);
     expect(listTile.titleTextStyle, popupMenuTheme.labelTextStyle?.resolve(enabled));
+<<<<<<< HEAD
 
     // Check popup menu padding.
     final SingleChildScrollView popupMenu = tester.widget<SingleChildScrollView>(
       find.byType(SingleChildScrollView),
     );
     expect(popupMenu.padding, popupMenuTheme.menuPadding);
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWidgets('Popup menu widget properties take priority over theme', (WidgetTester tester) async {
@@ -377,13 +379,13 @@ void main() {
     const ShapeBorder shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(9.0)),
     );
-    const EdgeInsets menuPadding = EdgeInsets.zero;
     const double elevation = 7.0;
     const TextStyle textStyle = TextStyle(color: Color(0xfff14fff), fontSize: 19.0);
     const MouseCursor cursor = SystemMouseCursors.forbidden;
     const Color iconColor = Color(0xfff15fff);
     const double iconSize = 21.5;
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       MaterialApp(
         theme: ThemeData(useMaterial3: true, popupMenuTheme: popupMenuTheme),
@@ -419,6 +421,40 @@ void main() {
               ),
             ],
           ),
+=======
+    await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(useMaterial3: true, popupMenuTheme: popupMenuTheme),
+      key: popupButtonApp,
+      home: Material(
+        child: Column(
+          children: <Widget>[
+            PopupMenuButton<void>(
+              key: popupButtonKey,
+              elevation: elevation,
+              shadowColor: shadowColor,
+              surfaceTintColor: surfaceTintColor,
+              color: color,
+              shape: shape,
+              iconColor: iconColor,
+              iconSize: iconSize,
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuEntry<void>>[
+                  PopupMenuItem<void>(
+                    key: popupItemKey,
+                    labelTextStyle: MaterialStateProperty.all<TextStyle>(textStyle),
+                    mouseCursor: cursor,
+                    child: const Text('Example'),
+                  ),
+                  CheckedPopupMenuItem<void>(
+                    checked: true,
+                    labelTextStyle: MaterialStateProperty.all<TextStyle>(textStyle),
+                    child: const Text('Checked item'),
+                  )
+                ];
+              },
+            ),
+          ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       ),
     );
@@ -461,12 +497,15 @@ void main() {
     // Test CheckedPopupMenuItem label.
     final ListTile listTile = tester.widget<ListTile>(find.byType(ListTile).first);
     expect(listTile.titleTextStyle, textStyle);
+<<<<<<< HEAD
 
     // Check popup menu padding.
     final SingleChildScrollView popupMenu = tester.widget<SingleChildScrollView>(
       find.byType(SingleChildScrollView),
     );
     expect(popupMenu.padding, EdgeInsets.zero);
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   group('Material 2', () {
@@ -575,12 +614,15 @@ void main() {
         RendererBinding.instance.mouseTracker.debugDeviceActiveCursor(1),
         SystemMouseCursors.click,
       );
+<<<<<<< HEAD
 
       // Check popup menu padding.
       final SingleChildScrollView popupMenu = tester.widget<SingleChildScrollView>(
         find.byType(SingleChildScrollView),
       );
       expect(popupMenu.padding, const EdgeInsets.symmetric(vertical: 8.0));
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWidgets('Popup menu uses values from PopupMenuThemeData', (WidgetTester tester) async {

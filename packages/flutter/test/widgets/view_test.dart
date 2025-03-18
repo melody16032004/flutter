@@ -6,7 +6,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
@@ -316,6 +315,7 @@ void main() {
     });
   });
 
+<<<<<<< HEAD
   testWidgets(
     'correctly switches between view configurations',
     experimentalLeakTesting:
@@ -334,6 +334,25 @@ void main() {
       expect(renderView, same(tester.binding.renderView));
       expect(renderView.owner, same(tester.binding.pipelineOwner));
       expect(tester.renderObject(find.byType(SizedBox)).owner, same(tester.binding.pipelineOwner));
+=======
+  testWidgets('correctly switches between view configurations',
+  // TODO(polina-c): clean up leaks, https://github.com/flutter/flutter/issues/134787 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
+    await tester.pumpWidget(
+      wrapWithView: false,
+      View(
+        view: tester.view,
+        deprecatedDoNotUseWillBeRemovedWithoutNoticePipelineOwner: tester.binding.pipelineOwner,
+        deprecatedDoNotUseWillBeRemovedWithoutNoticeRenderView: tester.binding.renderView,
+        child: const SizedBox(),
+      ),
+    );
+    RenderObject renderView = tester.renderObject(find.byType(View));
+    expect(renderView, same(tester.binding.renderView));
+    expect(renderView.owner, same(tester.binding.pipelineOwner));
+    expect(tester.renderObject(find.byType(SizedBox)).owner, same(tester.binding.pipelineOwner));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await tester.pumpWidget(
         wrapWithView: false,
@@ -499,6 +518,7 @@ void main() {
     expect(child.debugCanParentUseSize, isTrue);
     expect(child.size, const Size(100, 200));
   });
+<<<<<<< HEAD
 
   testWidgets('ViewFocusEvents cause unfocusing and refocusing', (WidgetTester tester) async {
     late FlutterView view;
@@ -682,6 +702,8 @@ void main() {
     notifyCount = 0;
     tester.binding.platformDispatcher.resetFocusedViewTestValues();
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class SpyRenderWidget extends SizedBox {

@@ -23,7 +23,7 @@ class OfExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Scaffold.of Example')),
+      appBar: AppBar(title: const Text('Demo')),
       body: Builder(
         // Create an inner BuildContext so that the onPressed methods
         // can refer to the Scaffold with Scaffold.of().

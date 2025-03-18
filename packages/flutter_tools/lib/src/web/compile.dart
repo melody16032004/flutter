@@ -85,7 +85,7 @@ class WebBuilder {
     ];
 
     final ProjectMigration migration = ProjectMigration(migrators);
-    await migration.run();
+    migration.run();
 
     final Status status = _logger.startProgress('Compiling $target for the Web...');
     final Stopwatch sw = Stopwatch()..start();
@@ -184,6 +184,7 @@ enum WebRendererMode {
   /// Always use skwasm.
   skwasm;
 
+<<<<<<< HEAD
   factory WebRendererMode.fromDartDefines(Iterable<String> defines, {required bool useWasm}) {
     if (defines.contains('FLUTTER_WEB_AUTO_DETECT=true')) {
       return auto;
@@ -221,6 +222,10 @@ enum WebRendererMode {
   String get deprecationWarning =>
       'The HTML Renderer is deprecated and will be removed. Please, stop using it.'
       '\nSee: https://docs.flutter.dev/to/web-html-renderer-deprecation';
+=======
+  @override
+  String get cliName => snakeCase(name, '-');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   String get helpText => switch (this) {
     auto => 'Use the HTML renderer on mobile devices, and CanvasKit on desktop devices.',
@@ -238,11 +243,31 @@ enum WebRendererMode {
       dartDefines.map((String define) => '--dart-define=$define');
 
   Iterable<String> get dartDefines => switch (this) {
+<<<<<<< HEAD
     auto => const <String>{'FLUTTER_WEB_AUTO_DETECT=true'},
     canvaskit => const <String>{'FLUTTER_WEB_USE_SKIA=true', 'FLUTTER_WEB_USE_SKWASM=false'},
     html => const <String>{'FLUTTER_WEB_USE_SKIA=false', 'FLUTTER_WEB_USE_SKWASM=false'},
     skwasm => const <String>{'FLUTTER_WEB_USE_SKIA=false', 'FLUTTER_WEB_USE_SKWASM=true'},
   };
+=======
+        WebRendererMode.auto => <String>[
+            'FLUTTER_WEB_AUTO_DETECT=true',
+          ],
+        WebRendererMode.canvaskit => <String>[
+            'FLUTTER_WEB_AUTO_DETECT=false',
+            'FLUTTER_WEB_USE_SKIA=true',
+          ],
+        WebRendererMode.html => <String>[
+            'FLUTTER_WEB_AUTO_DETECT=false',
+            'FLUTTER_WEB_USE_SKIA=false',
+          ],
+        WebRendererMode.skwasm => <String>[
+            'FLUTTER_WEB_AUTO_DETECT=false',
+            'FLUTTER_WEB_USE_SKIA=false',
+            'FLUTTER_WEB_USE_SKWASM=true',
+          ]
+      };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Sets the dart defines for the currently selected WebRendererMode
   List<String> updateDartDefines(List<String> inputDefines) {

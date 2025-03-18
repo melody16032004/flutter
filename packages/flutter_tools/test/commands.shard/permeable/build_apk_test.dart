@@ -308,6 +308,7 @@ void main() {
 
         await runBuildApkCommand(projectPath);
 
+<<<<<<< HEAD
         final Iterable<Event> successEvent = fakeAnalytics.sentEvents.where(
           (Event e) =>
               e.eventName == DashEvent.flutterCommandResult &&
@@ -437,6 +438,21 @@ void main() {
           FlutterProjectFactory: () => FakeFlutterProjectFactory(tempDir),
         },
       );
+=======
+      await runBuildApkCommand(projectPath);
+
+      expect(testUsage.events, contains(
+        const TestUsageEvent(
+          'tool-command-result',
+          'apk',
+          label: 'success',
+        ),
+      ));
+    },
+    overrides: <Type, Generator>{
+      AndroidBuilder: () => FakeAndroidBuilder(),
+      Usage: () => testUsage,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 

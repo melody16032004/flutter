@@ -345,7 +345,7 @@ void main() {
         opacity: 0.99,
         scale: 2.01,
       ).toString(),
-      'DecorationImage(SynchronousTestImageProvider(), Alignment.center, scale 2.0, opacity 1.0, FilterQuality.medium)',
+      'DecorationImage(SynchronousTestImageProvider(), Alignment.center, scale 2.0, opacity 1.0, FilterQuality.low)',
     );
   });
 
@@ -387,6 +387,7 @@ void main() {
       '   When DecorationImagePainter.paint() was called, there was no text '
       'direction provided in the ImageConfiguration object to match.\n'
       '   The DecorationImage was:\n'
+<<<<<<< HEAD
       '     DecorationImage(SynchronousTestImageProvider(), '
       'ColorFilter.mode(${const Color(0xff00ff00)}, BlendMode.src), '
       'BoxFit.contain, Alignment.center, '
@@ -398,6 +399,14 @@ void main() {
       'FilterQuality.medium, '
       'invert colors, '
       'use anti-aliasing)\n'
+=======
+      '     DecorationImage(SynchronousTestImageProvider(),\n'
+      '     ColorFilter.mode(Color(0xff00ff00), BlendMode.src),\n'
+      '     BoxFit.contain, Alignment.center, centerSlice:\n'
+      '     Rect.fromLTRB(10.0, 20.0, 40.0, 60.0), ImageRepeat.repeatY,\n'
+      '     match text direction, scale 0.5, opacity 0.5,\n'
+      '     FilterQuality.low, invert colors, use anti-aliasing)\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       '   The ImageConfiguration was:\n'
       '     ImageConfiguration(size: Size(100.0, 100.0))\n',
     );
@@ -802,6 +811,7 @@ void main() {
 
     info.dispose();
   }, skip: kIsWeb); // https://github.com/flutter/flutter/issues/87442
+<<<<<<< HEAD
 
   test('BoxShadow.copyWith', () {
     expect(const BoxShadow(), isNot(const BoxShadow(color: Color(0xFF112233))));
@@ -824,4 +834,6 @@ void main() {
       const BoxShadow(blurStyle: BlurStyle.outer),
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

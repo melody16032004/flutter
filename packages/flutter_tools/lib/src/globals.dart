@@ -234,7 +234,6 @@ final AnsiTerminal _defaultAnsiTerminal = AnsiTerminal(
   stdio: stdio,
   platform: platform,
   now: DateTime.now(),
-  shutdownHooks: shutdownHooks,
 );
 
 /// The global Stdio wrapper.

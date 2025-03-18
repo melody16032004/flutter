@@ -101,6 +101,7 @@ class LinkedScrollController extends ScrollController {
   @override
   void debugFillDescription(List<String> description) {
     super.debugFillDescription(description);
+<<<<<<< HEAD
     final String linkSymbol = switch ((before, after)) {
       (null, null) => 'none',
       (null, _) => '➡',
@@ -108,7 +109,19 @@ class LinkedScrollController extends ScrollController {
       (_, _) => '⬌',
     };
     description.add('links: $linkSymbol');
+=======
+    if (before != null && after != null) {
+      description.add('links: ⬌');
+    } else if (before != null) {
+      description.add('links: ⬅');
+    } else if (after != null) {
+      description.add('links: ➡');
+    } else {
+      description.add('links: none');
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
+
 }
 
 class LinkedScrollPosition extends ScrollPositionWithSingleContext {

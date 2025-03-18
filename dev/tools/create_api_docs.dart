@@ -46,7 +46,7 @@ const Map<String, PlatformDocsSection> kPlatformDocs = <String, PlatformDocsSect
   'android': PlatformDocsSection(
     zipName: 'android-javadoc.zip',
     sectionName: 'Android',
-    checkFile: 'io/flutter/embedding/android/FlutterView.html',
+    checkFile: 'io/flutter/view/FlutterView.html',
     subdir: 'javadoc',
   ),
   'ios': PlatformDocsSection(

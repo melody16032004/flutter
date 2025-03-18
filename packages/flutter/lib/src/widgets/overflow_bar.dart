@@ -427,6 +427,7 @@ class _RenderOverflowBar extends RenderBox
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(BoxConstraints constraints, TextBaseline baseline) {
     final BoxConstraints childConstraints = constraints.loosen();
 
@@ -472,6 +473,8 @@ class _RenderOverflowBar extends RenderBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Size computeDryLayout(BoxConstraints constraints) {
     RenderBox? child = firstChild;
     if (child == null) {

@@ -31,6 +31,7 @@ class _MainWidget extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
+<<<<<<< HEAD
           Semantics(
             label: 'Input field with suffix @gmail.com',
             child: const TextField(
@@ -55,6 +56,22 @@ class _MainWidget extends StatelessWidget {
               ),
               enabled: false,
               controller: TextEditingController(text: 'xyz'),
+=======
+          const TextField(
+            key: Key('enabled text field'),
+            decoration: InputDecoration(
+              labelText: 'Email',
+              suffixText: '@gmail.com',
+              hintText: 'Enter your email',
+            ),
+          ),
+          TextField(
+            key: const Key('disabled text field'),
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              suffixText: '@gmail.com',
+              hintText: 'Enter your email',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ),
         ],

@@ -127,9 +127,6 @@ class _AnimatedState extends State<AnimatedWidget> {
   }
 
   void _handleChange() {
-    if (!mounted) {
-      return;
-    }
     setState(() {
       // The listenable's state is our build state, and it changed already.
     });
@@ -321,7 +318,10 @@ class MatrixTransition extends AnimatedWidget {
     return Transform(
       transform: onTransform(animation.value),
       alignment: alignment,
-      filterQuality: animation.isAnimating ? filterQuality : null,
+      filterQuality: switch (animation.status) {
+        AnimationStatus.forward   || AnimationStatus.reverse   => filterQuality,
+        AnimationStatus.dismissed || AnimationStatus.completed => null,
+      },
       child: child,
     );
   }
@@ -501,8 +501,15 @@ class SizeTransition extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AlignmentDirectional alignment;
+    if (axis == Axis.vertical) {
+      alignment = AlignmentDirectional(-1.0, axisAlignment);
+    } else {
+      alignment = AlignmentDirectional(axisAlignment, -1.0);
+    }
     return ClipRect(
       child: Align(
+<<<<<<< HEAD
         alignment: switch (axis) {
           Axis.horizontal => AlignmentDirectional(axisAlignment, -1.0),
           Axis.vertical => AlignmentDirectional(-1.0, axisAlignment),
@@ -511,6 +518,11 @@ class SizeTransition extends AnimatedWidget {
             axis == Axis.vertical ? math.max(sizeFactor.value, 0.0) : fixedCrossAxisSizeFactor,
         widthFactor:
             axis == Axis.horizontal ? math.max(sizeFactor.value, 0.0) : fixedCrossAxisSizeFactor,
+=======
+        alignment: alignment,
+        heightFactor: axis == Axis.vertical ? math.max(sizeFactor.value, 0.0) : fixedCrossAxisSizeFactor,
+        widthFactor: axis == Axis.horizontal ? math.max(sizeFactor.value, 0.0) : fixedCrossAxisSizeFactor,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         child: child,
       ),
     );
@@ -645,7 +657,7 @@ class FadeTransition extends SingleChildRenderObjectWidget {
 /// To avoid such problems, it is generally a good idea to combine this widget
 /// with a [SliverIgnorePointer] that one enables when the [opacity] animation
 /// reaches zero. This prevents interactions with any children in the subtree
-/// when the sliver is not visible. For performance reasons, when implementing
+/// when the [sliver] is not visible. For performance reasons, when implementing
 /// this, care should be taken not to rebuild the relevant widget (e.g. by
 /// calling [State.setState]) except at the transition point.
 ///

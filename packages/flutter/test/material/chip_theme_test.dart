@@ -32,13 +32,6 @@ DefaultTextStyle getLabelStyle(WidgetTester tester) {
   );
 }
 
-TextStyle? getIconStyle(WidgetTester tester, IconData icon) {
-  final RichText iconRichText = tester.widget<RichText>(
-    find.descendant(of: find.byIcon(icon).first, matching: find.byType(RichText)),
-  );
-  return iconRichText.text.style;
-}
-
 void main() {
   test('ChipThemeData copyWith, ==, hashCode basics', () {
     expect(const ChipThemeData(), const ChipThemeData().copyWith());
@@ -1408,6 +1401,7 @@ void main() {
     final Offset labelTopRight = tester.getTopRight(find.byType(Container));
     expect(labelTopRight.dx, deleteIconCenter.dx - (iconSize / 2) - labelPadding);
   });
+<<<<<<< HEAD
 
   testWidgets('ChipThemeData.iconTheme updates avatar and delete icons', (
     WidgetTester tester,
@@ -1521,6 +1515,8 @@ void main() {
 
     expect(getChipRenderBox(), paints..drrect(color: colorScheme.primary));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _MaterialStateOutlinedBorder extends StadiumBorder implements MaterialStateOutlinedBorder {

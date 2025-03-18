@@ -56,11 +56,24 @@ class DialogDemoState extends State<DialogDemo> {
     _selectedTime = TimeOfDay(hour: now.hour, minute: now.minute);
   }
 
+<<<<<<< HEAD
   void showDemoDialog<T>({required BuildContext context, Widget? child}) {
     showDialog<T>(context: context, builder: (BuildContext context) => child!).then((T? value) {
       // The value passed to Navigator.pop() or null.
       if (context.mounted && value != null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('You selected: $value')));
+=======
+  void showDemoDialog<T>({ required BuildContext context, Widget? child }) {
+    showDialog<T>(
+      context: context,
+      builder: (BuildContext context) => child!,
+    )
+    .then((T? value) { // The value passed to Navigator.pop() or null.
+      if (value != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('You selected: $value'),
+        ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
     });
   }
@@ -193,6 +206,7 @@ class DialogDemoState extends State<DialogDemo> {
                       builder: (BuildContext context) => const FullScreenDialogDemo(),
                       fullscreenDialog: true,
                     ),
+<<<<<<< HEAD
                   );
                 },
               ),
@@ -201,6 +215,78 @@ class DialogDemoState extends State<DialogDemo> {
             .map<Widget>((Widget button) {
               return Container(padding: const EdgeInsets.symmetric(vertical: 8.0), child: button);
             }).toList(),
+=======
+                  ],
+                ),
+              );
+            },
+          ),
+          ElevatedButton(
+            child: const Text('SIMPLE'),
+            onPressed: () {
+              showDemoDialog<String>(
+                context: context,
+                child: SimpleDialog(
+                  title: const Text('Set backup account'),
+                  children: <Widget>[
+                    DialogDemoItem(
+                      icon: Icons.account_circle,
+                      color: theme.primaryColor,
+                      text: 'username@gmail.com',
+                      onPressed: () { Navigator.pop(context, 'username@gmail.com'); },
+                    ),
+                    DialogDemoItem(
+                      icon: Icons.account_circle,
+                      color: theme.primaryColor,
+                      text: 'user02@gmail.com',
+                      onPressed: () { Navigator.pop(context, 'user02@gmail.com'); },
+                    ),
+                    DialogDemoItem(
+                      icon: Icons.add_circle,
+                      text: 'add account',
+                      color: theme.disabledColor,
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ElevatedButton(
+            child: const Text('CONFIRMATION'),
+            onPressed: () {
+              showTimePicker(
+                context: context,
+                initialTime: _selectedTime!,
+              )
+              .then((TimeOfDay? value) {
+                if (value != null && value != _selectedTime) {
+                  _selectedTime = value;
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text('You selected: ${value.format(context)}'),
+                  ));
+                }
+              });
+            },
+          ),
+          ElevatedButton(
+            child: const Text('FULLSCREEN'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute<DismissDialogAction>(
+                builder: (BuildContext context) => const FullScreenDialogDemo(),
+                fullscreenDialog: true,
+              ));
+            },
+          ),
+        ]
+        // Add a little space between the buttons
+        .map<Widget>((Widget button) {
+          return Container(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: button,
+          );
+        })
+        .toList(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
   }

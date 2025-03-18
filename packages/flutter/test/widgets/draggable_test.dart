@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
 import 'semantics_tester.dart';
 
@@ -2589,7 +2590,10 @@ void main() {
   });
 
   // Regression test for https://github.com/flutter/flutter/issues/6128.
-  testWidgets('Draggable plays nice with onTap', (WidgetTester tester) async {
+  testWidgets('Draggable plays nice with onTap',
+  // TODO(polina-c): fix the leaking ImmediateMultiDragGestureRecognizer https://github.com/flutter/flutter/pull/144396 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
     late final OverlayEntry entry;
     addTearDown(
       () =>
@@ -2635,7 +2639,6 @@ void main() {
 
     await firstGesture.moveBy(const Offset(100.0, 0.0));
     await secondGesture.up();
-    await firstGesture.up();
   });
 
   testWidgets('DragTarget does not set state when remove from the tree', (
@@ -3183,6 +3186,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   testWidgets('Drag feedback is put on root overlay with [rootOverlay] flag', (
     WidgetTester tester,
   ) async {
@@ -3272,6 +3276,8 @@ void main() {
     );
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   // Regression test for https://github.com/flutter/flutter/issues/72483
   testWidgets('Drag and drop - DragTarget<Object> can accept Draggable<int> data', (
     WidgetTester tester,
@@ -3620,6 +3626,7 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+<<<<<<< HEAD
   testWidgets('Drag and drop - feedback matches pointer in scaled MaterialApp', (
     WidgetTester tester,
   ) async {
@@ -3758,6 +3765,8 @@ void main() {
     await tester.pump();
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('configurable Draggable hit test behavior', (WidgetTester tester) async {
     const HitTestBehavior hitTestBehavior = HitTestBehavior.deferToChild;
 
@@ -3778,7 +3787,10 @@ void main() {
   });
 
   // Regression test for https://github.com/flutter/flutter/issues/92083
-  testWidgets('feedback respect the MouseRegion cursor configure', (WidgetTester tester) async {
+  testWidgets('feedback respect the MouseRegion cursor configure',
+  // TODO(polina-c): fix the leaking ImmediateMultiDragGestureRecognizer https://github.com/flutter/flutter/pull/144396 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Column(
@@ -3803,11 +3815,15 @@ void main() {
     await gesture.down(location);
     await tester.pump();
 
+<<<<<<< HEAD
     expect(
       RendererBinding.instance.mouseTracker.debugDeviceActiveCursor(1),
       SystemMouseCursors.grabbing,
     );
     gesture.up();
+=======
+    expect(RendererBinding.instance.mouseTracker.debugDeviceActiveCursor(1), SystemMouseCursors.grabbing);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWidgets('configurable feedback ignore pointer behavior', (WidgetTester tester) async {

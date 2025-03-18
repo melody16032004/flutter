@@ -9,6 +9,7 @@ library;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
 void main() {
   /*
@@ -80,6 +81,7 @@ void main() {
     // Currently skipped due to daily flake: https://github.com/flutter/flutter/issues/87588
   }, skip: true); // Typically skip: isBrowser https://github.com/flutter/flutter/issues/42767
 
+<<<<<<< HEAD
   testWidgets(
     'Should show event indicator for pointer events with setSurfaceSize',
     (WidgetTester tester) async {
@@ -108,6 +110,33 @@ void main() {
                       taps.add(details.globalPosition);
                     },
                   ),
+=======
+  testWidgets('Should show event indicator for pointer events with setSurfaceSize',
+  // TODO(polina-c): clean up leaks, https://github.com/flutter/flutter/issues/134787 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
+    final AnimationSheetBuilder animationSheet = AnimationSheetBuilder(frameSize: const Size(200, 200), allLayers: true);
+    addTearDown(animationSheet.dispose);
+    final List<Offset> taps = <Offset>[];
+    Widget target({bool recording = true}) => Container(
+      padding: const EdgeInsets.fromLTRB(20, 10, 25, 20),
+      child: animationSheet.record(
+        MaterialApp(
+          home: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 128, 128, 128),
+              border: Border.all(),
+            ),
+            child: Center(
+              child: Container(
+                width: 40,
+                height: 40,
+                color: Colors.black,
+                child: GestureDetector(
+                  onTapDown: (TapDownDetails details) {
+                    taps.add(details.globalPosition);
+                  },
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                 ),
               ),
             ),
@@ -116,9 +145,14 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       await tester.binding.setSurfaceSize(const Size(300, 300));
       addTearDown(() => tester.binding.setSurfaceSize(null));
       await tester.pumpWidget(target(recording: false));
+=======
+    await tester.binding.setSurfaceSize(const Size(300, 300));
+    await tester.pumpWidget(target(recording: false));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await tester.pumpFrames(target(), const Duration(milliseconds: 50));
 

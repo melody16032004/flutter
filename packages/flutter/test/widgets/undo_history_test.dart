@@ -28,6 +28,7 @@ void main() {
     Future<void> sendUndo(WidgetTester tester) => sendUndoRedo(tester);
     Future<void> sendRedo(WidgetTester tester) => sendUndoRedo(tester, true);
 
+<<<<<<< HEAD
     testWidgets('UndoHistory widget registers as global undo/redo client', (
       WidgetTester tester,
     ) async {
@@ -144,6 +145,13 @@ void main() {
         addTearDown(value.dispose);
         final UndoHistoryController controller = UndoHistoryController();
         addTearDown(controller.dispose);
+=======
+    testWidgets('allows undo and redo to be called programmatically from the UndoHistoryController', (WidgetTester tester) async {
+      final ValueNotifier<int> value = ValueNotifier<int>(0);
+      addTearDown(value.dispose);
+      final UndoHistoryController controller = UndoHistoryController();
+      addTearDown(controller.dispose);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         await tester.pumpWidget(
           MaterialApp(

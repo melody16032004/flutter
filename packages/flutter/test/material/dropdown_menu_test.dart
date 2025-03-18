@@ -9,8 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_testing/leak_tracker_testing.dart';
 
 void main() {
+<<<<<<< HEAD
+=======
+  // TODO(polina-c): _DropdownMenuState should not be used after disposal, https://github.com/flutter/flutter/issues/145622 [leaks-to-clean]
+  LeakTesting.settings = LeakTesting.settings.withIgnoredAll();
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   const String longText = 'one two three four five six seven eight nine ten eleven twelve';
   final List<DropdownMenuEntry<TestMenu>> menuChildren = <DropdownMenuEntry<TestMenu>>[];
   final List<DropdownMenuEntry<TestMenu>> menuChildrenWithIcons = <DropdownMenuEntry<TestMenu>>[];
@@ -132,6 +139,7 @@ void main() {
     expect(material.textStyle?.height, 1.43);
   });
 
+<<<<<<< HEAD
   group('Item style', () {
     const Color focusedBackgroundColor = Color(0xffff0000);
     const Color focusedForegroundColor = Color(0xff00ff00);
@@ -513,8 +521,13 @@ void main() {
   testWidgets('Inner TextField is disabled when DropdownMenu is disabled', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('DropdownMenu can be disabled', (WidgetTester tester) async {
+    final ThemeData themeData = ThemeData();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.pumpWidget(
       MaterialApp(
+        theme: themeData,
         home: Scaffold(
           body: SafeArea(
             child: DropdownMenu<TestMenu>(enabled: false, dropdownMenuEntries: menuChildren),
@@ -524,7 +537,7 @@ void main() {
     );
 
     final TextField textField = tester.widget(find.byType(TextField));
-    expect(textField.enabled, false);
+    expect(textField.decoration?.enabled, false);
     final Finder menuMaterial = find.ancestor(
       of: find.byType(SingleChildScrollView),
       matching: find.byType(Material),
@@ -540,6 +553,7 @@ void main() {
     expect(updatedMenuMaterial, findsNothing);
   });
 
+<<<<<<< HEAD
   testWidgets('Inner IconButton is disabled when DropdownMenu is disabled', (
     WidgetTester tester,
   ) async {
@@ -562,6 +576,9 @@ void main() {
 
   testWidgets(
     'Material2 - The width of the text field should always be the same as the menu view',
+=======
+  testWidgets('Material2 - The width of the text field should always be the same as the menu view',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     (WidgetTester tester) async {
       final ThemeData themeData = ThemeData(useMaterial3: false);
       await tester.pumpWidget(
@@ -983,7 +1000,7 @@ void main() {
       ),
     );
 
-    final Finder leadingIcon = find.widgetWithIcon(SizedBox, Icons.search).last;
+    final Finder leadingIcon = find.widgetWithIcon(Container, Icons.search);
     final double iconWidth = tester.getSize(leadingIcon).width;
     final Finder updatedLabel = find.text('label');
     final Offset updatedLabelTopLeft = tester.getTopLeft(updatedLabel);
@@ -1007,7 +1024,7 @@ void main() {
       ),
     );
 
-    final Finder largeLeadingIcon = find.widgetWithIcon(SizedBox, Icons.search).last;
+    final Finder largeLeadingIcon = find.widgetWithIcon(Container, Icons.search);
     final double largeIconWidth = tester.getSize(largeLeadingIcon).width;
     final Finder updatedLabel1 = find.text('label');
     final Offset updatedLabelTopLeft1 = tester.getTopLeft(updatedLabel1);
@@ -1069,7 +1086,7 @@ void main() {
     );
     await tester.pump();
 
-    final Finder leadingIcon = find.widgetWithIcon(SizedBox, Icons.search).last;
+    final Finder leadingIcon = find.widgetWithIcon(Container, Icons.search);
     final double iconWidth = tester.getSize(leadingIcon).width;
     final Offset dropdownMenuTopRight = tester.getTopRight(find.byType(DropdownMenu<TestMenu>));
     final Finder updatedLabel = find.text('label');
@@ -1105,7 +1122,7 @@ void main() {
     );
     await tester.pump();
 
-    final Finder largeLeadingIcon = find.widgetWithIcon(SizedBox, Icons.search).last;
+    final Finder largeLeadingIcon = find.widgetWithIcon(Container, Icons.search);
     final double largeIconWidth = tester.getSize(largeLeadingIcon).width;
     final Offset updatedDropdownMenuTopRight = tester.getTopRight(
       find.byType(DropdownMenu<TestMenu>),
@@ -1366,6 +1383,7 @@ void main() {
     final TextEditingController controller = TextEditingController();
     addTearDown(controller.dispose);
 
+<<<<<<< HEAD
     final ThemeData themeData = ThemeData();
     await tester.pumpWidget(
       MaterialApp(
@@ -1620,6 +1638,10 @@ void main() {
   // Regression test for https://github.com/flutter/flutter/issues/152375.
   testWidgets('Down key and up key can navigate while focused when a label text contains '
       'another label text using customized search algorithm', (WidgetTester tester) async {
+=======
+  testWidgets('The text input should match the label of the menu item '
+      'while pressing down key on desktop platforms', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final ThemeData themeData = ThemeData();
     await tester.pumpWidget(
       MaterialApp(
@@ -1916,13 +1938,18 @@ void main() {
     }
   });
 
+<<<<<<< HEAD
   testWidgets('Enable filtering with custom filter callback that filter text case sensitive', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('The controller can access the value in the input field', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final ThemeData themeData = ThemeData();
     final TextEditingController controller = TextEditingController();
     addTearDown(controller.dispose);
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       MaterialApp(
         theme: themeData,
@@ -1975,6 +2002,13 @@ void main() {
         MaterialApp(
           theme: themeData,
           home: Scaffold(
+=======
+    await tester.pumpWidget(MaterialApp(
+      theme: themeData,
+      home: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
+          return Scaffold(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             body: DropdownMenu<TestMenu>(
               requestFocusOnTap: true,
               filterCallback: (List<DropdownMenuEntry<TestMenu>> entries, String filter) {
@@ -3209,7 +3243,6 @@ void main() {
       return newValue;
     });
     final TextEditingController controller = TextEditingController();
-    addTearDown(controller.dispose);
 
     await tester.pumpWidget(
       MaterialApp(
@@ -3243,6 +3276,7 @@ void main() {
     expect(called, 3);
     expect(controller.text, 'Green');
   });
+<<<<<<< HEAD
 
   // This is a regression test for https://github.com/flutter/flutter/issues/140596.
   testWidgets('Long text item does not overflow', (WidgetTester tester) async {
@@ -3847,6 +3881,8 @@ void main() {
     },
     variant: TargetPlatformVariant.all(),
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 enum TestMenu {

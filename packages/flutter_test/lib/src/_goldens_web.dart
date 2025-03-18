@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'matchers.dart';
-library;
-
 import 'dart:convert';
 import 'dart:js_interop';
 import 'dart:typed_data';
@@ -90,17 +87,22 @@ final class HttpProxyGoldenComparator extends GoldenFileComparator {
   'This feature was deprecated after v3.28.0-0.1.pre.',
 )
 class DefaultWebGoldenComparator extends WebGoldenComparator {
-  /// Creates a new [DefaultWebGoldenComparator] for the specified [testUri].
+  /// Creates a new [DefaultWebGoldenComparator] for the specified [testFile].
   ///
   /// Golden file keys will be interpreted as file paths relative to the
-  /// directory in which [testUri] resides.
+  /// directory in which [testFile] resides.
   ///
+<<<<<<< HEAD
   /// The [testUri] must represent a file.
   @Deprecated(
     'Use an implementation of GoldenFileComparator instead. '
     'This feature was deprecated after v3.28.0-0.1.pre.',
   )
   DefaultWebGoldenComparator(Uri testUri) : _comparatorImpl = HttpProxyGoldenComparator(testUri);
+=======
+  /// The [testFile] URL must represent a file.
+  DefaultWebGoldenComparator(this.testUri);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   // TODO(matanlurey): Refactor as part of https://github.com/flutter/flutter/issues/160261.
   final HttpProxyGoldenComparator _comparatorImpl;

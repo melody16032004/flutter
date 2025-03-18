@@ -138,31 +138,55 @@ void main() {
           // ignore: avoid_redundant_argument_values
           box.toStringDeep(minLevel: DiagnosticLevel.debug, wrapWidth: 600),
           equalsIgnoringHashCodes(
+<<<<<<< HEAD
             'RenderPadding#0f959 relayoutBoundary=up1\n'
             ' │ creator: Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← '
             '_PipelineOwnerScope ← _ViewScope ← ⋯\n'
+=======
+            'RenderPadding#00000 relayoutBoundary=up1\n'
+            ' │ creator: Padding ← Container ← Align ← MediaQuery ←\n'
+            ' │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
+            ' │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            ' │   [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ' │ parentData: offset=Offset(0.0, 0.0) (can use size)\n'
             ' │ constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=600.0)\n'
             ' │ size: Size(63.0, 88.0)\n'
             ' │ padding: EdgeInsets.all(5.0)\n'
             ' │\n'
+<<<<<<< HEAD
             ' └─child: RenderConstrainedBox#df6d6 relayoutBoundary=up2\n'
             '   │ creator: ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery ← '
             '_MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+=======
+            ' └─child: RenderConstrainedBox#00000 relayoutBoundary=up2\n'
+            '   │ creator: ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '   │   MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope ←\n'
+            '   │   _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '   │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '   │ parentData: offset=Offset(5.0, 5.0) (can use size)\n'
             '   │ constraints: BoxConstraints(0.0<=w<=790.0, 0.0<=h<=590.0)\n'
             '   │ size: Size(53.0, 78.0)\n'
             '   │ additionalConstraints: BoxConstraints(w=53.0, h=78.0)\n'
             '   │\n'
+<<<<<<< HEAD
             '   └─child: RenderDecoratedBox#7b39b\n'
             '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← ⋯\n'
+=======
+            '   └─child: RenderDecoratedBox#00000\n'
+            '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← Container ←\n'
+            '     │   Align ← MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope\n'
+            '     │   ← _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '     │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '     │ parentData: <none> (can use size)\n'
             '     │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '     │ size: Size(53.0, 78.0)\n'
@@ -172,31 +196,55 @@ void main() {
             'PlatformAssetBundle#fe53b(), devicePixelRatio: 3.0, platform: '
             'android)\n'
             '     │\n'
+<<<<<<< HEAD
             '     └─child: _RenderColoredBox#6bd0d\n'
             '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← '
             'Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← ⋯\n'
+=======
+            '     └─child: _RenderColoredBox#00000\n'
+            '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ←\n'
+            '       │   Container ← Align ← MediaQuery ← _MediaQueryFromView ←\n'
+            '       │   _PipelineOwnerScope ← _ViewScope ←\n'
+            '       │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            '       │   ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '       │ parentData: <none> (can use size)\n'
             '       │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '       │ size: Size(53.0, 78.0)\n'
             '       │ behavior: opaque\n'
             '       │\n'
+<<<<<<< HEAD
             '       └─child: RenderPadding#d92f7\n'
             '         │ creator: Padding ← ColoredBox ← DecoratedBox ← '
             'ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← ⋯\n'
+=======
+            '       └─child: RenderPadding#00000\n'
+            '         │ creator: Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ←\n'
+            '         │   Padding ← Container ← Align ← MediaQuery ← _MediaQueryFromView\n'
+            '         │   ← _PipelineOwnerScope ← _ViewScope ←\n'
+            '         │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '         │ parentData: <none> (can use size)\n'
             '         │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '         │ size: Size(53.0, 78.0)\n'
             '         │ padding: EdgeInsets.all(7.0)\n'
             '         │\n'
+<<<<<<< HEAD
             '         └─child: RenderPositionedBox#aaa32\n'
             '           │ creator: Align ← Padding ← ColoredBox ← '
             'DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← ⋯\n'
+=======
+            '         └─child: RenderPositionedBox#00000\n'
+            '           │ creator: Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '           │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '           │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '           │ parentData: offset=Offset(7.0, 7.0) (can use size)\n'
             '           │ constraints: BoxConstraints(w=39.0, h=64.0)\n'
             '           │ size: Size(39.0, 64.0)\n'
@@ -204,29 +252,50 @@ void main() {
             '           │ widthFactor: expand\n'
             '           │ heightFactor: expand\n'
             '           │\n'
+<<<<<<< HEAD
             '           └─child: RenderConstrainedBox#49805 relayoutBoundary=up1\n'
             '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← '
             'DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← ⋯\n'
+=======
+            '           └─child: RenderConstrainedBox#00000 relayoutBoundary=up1\n'
+            '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '             │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '             │   _MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '             │ parentData: offset=Offset(14.0, 31.0) (can use size)\n'
             '             │ constraints: BoxConstraints(0.0<=w<=39.0, 0.0<=h<=64.0)\n'
             '             │ size: Size(25.0, 33.0)\n'
             '             │ additionalConstraints: BoxConstraints(w=25.0, h=33.0)\n'
             '             │\n'
+<<<<<<< HEAD
             '             └─child: RenderDecoratedBox#7843f\n'
             '                 creator: DecoratedBox ← SizedBox ← Align ← '
             'Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← ⋯\n'
+=======
+            '             └─child: RenderDecoratedBox#00000\n'
+            '                 creator: DecoratedBox ← SizedBox ← Align ← Padding ← ColoredBox ←\n'
+            '                   DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '                   MediaQuery ← _MediaQueryFromView ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '                 parentData: <none> (can use size)\n'
             '                 constraints: BoxConstraints(w=25.0, h=33.0)\n'
             '                 size: Size(25.0, 33.0)\n'
             '                 decoration: BoxDecoration:\n'
+<<<<<<< HEAD
             '                   color: ${const Color(0xffffff00)}\n'
             '                 configuration: ImageConfiguration(bundle: '
             'PlatformAssetBundle#fe53b(), devicePixelRatio: 3.0, platform: '
             'android)\n',
+=======
+            '                   color: Color(0xffffff00)\n'
+            '                 configuration: ImageConfiguration(bundle:\n'
+            '                   PlatformAssetBundle#00000(), devicePixelRatio: 3.0, platform:\n'
+            '                   android)\n',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         );
       });
@@ -239,11 +308,19 @@ void main() {
         expect(
           box.toStringDeep(minLevel: DiagnosticLevel.fine, wrapWidth: 600),
           equalsIgnoringHashCodes(
+<<<<<<< HEAD
             'RenderPadding#68510 relayoutBoundary=up1\n'
             ' │ creator: Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← '
             '_PipelineOwnerScope ← _ViewScope ← ⋯\n'
+=======
+            'RenderPadding#00000 relayoutBoundary=up1\n'
+            ' │ creator: Padding ← Container ← Align ← MediaQuery ←\n'
+            ' │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
+            ' │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            ' │   [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ' │ parentData: offset=Offset(0.0, 0.0) (can use size)\n'
             ' │ constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=600.0)\n'
             ' │ layer: null\n'
@@ -252,11 +329,19 @@ void main() {
             ' │ padding: EdgeInsets.all(5.0)\n'
             ' │ textDirection: null\n'
             ' │\n'
+<<<<<<< HEAD
             ' └─child: RenderConstrainedBox#69988 relayoutBoundary=up2\n'
             '   │ creator: ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery ← '
             '_MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+=======
+            ' └─child: RenderConstrainedBox#00000 relayoutBoundary=up2\n'
+            '   │ creator: ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '   │   MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope ←\n'
+            '   │   _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '   │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '   │ parentData: offset=Offset(5.0, 5.0) (can use size)\n'
             '   │ constraints: BoxConstraints(0.0<=w<=790.0, 0.0<=h<=590.0)\n'
             '   │ layer: null\n'
@@ -264,11 +349,19 @@ void main() {
             '   │ size: Size(53.0, 78.0)\n'
             '   │ additionalConstraints: BoxConstraints(w=53.0, h=78.0)\n'
             '   │\n'
+<<<<<<< HEAD
             '   └─child: RenderDecoratedBox#c7049\n'
             '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← ⋯\n'
+=======
+            '   └─child: RenderDecoratedBox#00000\n'
+            '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← Container ←\n'
+            '     │   Align ← MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope\n'
+            '     │   ← _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '     │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '     │ parentData: <none> (can use size)\n'
             '     │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '     │ layer: null\n'
@@ -285,11 +378,20 @@ void main() {
             '     │ configuration: ImageConfiguration(bundle: '
             'PlatformAssetBundle#23b2a(), devicePixelRatio: 3.0, platform: android)\n'
             '     │\n'
+<<<<<<< HEAD
             '     └─child: _RenderColoredBox#c8805\n'
             '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← '
             'Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← ⋯\n'
+=======
+            '     └─child: _RenderColoredBox#00000\n'
+            '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ←\n'
+            '       │   Container ← Align ← MediaQuery ← _MediaQueryFromView ←\n'
+            '       │   _PipelineOwnerScope ← _ViewScope ←\n'
+            '       │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            '       │   ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '       │ parentData: <none> (can use size)\n'
             '       │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '       │ layer: null\n'
@@ -297,11 +399,19 @@ void main() {
             '       │ size: Size(53.0, 78.0)\n'
             '       │ behavior: opaque\n'
             '       │\n'
+<<<<<<< HEAD
             '       └─child: RenderPadding#0fab7\n'
             '         │ creator: Padding ← ColoredBox ← DecoratedBox ← '
             'ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← ⋯\n'
+=======
+            '       └─child: RenderPadding#00000\n'
+            '         │ creator: Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ←\n'
+            '         │   Padding ← Container ← Align ← MediaQuery ← _MediaQueryFromView\n'
+            '         │   ← _PipelineOwnerScope ← _ViewScope ←\n'
+            '         │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '         │ parentData: <none> (can use size)\n'
             '         │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '         │ layer: null\n'
@@ -310,11 +420,18 @@ void main() {
             '         │ padding: EdgeInsets.all(7.0)\n'
             '         │ textDirection: null\n'
             '         │\n'
+<<<<<<< HEAD
             '         └─child: RenderPositionedBox#458fb\n'
             '           │ creator: Align ← Padding ← ColoredBox ← '
             'DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← ⋯\n'
+=======
+            '         └─child: RenderPositionedBox#00000\n'
+            '           │ creator: Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '           │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '           │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '           │ parentData: offset=Offset(7.0, 7.0) (can use size)\n'
             '           │ constraints: BoxConstraints(w=39.0, h=64.0)\n'
             '           │ layer: null\n'
@@ -325,11 +442,18 @@ void main() {
             '           │ widthFactor: expand\n'
             '           │ heightFactor: expand\n'
             '           │\n'
+<<<<<<< HEAD
             '           └─child: RenderConstrainedBox#16613 relayoutBoundary=up1\n'
             '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← '
             'DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← ⋯\n'
+=======
+            '           └─child: RenderConstrainedBox#00000 relayoutBoundary=up1\n'
+            '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '             │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '             │   _MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '             │ parentData: offset=Offset(14.0, 31.0) (can use size)\n'
             '             │ constraints: BoxConstraints(0.0<=w<=39.0, 0.0<=h<=64.0)\n'
             '             │ layer: null\n'
@@ -337,11 +461,18 @@ void main() {
             '             │ size: Size(25.0, 33.0)\n'
             '             │ additionalConstraints: BoxConstraints(w=25.0, h=33.0)\n'
             '             │\n'
+<<<<<<< HEAD
             '             └─child: RenderDecoratedBox#52bc3\n'
             '                 creator: DecoratedBox ← SizedBox ← Align ← '
             'Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← ⋯\n'
+=======
+            '             └─child: RenderDecoratedBox#00000\n'
+            '                 creator: DecoratedBox ← SizedBox ← Align ← Padding ← ColoredBox ←\n'
+            '                   DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '                   MediaQuery ← _MediaQueryFromView ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '                 parentData: <none> (can use size)\n'
             '                 constraints: BoxConstraints(w=25.0, h=33.0)\n'
             '                 layer: null\n'
@@ -371,10 +502,17 @@ void main() {
           equalsIgnoringHashCodes(
             'RenderPadding#4a353 relayoutBoundary=up1\n'
             ' │ needsCompositing: false\n'
+<<<<<<< HEAD
             ' │ creator: Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← '
             '_PipelineOwnerScope ← _ViewScope ← ⋯\n'
+=======
+            ' │ creator: Padding ← Container ← Align ← MediaQuery ←\n'
+            ' │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
+            ' │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            ' │   [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ' │ parentData: offset=Offset(0.0, 0.0) (can use size)\n'
             ' │ constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=600.0)\n'
             ' │ layer: null\n'
@@ -387,10 +525,17 @@ void main() {
             ' │\n'
             ' └─child: RenderConstrainedBox#e3b23 relayoutBoundary=up2\n'
             '   │ needsCompositing: false\n'
+<<<<<<< HEAD
             '   │ creator: ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery ← '
             '_MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+=======
+            '   │ creator: ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '   │   MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope ←\n'
+            '   │   _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '   │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '   │ parentData: offset=Offset(5.0, 5.0) (can use size)\n'
             '   │ constraints: BoxConstraints(0.0<=w<=790.0, 0.0<=h<=590.0)\n'
             '   │ layer: null\n'
@@ -402,10 +547,17 @@ void main() {
             '   │\n'
             '   └─child: RenderDecoratedBox#1ca6c\n'
             '     │ needsCompositing: false\n'
+<<<<<<< HEAD
             '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← _MediaQueryFromView ← ⋯\n'
+=======
+            '     │ creator: DecoratedBox ← ConstrainedBox ← Padding ← Container ←\n'
+            '     │   Align ← MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope\n'
+            '     │   ← _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+            '     │   TestFlutterView#00000] ← View ← [root]\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '     │ parentData: <none> (can use size)\n'
             '     │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '     │ layer: null\n'
@@ -427,10 +579,18 @@ void main() {
             '     │\n'
             '     └─child: _RenderColoredBox#cff14\n'
             '       │ needsCompositing: false\n'
+<<<<<<< HEAD
             '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← '
             'Padding ← Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← _FocusInheritedScope ← Focus ← '
             'FocusTraversalGroup ← MediaQuery ← ⋯\n'
+=======
+            '       │ creator: ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ←\n'
+            '       │   Container ← Align ← MediaQuery ← _MediaQueryFromView ←\n'
+            '       │   _PipelineOwnerScope ← _ViewScope ←\n'
+            '       │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+            '       │   ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '       │ parentData: <none> (can use size)\n'
             '       │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '       │ layer: null\n'
@@ -442,10 +602,17 @@ void main() {
             '       │\n'
             '       └─child: RenderPadding#f6d0f\n'
             '         │ needsCompositing: false\n'
+<<<<<<< HEAD
             '         │ creator: Padding ← ColoredBox ← DecoratedBox ← '
             'ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← FocusTraversalGroup ← ⋯\n'
+=======
+            '         │ creator: Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ←\n'
+            '         │   Padding ← Container ← Align ← MediaQuery ← _MediaQueryFromView\n'
+            '         │   ← _PipelineOwnerScope ← _ViewScope ←\n'
+            '         │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '         │ parentData: <none> (can use size)\n'
             '         │ constraints: BoxConstraints(w=53.0, h=78.0)\n'
             '         │ layer: null\n'
@@ -458,10 +625,16 @@ void main() {
             '         │\n'
             '         └─child: RenderPositionedBox#4f7d2\n'
             '           │ needsCompositing: false\n'
+<<<<<<< HEAD
             '           │ creator: Align ← Padding ← ColoredBox ← DecoratedBox '
             '← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← Focus ← ⋯\n'
+=======
+            '           │ creator: Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '           │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '           │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '           │ parentData: offset=Offset(7.0, 7.0) (can use size)\n'
             '           │ constraints: BoxConstraints(w=39.0, h=64.0)\n'
             '           │ layer: null\n'
@@ -476,10 +649,16 @@ void main() {
             '           │\n'
             '           └─child: RenderConstrainedBox#81408 relayoutBoundary=up1\n'
             '             │ needsCompositing: false\n'
+<<<<<<< HEAD
             '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← '
             'DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ← '
             '_FocusInheritedScope ← _FocusScopeWithExternalFocusNode ← '
             '_FocusInheritedScope ← ⋯\n'
+=======
+            '             │ creator: SizedBox ← Align ← Padding ← ColoredBox ← DecoratedBox ←\n'
+            '             │   ConstrainedBox ← Padding ← Container ← Align ← MediaQuery ←\n'
+            '             │   _MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '             │ parentData: offset=Offset(14.0, 31.0) (can use size)\n'
             '             │ constraints: BoxConstraints(0.0<=w<=39.0, 0.0<=h<=64.0)\n'
             '             │ layer: null\n'
@@ -491,10 +670,16 @@ void main() {
             '             │\n'
             '             └─child: RenderDecoratedBox#b5693\n'
             '                 needsCompositing: false\n'
+<<<<<<< HEAD
             '                 creator: DecoratedBox ← SizedBox ← Align ← '
             'Padding ← ColoredBox ← DecoratedBox ← ConstrainedBox ← Padding ← '
             'Container ← Align ← _FocusInheritedScope ← '
             '_FocusScopeWithExternalFocusNode ← ⋯\n'
+=======
+            '                 creator: DecoratedBox ← SizedBox ← Align ← Padding ← ColoredBox ←\n'
+            '                   DecoratedBox ← ConstrainedBox ← Padding ← Container ← Align ←\n'
+            '                   MediaQuery ← _MediaQueryFromView ← ⋯\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             '                 parentData: <none> (can use size)\n'
             '                 constraints: BoxConstraints(w=25.0, h=33.0)\n'
             '                 layer: null\n'

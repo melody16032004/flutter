@@ -8,8 +8,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import '../widgets/feedback_tester.dart';
+import 'feedback_tester.dart';
 
 Widget wrap({required Widget child}) {
   return MediaQuery(
@@ -1226,6 +1225,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(CheckboxListTile)),
       matchesSemantics(
@@ -1240,6 +1240,17 @@ void main() {
         label: 'Hello\nthere',
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(CheckboxListTile)), matchesSemantics(
+      hasCheckedState: true,
+      isChecked: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+      label: 'Hello\nthere',
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     handle.dispose();
   });

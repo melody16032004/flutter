@@ -28,7 +28,7 @@ void main() {
       await project.setUpIn(tempDir);
 
       flutter = FlutterRunTestDriver(tempDir);
-      await flutter.run(withDebugger: true, verbose: true);
+      await flutter.run(withDebugger: true);
       final int? port = flutter.vmServicePort;
       expect(port != null, true);
       vmService = await vmServiceConnectUri('ws://localhost:$port/ws');

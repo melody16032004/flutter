@@ -675,6 +675,7 @@ class _RenderSegmentedControl<T> extends RenderBox
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     final Size childSize = _calculateChildSize(constraints);
     final BoxConstraints childConstraints = BoxConstraints.tight(childSize);
@@ -689,6 +690,8 @@ class _RenderSegmentedControl<T> extends RenderBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Size computeDryLayout(BoxConstraints constraints) {
     final Size childSize = _calculateChildSize(constraints);
     return _computeOverallSizeFromChildSize(childSize);

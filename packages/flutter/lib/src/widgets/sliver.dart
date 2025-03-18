@@ -143,7 +143,7 @@ abstract class SliverMultiBoxAdaptorWidget extends SliverWithKeepAliveWidget {
 ///
 /// See also:
 ///
-///  * <https://docs.flutter.dev/ui/layout/scrolling/slivers>, a description
+///  * <https://flutter.dev/docs/development/ui/advanced/slivers>, a description
 ///    of what slivers are and how to use them.
 ///  * [SliverFixedExtentList], which is more efficient for children with
 ///    the same extent in the main axis.
@@ -535,6 +535,7 @@ class SliverFixedExtentList extends SliverMultiBoxAdaptorWidget {
   }
 }
 
+<<<<<<< HEAD
 /// A sliver that places its box children in a linear array and constrains them
 /// to have the corresponding extent returned by [itemExtentBuilder].
 ///
@@ -649,6 +650,8 @@ class SliverVariedExtentList extends SliverMultiBoxAdaptorWidget {
   }
 }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// A sliver that places multiple box children in a two dimensional arrangement.
 ///
 /// _To learn more about slivers, see [CustomScrollView.slivers]._

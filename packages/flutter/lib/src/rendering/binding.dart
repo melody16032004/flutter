@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'dart:ui';
 ///
 /// @docImport 'package:flutter/widgets.dart';
@@ -10,6 +11,9 @@
 library;
 
 import 'dart:ui' as ui show PictureRecorder, SceneBuilder, SemanticsUpdate;
+=======
+import 'dart:ui' as ui show SemanticsUpdate;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -358,31 +362,6 @@ mixin RendererBinding
     return ViewConfiguration.fromView(renderView.flutterView);
   }
 
-  /// Create a [SceneBuilder].
-  ///
-  /// This hook enables test bindings to instrument the rendering layer.
-  ///
-  /// This is used by the [RenderView] to create the [SceneBuilder] that is
-  /// passed to the [Layer] system to render the scene.
-  ui.SceneBuilder createSceneBuilder() => ui.SceneBuilder();
-
-  /// Create a [PictureRecorder].
-  ///
-  /// This hook enables test bindings to instrument the rendering layer.
-  ///
-  /// This is used by the [PaintingContext] to create the [PictureRecorder]s
-  /// used when painting [RenderObject]s into [Picture]s passed to
-  /// [PictureLayer]s.
-  ui.PictureRecorder createPictureRecorder() => ui.PictureRecorder();
-
-  /// Create a [Canvas] from a [PictureRecorder].
-  ///
-  /// This hook enables test bindings to instrument the rendering layer.
-  ///
-  /// This is used by the [PaintingContext] after creating a [PictureRecorder]
-  /// using [createPictureRecorder].
-  Canvas createCanvas(ui.PictureRecorder recorder) => Canvas(recorder);
-
   /// Called when the system metrics change.
   ///
   /// See [dart:ui.PlatformDispatcher.onMetricsChanged].
@@ -677,7 +656,7 @@ String _debugCollectRenderTrees() {
 ///
 /// {@template flutter.rendering.debugDumpRenderTree}
 /// It prints the trees associated with every [RenderView] in
-/// [RendererBinding.renderViews], separated by two blank lines.
+/// [RendererBinding.renderView], separated by two blank lines.
 /// {@endtemplate}
 void debugDumpRenderTree() {
   debugPrint(_debugCollectRenderTrees());

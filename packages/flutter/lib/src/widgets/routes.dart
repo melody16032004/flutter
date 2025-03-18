@@ -30,7 +30,6 @@ import 'focus_manager.dart';
 import 'focus_scope.dart';
 import 'focus_traversal.dart';
 import 'framework.dart';
-import 'inherited_model.dart';
 import 'modal_barrier.dart';
 import 'navigator.dart';
 import 'overlay.dart';
@@ -176,7 +175,7 @@ abstract class TransitionRoute<T> extends OverlayRoute<T> implements PredictiveB
   //
   // This situation arises when dealing with the Cupertino dismiss gesture.
   @override
-  bool get finishedWhenPopped => _controller!.isDismissed && !_popFinalized;
+  bool get finishedWhenPopped => _controller!.status == AnimationStatus.dismissed && !_popFinalized;
 
   bool _popFinalized = false;
 
@@ -435,7 +434,11 @@ abstract class TransitionRoute<T> extends OverlayRoute<T> implements PredictiveB
         final Animation<double> currentTrain =
             (current is TrainHoppingAnimation ? current.currentTrain : current)!;
         final Animation<double> nextTrain = nextRoute._animation!;
-        if (currentTrain.value == nextTrain.value || !nextTrain.isAnimating) {
+        if (
+          currentTrain.value == nextTrain.value ||
+          nextTrain.status == AnimationStatus.completed ||
+          nextTrain.status == AnimationStatus.dismissed
+        ) {
           _setSecondaryAnimation(nextTrain, nextRoute.completed);
         } else {
           // Two trains animate at different values. We have to do train hopping.
@@ -450,15 +453,20 @@ abstract class TransitionRoute<T> extends OverlayRoute<T> implements PredictiveB
           //     properly clean up the existing train hopping.
           TrainHoppingAnimation? newAnimation;
           void jumpOnAnimationEnd(AnimationStatus status) {
-            if (!status.isAnimating) {
-              // The nextTrain has stopped animating without train hopping.
-              // Directly sets the secondary animation and disposes the
-              // TrainHoppingAnimation.
-              _setSecondaryAnimation(nextTrain, nextRoute.completed);
-              if (_trainHoppingListenerRemover != null) {
-                _trainHoppingListenerRemover!();
-                _trainHoppingListenerRemover = null;
-              }
+            switch (status) {
+              case AnimationStatus.completed:
+              case AnimationStatus.dismissed:
+                // The nextTrain has stopped animating without train hopping.
+                // Directly sets the secondary animation and disposes the
+                // TrainHoppingAnimation.
+                _setSecondaryAnimation(nextTrain, nextRoute.completed);
+                if (_trainHoppingListenerRemover != null) {
+                  _trainHoppingListenerRemover!();
+                  _trainHoppingListenerRemover = null;
+                }
+              case AnimationStatus.forward:
+              case AnimationStatus.reverse:
+                break;
             }
           }
 
@@ -690,7 +698,7 @@ abstract interface class PredictiveBackRoute {
   /// Handles a predictive back gesture ending successfully.
   void handleCommitBackGesture();
 
-  /// Handles a predictive back gesture ending in cancellation.
+  /// Handles a predictive back gesture ending in cancelation.
   void handleCancelBackGesture();
 }
 
@@ -979,6 +987,7 @@ class _DismissModalAction extends DismissAction {
   }
 }
 
+<<<<<<< HEAD
 enum _ModalRouteAspect {
   /// Specifies the aspect corresponding to [ModalRoute.isCurrent].
   isCurrent,
@@ -991,6 +1000,9 @@ enum _ModalRouteAspect {
 }
 
 class _ModalScopeStatus extends InheritedModel<_ModalRouteAspect> {
+=======
+class _ModalScopeStatus extends InheritedWidget {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   const _ModalScopeStatus({
     required this.isCurrent,
     required this.canPop,
@@ -1027,6 +1039,7 @@ class _ModalScopeStatus extends InheritedModel<_ModalRouteAspect> {
       ),
     );
   }
+<<<<<<< HEAD
 
   @override
   bool updateShouldNotifyDependent(
@@ -1041,6 +1054,8 @@ class _ModalScopeStatus extends InheritedModel<_ModalRouteAspect> {
       },
     );
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _ModalScope<T> extends StatefulWidget {
@@ -1264,9 +1279,11 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   /// while it is visible (specifically, if [isCurrent] or [canPop] change value).
   @optionalTypeArgs
   static ModalRoute<T>? of<T extends Object?>(BuildContext context) {
-    return _of<T>(context);
+    final _ModalScopeStatus? widget = context.dependOnInheritedWidgetOfExactType<_ModalScopeStatus>();
+    return widget?.route as ModalRoute<T>?;
   }
 
+<<<<<<< HEAD
   static ModalRoute<T>? _of<T extends Object?>(BuildContext context, [_ModalRouteAspect? aspect]) {
     return InheritedModel.inheritFrom<_ModalScopeStatus>(context, aspect: aspect)?.route
         as ModalRoute<T>?;
@@ -1301,6 +1318,8 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   static RouteSettings? settingsOf(BuildContext context) =>
       _of(context, _ModalRouteAspect.settings)?.settings;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Schedule a call to [buildTransitions].
   ///
   /// Whenever you need to change internal state for a [ModalRoute] object, make
@@ -1831,17 +1850,18 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
     }
     // If attempts to dismiss this route might be vetoed such as in a page
     // with forms, then do not allow the user to dismiss the route with a swipe.
-    if (hasScopedWillPopCallback || popDisposition == RoutePopDisposition.doNotPop) {
+    if (hasScopedWillPopCallback ||
+        popDisposition == RoutePopDisposition.doNotPop) {
       return false;
     }
     // If we're in an animation already, we cannot be manually swiped.
-    if (!animation!.isCompleted) {
+    if (animation!.status != AnimationStatus.completed) {
       return false;
     }
     // If we're being popped into, we also cannot be swiped until the pop above
     // it completes. This translates to our secondary animation being
     // dismissed.
-    if (!secondaryAnimation!.isDismissed) {
+    if (secondaryAnimation!.status != AnimationStatus.dismissed) {
       return false;
     }
     // If we're in a gesture already, we cannot start another.
@@ -1895,9 +1915,7 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
 
   final List<WillPopCallback> _willPopCallbacks = <WillPopCallback>[];
 
-  // Holding as Object? instead of T so that PopScope in this route can be
-  // declared with any supertype of T.
-  final Set<PopEntry<Object?>> _popEntries = <PopEntry<Object?>>{};
+  final Set<PopEntry> _popEntries = <PopEntry>{};
 
   /// Returns [RoutePopDisposition.doNotPop] if any of callbacks added with
   /// [addScopedWillPopCallback] returns either false or null. If they all
@@ -1945,14 +1963,14 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   ///
   /// See also:
   ///
-  ///  * [Form], which provides an `onPopInvokedWithResult` callback that is similar.
+  ///  * [Form], which provides an `onPopInvoked` callback that is similar.
   ///  * [registerPopEntry], which adds a [PopEntry] to the list this method
   ///    checks.
   ///  * [unregisterPopEntry], which removes a [PopEntry] from the list this
   ///    method checks.
   @override
   RoutePopDisposition get popDisposition {
-    for (final PopEntry<Object?> popEntry in _popEntries) {
+    for (final PopEntry popEntry in _popEntries) {
       if (!popEntry.canPopNotifier.value) {
         return RoutePopDisposition.doNotPop;
       }
@@ -1962,11 +1980,10 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   }
 
   @override
-  void onPopInvokedWithResult(bool didPop, T? result) {
-    for (final PopEntry<Object?> popEntry in _popEntries) {
-      popEntry.onPopInvokedWithResult(didPop, result);
+  void onPopInvoked(bool didPop) {
+    for (final PopEntry popEntry in _popEntries) {
+      popEntry.onPopInvoked?.call(didPop);
     }
-    super.onPopInvokedWithResult(didPop, result);
   }
 
   /// Enables this route to veto attempts by the user to dismiss it.
@@ -2027,17 +2044,17 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   /// Registers the existence of a [PopEntry] in the route.
   ///
   /// [PopEntry] instances registered in this way will have their
-  /// [PopEntry.onPopInvokedWithResult] callbacks called when a route is popped or a pop
+  /// [PopEntry.onPopInvoked] callbacks called when a route is popped or a pop
   /// is attempted. They will also be able to block pop operations with
   /// [PopEntry.canPopNotifier] through this route's [popDisposition] method.
   ///
   /// See also:
   ///
   ///  * [unregisterPopEntry], which performs the opposite operation.
-  void registerPopEntry(PopEntry<Object?> popEntry) {
+  void registerPopEntry(PopEntry popEntry) {
     _popEntries.add(popEntry);
-    popEntry.canPopNotifier.addListener(_maybeDispatchNavigationNotification);
-    _maybeDispatchNavigationNotification();
+    popEntry.canPopNotifier.addListener(_handlePopEntryChange);
+    _handlePopEntryChange();
   }
 
   /// Unregisters a [PopEntry] in the route's widget subtree.
@@ -2045,13 +2062,13 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
   /// See also:
   ///
   ///  * [registerPopEntry], which performs the opposite operation.
-  void unregisterPopEntry(PopEntry<Object?> popEntry) {
+  void unregisterPopEntry(PopEntry popEntry) {
     _popEntries.remove(popEntry);
-    popEntry.canPopNotifier.removeListener(_maybeDispatchNavigationNotification);
-    _maybeDispatchNavigationNotification();
+    popEntry.canPopNotifier.removeListener(_handlePopEntryChange);
+    _handlePopEntryChange();
   }
 
-  void _maybeDispatchNavigationNotification() {
+  void _handlePopEntryChange() {
     if (!isCurrent) {
       return;
     }
@@ -2134,7 +2151,6 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
     }
     super.didPopNext(nextRoute);
     changedInternalState();
-    _maybeDispatchNavigationNotification();
   }
 
   @override
@@ -2191,10 +2207,16 @@ abstract class ModalRoute<T> extends TransitionRoute<T> with LocalHistoryRoute<T
       barrier = BackdropFilter(filter: filter!, child: barrier);
     }
     barrier = IgnorePointer(
+<<<<<<< HEAD
       ignoring:
           !animation!
               .isForwardOrCompleted, // changedInternalState is called when animation.status updates
       child: barrier, // dismissed is possible when doing a manual pop gesture
+=======
+      ignoring: animation!.status == AnimationStatus.reverse || // changedInternalState is called when animation.status updates
+                animation!.status == AnimationStatus.dismissed, // dismissed is possible when doing a manual pop gesture
+      child: barrier,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     if (semanticsDismissible && barrierDismissible) {
       // To be sorted after the _modalScope.
@@ -2552,7 +2574,17 @@ class RawDialogRoute<T> extends PopupRoute<T> {
   ) {
     if (_transitionBuilder == null) {
       // Some default transition.
+<<<<<<< HEAD
       return FadeTransition(opacity: animation, child: child);
+=======
+      return FadeTransition(
+        opacity: CurvedAnimation(
+          parent: animation,
+          curve: Curves.linear,
+        ),
+        child: child,
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     return _transitionBuilder(context, animation, secondaryAnimation, child);
   }
@@ -2689,13 +2721,11 @@ typedef RouteTransitionsBuilder =
 ///
 /// Accepts a didPop boolean indicating whether or not back navigation
 /// succeeded.
-///
-/// The `result` contains the pop result.
-typedef PopInvokedWithResultCallback<T> = void Function(bool didPop, T? result);
+typedef PopInvokedCallback = void Function(bool didPop);
 
 /// Allows listening to and preventing pops.
 ///
-/// Can be registered in [ModalRoute] to listen to pops with [onPopInvokedWithResult] or
+/// Can be registered in [ModalRoute] to listen to pops with [onPopInvoked] or
 /// to enable/disable them with [canPopNotifier].
 ///
 /// See also:
@@ -2703,6 +2733,7 @@ typedef PopInvokedWithResultCallback<T> = void Function(bool didPop, T? result);
 ///  * [PopScope], which provides similar functionality in a widget.
 ///  * [ModalRoute.registerPopEntry], which unregisters instances of this.
 ///  * [ModalRoute.unregisterPopEntry], which unregisters instances of this.
+<<<<<<< HEAD
 abstract class PopEntry<T> {
   /// {@macro flutter.widgets.PopScope.onPopInvokedWithResult}
   @Deprecated(
@@ -2713,12 +2744,17 @@ abstract class PopEntry<T> {
 
   /// {@macro flutter.widgets.PopScope.onPopInvokedWithResult}
   void onPopInvokedWithResult(bool didPop, T? result) => onPopInvoked(didPop);
+=======
+abstract class PopEntry {
+  /// {@macro flutter.widgets.PopScope.onPopInvoked}
+  PopInvokedCallback? get onPopInvoked;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// {@macro flutter.widgets.PopScope.canPop}
   ValueListenable<bool> get canPopNotifier;
 
   @override
   String toString() {
-    return 'PopEntry canPop: ${canPopNotifier.value}, onPopInvoked: $onPopInvokedWithResult';
+    return 'PopEntry canPop: ${canPopNotifier.value}, onPopInvoked: $onPopInvoked';
   }
 }

@@ -8,7 +8,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('PhysicalShape is an ancestor of the text widget', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(const example.PhysicalShapeApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(home: example.PhysicalShapeApp()),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     final PhysicalShape physicalShape = tester.widget<PhysicalShape>(
       find.ancestor(of: find.text('Hello, World!'), matching: find.byType(PhysicalShape)),

@@ -13,30 +13,26 @@ import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/doctor.dart';
 import 'package:flutter_tools/src/project.dart';
 import 'package:flutter_tools/src/reporting/crash_reporting.dart';
+import 'package:flutter_tools/src/reporting/reporting.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:test/fake.dart';
-import 'package:unified_analytics/unified_analytics.dart';
 
 import '../src/common.dart';
 import '../src/fake_process_manager.dart';
-import '../src/fakes.dart';
 
 void main() {
   late BufferLogger logger;
-  late MemoryFileSystem fs;
+  late FileSystem fs;
+  late TestUsage testUsage;
   late Platform platform;
   late OperatingSystemUtils operatingSystemUtils;
   late StackTrace stackTrace;
-  late FakeAnalytics fakeAnalytics;
 
   setUp(() async {
     logger = BufferLogger.test();
     fs = MemoryFileSystem.test();
-    fakeAnalytics = getInitializedFakeAnalyticsInstance(
-      fs: fs,
-      fakeFlutterVersion: FakeFlutterVersion(),
-    );
+    testUsage = TestUsage();
 
     platform = FakePlatform(environment: <String, String>{});
     operatingSystemUtils = OperatingSystemUtils(
@@ -55,6 +51,7 @@ void main() {
   Future<void> verifyCrashReportSent(RequestInfo crashInfo, {int crashes = 1}) async {
     // Verify that we sent the crash report.
     expect(crashInfo.method, 'POST');
+<<<<<<< HEAD
     expect(
       crashInfo.uri,
       Uri(
@@ -66,6 +63,19 @@ void main() {
       ),
     );
     expect(crashInfo.fields?['uuid'], fakeAnalytics.clientId);
+=======
+    expect(crashInfo.uri, Uri(
+      scheme: 'https',
+      host: 'clients2.google.com',
+      port: 443,
+      path: '/cr/report',
+      queryParameters: <String, String>{
+        'product': 'Flutter_Tools',
+        'version': 'test-version',
+      },
+    ));
+    expect(crashInfo.fields?['uuid'], testUsage.clientId);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(crashInfo.fields?['product'], 'Flutter_Tools');
     expect(crashInfo.fields?['version'], 'test-version');
     expect(crashInfo.fields?['osName'], 'linux');
@@ -106,14 +116,14 @@ void main() {
   });
 
   testWithoutContext('suppress analytics', () async {
-    fakeAnalytics.suppressTelemetry();
+    testUsage.suppressAnalytics = true;
 
     final CrashReportSender crashReportSender = CrashReportSender(
       client: CrashingCrashReportSender(const SocketException('no internets')),
+      usage: testUsage,
       platform: platform,
       logger: logger,
       operatingSystemUtils: operatingSystemUtils,
-      analytics: fakeAnalytics,
     );
 
     await crashReportSender.sendReport(
@@ -128,7 +138,7 @@ void main() {
 
   group('allow analytics', () {
     setUp(() async {
-      await fakeAnalytics.setTelemetry(true);
+      testUsage.suppressAnalytics = false;
     });
 
     testWithoutContext('should send crash reports', () async {
@@ -136,10 +146,10 @@ void main() {
 
       final CrashReportSender crashReportSender = CrashReportSender(
         client: MockCrashReportSender(requestInfo),
+        usage: testUsage,
         platform: platform,
         logger: logger,
         operatingSystemUtils: operatingSystemUtils,
-        analytics: fakeAnalytics,
       );
 
       await crashReportSender.sendReport(
@@ -152,6 +162,7 @@ void main() {
       await verifyCrashReportSent(requestInfo);
     });
 
+<<<<<<< HEAD
     testWithoutContext(
       'should print an explanatory message when there is a SocketException',
       () async {
@@ -162,6 +173,16 @@ void main() {
           operatingSystemUtils: operatingSystemUtils,
           analytics: fakeAnalytics,
         );
+=======
+    testWithoutContext('should print an explanatory message when there is a SocketException', () async {
+      final CrashReportSender crashReportSender = CrashReportSender(
+        client: CrashingCrashReportSender(const SocketException('no internets')),
+        usage: testUsage,
+        platform: platform,
+        logger: logger,
+        operatingSystemUtils: operatingSystemUtils,
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         await crashReportSender.sendReport(
           error: StateError('Test bad state error'),
@@ -174,6 +195,7 @@ void main() {
       },
     );
 
+<<<<<<< HEAD
     testWithoutContext(
       'should print an explanatory message when there is an HttpException',
       () async {
@@ -184,6 +206,16 @@ void main() {
           operatingSystemUtils: operatingSystemUtils,
           analytics: fakeAnalytics,
         );
+=======
+    testWithoutContext('should print an explanatory message when there is an HttpException', () async {
+      final CrashReportSender crashReportSender = CrashReportSender(
+        client: CrashingCrashReportSender(const HttpException('no internets')),
+        usage: testUsage,
+        platform: platform,
+        logger: logger,
+        operatingSystemUtils: operatingSystemUtils,
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         await crashReportSender.sendReport(
           error: StateError('Test bad state error'),
@@ -196,6 +228,7 @@ void main() {
       },
     );
 
+<<<<<<< HEAD
     testWithoutContext(
       'should print an explanatory message when there is a ClientException',
       () async {
@@ -206,6 +239,16 @@ void main() {
           operatingSystemUtils: operatingSystemUtils,
           analytics: fakeAnalytics,
         );
+=======
+    testWithoutContext('should print an explanatory message when there is a ClientException', () async {
+      final CrashReportSender crashReportSender = CrashReportSender(
+        client: CrashingCrashReportSender(const HttpException('no internets')),
+        usage: testUsage,
+        platform: platform,
+        logger: logger,
+        operatingSystemUtils: operatingSystemUtils,
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         await crashReportSender.sendReport(
           error: ClientException('Test bad state error'),
@@ -223,10 +266,10 @@ void main() {
 
       final CrashReportSender crashReportSender = CrashReportSender(
         client: MockCrashReportSender(requestInfo),
+        usage: testUsage,
         platform: platform,
         logger: logger,
         operatingSystemUtils: operatingSystemUtils,
-        analytics: fakeAnalytics,
       );
 
       await crashReportSender.sendReport(
@@ -274,10 +317,10 @@ void main() {
 
       final CrashReportSender crashReportSender = CrashReportSender(
         client: mockClient,
+        usage: testUsage,
         platform: platform,
         logger: logger,
         operatingSystemUtils: operatingSystemUtils,
-        analytics: fakeAnalytics,
       );
 
       await crashReportSender.sendReport(
@@ -311,10 +354,10 @@ void main() {
 
       final CrashReportSender crashReportSender = CrashReportSender(
         client: mockClient,
+        usage: testUsage,
         platform: environmentPlatform,
         logger: logger,
         operatingSystemUtils: operatingSystemUtils,
-        analytics: fakeAnalytics,
       );
 
       await crashReportSender.sendReport(

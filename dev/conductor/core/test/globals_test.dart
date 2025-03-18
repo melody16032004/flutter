@@ -115,7 +115,7 @@ void main() {
   });
 }
 
-class FakeArgs extends Fake implements ArgResults {
+class FakeArgs implements ArgResults {
   FakeArgs({
     this.arguments = const <String>[],
     this.name = 'fake-command',
@@ -129,6 +129,15 @@ class FakeArgs extends Fake implements ArgResults {
 
   @override
   final String name;
+
+  @override
+  ArgResults? get command => throw Exception('Unimplemented');
+
+  @override
+  List<String> get rest => throw Exception('Unimplemented');
+
+  @override
+  Iterable<String> get options => throw Exception('Unimplemented');
 
   @override
   bool wasParsed(String name) {

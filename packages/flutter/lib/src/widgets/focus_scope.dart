@@ -715,6 +715,7 @@ class _FocusState extends State<Focus> {
     Widget child = widget.child;
     if (widget.includeSemantics) {
       child = Semantics(
+<<<<<<< HEAD
         // Automatically request the focus for a focusable widget when it
         // receives an input focus action from the semantics. Nothing is needed
         // for losing the focus because if focus is lost, that means another
@@ -725,6 +726,8 @@ class _FocusState extends State<Focus> {
             defaultTargetPlatform != TargetPlatform.iOS && _couldRequestFocus
                 ? focusNode.requestFocus
                 : null,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         focusable: _couldRequestFocus,
         focused: _hadPrimaryFocus,
         child: widget.child,
@@ -808,10 +811,16 @@ class FocusScope extends Focus {
     super.onKeyEvent,
     super.onKey,
     super.debugLabel,
+<<<<<<< HEAD
     super.includeSemantics,
     super.descendantsAreFocusable,
     super.descendantsAreTraversable,
   }) : super(focusNode: node);
+=======
+  })  : super(
+          focusNode: node,
+        );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Creates a FocusScope widget that uses the given [focusScopeNode] as the
   /// source of truth for attributes on the node, rather than the attributes of
@@ -822,7 +831,6 @@ class FocusScope extends Focus {
     required FocusScopeNode focusScopeNode,
     FocusNode? parentNode,
     bool autofocus,
-    bool includeSemantics,
     ValueChanged<bool>? onFocusChange,
   }) = _FocusScopeWithExternalFocusNode;
 
@@ -855,7 +863,6 @@ class _FocusScopeWithExternalFocusNode extends FocusScope {
     required FocusScopeNode focusScopeNode,
     super.parentNode,
     super.autofocus,
-    super.includeSemantics,
     super.onFocusChange,
   }) : super(node: focusScopeNode);
 
@@ -890,11 +897,21 @@ class _FocusScopeState extends _FocusState {
   @override
   Widget build(BuildContext context) {
     _focusAttachment!.reparent(parent: widget.parentNode);
+<<<<<<< HEAD
     Widget result = _FocusInheritedScope(node: focusNode, child: widget.child);
     if (widget.includeSemantics) {
       result = Semantics(explicitChildNodes: true, child: result);
     }
     return result;
+=======
+    return Semantics(
+      explicitChildNodes: true,
+      child: _FocusInheritedScope(
+        node: focusNode,
+        child: widget.child,
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

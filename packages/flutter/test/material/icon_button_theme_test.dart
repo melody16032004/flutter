@@ -2,18 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+<<<<<<< HEAD
   RenderObject getOverlayColor(WidgetTester tester) {
     return tester.allRenderObjects.firstWhere(
       (RenderObject object) => object.runtimeType.toString() == '_RenderInkFeatures',
     );
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('IconButtonThemeData lerp special cases', () {
     expect(IconButtonThemeData.lerp(null, null, 0), null);
     const IconButtonThemeData data = IconButtonThemeData();
@@ -289,6 +290,7 @@ void main() {
     material = tester.widget<Material>(buttonMaterialFinder);
     expect(material.shadowColor, shadowColor);
   });
+<<<<<<< HEAD
 
   testWidgets('IconButtonTheme IconButton.styleFrom overlayColor overrides default overlay color', (
     WidgetTester tester,
@@ -335,4 +337,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(getOverlayColor(tester), paints..rect(color: overlayColor.withOpacity(0.1)));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

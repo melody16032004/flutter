@@ -25,7 +25,7 @@ class MinSdkVersionMigration extends ProjectMigrator {
   final AndroidProject _project;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     // Skip applying migration in modules as the FlutterExtension is not applied.
     if (_project.isModule) {
       return;

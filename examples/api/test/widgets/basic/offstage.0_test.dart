@@ -2,12 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter/material.dart';
 import 'package:flutter_api_samples/widgets/basic/offstage.0.dart' as example;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Can off/on stage Flutter logo widget', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(const example.OffstageApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(home: example.OffstageApp()),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // The Flutter logo is off stage and not visible.
     expect(find.text('Flutter logo is offstage: true'), findsOneWidget);

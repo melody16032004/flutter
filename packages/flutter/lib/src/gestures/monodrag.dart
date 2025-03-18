@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/widgets.dart';
-///
-/// @docImport 'multidrag.dart';
-library;
-
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
@@ -89,8 +84,8 @@ sealed class DragGestureRecognizer extends OneSequenceGestureRecognizer {
     this.velocityTrackerBuilder = _defaultBuilder,
     this.onlyAcceptDragOnThreshold = false,
     super.supportedDevices,
-    super.allowedButtonsFilter = _defaultButtonAcceptBehavior,
-  });
+    AllowedButtonsFilter? allowedButtonsFilter,
+  }) : super(allowedButtonsFilter: allowedButtonsFilter ?? _defaultButtonAcceptBehavior);
 
   static VelocityTracker _defaultBuilder(PointerEvent event) =>
       VelocityTracker.withKind(event.kind);
@@ -108,7 +103,7 @@ sealed class DragGestureRecognizer extends OneSequenceGestureRecognizer {
   /// no difference in behavior between the two settings.
   ///
   /// For more information about the gesture arena:
-  /// https://flutter.dev/to/gesture-disambiguation
+  /// https://flutter.dev/docs/development/ui/advanced/gestures#gesture-disambiguation
   ///
   /// By default, the drag start behavior is [DragStartBehavior.start].
   ///
@@ -655,6 +650,7 @@ sealed class DragGestureRecognizer extends OneSequenceGestureRecognizer {
     assert(_state != _DragState.ready);
     if (!event.synthesized &&
         (event is PointerDownEvent ||
+<<<<<<< HEAD
             event is PointerMoveEvent ||
             event is PointerPanZoomStartEvent ||
             event is PointerPanZoomUpdateEvent)) {
@@ -664,6 +660,19 @@ sealed class DragGestureRecognizer extends OneSequenceGestureRecognizer {
         _ => event.localPosition,
       };
       _velocityTrackers[event.pointer]!.addPosition(event.timeStamp, position);
+=======
+         event is PointerMoveEvent ||
+         event is PointerPanZoomStartEvent ||
+         event is PointerPanZoomUpdateEvent)) {
+      final VelocityTracker tracker = _velocityTrackers[event.pointer]!;
+      if (event is PointerPanZoomStartEvent) {
+        tracker.addPosition(event.timeStamp, Offset.zero);
+      } else if (event is PointerPanZoomUpdateEvent) {
+        tracker.addPosition(event.timeStamp, event.pan);
+      } else {
+        tracker.addPosition(event.timeStamp, event.localPosition);
+      }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     if (event is PointerMoveEvent && event.buttons != _initialButtons) {
       _giveUpPointer(event.pointer);
@@ -731,7 +740,7 @@ sealed class DragGestureRecognizer extends OneSequenceGestureRecognizer {
   // it keeps track of the last accepted pointer. If this active pointer
   // leave up, it will be set to the first accepted pointer.
   // Refer to the implementation of Android `RecyclerView`(line 3846):
-  // https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-main/recyclerview/recyclerview/src/main/java/androidx/recyclerview/widget/RecyclerView.java
+  // https://android.googlesource.com/platform/frameworks/support/+/refs/heads/androidx-master-dev/recyclerview/recyclerview/src/main/java/androidx/recyclerview/widget/RecyclerView.java
   int? _activePointer;
 
   @override

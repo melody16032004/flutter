@@ -14,12 +14,14 @@ class RemoveBitcodeMigration extends ProjectMigrator {
   final File _xcodeProjectInfoFile;
 
   @override
-  Future<void> migrate() async {
+  bool migrate() {
     if (_xcodeProjectInfoFile.existsSync()) {
       processFileLines(_xcodeProjectInfoFile);
     } else {
       logger.printTrace('Xcode project not found, skipping removing bitcode migration.');
     }
+
+    return true;
   }
 
   @override

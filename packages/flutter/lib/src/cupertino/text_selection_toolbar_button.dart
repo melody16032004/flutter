@@ -124,8 +124,16 @@ class _CupertinoTextSelectionToolbarButtonState extends State<CupertinoTextSelec
   Widget build(BuildContext context) {
     final Widget content = _getContentWidget(context);
     final Widget child = CupertinoButton(
+<<<<<<< HEAD
       color: isPressed ? _kToolbarPressedColor.resolveFrom(context) : CupertinoColors.transparent,
       disabledColor: CupertinoColors.transparent,
+=======
+      color: isPressed
+        ? _kToolbarPressedColor.resolveFrom(context)
+        : const Color(0x00000000),
+      borderRadius: null,
+      disabledColor: const Color(0x00000000),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       // This CupertinoButton does not actually handle the onPressed callback,
       // this is only here to correctly enable/disable the button (see
       // GestureDetector comment below).
@@ -167,7 +175,10 @@ class _CupertinoTextSelectionToolbarButtonState extends State<CupertinoTextSelec
                 : CupertinoColors.inactiveGray,
       ),
     );
-    switch (widget.buttonItem?.type) {
+    if (widget.buttonItem == null) {
+      return textWidget;
+    }
+    switch (widget.buttonItem!.type) {
       case ContextMenuButtonType.cut:
       case ContextMenuButtonType.copy:
       case ContextMenuButtonType.paste:
@@ -177,7 +188,6 @@ class _CupertinoTextSelectionToolbarButtonState extends State<CupertinoTextSelec
       case ContextMenuButtonType.searchWeb:
       case ContextMenuButtonType.share:
       case ContextMenuButtonType.custom:
-      case null:
         return textWidget;
       case ContextMenuButtonType.liveTextInput:
         return SizedBox(

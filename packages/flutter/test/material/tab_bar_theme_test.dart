@@ -7,9 +7,13 @@
 @Tags(<String>['reduced-test-set'])
 library;
 
+<<<<<<< HEAD
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+=======
+import 'package:flutter/gestures.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -1584,6 +1588,7 @@ void main() {
       expect(unselectedTabIcon.color, unselectedColor);
       expect(selectedTextStyle.color, selectedColor);
       expect(unselectedTextStyle.color, unselectedColor);
+<<<<<<< HEAD
     },
   );
 
@@ -1766,5 +1771,7 @@ void main() {
       ),
     );
     gesture.removePointer();
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

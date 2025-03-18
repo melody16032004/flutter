@@ -86,8 +86,19 @@ class _CategoryListItemState extends State<CategoryListItem> with SingleTickerPr
     super.dispose();
   }
 
+  bool _shouldOpenList() {
+    switch (_controller.status) {
+      case AnimationStatus.completed:
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+        return false;
+      case AnimationStatus.dismissed:
+        return true;
+    }
+  }
+
   void _handleTap() {
-    if (_controller.isDismissed) {
+    if (_shouldOpenList()) {
       _controller.forward();
       if (widget.onTap != null) {
         widget.onTap!(true);
@@ -127,10 +138,19 @@ class _CategoryListItemState extends State<CategoryListItem> with SingleTickerPr
     return AnimatedBuilder(
       animation: _controller.view,
       builder: _buildHeaderWithChildren,
+<<<<<<< HEAD
       child:
           _controller.isDismissed
               ? null
               : _ExpandedCategoryDemos(category: widget.category, demos: widget.demos),
+=======
+      child: _shouldOpenList()
+          ? null
+          : _ExpandedCategoryDemos(
+              category: widget.category,
+              demos: widget.demos,
+            ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }

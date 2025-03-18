@@ -227,6 +227,7 @@ class FocusAttachment {
       _node._manager?._markDetached(_node);
       _node._parent?._removeChild(_node);
       _node._attachment = null;
+<<<<<<< HEAD
       assert(
         !_node.hasPrimaryFocus,
         'Node ${_node.debugLabel ?? _node} still has primary focus while being detached.',
@@ -235,6 +236,10 @@ class FocusAttachment {
         _node._manager?._markedForFocus != _node,
         'Node ${_node.debugLabel ?? _node} still marked for focus while being detached.',
       );
+=======
+      assert(!_node.hasPrimaryFocus);
+      assert(_node._manager?._markedForFocus != _node);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     assert(!isAttached);
   }
@@ -1384,12 +1389,17 @@ class FocusScopeNode extends FocusNode {
   ///
   /// Returns null if there is no currently focused child.
   FocusNode? get focusedChild {
+<<<<<<< HEAD
     assert(
       _focusedChildren.isEmpty || _focusedChildren.last.enclosingScope == this,
       '$debugLabel: Focused child does not have the same idea of its enclosing scope '
       '(${_focusedChildren.lastOrNull?.enclosingScope}) as the scope does.',
     );
     return _focusedChildren.lastOrNull;
+=======
+    assert(_focusedChildren.isEmpty || _focusedChildren.last.enclosingScope == this, 'Focused child does not have the same idea of its enclosing scope as the scope does.');
+    return _focusedChildren.isNotEmpty ? _focusedChildren.last : null;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   // A stack of the children that have been set as the focusedChild, most recent
@@ -1474,20 +1484,18 @@ class FocusScopeNode extends FocusNode {
     _manager?._markNeedsUpdate();
   }
 
-  /// Requests that the scope itself receive focus, without trying to find
-  /// a descendant that should receive focus.
-  ///
-  /// This is used only if you want to park the focus on a scope itself.
-  void requestScopeFocus() {
-    _doRequestFocus(findFirstFocus: false);
-  }
-
   @override
   void _doRequestFocus({required bool findFirstFocus}) {
+<<<<<<< HEAD
     // It is possible that a previously focused child is no longer focusable, so
     // clean out the list if so.
     while (_focusedChildren.isNotEmpty &&
         (!_focusedChildren.last.canRequestFocus || _focusedChildren.last.enclosingScope == null)) {
+=======
+
+    // It is possible that a previously focused child is no longer focusable.
+    while (this.focusedChild != null && !this.focusedChild!.canRequestFocus) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       _focusedChildren.removeLast();
     }
 
@@ -1640,13 +1648,24 @@ class FocusManager with DiagnosticableTreeMixin, ChangeNotifier {
     if (kFlutterMemoryAllocationsEnabled) {
       ChangeNotifier.maybeDispatchObjectCreation(this);
     }
+<<<<<<< HEAD
     if (_respondToLifecycleChange) {
+=======
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.android) {
+      // It appears that some Android keyboard implementations can cause
+      // app lifecycle state changes: adding this listener would cause the
+      // text field to unfocus as the user is trying to type.
+      //
+      // Until this is resolved, we won't be adding the listener to Android apps.
+      // https://github.com/flutter/flutter/pull/142930#issuecomment-1981750069
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       _appLifecycleListener = _AppLifecycleListener(_appLifecycleChange);
       WidgetsBinding.instance.addObserver(_appLifecycleListener!);
     }
     rootScope._manager = this;
   }
 
+<<<<<<< HEAD
   /// It appears that some Android keyboard implementations can cause
   /// app lifecycle state changes: adding the app lifecycle listener would
   /// cause the text field to unfocus as the user is trying to type.
@@ -1665,6 +1684,8 @@ class FocusManager with DiagnosticableTreeMixin, ChangeNotifier {
         TargetPlatform.windows || TargetPlatform.macOS => true,
       };
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Registers global input event handlers that are needed to manage focus.
   ///
   /// This calls the [HardwareKeyboard.addHandler] on the shared instance of
@@ -1999,6 +2020,7 @@ class FocusManager with DiagnosticableTreeMixin, ChangeNotifier {
     }());
   }
 
+<<<<<<< HEAD
   /// Enables this [FocusManager] to listen to changes of the application
   /// lifecycle if it does not already have an application lifecycle listener
   /// active, and the app isn't running on a native mobile platform.
@@ -2021,6 +2043,8 @@ class FocusManager with DiagnosticableTreeMixin, ChangeNotifier {
     }
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   List<DiagnosticsNode> debugDescribeChildren() {
     return <DiagnosticsNode>[rootScope.toDiagnosticsNode(name: 'rootScope')];
@@ -2209,11 +2233,15 @@ class _HighlightModeManager {
     // Check to see if any of the early handlers handle the key. If so, then
     // return early.
     if (_earlyKeyEventHandlers.isNotEmpty) {
-      final List<KeyEventResult> results = <KeyEventResult>[
-        // Make a copy to prevent problems if the list is modified during iteration.
-        for (final OnKeyEventCallback callback in _earlyKeyEventHandlers.toList())
-          for (final KeyEvent event in message.events) callback(event),
-      ];
+      final List<KeyEventResult> results = <KeyEventResult>[];
+      // Copy the list before iteration to prevent problems if the list gets
+      // modified during iteration.
+      final List<OnKeyEventCallback> iterationList = _earlyKeyEventHandlers.toList();
+      for (final OnKeyEventCallback callback in iterationList) {
+        for (final KeyEvent event in message.events) {
+          results.add(callback(event));
+        }
+      }
       final KeyEventResult result = combineKeyEventResults(results);
       switch (result) {
         case KeyEventResult.ignored:
@@ -2241,11 +2269,23 @@ class _HighlightModeManager {
       FocusManager.instance.primaryFocus!,
       ...FocusManager.instance.primaryFocus!.ancestors,
     ]) {
+<<<<<<< HEAD
       final List<KeyEventResult> results = <KeyEventResult>[
         if (node.onKeyEvent != null)
           for (final KeyEvent event in message.events) node.onKeyEvent!(node, event),
         if (node.onKey != null && message.rawEvent != null) node.onKey!(node, message.rawEvent!),
       ];
+=======
+      final List<KeyEventResult> results = <KeyEventResult>[];
+      if (node.onKeyEvent != null) {
+        for (final KeyEvent event in message.events) {
+          results.add(node.onKeyEvent!(node, event));
+        }
+      }
+      if (node.onKey != null && message.rawEvent != null) {
+        results.add(node.onKey!(node, message.rawEvent!));
+      }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       final KeyEventResult result = combineKeyEventResults(results);
       switch (result) {
         case KeyEventResult.ignored:
@@ -2265,11 +2305,15 @@ class _HighlightModeManager {
 
     // Check to see if any late key event handlers want to handle the event.
     if (!handled && _lateKeyEventHandlers.isNotEmpty) {
-      final List<KeyEventResult> results = <KeyEventResult>[
-        // Make a copy to prevent problems if the list is modified during iteration.
-        for (final OnKeyEventCallback callback in _lateKeyEventHandlers.toList())
-          for (final KeyEvent event in message.events) callback(event),
-      ];
+      final List<KeyEventResult> results = <KeyEventResult>[];
+      // Copy the list before iteration to prevent problems if the list gets
+      // modified during iteration.
+      final List<OnKeyEventCallback> iterationList = _lateKeyEventHandlers.toList();
+      for (final OnKeyEventCallback callback in iterationList) {
+        for (final KeyEvent event in message.events) {
+          results.add(callback(event));
+        }
+      }
       final KeyEventResult result = combineKeyEventResults(results);
       switch (result) {
         case KeyEventResult.ignored:

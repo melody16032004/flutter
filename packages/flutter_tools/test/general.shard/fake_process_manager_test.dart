@@ -199,6 +199,7 @@ void main() {
         expect(stderr, isEmpty);
         expect(stdout, isEmpty);
 
+<<<<<<< HEAD
         // Flush all remaining async work. Ensure stderr, stdout is received.
         await Future<void>.delayed(Duration.zero);
         expect(stderr, 'stderr'.codeUnits);
@@ -211,6 +212,12 @@ void main() {
       process.stdin.write('hello');
       // If nothing is listening to the stdin stream, this test will never complete.
       await process.stdin.flush();
+=======
+      // Flush all remaining async work. Ensure stderr, stdout is received.
+      await Future<void>.delayed(Duration.zero);
+      expect(stderr, 'stderr'.codeUnits);
+      expect(stdout, 'stdout'.codeUnits);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 

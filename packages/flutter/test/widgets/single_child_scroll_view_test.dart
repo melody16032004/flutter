@@ -1090,6 +1090,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(textField.focusNode!.hasFocus, isTrue);
   });
+<<<<<<< HEAD
 
   testWidgets('keyboardDismissBehavior.OnDrag with drawer tests', (WidgetTester tester) async {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -1128,4 +1129,6 @@ void main() {
 
     expect(tester.testTextInput.isVisible, isFalse);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

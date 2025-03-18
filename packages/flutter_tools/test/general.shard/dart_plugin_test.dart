@@ -561,6 +561,7 @@ void main() {
         );
       });
 
+<<<<<<< HEAD
       testWithoutContext('user-selected implementation overrides inline implementation', () async {
         final Set<String> directDependencies = <String>{
           'user_selected_url_launcher_implementation',
@@ -919,6 +920,8 @@ void main() {
         },
       );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       testUsingContext('provides error when user selected multiple implementations', () async {
         final Set<String> directDependencies = <String>{
           'url_launcher_linux_1',
@@ -1390,6 +1393,7 @@ void main() {
             packageConfig,
             'package:app/main.dart',
             mainFile,
+<<<<<<< HEAD
           );
           expect(flutterProject.dartPluginRegistrant.existsSync(), isFalse);
         },
@@ -1400,6 +1404,19 @@ void main() {
           Pub: FakePubWithPrimedDeps.new,
         },
       );
+=======
+          ), throwsToolExit(message:
+            'Invalid plugin specification url_launcher_macos.\n'
+            'Cannot find the `flutter.plugin.platforms` key in the `pubspec.yaml` file. '
+            'An instruction to format the `pubspec.yaml` can be found here: '
+            'https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms'
+          ),
+        );
+      }, overrides: <Type, Generator>{
+        FileSystem: () => fs,
+        ProcessManager: () => FakeProcessManager.any(),
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       testUsingContext(
         'Deletes new entrypoint if there are no platform resolutions',

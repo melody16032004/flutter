@@ -2496,7 +2496,7 @@ class CustomMultiChildLayout extends MultiChildRenderObjectWidget {
 ///  * [FittedBox], which sizes and positions its child widget to fit the parent
 ///    according to a given [BoxFit] discipline.
 ///  * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
-///  * [Understanding constraints](https://docs.flutter.dev/ui/layout/constraints),
+///  * [Understanding constraints](https://flutter.dev/docs/development/ui/layout/constraints),
 ///    an in-depth article about layout in Flutter.
 class SizedBox extends SingleChildRenderObjectWidget {
   /// Creates a fixed size box. The [width] and [height] parameters can be null
@@ -2544,11 +2544,14 @@ class SizedBox extends SingleChildRenderObjectWidget {
 
   @override
   String toStringShort() {
-    final String type = switch ((width, height)) {
-      (double.infinity, double.infinity) => '${objectRuntimeType(this, 'SizedBox')}.expand',
-      (0.0, 0.0) => '${objectRuntimeType(this, 'SizedBox')}.shrink',
-      _ => objectRuntimeType(this, 'SizedBox'),
-    };
+    final String type;
+    if (width == double.infinity && height == double.infinity) {
+      type = '${objectRuntimeType(this, 'SizedBox')}.expand';
+    } else if (width == 0.0 && height == 0.0) {
+      type = '${objectRuntimeType(this, 'SizedBox')}.shrink';
+    } else {
+      type = objectRuntimeType(this, 'SizedBox');
+    }
     return key == null ? type : '$type-$key';
   }
 
@@ -6068,8 +6071,8 @@ class RichText extends MultiChildRenderObjectWidget {
 /// various fields on this class in more detail.
 ///
 /// The [image] is not disposed of by this widget. Creators of the widget are
-/// expected to call [dart:ui.Image.dispose] on the [image] once the [RawImage]
-/// is no longer buildable.
+/// expected to call [Image.dispose] on the [image] once the [RawImage] is no
+/// longer buildable.
 ///
 /// The `scale` argument specifies the linear scale factor for drawing this
 /// image at its intended size and applies to both the width and the height.
@@ -6097,15 +6100,15 @@ class RawImage extends LeafRenderObjectWidget {
     this.centerSlice,
     this.matchTextDirection = false,
     this.invertColors = false,
-    this.filterQuality = FilterQuality.medium,
+    this.filterQuality = FilterQuality.low,
     this.isAntiAlias = false,
   });
 
   /// The image to display.
   ///
   /// Since a [RawImage] is stateless, it does not ever dispose this image.
-  /// Creators of a [RawImage] are expected to call [dart:ui.Image.dispose] on
-  /// this image handle when the [RawImage] will no longer be needed.
+  /// Creators of a [RawImage] are expected to call [Image.dispose] on this
+  /// image handle when the [RawImage] will no longer be needed.
   final ui.Image? image;
 
   /// A string identifying the source of the image.
@@ -6142,7 +6145,8 @@ class RawImage extends LeafRenderObjectWidget {
 
   /// Used to set the filterQuality of the image.
   ///
-  /// Defaults to [FilterQuality.medium].
+  /// Defaults to [FilterQuality.low] to scale the image, which corresponds to
+  /// bilinear interpolation.
   final FilterQuality filterQuality;
 
   /// Used to combine [color] with this image.
@@ -6821,11 +6825,16 @@ class MouseRegion extends SingleChildRenderObjectWidget {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    final List<String> listeners = <String>[
-      if (onEnter != null) 'enter',
-      if (onExit != null) 'exit',
-      if (onHover != null) 'hover',
-    ];
+    final List<String> listeners = <String>[];
+    if (onEnter != null) {
+      listeners.add('enter');
+    }
+    if (onExit != null) {
+      listeners.add('exit');
+    }
+    if (onHover != null) {
+      listeners.add('hover');
+    }
     properties.add(IterableProperty<String>('listeners', listeners, ifEmpty: '<none>'));
     properties.add(DiagnosticsProperty<MouseCursor>('cursor', cursor, defaultValue: null));
     properties.add(DiagnosticsProperty<bool>('opaque', opaque, defaultValue: true));
@@ -7235,7 +7244,6 @@ class Semantics extends SingleChildRenderObjectWidget {
     bool? link,
     Uri? linkUrl,
     bool? header,
-    int? headingLevel,
     bool? textField,
     bool? readOnly,
     bool? focusable,
@@ -7286,10 +7294,10 @@ class Semantics extends SingleChildRenderObjectWidget {
     SetTextHandler? onSetText,
     VoidCallback? onDidGainAccessibilityFocus,
     VoidCallback? onDidLoseAccessibilityFocus,
-    VoidCallback? onFocus,
     Map<CustomSemanticsAction, VoidCallback>? customSemanticsActions,
     ui.SemanticsRole? role,
   }) : this.fromProperties(
+<<<<<<< HEAD
          key: key,
          child: child,
          container: container,
@@ -7366,6 +7374,81 @@ class Semantics extends SingleChildRenderObjectWidget {
            role: role,
          ),
        );
+=======
+    key: key,
+    child: child,
+    container: container,
+    explicitChildNodes: explicitChildNodes,
+    excludeSemantics: excludeSemantics,
+    blockUserActions: blockUserActions,
+    properties: SemanticsProperties(
+      enabled: enabled,
+      checked: checked,
+      mixed: mixed,
+      expanded: expanded,
+      toggled: toggled,
+      selected: selected,
+      button: button,
+      slider: slider,
+      keyboardKey: keyboardKey,
+      link: link,
+      header: header,
+      textField: textField,
+      readOnly: readOnly,
+      focusable: focusable,
+      focused: focused,
+      inMutuallyExclusiveGroup: inMutuallyExclusiveGroup,
+      obscured: obscured,
+      multiline: multiline,
+      scopesRoute: scopesRoute,
+      namesRoute: namesRoute,
+      hidden: hidden,
+      image: image,
+      liveRegion: liveRegion,
+      maxValueLength: maxValueLength,
+      currentValueLength: currentValueLength,
+      identifier: identifier,
+      label: label,
+      attributedLabel: attributedLabel,
+      value: value,
+      attributedValue: attributedValue,
+      increasedValue: increasedValue,
+      attributedIncreasedValue: attributedIncreasedValue,
+      decreasedValue: decreasedValue,
+      attributedDecreasedValue: attributedDecreasedValue,
+      hint: hint,
+      attributedHint: attributedHint,
+      tooltip: tooltip,
+      textDirection: textDirection,
+      sortKey: sortKey,
+      tagForChildren: tagForChildren,
+      onTap: onTap,
+      onLongPress: onLongPress,
+      onScrollLeft: onScrollLeft,
+      onScrollRight: onScrollRight,
+      onScrollUp: onScrollUp,
+      onScrollDown: onScrollDown,
+      onIncrease: onIncrease,
+      onDecrease: onDecrease,
+      onCopy: onCopy,
+      onCut: onCut,
+      onPaste: onPaste,
+      onMoveCursorForwardByCharacter: onMoveCursorForwardByCharacter,
+      onMoveCursorBackwardByCharacter: onMoveCursorBackwardByCharacter,
+      onDidGainAccessibilityFocus: onDidGainAccessibilityFocus,
+      onDidLoseAccessibilityFocus: onDidLoseAccessibilityFocus,
+      onDismiss: onDismiss,
+      onSetSelection: onSetSelection,
+      onSetText: onSetText,
+      customSemanticsActions: customSemanticsActions,
+      hintOverrides: onTapHint != null || onLongPressHint != null ?
+        SemanticsHintOverrides(
+          onTapHint: onTapHint,
+          onLongPressHint: onLongPressHint,
+        ) : null,
+    ),
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Creates a semantic annotation using [SemanticsProperties].
   const Semantics.fromProperties({
@@ -7702,9 +7785,18 @@ class KeyedSubtree extends StatelessWidget {
       return items;
     }
 
+<<<<<<< HEAD
     final List<Widget> itemsWithUniqueKeys = <Widget>[
       for (final (int i, Widget item) in items.indexed) KeyedSubtree.wrap(item, baseIndex + i),
     ];
+=======
+    final List<Widget> itemsWithUniqueKeys = <Widget>[];
+    int itemIndex = baseIndex;
+    for (final Widget item in items) {
+      itemsWithUniqueKeys.add(KeyedSubtree.wrap(item, itemIndex));
+      itemIndex += 1;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     assert(!debugItemsHaveDuplicateKeys(itemsWithUniqueKeys));
     return itemsWithUniqueKeys;

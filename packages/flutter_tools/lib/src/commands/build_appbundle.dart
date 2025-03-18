@@ -141,8 +141,13 @@ class BuildAppBundleCommand extends BuildSubCommand {
     if (globals.androidSdk == null) {
       exitWithNoSdkMessage();
     }
+<<<<<<< HEAD
     final AndroidBuildInfo androidBuildInfo = AndroidBuildInfo(
       await getBuildInfo(),
+=======
+
+    final AndroidBuildInfo androidBuildInfo = AndroidBuildInfo(await getBuildInfo(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       targetArchs: stringsArg('target-platform').map<AndroidArch>(getAndroidArchForName),
     );
     // Do all setup verification that doesn't involve loading units. Checks that
@@ -160,7 +165,7 @@ class BuildAppBundleCommand extends BuildSubCommand {
         boolArg('validate-deferred-components') &&
         !boolArg('debug')) {
       final DeferredComponentsPrebuildValidator validator = DeferredComponentsPrebuildValidator(
-        project.directory,
+        FlutterProject.current().directory,
         globals.logger,
         globals.platform,
         title: 'Deferred components prebuild validation',
@@ -174,6 +179,7 @@ class BuildAppBundleCommand extends BuildSubCommand {
       // Delete intermediates libs dir for components to resolve mismatching
       // abis supported by base and dynamic feature modules.
       for (final DeferredComponent component in deferredComponents) {
+<<<<<<< HEAD
         final Directory deferredLibsIntermediate = project.directory
             .childDirectory('build')
             .childDirectory(component.name)
@@ -181,6 +187,15 @@ class BuildAppBundleCommand extends BuildSubCommand {
             .childDirectory('flutter')
             .childDirectory(androidBuildInfo.buildInfo.mode.cliName)
             .childDirectory('deferred_libs');
+=======
+        final Directory deferredLibsIntermediate = FlutterProject.current().directory
+          .childDirectory('build')
+          .childDirectory(component.name)
+          .childDirectory('intermediates')
+          .childDirectory('flutter')
+          .childDirectory(androidBuildInfo.buildInfo.mode.cliName)
+          .childDirectory('deferred_libs');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (deferredLibsIntermediate.existsSync()) {
           deferredLibsIntermediate.deleteSync(recursive: true);
         }
@@ -191,7 +206,7 @@ class BuildAppBundleCommand extends BuildSubCommand {
     displayNullSafetyMode(androidBuildInfo.buildInfo);
     globals.terminal.usesTerminalUi = true;
     await androidBuilder?.buildAab(
-      project: project,
+      project: FlutterProject.current(),
       target: targetFile,
       androidBuildInfo: androidBuildInfo,
       validateDeferredComponents: boolArg('validate-deferred-components'),

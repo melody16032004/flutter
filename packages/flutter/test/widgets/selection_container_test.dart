@@ -8,7 +8,15 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   Future<void> pumpContainer(WidgetTester tester, Widget child) async {
-    await tester.pumpWidget(MaterialApp(home: child));
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: DefaultSelectionStyle(
+          selectionColor: Colors.red,
+          child: child,
+        ),
+      ),
+    );
   }
 
   testWidgets('updates its registrar and delegate based on the number of selectables', (
@@ -82,7 +90,7 @@ void main() {
               child: const Text('dummy'),
             );
           },
-        ),
+        )
       ),
     );
     await tester.pumpAndSettle();
@@ -124,6 +132,7 @@ void main() {
     await pumpContainer(
       tester,
       SelectionContainer(
+<<<<<<< HEAD
         registrar: registrar,
         delegate: delegate,
         child: Builder(
@@ -135,6 +144,19 @@ void main() {
             );
           },
         ),
+=======
+          registrar: registrar,
+          delegate: delegate,
+          child: Builder(
+            builder: (BuildContext context) {
+              return SelectionContainer(
+                registrar: SelectionContainer.maybeOf(context),
+                delegate: childDelegate,
+                child: const Text('dummy'),
+              );
+            },
+          )
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
     await tester.pump();

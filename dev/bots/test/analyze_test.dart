@@ -49,10 +49,14 @@ Future<String> capture(AsyncVoidCallback callback, {bool shouldHaveErrors = fals
 void main() {
   final String testRootPath = path.join('test', 'analyze-test-input', 'root');
   final String dartName = Platform.isWindows ? 'dart.exe' : 'dart';
+<<<<<<< HEAD
   final String dartPath = path.canonicalize(
     path.join('..', '..', 'bin', 'cache', 'dart-sdk', 'bin', dartName),
   );
   final String testGenDefaultsPath = path.join('test', 'analyze-gen-defaults');
+=======
+  final String dartPath = path.canonicalize(path.join('..', '..', 'bin', 'cache', 'dart-sdk', 'bin', dartName));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('matchesErrorsInFile matcher basic test', () async {
     final String result = await capture(() async {
@@ -69,6 +73,7 @@ void main() {
   });
 
   test('analyze.dart - verifyDeprecations', () async {
+<<<<<<< HEAD
     final String result = await capture(
       () => verifyDeprecations(testRootPath, minimumMatches: 2),
       shouldHaveErrors: true,
@@ -82,6 +87,35 @@ void main() {
           'See: https://github.com/flutter/flutter/blob/main/docs/contributing/Tree-hygiene.md#handling-breaking-changes',
         ],
       ),
+=======
+    final String result = await capture(() => verifyDeprecations(testRootPath, minimumMatches: 2), shouldHaveErrors: true);
+    final String lines = <String>[
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:12: Deprecation notice does not match required pattern. There might be a missing space character at the end of the line.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:18: Deprecation notice should be a grammatically correct sentence and start with a capital letter; see style guide: STYLE_GUIDE_URL',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:25: Deprecation notice should be a grammatically correct sentence and end with a period; notice appears to be "Also bad grammar".',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:29: Deprecation notice does not match required pattern.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:32: Deprecation notice does not match required pattern.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:37: Deprecation notice does not match required pattern. It might be missing the line saying "This feature was deprecated after...".',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:41: Deprecation notice does not match required pattern. There might not be an explanatory message.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:48: End of deprecation notice does not match required pattern.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:51: Unexpected deprecation notice indent.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:70: Deprecation notice does not accurately indicate a beta branch version number; please see RELEASES_URL to find the latest beta build version number.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:76: Deprecation notice does not accurately indicate a beta branch version number; please see RELEASES_URL to find the latest beta build version number.',
+        '║ test/analyze-test-input/root/packages/foo/deprecation.dart:99: Deprecation notice does not match required pattern. You might have used double quotes (") for the string instead of single quotes (\').',
+      ]
+      .map((String line) {
+        return line
+          .replaceAll('/', Platform.isWindows ? r'\' : '/')
+          .replaceAll('STYLE_GUIDE_URL', 'https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo')
+          .replaceAll('RELEASES_URL', 'https://flutter.dev/docs/development/tools/sdk/releases');
+      })
+      .join('\n');
+    expect(result,
+      '╔═╡ERROR #1╞════════════════════════════════════════════════════════════════════\n'
+      '$lines\n'
+      '║ See: https://github.com/flutter/flutter/wiki/Tree-hygiene#handling-breaking-changes\n'
+      '╚═══════════════════════════════════════════════════════════════════════════════\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   });
 
@@ -110,6 +144,7 @@ void main() {
       '╔═╡ERROR #1╞════════════════════════════════════════════════════════════════════',
     );
     expect(result.getRange(1, result.length - 3).toSet(), lines.toSet());
+<<<<<<< HEAD
     expect(
       result[result.length - 3],
       '║ See: https://github.com/flutter/flutter/blob/main/docs/contributing/testing/Writing-a-golden-file-test-for-package-flutter.md',
@@ -118,6 +153,10 @@ void main() {
       result[result.length - 2],
       '╚═══════════════════════════════════════════════════════════════════════════════',
     );
+=======
+    expect(result[result.length - 3], '║ See: https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter');
+    expect(result[result.length - 2], '╚═══════════════════════════════════════════════════════════════════════════════');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(result[result.length - 1], ''); // trailing newline
   });
 
@@ -161,6 +200,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   test('analyze.dart - verifyRepositoryLinks', () async {
     final String result = await capture(
       () => verifyRepositoryLinks(testRootPath),
@@ -190,6 +230,8 @@ void main() {
     );
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('analyze.dart - verifyNoBinaries - positive', () async {
     final String result = await capture(
       () => verifyNoBinaries(
@@ -209,8 +251,13 @@ void main() {
         '║ to which you need access, you should consider how to fetch it from another repository;\n'
         '║ for example, the "assets-for-api-docs" repository is used for images in API docs.\n'
         '║ To add assets to flutter_tools templates, see the instructions in the wiki:\n'
+<<<<<<< HEAD
         '║ https://github.com/flutter/flutter/blob/main/docs/tool/Managing-template-image-assets.md\n'
         '╚═══════════════════════════════════════════════════════════════════════════════\n',
+=======
+        '║ https://github.com/flutter/flutter/wiki/Managing-template-image-assets\n'
+        '╚═══════════════════════════════════════════════════════════════════════════════\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
     }
   });
@@ -386,6 +433,7 @@ void main() {
       ),
     );
   });
+<<<<<<< HEAD
 
   test('analyze.dart - verifyMaterialFilesAreUpToDateWithTemplateFiles', () async {
     String result = await capture(
@@ -405,4 +453,6 @@ void main() {
       '╚═══════════════════════════════════════════════════════════════════════════════\n',
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

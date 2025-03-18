@@ -44,7 +44,7 @@ void main() {
       expect(renderObject.centerSlice, null);
       expect(renderObject.matchTextDirection, false);
       expect(renderObject.invertColors, false);
-      expect(renderObject.filterQuality, FilterQuality.medium);
+      expect(renderObject.filterQuality, FilterQuality.low);
       expect(renderObject.isAntiAlias, false);
 
       final ui.Image image2 =
@@ -925,7 +925,6 @@ void main() {
         matchesSemantics(
           label: 'button',
           hasTapAction: true,
-          hasFocusAction: true,
           isButton: true,
           isFocusable: true,
           hasEnabledState: true,

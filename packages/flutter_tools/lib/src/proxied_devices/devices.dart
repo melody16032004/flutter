@@ -17,7 +17,6 @@ import '../convert.dart';
 import '../daemon.dart';
 import '../device.dart';
 import '../device_port_forwarder.dart';
-import '../device_vm_service_discovery_for_attach.dart';
 import '../project.dart';
 import '../resident_runner.dart';
 import '../vmservice.dart';
@@ -313,6 +312,7 @@ class ProxiedDevice extends Device {
   void clearLogs() => throw UnimplementedError();
 
   @override
+<<<<<<< HEAD
   VMServiceDiscoveryForAttach getVMServiceDiscoveryForAttach({
     String? appId,
     String? fuchsiaModule,
@@ -342,6 +342,8 @@ class ProxiedDevice extends Device {
   );
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Future<LaunchResult> startApp(
     PrebuiltApplicationPackage package, {
     String? mainPath,
@@ -661,6 +663,7 @@ class ProxiedPortForwarder extends DevicePortForwarder {
   Future<ServerSocket> _startProxyServer(int devicePort, int? hostPort, bool? ipv6) async {
     final ServerSocket serverSocket = await _createSocketServer(_logger, hostPort, ipv6);
 
+<<<<<<< HEAD
     serverSocket.listen(
       (Socket socket) async {
         final String id = _cast<String>(
@@ -751,6 +754,69 @@ class ProxiedPortForwarder extends DevicePortForwarder {
         _logger.printTrace('Server socket error: $error, stack trace: $stackTrace');
       },
     );
+=======
+    serverSocket.listen((Socket socket) async {
+      final String id = _cast<String>(await connection.sendRequest('proxy.connect', <String, Object>{
+        'port': devicePort,
+      }));
+      final Stream<List<int>> dataStream = connection.listenToEvent('proxy.data.$id').asyncExpand((DaemonEventData event) => event.binary);
+      dataStream.listen(socket.add);
+      final Future<DaemonEventData> disconnectFuture = connection.listenToEvent('proxy.disconnected.$id').first;
+      unawaited(disconnectFuture.then<void>((_) async {
+          try {
+            await socket.close();
+          } on Exception {
+            // ignore
+          }
+        },
+        onError: (_) {
+          // The event is not guaranteed to be sent if we initiated the disconnection.
+          // Do nothing here.
+        },
+      ));
+      debounceDataStream(socket).listen((Uint8List data) {
+        unawaited(connection.sendRequest('proxy.write', <String, Object>{
+          'id': id,
+        }, data).then(
+          (Object? obj) => obj,
+          onError: (Object error, StackTrace stackTrace) {
+            // Log the error, but proceed normally. Network failure should not
+            // crash the tool. If this is critical, the place where the connection
+            // is being used would crash.
+            _logger.printWarning('Write to remote proxy error: $error');
+            _logger.printTrace('Write to remote proxy error: $error, stack trace: $stackTrace');
+            return null;
+          },
+        ));
+      });
+      _connectedSockets.add(socket);
+
+      unawaited(socket.done.then(
+        (Object? obj) => obj,
+        onError: (Object error, StackTrace stackTrace) {
+        // Do nothing here. Everything will be handled in the `then` block below.
+        return false;
+      }).whenComplete(() {
+        // Send a proxy disconnect event just in case.
+        unawaited(connection.sendRequest('proxy.disconnect', <String, Object>{
+          'id': id,
+        }).then(
+          (Object? obj) => obj,
+          onError: (Object error, StackTrace stackTrace) {
+            // Ignore the error here. There might be a race condition when the
+            // remote end also disconnects. In any case, this request is just to
+            // notify the remote end to disconnect and we should not crash when
+            // there is an error here.
+            return null;
+          },
+        ));
+        _connectedSockets.remove(socket);
+      }));
+    }, onError: (Object error, StackTrace stackTrace) {
+      _logger.printWarning('Server socket error: $error');
+      _logger.printTrace('Server socket error: $error, stack trace: $stackTrace');
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     return serverSocket;
   }
@@ -959,6 +1025,7 @@ class ProxiedDartDevelopmentService
     }
   }
 }
+<<<<<<< HEAD
 
 class ProxiedVMServiceDiscoveryForAttach extends VMServiceDiscoveryForAttach {
   ProxiedVMServiceDiscoveryForAttach(
@@ -1048,3 +1115,5 @@ class ProxiedVMServiceDiscoveryForAttach extends VMServiceDiscoveryForAttach {
     return _uris!;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

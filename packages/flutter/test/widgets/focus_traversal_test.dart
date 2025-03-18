@@ -3259,8 +3259,14 @@ void main() {
       final TestSemantics expectedSemantics = TestSemantics.root(
         children: <TestSemantics>[
           TestSemantics.rootChild(
+<<<<<<< HEAD
             flags: <SemanticsFlag>[SemanticsFlag.isFocusable],
             actions: <SemanticsAction>[SemanticsAction.focus],
+=======
+            flags: <SemanticsFlag>[
+              SemanticsFlag.isFocusable,
+            ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         ],
       );

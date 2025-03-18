@@ -22,6 +22,7 @@ class _Circular${blockName}DefaultsM3 extends ProgressIndicatorThemeData {
   final bool indeterminate;
 
   @override
+<<<<<<< HEAD
   Color get color => ${componentColor('md.comp.progress-indicator.active-indicator')};
 
   @override
@@ -44,6 +45,9 @@ class _Circular${blockName}DefaultsM3 extends ProgressIndicatorThemeData {
 
   @override
   EdgeInsetsGeometry? get circularTrackPadding => const EdgeInsets.all(4.0);
+=======
+  Color get color => ${componentColor('md.comp.circular-progress-indicator.active-indicator')};
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _Linear${blockName}DefaultsM3 extends ProgressIndicatorThemeData {
@@ -53,12 +57,13 @@ class _Linear${blockName}DefaultsM3 extends ProgressIndicatorThemeData {
   late final ColorScheme _colors = Theme.of(context).colorScheme;
 
   @override
-  Color get color => ${componentColor('md.comp.progress-indicator.active-indicator')};
+  Color get color => ${componentColor('md.comp.linear-progress-indicator.active-indicator')};
 
   @override
-  Color get linearTrackColor => ${componentColor('md.comp.progress-indicator.track')};
+  Color get linearTrackColor => ${componentColor('md.comp.linear-progress-indicator.track')};
 
   @override
+<<<<<<< HEAD
   double get linearMinHeight => ${getToken('md.comp.progress-indicator.track.thickness')};
 
   @override
@@ -72,6 +77,9 @@ class _Linear${blockName}DefaultsM3 extends ProgressIndicatorThemeData {
 
   @override
   double? get trackGap => ${getToken('md.comp.progress-indicator.active-indicator-track-space')};
+=======
+  double get linearMinHeight => ${getToken('md.comp.linear-progress-indicator.track.height')};
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 ''';
 }

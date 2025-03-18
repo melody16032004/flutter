@@ -33,12 +33,20 @@ void main() {
       mockProject = FakeWindowsProject(cmakeFile, resourceFile);
     });
 
-    testWithoutContext('skipped if CMake file is missing', () async {
+    testWithoutContext('skipped if CMake file is missing', () {
       const String resourceFileContents = 'Hello world';
 
       resourceFile.writeAsStringSync(resourceFileContents);
+<<<<<<< HEAD
       final VersionMigration migration = VersionMigration(mockProject, testLogger);
       await migration.migrate();
+=======
+      final VersionMigration migration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      migration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(cmakeFile.existsSync(), isFalse);
       expect(resourceFile.existsSync(), isTrue);
 
@@ -49,12 +57,20 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if resource file is missing', () async {
+    testWithoutContext('skipped if resource file is missing', () {
       const String cmakeFileContents = 'Hello world';
 
       cmakeFile.writeAsStringSync(cmakeFileContents);
+<<<<<<< HEAD
       final VersionMigration migration = VersionMigration(mockProject, testLogger);
       await migration.migrate();
+=======
+      final VersionMigration migration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      migration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(cmakeFile.existsSync(), isTrue);
       expect(resourceFile.existsSync(), isFalse);
 
@@ -65,7 +81,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if nothing to migrate', () async {
+    testWithoutContext('skipped if nothing to migrate', () {
       const String cmakeFileContents = 'Nothing to migrate';
       const String resourceFileContents = 'Nothing to migrate';
 
@@ -75,8 +91,16 @@ void main() {
       final DateTime cmakeUpdatedAt = cmakeFile.lastModifiedSync();
       final DateTime resourceUpdatedAt = resourceFile.lastModifiedSync();
 
+<<<<<<< HEAD
       final VersionMigration versionMigration = VersionMigration(mockProject, testLogger);
       await versionMigration.migrate();
+=======
+      final VersionMigration versionMigration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      versionMigration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
@@ -86,7 +110,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if already migrated', () async {
+    testWithoutContext('skipped if already migrated', () {
       const String cmakeFileContents =
           '# Apply the standard set of build settings. This can be removed for applications\n'
           '# that need different build settings.\n'
@@ -120,8 +144,16 @@ void main() {
       final DateTime cmakeUpdatedAt = cmakeFile.lastModifiedSync();
       final DateTime resourceUpdatedAt = resourceFile.lastModifiedSync();
 
+<<<<<<< HEAD
       final VersionMigration versionMigration = VersionMigration(mockProject, testLogger);
       await versionMigration.migrate();
+=======
+      final VersionMigration versionMigration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      versionMigration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
@@ -131,7 +163,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if already migrated (CRLF)', () async {
+    testWithoutContext('skipped if already migrated (CRLF)', () {
       const String cmakeFileContents =
           '# Apply the standard set of build settings. This can be removed for applications\r\n'
           '# that need different build settings.\r\n'
@@ -165,8 +197,16 @@ void main() {
       final DateTime cmakeUpdatedAt = cmakeFile.lastModifiedSync();
       final DateTime resourceUpdatedAt = resourceFile.lastModifiedSync();
 
+<<<<<<< HEAD
       final VersionMigration versionMigration = VersionMigration(mockProject, testLogger);
       await versionMigration.migrate();
+=======
+      final VersionMigration versionMigration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      versionMigration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
@@ -176,7 +216,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('migrates project to set version information', () async {
+    testWithoutContext('migrates project to set version information', () {
       cmakeFile.writeAsStringSync(
         '# Apply the standard set of build settings. This can be removed for applications\n'
         '# that need different build settings.\n'
@@ -199,8 +239,16 @@ void main() {
         '#endif\n',
       );
 
+<<<<<<< HEAD
       final VersionMigration versionMigration = VersionMigration(mockProject, testLogger);
       await versionMigration.migrate();
+=======
+      final VersionMigration versionMigration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      versionMigration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(
         cmakeFile.readAsStringSync(),
@@ -243,7 +291,7 @@ void main() {
       );
     });
 
-    testWithoutContext('migrates project to set version information (CRLF)', () async {
+    testWithoutContext('migrates project to set version information (CRLF)', () {
       cmakeFile.writeAsStringSync(
         '# Apply the standard set of build settings. This can be removed for applications\r\n'
         '# that need different build settings.\r\n'
@@ -266,8 +314,16 @@ void main() {
         '#endif\r\n',
       );
 
+<<<<<<< HEAD
       final VersionMigration versionMigration = VersionMigration(mockProject, testLogger);
       await versionMigration.migrate();
+=======
+      final VersionMigration versionMigration = VersionMigration(
+        mockProject,
+        testLogger,
+      );
+      versionMigration.migrate();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(
         cmakeFile.readAsStringSync(),

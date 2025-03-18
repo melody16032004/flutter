@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'button.dart';
 /// @docImport 'nav_bar.dart';
 /// @docImport 'route.dart';
@@ -9,6 +10,8 @@
 library;
 
 import 'package:flutter/foundation.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter/widgets.dart';
 
 import 'colors.dart';

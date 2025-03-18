@@ -146,6 +146,7 @@ void main() {
       painter.layout();
       caretOffset = painter.getOffsetForCaret(ui.TextPosition(offset: text.length), ui.Rect.zero);
       expect(caretOffset.dx, painter.width);
+<<<<<<< HEAD
 
       /// Verify the handling of spaces by SkParagraph and TextPainter.
       ///
@@ -216,6 +217,8 @@ void main() {
       // Test with trailing medium mathematical space(MMSP).
       verifyCharacterIsConsideredTrailingSpace('\u{205F}');
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       painter.dispose();
     }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
 
@@ -244,7 +247,7 @@ void main() {
       );
       expect(caretOffset.dx, painter.width);
       painter.dispose();
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('TextPainter null text test', () {
       final TextPainter painter = TextPainter()..textDirection = TextDirection.ltr;
@@ -346,7 +349,7 @@ void main() {
       caretOffset = painter.getOffsetForCaret(const ui.TextPosition(offset: 23), ui.Rect.zero);
       expect(caretOffset.dx, 126); // end of string
       painter.dispose();
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('TextPainter caret emoji tests: single, long emoji', () {
       // Regression test for https://github.com/flutter/flutter/issues/50563
@@ -364,8 +367,9 @@ void main() {
       // their lengths in code units are powers of 2, namely 4 and 8).
       checkCaretOffsetsLtr('🇺🇳');
       checkCaretOffsetsLtr('👩‍❤️‍👨');
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
+<<<<<<< HEAD
     test(
       'TextPainter caret emoji test: letters, then 1 emoji of 5 code units',
       () {
@@ -377,14 +381,24 @@ void main() {
       },
       skip: isBrowser && !isSkiaWeb, // https://github.com/flutter/flutter/issues/56308
     );
+=======
+    test('TextPainter caret emoji test: letters, then 1 emoji of 5 code units', () {
+      // Regression test for https://github.com/flutter/flutter/issues/50563
+      checkCaretOffsetsLtr('a👩‍🚀');
+      checkCaretOffsetsLtr('ab👩‍🚀');
+      checkCaretOffsetsLtr('abc👩‍🚀');
+      checkCaretOffsetsLtr('abcd👩‍🚀');
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     test('TextPainter caret zalgo test', () {
       // Regression test for https://github.com/flutter/flutter/issues/98516
       checkCaretOffsetsLtr('Z͉̳̺ͥͬ̾a̴͕̲̒̒͌̋ͪl̨͎̰̘͉̟ͤ̀̈̚͜g͕͔̤͖̟̒͝ͅo̵̡̡̼͚̐ͯ̅ͪ̆ͣ̚');
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('TextPainter caret Devanagari test', () {
       // Regression test for https://github.com/flutter/flutter/issues/118403
+<<<<<<< HEAD
       checkCaretOffsetsLtrFromPieces(<String>[
         'प्रा',
         'प्त',
@@ -398,12 +412,18 @@ void main() {
         'ति',
       ]);
     }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+=======
+      checkCaretOffsetsLtrFromPieces(
+          <String>['प्रा', 'प्त', ' ', 'व', 'र्ण', 'न', ' ', 'प्र', 'व्रु', 'ति']);
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     test('TextPainter caret Devanagari test, full strength', () {
       // Regression test for https://github.com/flutter/flutter/issues/118403
       checkCaretOffsetsLtr('प्राप्त वर्णन प्रव्रुति');
     }, skip: true); // https://github.com/flutter/flutter/issues/122478
 
+<<<<<<< HEAD
     test(
       'TextPainter caret emoji test LTR: letters next to emoji, as separate TextBoxes',
       () {
@@ -473,6 +493,49 @@ void main() {
       },
       skip: isBrowser && !isSkiaWeb, // https://github.com/flutter/flutter/issues/56308
     );
+=======
+    test('TextPainter caret emoji test LTR: letters next to emoji, as separate TextBoxes', () {
+      // Regression test for https://github.com/flutter/flutter/issues/122477
+      // The trigger for this bug was to have SkParagraph report separate
+      // TextBoxes for the emoji and for the characters next to it.
+      // In normal usage on a real device, this can happen by simply typing
+      // letters and then an emoji, presumably because they get different fonts.
+      // In these tests, our single test font covers both letters and emoji,
+      // so we provoke the same effect by adding styles.
+      expect(caretOffsetsForTextSpan(
+          TextDirection.ltr,
+          const TextSpan(children: <TextSpan>[
+            TextSpan(text: '👩‍🚀', style: TextStyle()),
+            TextSpan(text: ' words', style: TextStyle(fontWeight: FontWeight.bold)),
+          ])),
+          <double>[0, 28, 28, 28, 28, 28, 42, 56, 70, 84, 98, 112]);
+      expect(caretOffsetsForTextSpan(
+          TextDirection.ltr,
+          const TextSpan(children: <TextSpan>[
+            TextSpan(text: 'words ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '👩‍🚀', style: TextStyle()),
+          ])),
+          <double>[0, 14, 28, 42, 56, 70, 84, 112, 112, 112, 112, 112]);
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+
+    test('TextPainter caret emoji test RTL: letters next to emoji, as separate TextBoxes', () {
+      // Regression test for https://github.com/flutter/flutter/issues/122477
+      expect(caretOffsetsForTextSpan(
+          TextDirection.rtl,
+          const TextSpan(children: <TextSpan>[
+            TextSpan(text: '👩‍🚀', style: TextStyle()),
+            TextSpan(text: ' מילים', style: TextStyle(fontWeight: FontWeight.bold)),
+          ])),
+          <double>[112, 84, 84, 84, 84, 84, 70, 56, 42, 28, 14, 0]);
+      expect(caretOffsetsForTextSpan(
+          TextDirection.rtl,
+          const TextSpan(children: <TextSpan>[
+            TextSpan(text: 'מילים ', style: TextStyle(fontWeight: FontWeight.bold)),
+            TextSpan(text: '👩‍🚀', style: TextStyle()),
+          ])),
+          <double>[112, 98, 84, 70, 56, 42, 28, 0, 0, 0, 0, 0]);
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     test('TextPainter caret center space test', () {
       final TextPainter painter = TextPainter()..textDirection = TextDirection.ltr;
@@ -500,7 +563,7 @@ void main() {
       caretOffset = painter.getOffsetForCaret(const ui.TextPosition(offset: 2), ui.Rect.zero);
       expect(caretOffset.dx, 49);
       painter.dispose();
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('TextPainter caret height and line height', () {
       final TextPainter painter =
@@ -518,7 +581,7 @@ void main() {
       );
       expect(caretHeight, 50.0);
       painter.dispose();
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('upstream downstream makes no difference in the same line within the same bidi run', () {
       final TextPainter painter =
@@ -559,7 +622,7 @@ void main() {
         painter.getOffsetForCaret(TextPosition(offset: text.length), largeRect).dx,
         1000 - text.length * fontSize - largeRect.width,
       );
-    }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
 
     test('End of text caret when the text ends with +1 bidi level', () {
       const double fontSize = 14.0;
@@ -576,8 +639,16 @@ void main() {
         painter.getOffsetForCaret(const TextPosition(offset: 1), largeRect).dx,
         fontSize * 2 - largeRect.width,
       );
+<<<<<<< HEAD
       expect(painter.getOffsetForCaret(const TextPosition(offset: 2), largeRect).dx, fontSize * 2);
     }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/56308
+=======
+      expect(
+        painter.getOffsetForCaret(const TextPosition(offset: 2), largeRect).dx,
+        fontSize * 2,
+      );
+    }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     test('handles newlines properly', () {
       final TextPainter painter = TextPainter()..textDirection = TextDirection.ltr;
@@ -1243,7 +1314,7 @@ void main() {
       const TextBox.fromLTRBD(351, 30, 401, 60, TextDirection.ltr),
     );
     painter.dispose();
-  }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/87540
+  }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/87540
 
   // Null values are valid. See https://github.com/flutter/flutter/pull/48346#issuecomment-584839221
   test('TextPainter set TextHeightBehavior null test', () {
@@ -1314,7 +1385,7 @@ void main() {
     expect(lines[2].lineNumber, 2);
     expect(lines[3].lineNumber, 3);
     painter.dispose();
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/122066
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/122066
 
   group('TextPainter line-height', () {
     test('half-leading', () {
@@ -1453,7 +1524,7 @@ void main() {
       expect(glyphBox, newGlyphBox);
       painter.dispose();
     });
-  }, skip: isBrowser && !isSkiaWeb); // https://github.com/flutter/flutter/issues/87543
+  }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/87543
 
   test('TextPainter handles invalid UTF-16', () {
     FlutterErrorDetails? error;
@@ -1488,7 +1559,7 @@ void main() {
     );
     expect(caretOffset.dx, painter.width);
     painter.dispose();
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/87545
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/87545
 
   test('TextPainter line metrics update after layout', () {
     final TextPainter painter = TextPainter()..textDirection = TextDirection.ltr;
@@ -1506,7 +1577,7 @@ void main() {
     lines = painter.computeLineMetrics();
     expect(lines.length, 1);
     painter.dispose();
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/62819
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/62819
 
   test('TextPainter throws with stack trace when accessing text layout', () {
     final TextPainter painter =
@@ -1574,6 +1645,7 @@ void main() {
         PlaceholderDimensions(size: Size(50, 30), alignment: ui.PlaceholderAlignment.bottom),
       ]);
 
+<<<<<<< HEAD
       expect(
         () => painter.paint(MockCanvas(), Offset.zero),
         throwsA(
@@ -1588,6 +1660,18 @@ void main() {
     },
     skip: isBrowser && !isSkiaWeb, // https://github.com/flutter/flutter/issues/56308
   );
+=======
+    expect(
+      () => painter.paint(MockCanvas(), Offset.zero),
+      throwsA(isA<StateError>().having(
+        (StateError error) => error.message,
+        'message',
+        contains('TextPainter.paint called when text geometry was not yet calculated'),
+      )),
+    );
+    painter.dispose();
+  }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test(
     'TextPainter does not require layout after providing identical placeholder dimensions',
@@ -1617,6 +1701,7 @@ void main() {
         PlaceholderDimensions(size: Size(50, 30), alignment: ui.PlaceholderAlignment.bottom),
       ]);
 
+<<<<<<< HEAD
       // In tests, paint() will throw an UnimplementedError due to missing drawParagraph method.
       expect(
         () => painter.paint(MockCanvas(), Offset.zero),
@@ -1634,6 +1719,19 @@ void main() {
     },
     skip: isBrowser && !isSkiaWeb, // https://github.com/flutter/flutter/issues/56308
   );
+=======
+    // In tests, paint() will throw an UnimplementedError due to missing drawParagraph method.
+    expect(
+      () => painter.paint(MockCanvas(), Offset.zero),
+      isNot(throwsA(isA<StateError>().having(
+        (StateError error) => error.message,
+        'message',
+        contains('TextPainter.paint called when text geometry was not yet calculated'),
+      ))),
+    );
+    painter.dispose();
+  }, skip: isBrowser && !isCanvasKit); // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('TextPainter - debugDisposed', () {
     final TextPainter painter = TextPainter();
@@ -1870,7 +1968,7 @@ void main() {
       case final List<ui.LineMetrics> metrics:
         expect(metrics, hasLength(1));
     }
-  }, skip: kIsWeb && !isSkiaWeb); // [intended] Browsers seem to always round font/glyph metrics.
+  }, skip: kIsWeb && !isCanvasKit); // [intended] Browsers seem to always round font/glyph metrics.
 
   group(
     'strut style',
@@ -1936,6 +2034,7 @@ void main() {
         );
       });
 
+<<<<<<< HEAD
       test('force strut height applies to widget spans', () {
         const Size placeholderSize = Size(1000, 1000);
         const StrutStyle strut = StrutStyle(height: 10, fontSize: 10, forceStrutHeight: true);
@@ -1958,6 +2057,21 @@ void main() {
     // [intended] strut support for HTML renderer https://github.com/flutter/flutter/issues/32243.
     skip: kIsWeb && !isSkiaWeb,
   );
+=======
+   test('force strut height applies to widget spans', () {
+      const Size placeholderSize = Size(1000, 1000);
+      const StrutStyle strut = StrutStyle(height: 10, fontSize: 10, forceStrutHeight: true);
+      final TextPainter painter = TextPainter(
+        textDirection: TextDirection.ltr,
+        text: const WidgetSpan(child: SizedBox()),
+        strutStyle: strut,
+      )
+      ..setPlaceholderDimensions(const <PlaceholderDimensions>[PlaceholderDimensions(size: placeholderSize, alignment: PlaceholderAlignment.bottom)])
+      ..layout();
+      expect(painter.height, 100);
+    });
+  }, skip: kIsWeb && !isCanvasKit); // [intended] strut spport for HTML renderer https://github.com/flutter/flutter/issues/32243.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('getOffsetForCaret does not crash on decomposed characters', () {
     final TextPainter painter = TextPainter(
@@ -1968,17 +2082,6 @@ void main() {
       () => painter.getOffsetForCaret(const TextPosition(offset: 0), Rect.zero),
       returnsNormally,
     );
-  });
-
-  test('kTextHeightNone unsets the text height multiplier', () {
-    final TextPainter painter = TextPainter(
-      textDirection: TextDirection.ltr,
-      text: const TextSpan(
-        style: TextStyle(fontSize: 10, height: 1000),
-        children: <TextSpan>[TextSpan(text: 'A', style: TextStyle(height: kTextHeightNone))],
-      ),
-    )..layout();
-    expect(painter.height, 10);
   });
 
   test('TextPainter dispatches memory events', () async {

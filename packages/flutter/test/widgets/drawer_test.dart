@@ -340,6 +340,7 @@ void main() {
       scaffoldKey.currentState!.openDrawer();
       await tester.pump(const Duration(milliseconds: 100));
 
+<<<<<<< HEAD
       expect(
         semantics,
         isNot(
@@ -347,6 +348,10 @@ void main() {
         ),
       );
       expect(semantics, isNot(includesNodeWith(label: 'Dismiss')));
+=======
+    expect(semantics, isNot(includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap])));
+    expect(semantics, isNot(includesNodeWith(label: 'Dismiss')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       semantics.dispose();
     },

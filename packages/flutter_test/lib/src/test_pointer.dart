@@ -2,12 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'dart:ui';
-///
-/// @docImport 'controller.dart';
-/// @docImport 'widget_tester.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 
@@ -274,7 +268,6 @@ class TestPointer {
   PointerScrollEvent scroll(
     Offset scrollDelta, {
     Duration timeStamp = Duration.zero,
-    RespondPointerEventCallback? onRespond,
   }) {
     assert(kind != PointerDeviceKind.touch, "Touch pointers can't generate pointer signal events");
     assert(location != null);
@@ -284,7 +277,6 @@ class TestPointer {
       device: _device,
       position: location!,
       scrollDelta: scrollDelta,
-      onRespond: onRespond,
     );
   }
 

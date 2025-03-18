@@ -183,6 +183,7 @@ void main() {
 
   testWidgets('Text Fade', (WidgetTester tester) async {
     await tester.pumpWidget(
+<<<<<<< HEAD
       MaterialApp(
         theme: ThemeData(useMaterial3: false),
         home: Scaffold(
@@ -202,6 +203,28 @@ void main() {
                       style: TextStyle(color: Colors.black),
                       maxLines: 3,
                       overflow: TextOverflow.fade,
+=======
+        MaterialApp(
+          theme: ThemeData(useMaterial3: false),
+          home: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: RepaintBoundary(
+              child: Center(
+                child: Container(
+                  width: 200.0,
+                  height: 200.0,
+                  color: Colors.green,
+                  child: Center(
+                    child: Container(
+                      width: 100.0,
+                      color: Colors.blue,
+                      child: const Text(
+                        'Pp PPp PPPp PPPPp PPPPpp PPPPppp PPPPppppp ',
+                        style: TextStyle(color: Colors.black),
+                        maxLines: 3,
+                        overflow: TextOverflow.fade,
+                      ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                     ),
                   ),
                 ),
@@ -209,7 +232,10 @@ void main() {
             ),
           ),
         ),
+<<<<<<< HEAD
       ),
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     await expectLater(

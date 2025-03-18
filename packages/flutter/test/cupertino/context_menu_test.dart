@@ -90,12 +90,10 @@ void main() {
     return find.descendant(of: findStatic(), matching: find.byWidget(child));
   }
 
-  Finder findStaticChildColor(WidgetTester tester) {
+  Finder findStaticChildDecoration(WidgetTester tester) {
     return find.descendant(
       of: findStatic(),
-      matching: find.byWidgetPredicate(
-        (Widget widget) => widget is ColoredBox && widget.color != CupertinoColors.activeOrange,
-      ),
+      matching: find.byType(DecoratedBox),
     );
   }
 
@@ -285,7 +283,7 @@ void main() {
           (tester.firstWidget(decoyChildDescendant) as Container).decoration as BoxDecoration?;
       const List<Color?> expectedColors = <Color?>[null, Color(0x00000000)];
 
-      // `Color(0x00000000)` -> Is `CupertinoColors.transparent`.
+      // `Color(0x00000000)` -> Is `Colors.transparent`.
       // `null`              -> Default when no color argument is given in `BoxDecoration`.
       // Any other color won't preserve the child's property.
       expect(expectedColors, contains(boxDecoration?.color));
@@ -544,8 +542,12 @@ void main() {
       await tester.pumpAndSettle();
       expect(findStatic(), findsOneWidget);
 
+<<<<<<< HEAD
       // Both the background color and the action colors are found.
       expect(findStaticChildColor(tester), findsNWidgets(2));
+=======
+      expect(findStaticChildDecoration(tester), findsNWidgets(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Close the CupertinoContextMenu.
       await tester.tapAt(const Offset(1.0, 1.0));
@@ -577,7 +579,11 @@ void main() {
       await tester.pumpAndSettle();
       expect(findStatic(), findsOneWidget);
 
+<<<<<<< HEAD
       expect(findStaticChildColor(tester), findsNWidgets(3));
+=======
+      expect(findStaticChildDecoration(tester), findsNWidgets(3));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWidgets('Can close CupertinoContextMenu by background tap', (WidgetTester tester) async {

@@ -311,6 +311,7 @@ void main() {
     });
   });
 
+<<<<<<< HEAD
   group('byTooltip', () {
     testWidgets('finds widgets by tooltip', (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -385,6 +386,8 @@ void main() {
     });
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   group('hitTestable', () {
     testWidgets('excludes non-hit-testable widgets', (WidgetTester tester) async {
       await tester.pumpWidget(
@@ -793,10 +796,17 @@ void main() {
         Directionality(
           textDirection: TextDirection.ltr,
           child: _deepWidgetTree(
-            depth: 500,
+            depth: 1000,
             child: Row(
               children: <Widget>[
+<<<<<<< HEAD
                 _deepWidgetTree(depth: 500, child: const Column(children: fooBarTexts)),
+=======
+                _deepWidgetTree(
+                  depth: 1000,
+                  child: const Column(children: fooBarTexts),
+                ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               ],
             ),
           ),
@@ -1508,11 +1518,15 @@ void main() {
 Widget _boilerplate(Widget child) {
   return Directionality(
     textDirection: TextDirection.ltr,
+<<<<<<< HEAD
     child: Navigator(
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute<void>(builder: (BuildContext context) => child);
       },
     ),
+=======
+    child: child,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 }
 

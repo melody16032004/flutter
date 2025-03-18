@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:async';
-
 import 'package:flutter_tools/src/base/io.dart';
 import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/platform.dart';
@@ -370,6 +368,7 @@ void main() {
       expect(() async => processUtils.exitsHappy(<String>['invalid']), throwsArgumentError);
     });
   });
+<<<<<<< HEAD
 
   group('writeToStdinGuarded', () {
     testWithoutContext('handles any error thrown by stdin.flush', () async {
@@ -400,4 +399,6 @@ class _ThrowsOnFlushIOSink extends MemoryIOSink {
   Future<Object?> flush() async {
     throw const SocketException('Write failed', osError: OSError('Broken pipe', 32));
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

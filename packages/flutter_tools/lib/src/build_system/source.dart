@@ -91,15 +91,28 @@ class SourceVisitor implements ResolvedFiles {
   void visitPattern(String pattern, bool optional) {
     // perform substitution of the environmental values and then
     // of the local values.
+    final List<String> segments = <String>[];
     final List<String> rawParts = pattern.split('/');
     final bool hasWildcard = rawParts.last.contains('*');
     String? wildcardFile;
     if (hasWildcard) {
       wildcardFile = rawParts.removeLast();
     }
-    final List<String> segments = <String>[
-      ...environment.fileSystem.path.split(switch (rawParts.first) {
+    // If the pattern does not start with an env variable, then we have nothing
+    // to resolve it to, error out.
+    switch (rawParts.first) {
+      case Environment.kProjectDirectory:
+        segments.addAll(
+          environment.fileSystem.path.split(environment.projectDir.resolveSymbolicLinksSync()));
+      case Environment.kBuildDirectory:
+        segments.addAll(environment.fileSystem.path.split(
+          environment.buildDir.resolveSymbolicLinksSync()));
+      case Environment.kCacheDirectory:
+        segments.addAll(
+          environment.fileSystem.path.split(environment.cacheDir.resolveSymbolicLinksSync()));
+      case Environment.kFlutterRootDirectory:
         // flutter root will not contain a symbolic link.
+<<<<<<< HEAD
         Environment.kFlutterRootDirectory => environment.flutterRootDir.absolute.path,
         Environment.kProjectDirectory => environment.projectDir.resolveSymbolicLinksSync(),
         Environment.kWorkspaceDirectory => environment.fileSystem.path.dirname(
@@ -114,6 +127,17 @@ class SourceVisitor implements ResolvedFiles {
       }),
       ...rawParts.skip(1),
     ];
+=======
+        segments.addAll(
+          environment.fileSystem.path.split(environment.flutterRootDir.absolute.path));
+      case Environment.kOutputDirectory:
+        segments.addAll(
+          environment.fileSystem.path.split(environment.outputDir.resolveSymbolicLinksSync()));
+      default:
+        throw InvalidPatternException(pattern);
+    }
+    rawParts.skip(1).forEach(segments.add);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final String filePath = environment.fileSystem.path.joinAll(segments);
     if (!hasWildcard) {
       if (optional && !environment.fileSystem.isFileSync(filePath)) {

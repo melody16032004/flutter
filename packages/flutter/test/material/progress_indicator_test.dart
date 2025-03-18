@@ -205,6 +205,7 @@ void main() {
   });
 
   testWidgets('LinearProgressIndicator with colors', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(
       const MaterialApp(
         home: Center(child: SizedBox(width: 200.0, child: LinearProgressIndicator(value: 0.25))),
@@ -222,6 +223,8 @@ void main() {
         ..rect(rect: const Rect.fromLTRB(0.0, 0.0, 50.0, 4.0), color: theme.colorScheme.primary),
     );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     // With valueColor & color provided
     await tester.pumpWidget(
       Theme(
@@ -1767,6 +1770,7 @@ class _RefreshProgressIndicatorGolden extends StatefulWidget {
   _RefreshProgressIndicatorGoldenState createState() => _RefreshProgressIndicatorGoldenState();
 }
 
+<<<<<<< HEAD
 class _RefreshProgressIndicatorGoldenState extends State<_RefreshProgressIndicatorGolden>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller =
@@ -1780,6 +1784,22 @@ class _RefreshProgressIndicatorGoldenState extends State<_RefreshProgressIndicat
             indeterminate = true;
           }
         });
+=======
+class _RefreshProgressIndicatorGoldenState extends State<_RefreshProgressIndicatorGolden> with SingleTickerProviderStateMixin {
+  late final AnimationController controller = AnimationController(
+    vsync: this,
+    duration: const Duration(seconds: 1),
+  )
+    ..forward()
+    ..addListener(() {
+        setState(() {});
+      })
+    ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          indeterminate = true;
+        }
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   bool indeterminate = false;
 

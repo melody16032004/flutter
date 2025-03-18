@@ -13,8 +13,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 
 void main() {
   final ThemeData material3Theme = ThemeData(useMaterial3: true);
@@ -594,6 +594,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -609,6 +610,20 @@ void main() {
               ],
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
             ),
+=======
+    expect(semantics, hasSemantics(TestSemantics.root(
+      children: <TestSemantics>[
+        TestSemantics.rootChild(
+          label: 'Add',
+          flags: <SemanticsFlag>[
+            SemanticsFlag.hasEnabledState,
+            SemanticsFlag.isButton,
+            SemanticsFlag.isEnabled,
+            SemanticsFlag.isFocusable,
+          ],
+          actions: <SemanticsAction>[
+            SemanticsAction.tap,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ],
         ),
         ignoreTransform: true,
@@ -680,6 +695,7 @@ void main() {
                 TestSemantics(
                   children: <TestSemantics>[
                     TestSemantics(
+<<<<<<< HEAD
                       flags: <SemanticsFlag>[SemanticsFlag.scopesRoute],
                       children: <TestSemantics>[
                         TestSemantics(
@@ -692,6 +708,17 @@ void main() {
                             SemanticsFlag.isFocusable,
                           ],
                         ),
+=======
+                      tooltip: 'Add Photo',
+                      actions: <SemanticsAction>[
+                        SemanticsAction.tap,
+                      ],
+                      flags: <SemanticsFlag>[
+                        SemanticsFlag.hasEnabledState,
+                        SemanticsFlag.isButton,
+                        SemanticsFlag.isEnabled,
+                        SemanticsFlag.isFocusable,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                       ],
                     ),
                   ],
@@ -919,7 +946,6 @@ void main() {
       tester.getSemantics(find.byType(FloatingActionButton)),
       matchesSemantics(
         hasTapAction: true,
-        hasFocusAction: true,
         hasEnabledState: true,
         isButton: true,
         isEnabled: true,

@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 
 class TestIcon extends StatefulWidget {
   const TestIcon({super.key});
@@ -160,8 +160,12 @@ void main() {
     await tester.pumpWidget(buildFrame(isTwoLine: true, textScaler: const TextScaler.linear(4.0)));
     testChildren();
     testHorizontalGeometry();
+<<<<<<< HEAD
     if (!kIsWeb || isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       testVerticalGeometry(192.0);
     }
 
@@ -175,8 +179,12 @@ void main() {
     );
     testChildren();
     testHorizontalGeometry();
+<<<<<<< HEAD
     if (!kIsWeb || isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       testVerticalGeometry(108.0);
     }
 
@@ -185,8 +193,12 @@ void main() {
     );
     testChildren();
     testHorizontalGeometry();
+<<<<<<< HEAD
     if (!kIsWeb || isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       testVerticalGeometry(192.0);
     }
   });
@@ -320,7 +332,7 @@ void main() {
                 SemanticsFlag.isFocusable,
                 SemanticsFlag.hasSelectedState,
               ],
-              actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+              actions: <SemanticsAction>[SemanticsAction.tap],
               label: 'two',
             ),
             TestSemantics.rootChild(
@@ -536,8 +548,12 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     if (kIsWeb && !isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (kIsWeb && !isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return;
     }
     const double height = 300;

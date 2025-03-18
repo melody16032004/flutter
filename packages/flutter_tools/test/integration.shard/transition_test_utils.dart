@@ -126,6 +126,7 @@ class LogLine {
   }
 
   static String clarify(String line) {
+<<<<<<< HEAD
     return line.runes
         .map<String>(
           (int rune) => switch (rune) {
@@ -144,6 +145,28 @@ class LogLine {
           },
         )
         .join();
+=======
+    return line.runes.map<String>((int rune) {
+      if (rune >= 0x20 && rune <= 0x7F) {
+        return String.fromCharCode(rune);
+      }
+      switch (rune) {
+        case 0x00:
+          return '<NUL>';
+        case 0x07:
+          return '<BEL>';
+        case 0x08:
+          return '<TAB>';
+        case 0x09:
+          return '<BS>';
+        case 0x0A:
+          return '<LF>';
+        case 0x0D:
+          return '<CR>';
+      }
+      return '<${rune.toRadixString(16).padLeft(rune <= 0xFF ? 2 : rune <= 0xFFFF ? 4 : 5, '0')}>';
+    }).join();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

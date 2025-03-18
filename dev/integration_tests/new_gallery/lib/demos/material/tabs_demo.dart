@@ -13,10 +13,21 @@ class TabsDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return switch (type) {
       TabsDemoType.scrollable => _TabsScrollableDemo(),
       TabsDemoType.nonScrollable => _TabsNonScrollableDemo(),
     };
+=======
+    Widget tabs;
+    switch (type) {
+      case TabsDemoType.scrollable:
+        tabs = _TabsScrollableDemo();
+      case TabsDemoType.nonScrollable:
+        tabs = _TabsNonScrollableDemo();
+    }
+    return tabs;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

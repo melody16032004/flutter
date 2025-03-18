@@ -21,6 +21,7 @@ import 'colors.dart';
 import 'curves.dart';
 import 'debug.dart';
 import 'dialog.dart';
+import 'feedback.dart';
 import 'icon_button.dart';
 import 'icons.dart';
 import 'ink_well.dart';
@@ -872,6 +873,7 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     final RenderBox? child = this.child;
     if (child == null) {
@@ -887,6 +889,8 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performLayout() {
     size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
     if (child != null) {

@@ -120,7 +120,7 @@ bool debugCheckIntrinsicSizes = false;
 /// performance. This data is omitted in profile builds.
 ///
 /// For more information about performance debugging in Flutter, see
-/// <https://docs.flutter.dev/perf/ui-performance>.
+/// <https://flutter.dev/docs/perf/rendering>.
 ///
 /// See also:
 ///
@@ -146,7 +146,7 @@ bool debugProfileLayoutsEnabled = false;
 /// performance. This data is omitted in profile builds.
 ///
 /// For more information about performance debugging in Flutter, see
-/// <https://docs.flutter.dev/perf/ui-performance>.
+/// <https://flutter.dev/docs/perf/rendering>.
 ///
 /// See also:
 ///

@@ -80,8 +80,16 @@ class _FadeScaleTransitionDemoState extends State<FadeScaleTransitionDemo>
           return FadeScaleTransition(animation: _controller, child: child);
         },
         child: Visibility(
+<<<<<<< HEAD
           visible: !_controller.isDismissed,
           child: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+=======
+          visible: _controller.status != AnimationStatus.dismissed,
+          child: FloatingActionButton(
+            onPressed: () {},
+            child: const Icon(Icons.add),
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       ),
       bottomNavigationBar: Column(

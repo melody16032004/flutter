@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 
 void main() {
   testWidgets('Navigator.push works within a PopupMenuButton', (WidgetTester tester) async {
@@ -1008,6 +1008,7 @@ void main() {
     expect(tester.getTopLeft(popupFinder), buttonTopLeft);
   });
 
+<<<<<<< HEAD
   testWidgets('PopupMenu positioning inside nested Navigator when useRootNavigator', (
     WidgetTester tester,
   ) async {
@@ -1055,6 +1056,8 @@ void main() {
     expect(tester.getTopLeft(popupFinder), buttonTopLeft);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Popup menu with RouteSettings', (WidgetTester tester) async {
     final Key buttonKey = UniqueKey();
     const RouteSettings popupRoute = RouteSettings(name: '/popup');
@@ -1269,6 +1272,7 @@ void main() {
     await tester.tap(find.text('XXX'));
     await tester.pumpAndSettle();
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -1364,6 +1368,91 @@ void main() {
                   ],
                 ),
                 TestSemantics(
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics(
+            textDirection: TextDirection.ltr,
+            children: <TestSemantics>[
+              TestSemantics(
+                children: <TestSemantics>[
+                  TestSemantics(
+                    flags: <SemanticsFlag>[
+                      SemanticsFlag.scopesRoute,
+                      SemanticsFlag.namesRoute,
+                    ],
+                    label: 'Popup menu',
+                    textDirection: TextDirection.ltr,
+                    children: <TestSemantics>[
+                      TestSemantics(
+                        flags: <SemanticsFlag>[
+                          SemanticsFlag.hasImplicitScrolling,
+                        ],
+                        children: <TestSemantics>[
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '1',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '2',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '3',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '4',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '5',
+                            textDirection: TextDirection.ltr,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              TestSemantics(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                   actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.dismiss],
                   label: 'Dismiss menu',
                   textDirection: TextDirection.ltr,
@@ -1408,6 +1497,7 @@ void main() {
     await tester.tap(find.text('XXX'));
     await tester.pumpAndSettle();
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -1447,6 +1537,47 @@ void main() {
                   ],
                 ),
                 TestSemantics(
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics(
+            textDirection: TextDirection.ltr,
+            children: <TestSemantics>[
+              TestSemantics(
+                children: <TestSemantics>[
+                  TestSemantics(
+                    flags: <SemanticsFlag>[
+                      SemanticsFlag.scopesRoute,
+                      SemanticsFlag.namesRoute,
+                    ],
+                    label: 'Popup menu',
+                    textDirection: TextDirection.ltr,
+                    children: <TestSemantics>[
+                      TestSemantics(
+                        flags: <SemanticsFlag>[
+                          SemanticsFlag.hasImplicitScrolling,
+                        ],
+                        children: <TestSemantics>[
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: 'test1\ntest2',
+                            textDirection: TextDirection.ltr,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              TestSemantics(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                   actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.dismiss],
                   label: 'Dismiss menu',
                   textDirection: TextDirection.ltr,
@@ -1488,6 +1619,7 @@ void main() {
     await tester.tap(find.text('XXX'));
     await tester.pumpAndSettle();
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -1578,6 +1710,89 @@ void main() {
                   ],
                 ),
                 TestSemantics(
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics(
+            textDirection: TextDirection.ltr,
+            children: <TestSemantics>[
+              TestSemantics(
+                children: <TestSemantics>[
+                  TestSemantics(
+                    flags: <SemanticsFlag>[
+                      SemanticsFlag.scopesRoute,
+                      SemanticsFlag.namesRoute,
+                    ],
+                    label: 'Popup menu',
+                    textDirection: TextDirection.ltr,
+                    children: <TestSemantics>[
+                      TestSemantics(
+                        flags: <SemanticsFlag>[
+                          SemanticsFlag.hasImplicitScrolling,
+                        ],
+                        children: <TestSemantics>[
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '1',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                            ],
+                            actions: <SemanticsAction>[],
+                            label: '2',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '3',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '4',
+                            textDirection: TextDirection.ltr,
+                          ),
+                          TestSemantics(
+                            flags: <SemanticsFlag>[
+                              SemanticsFlag.isButton,
+                              SemanticsFlag.hasEnabledState,
+                              SemanticsFlag.isEnabled,
+                              SemanticsFlag.isFocusable,
+                            ],
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+                            label: '5',
+                            textDirection: TextDirection.ltr,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              TestSemantics(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                   actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.dismiss],
                   label: 'Dismiss menu',
                   textDirection: TextDirection.ltr,
@@ -1757,6 +1972,7 @@ void main() {
     expect(paddingFor('Item 1'), const EdgeInsets.symmetric(horizontal: 12.0));
   });
 
+<<<<<<< HEAD
   testWidgets('PopupMenu default padding', (WidgetTester tester) async {
     final Key popupMenuButtonKey = UniqueKey();
     await tester.pumpWidget(
@@ -1790,6 +2006,8 @@ void main() {
     expect(popupMenu.padding, const EdgeInsets.symmetric(vertical: 8.0));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Material2 - PopupMenuItem default padding', (WidgetTester tester) async {
     final Key popupMenuButtonKey = UniqueKey();
     await tester.pumpWidget(
@@ -1832,6 +2050,7 @@ void main() {
     expect(paddingFor('Item 1'), const EdgeInsets.symmetric(horizontal: 16.0));
   });
 
+<<<<<<< HEAD
   testWidgets('Material2 - PopupMenuItem default padding', (WidgetTester tester) async {
     final Key popupMenuButtonKey = UniqueKey();
     await tester.pumpWidget(
@@ -1866,6 +2085,8 @@ void main() {
     expect(popupMenu.padding, const EdgeInsets.symmetric(vertical: 8.0));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('PopupMenuItem custom padding', (WidgetTester tester) async {
     final Key popupMenuButtonKey = UniqueKey();
     final Type menuItemType = const PopupMenuItem<String>(child: Text('item')).runtimeType;

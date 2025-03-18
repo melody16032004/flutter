@@ -197,7 +197,7 @@ class InkSplash extends InteractiveInkFeature {
   }
 
   void _handleAlphaStatusChanged(AnimationStatus status) {
-    if (status.isCompleted) {
+    if (status == AnimationStatus.completed) {
       dispose();
     }
   }

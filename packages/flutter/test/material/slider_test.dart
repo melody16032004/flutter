@@ -48,36 +48,6 @@ class LoggingThumbShape extends SliderComponentShape {
   }
 }
 
-// A value indicator shape to log labelPainter text.
-class LoggingValueIndicatorShape extends SliderComponentShape {
-  LoggingValueIndicatorShape(this.logLabel);
-
-  final List<InlineSpan> logLabel;
-
-  @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return const Size(10.0, 10.0);
-  }
-
-  @override
-  void paint(
-    PaintingContext context,
-    Offset offset, {
-    required Animation<double> activationAnimation,
-    required Animation<double> enableAnimation,
-    required bool isDiscrete,
-    required TextPainter labelPainter,
-    required RenderBox parentBox,
-    required SliderThemeData sliderTheme,
-    required TextDirection textDirection,
-    required double value,
-    required double textScaleFactor,
-    required Size sizeWithOverflow,
-  }) {
-    logLabel.add(labelPainter.text!);
-  }
-}
-
 class TallSliderTickMarkShape extends SliderTickMarkShape {
   @override
   Size getPreferredSize({required SliderThemeData sliderTheme, required bool isEnabled}) {
@@ -1005,6 +975,7 @@ void main() {
     }
   });
 
+<<<<<<< HEAD
   testWidgets('Slider value indicator respects bold text', (WidgetTester tester) async {
     final Key sliderKey = UniqueKey();
     double value = 0.0;
@@ -1079,6 +1050,8 @@ void main() {
     await tester.pumpAndSettle();
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Tick marks are skipped when they are too dense', (WidgetTester tester) async {
     Widget buildSlider({required int divisions}) {
       return MaterialApp(
@@ -1259,6 +1232,7 @@ void main() {
 
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       expect(
         semantics,
         hasSemantics(
@@ -1303,6 +1277,48 @@ void main() {
           ),
           ignoreRect: true,
           ignoreTransform: true,
+=======
+    expect(
+      semantics,
+      hasSemantics(
+        TestSemantics.root(
+          children: <TestSemantics>[
+            TestSemantics(
+              id: 1,
+              textDirection: TextDirection.ltr,
+              children: <TestSemantics>[
+                TestSemantics(
+                  id: 2,
+                  children: <TestSemantics>[
+                    TestSemantics(
+                      id: 3,
+                      flags: <SemanticsFlag>[SemanticsFlag.scopesRoute],
+                      children: <TestSemantics>[
+                        TestSemantics(
+                          id: 4,
+                          flags: <SemanticsFlag>[
+                            SemanticsFlag.hasEnabledState,
+                            SemanticsFlag.isEnabled,
+                            SemanticsFlag.isFocusable,
+                            SemanticsFlag.isSlider,
+                          ],
+                          actions: <SemanticsAction>[
+                            SemanticsAction.increase,
+                            SemanticsAction.decrease,
+                          ],
+                          value: '50%',
+                          increasedValue: '55%',
+                          decreasedValue: '45%',
+                          textDirection: TextDirection.ltr,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       );
 
@@ -1316,6 +1332,7 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       expect(
         semantics,
         hasSemantics(
@@ -1356,6 +1373,44 @@ void main() {
           ),
           ignoreRect: true,
           ignoreTransform: true,
+=======
+    expect(
+      semantics,
+      hasSemantics(
+        TestSemantics.root(
+          children: <TestSemantics>[
+            TestSemantics(
+              id: 1,
+              textDirection: TextDirection.ltr,
+              children: <TestSemantics>[
+                TestSemantics(
+                  id: 2,
+                  children: <TestSemantics>[
+                    TestSemantics(
+                      id: 3,
+                      flags: <SemanticsFlag>[SemanticsFlag.scopesRoute],
+                      children: <TestSemantics>[
+                        TestSemantics(
+                          id: 4,
+                          flags: <SemanticsFlag>[
+                            SemanticsFlag.hasEnabledState,
+                            // isFocusable is delayed by 1 frame.
+                            SemanticsFlag.isFocusable,
+                            SemanticsFlag.isSlider,
+                          ],
+                          value: '50%',
+                          increasedValue: '55%',
+                          decreasedValue: '45%',
+                          textDirection: TextDirection.ltr,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       );
 
@@ -1543,6 +1598,114 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
+=======
+    expect(
+      semantics,
+      hasSemantics(
+        TestSemantics.root(
+          children: <TestSemantics>[
+            TestSemantics(
+              id: 1,
+              textDirection: TextDirection.ltr,
+              children: <TestSemantics>[
+                TestSemantics(
+                  id: 2,
+                  children: <TestSemantics>[
+                    TestSemantics(
+                      id: 3,
+                      flags: <SemanticsFlag>[SemanticsFlag.scopesRoute],
+                      children: <TestSemantics>[
+                        TestSemantics(
+                          id: 4,
+                          flags: <SemanticsFlag>[SemanticsFlag.hasEnabledState, SemanticsFlag.isEnabled, SemanticsFlag.isFocusable, SemanticsFlag.isSlider],
+                          actions: <SemanticsAction>[SemanticsAction.increase, SemanticsAction.decrease],
+                          value: '50%',
+                          increasedValue: '60%',
+                          decreasedValue: '40%',
+                          textDirection: TextDirection.ltr,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        ignoreRect: true,
+        ignoreTransform: true,
+      ),
+    );
+
+    // Disable slider
+    await tester.pumpWidget(const MaterialApp(
+      home: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Material(
+          child: Slider(
+            value: 0.5,
+            onChanged: null,
+          ),
+        ),
+      ),
+    ));
+
+    expect(
+      semantics,
+      hasSemantics(
+        TestSemantics.root(
+          children: <TestSemantics>[
+            TestSemantics(
+              id: 1,
+              textDirection: TextDirection.ltr,
+              children: <TestSemantics>[
+                TestSemantics(
+                  id: 2,
+                  children: <TestSemantics>[
+                    TestSemantics(
+                      id: 3,
+                      flags: <SemanticsFlag>[SemanticsFlag.scopesRoute],
+                      children: <TestSemantics>[
+                        TestSemantics(
+                          id: 5,
+                          flags: <SemanticsFlag>[SemanticsFlag.hasEnabledState, SemanticsFlag.isSlider],
+                          value: '50%',
+                          increasedValue: '60%',
+                          decreasedValue: '40%',
+                          textDirection: TextDirection.ltr,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+        ignoreRect: true,
+        ignoreTransform: true,
+      ),
+    );
+    semantics.dispose();
+  }, variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.iOS,  TargetPlatform.macOS }));
+
+  testWidgets('Slider Semantics', (WidgetTester tester) async {
+    final SemanticsTester semantics = SemanticsTester(tester);
+
+    await tester.pumpWidget(MaterialApp(
+      home: Directionality(
+        textDirection: TextDirection.ltr,
+        child: Material(
+          child: Slider(
+            value: 0.5,
+            onChanged: (double v) { },
+          ),
+        ),
+      ),
+    ));
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.pumpAndSettle();
 
     expect(
@@ -1570,7 +1733,6 @@ void main() {
                             SemanticsFlag.isSlider,
                           ],
                           actions: <SemanticsAction>[
-                            SemanticsAction.focus,
                             SemanticsAction.increase,
                             SemanticsAction.decrease,
                             SemanticsAction.didGainAccessibilityFocus,
@@ -1628,7 +1790,6 @@ void main() {
                             SemanticsFlag.isSlider,
                           ],
                           actions: <SemanticsAction>[
-                            SemanticsAction.focus,
                             SemanticsAction.didGainAccessibilityFocus,
                           ],
                           value: '50%',
@@ -1732,6 +1893,7 @@ void main() {
                       children: <TestSemantics>[
                         TestSemantics(
                           id: 4,
+<<<<<<< HEAD
                           flags: <SemanticsFlag>[
                             SemanticsFlag.hasEnabledState,
                             SemanticsFlag.isEnabled,
@@ -1743,6 +1905,10 @@ void main() {
                             SemanticsAction.increase,
                             SemanticsAction.decrease,
                           ],
+=======
+                          flags: <SemanticsFlag>[SemanticsFlag.hasEnabledState, SemanticsFlag.isEnabled, SemanticsFlag.isFocusable, SemanticsFlag.isSlider],
+                          actions: <SemanticsAction>[SemanticsAction.increase, SemanticsAction.decrease],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                           value: '40',
                           increasedValue: '60',
                           decreasedValue: '20',
@@ -1803,6 +1969,7 @@ void main() {
                       children: <TestSemantics>[
                         TestSemantics(
                           id: 4,
+<<<<<<< HEAD
                           flags: <SemanticsFlag>[
                             SemanticsFlag.hasEnabledState,
                             SemanticsFlag.isEnabled,
@@ -1814,6 +1981,10 @@ void main() {
                             SemanticsAction.increase,
                             SemanticsAction.decrease,
                           ],
+=======
+                          flags: <SemanticsFlag>[SemanticsFlag.hasEnabledState, SemanticsFlag.isEnabled, SemanticsFlag.isFocusable, SemanticsFlag.isSlider],
+                          actions: <SemanticsAction>[SemanticsAction.increase, SemanticsAction.decrease],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                           value: '40',
                           increasedValue: '60',
                           decreasedValue: '20',
@@ -2773,6 +2944,18 @@ void main() {
                             textDirection: TextDirection.ltr,
                           ),
                         ],
+<<<<<<< HEAD
+=======
+                        actions: <SemanticsAction>[
+                          SemanticsAction.increase,
+                          SemanticsAction.decrease,
+                          SemanticsAction.didGainAccessibilityFocus,
+                        ],
+                        value: '50%',
+                        increasedValue: '55%',
+                        decreasedValue: '45%',
+                        textDirection: TextDirection.ltr,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                       ),
                     ],
                   ),
@@ -4630,6 +4813,7 @@ void main() {
     await gesture.moveBy(const Offset(1.0, 0.0));
     expect(onChangeCallbackCount, 1);
   });
+<<<<<<< HEAD
 
   testWidgets('Skip drawing ValueIndicator shape when label painter text is null', (
     WidgetTester tester,
@@ -5177,4 +5361,6 @@ void main() {
     await gesture.up();
     await tester.pumpAndSettle();
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

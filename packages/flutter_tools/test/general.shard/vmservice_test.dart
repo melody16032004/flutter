@@ -145,16 +145,21 @@ void main() {
   );
 
   testWithoutContext('setAssetDirectory forwards arguments correctly', () async {
-    final MockVMService mockVMService = MockVMService();
-    final FlutterVmService flutterVmService = FlutterVmService(mockVMService);
+    final Completer<String> completer = Completer<String>();
+    final vm_service.VmService  vmService = vm_service.VmService(
+      const Stream<String>.empty(),
+      completer.complete,
+    );
+    final FlutterVmService flutterVmService = FlutterVmService(vmService);
 
-    await flutterVmService.setAssetDirectory(
+    unawaited(flutterVmService.setAssetDirectory(
       assetsDirectory: Uri(path: 'abc', scheme: 'file'),
       viewId: 'abc',
       uiIsolateId: 'def',
       windows: false,
-    );
+    ));
 
+<<<<<<< HEAD
     final ({Map<String, Object?>? args, String? isolateId}) call =
         mockVMService.calledMethods[kSetAssetBundlePathMethod]!.single;
     expect(call.isolateId, 'def');
@@ -171,13 +176,37 @@ void main() {
             'C:/Users/Tester/AppData/Local/Temp/hello_worldb42a6da5/hello_world/build/flutter_assets',
         scheme: 'file',
       ),
+=======
+    final Map<String, Object?>? rawRequest = json.decode(await completer.future) as Map<String, Object?>?;
+
+    expect(rawRequest, allOf(<Matcher>[
+      containsPair('method', kSetAssetBundlePathMethod),
+      containsPair('params', allOf(<Matcher>[
+        containsPair('viewId', 'abc'),
+        containsPair('assetDirectory', '/abc'),
+        containsPair('isolateId', 'def'),
+      ])),
+    ]));
+  });
+
+  testWithoutContext('setAssetDirectory forwards arguments correctly - windows', () async {
+    final Completer<String> completer = Completer<String>();
+    final vm_service.VmService  vmService = vm_service.VmService(
+      const Stream<String>.empty(),
+      completer.complete,
+    );
+    final FlutterVmService flutterVmService = FlutterVmService(vmService);
+    unawaited(flutterVmService.setAssetDirectory(
+      assetsDirectory: Uri(path: 'C:/Users/Tester/AppData/Local/Temp/hello_worldb42a6da5/hello_world/build/flutter_assets', scheme: 'file'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       viewId: 'abc',
       uiIsolateId: 'def',
       // If windows is not set to `true`, then the file path below is incorrectly prepended with a `/` which
       // causes the engine asset manager to interpret the file scheme as invalid.
       windows: true,
-    );
+    ));
 
+<<<<<<< HEAD
     final ({Map<String, Object?>? args, String? isolateId}) call =
         mockVMService.calledMethods[kSetAssetBundlePathMethod]!.single;
     expect(call.isolateId, 'def');
@@ -186,30 +215,76 @@ void main() {
       'assetDirectory':
           r'C:\Users\Tester\AppData\Local\Temp\hello_worldb42a6da5\hello_world\build\flutter_assets',
     });
+=======
+    final Map<String, Object?>? rawRequest = json.decode(await completer.future) as Map<String, Object?>?;
+
+    expect(rawRequest, allOf(<Matcher>[
+      containsPair('method', kSetAssetBundlePathMethod),
+      containsPair('params', allOf(<Matcher>[
+        containsPair('viewId', 'abc'),
+        containsPair('assetDirectory', r'C:\Users\Tester\AppData\Local\Temp\hello_worldb42a6da5\hello_world\build\flutter_assets'),
+        containsPair('isolateId', 'def'),
+      ])),
+    ]));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWithoutContext('getSkSLs forwards arguments correctly', () async {
-    final MockVMService mockVMService = MockVMService();
-    final FlutterVmService flutterVmService = FlutterVmService(mockVMService);
+    final Completer<String> completer = Completer<String>();
+    final vm_service.VmService  vmService = vm_service.VmService(
+      const Stream<String>.empty(),
+      completer.complete,
+    );
+    final FlutterVmService flutterVmService = FlutterVmService(vmService);
 
-    await flutterVmService.getSkSLs(viewId: 'abc');
+    unawaited(flutterVmService.getSkSLs(
+      viewId: 'abc',
+    ));
 
+<<<<<<< HEAD
     final ({Map<String, Object?>? args, String? isolateId}) call =
         mockVMService.calledMethods[kGetSkSLsMethod]!.single;
     expect(call.isolateId, isNull);
     expect(call.args, <String, String>{'viewId': 'abc'});
+=======
+    final Map<String, Object?>? rawRequest = json.decode(await completer.future) as Map<String, Object?>?;
+
+    expect(rawRequest, allOf(<Matcher>[
+      containsPair('method', kGetSkSLsMethod),
+      containsPair('params', allOf(<Matcher>[
+        containsPair('viewId', 'abc'),
+      ])),
+    ]));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWithoutContext('flushUIThreadTasks forwards arguments correctly', () async {
-    final MockVMService mockVMService = MockVMService();
-    final FlutterVmService flutterVmService = FlutterVmService(mockVMService);
+    final Completer<String> completer = Completer<String>();
+    final vm_service.VmService vmService = vm_service.VmService(
+      const Stream<String>.empty(),
+      completer.complete,
+    );
+    final FlutterVmService flutterVmService = FlutterVmService(vmService);
 
-    await flutterVmService.flushUIThreadTasks(uiIsolateId: 'def');
+    unawaited(flutterVmService.flushUIThreadTasks(
+      uiIsolateId: 'def',
+    ));
 
+<<<<<<< HEAD
     final ({Map<String, Object?>? args, String? isolateId}) call =
         mockVMService.calledMethods[kFlushUIThreadTasksMethod]!.single;
     expect(call.isolateId, isNull);
     expect(call.args, <String, String>{'isolateId': 'def'});
+=======
+    final Map<String, Object?>? rawRequest = json.decode(await completer.future) as Map<String, Object?>?;
+
+    expect(rawRequest, allOf(<Matcher>[
+      containsPair('method', kFlushUIThreadTasksMethod),
+      containsPair('params', allOf(<Matcher>[
+        containsPair('isolateId', 'def'),
+      ])),
+    ]));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testUsingContext('runInView forwards arguments correctly', () async {
@@ -659,6 +734,7 @@ void main() {
         throwsA(isA<VmServiceDisappearedException>()),
       );
     });
+<<<<<<< HEAD
 
     testWithoutContext('throws when the service is disposed', () async {
       final FakeVmServiceHost fakeVmServiceHost = FakeVmServiceHost(
@@ -672,6 +748,8 @@ void main() {
         throwsA(isA<VmServiceDisappearedException>()),
       );
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWithoutContext('Can process log events from the vm service', () {
@@ -707,14 +785,19 @@ void main() {
 
 class MockVMService extends Fake implements vm_service.VmService {
   final Map<String, String> services = <String, String>{};
+<<<<<<< HEAD
   final Map<String, vm_service.ServiceCallback> serviceCallBacks =
       <String, vm_service.ServiceCallback>{};
   final Map<String, List<({String? isolateId, Map<String, Object?>? args})>> calledMethods =
       <String, List<({Map<String, Object?>? args, String? isolateId})>>{};
+=======
+  final Map<String, vm_service.ServiceCallback> serviceCallBacks = <String, vm_service.ServiceCallback>{};
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final Set<String> listenedStreams = <String>{};
   bool errorOnRegisterService = false;
 
   @override
+<<<<<<< HEAD
   Future<vm_service.Response> callMethod(
     String method, {
     String? isolateId,
@@ -727,6 +810,8 @@ class MockVMService extends Fake implements vm_service.VmService {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void registerServiceCallback(String service, vm_service.ServiceCallback cb) {
     serviceCallBacks[service] = cb;
   }

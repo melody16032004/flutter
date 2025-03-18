@@ -121,7 +121,11 @@ function generate_docs() {
     # Install and activate dartdoc.
     # When updating to a new dartdoc version, please also update
     # `dartdoc_options.yaml` to include newly introduced error and warning types.
+<<<<<<< HEAD
     "$DART" pub global activate dartdoc 8.3.0
+=======
+    "$DART" pub global activate dartdoc 8.0.6
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     # Build and install the snippets tool, which resides in
     # the dev/docs/snippets directory.

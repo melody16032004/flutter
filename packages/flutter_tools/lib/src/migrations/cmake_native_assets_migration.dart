@@ -23,7 +23,7 @@ class CmakeNativeAssetsMigration extends ProjectMigrator {
   final String os;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_cmakeFile.existsSync()) {
       logger.printTrace('CMake project not found, skipping install() NATIVE_ASSETS_DIR migration.');
       return;

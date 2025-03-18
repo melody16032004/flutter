@@ -31,12 +31,13 @@ String camelCase(String str) {
 
 /// Convert `fooBar` to `foo-bar`.
 String kebabCase(String str) {
-  return _reCase(str, '-');
+  return snakeCase(str, '-');
 }
 
 final RegExp _upperRegex = RegExp(r'[A-Z]');
 
 /// Convert `fooBar` to `foo_bar`.
+<<<<<<< HEAD
 String snakeCase(String str) {
   return _reCase(str, '_');
 }
@@ -47,6 +48,11 @@ String _reCase(String str, String sep) {
     _upperRegex,
     (Match m) => '${m.start == 0 ? '' : sep}${m[0]!.toLowerCase()}',
   );
+=======
+String snakeCase(String str, [ String sep = '_' ]) {
+  return str.replaceAllMapped(_upperRegex,
+      (Match m) => '${m.start == 0 ? '' : sep}${m[0]!.toLowerCase()}');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 abstract interface class CliEnum implements Enum {
@@ -221,7 +227,7 @@ const int kMinColumnWidth = 10;
 /// ```
 ///
 /// yields:
-/// ```none
+/// ```
 ///   Usage: app main_command <subcommand>
 ///          [arguments]
 /// ```

@@ -492,7 +492,6 @@ abstract class MacOSBundleFlutterAssets extends Target {
       environment,
       assetDirectory,
       targetPlatform: TargetPlatform.darwin,
-      buildMode: buildMode,
       flavor: environment.defines[kFlavor],
       additionalContent: <String, DevFSContent>{
         'NativeAssetsManifest.json': DevFSFileContent(

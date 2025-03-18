@@ -45,6 +45,7 @@ void main() {
       MaterialApp(
         initialRoute: '/',
         routes: <String, WidgetBuilder>{
+<<<<<<< HEAD
           '/':
               (BuildContext buildContext) => Scaffold(
                 body: StatefulBuilder(
@@ -63,6 +64,27 @@ void main() {
                   },
                 ),
               ),
+=======
+          '/': (BuildContext buildContext) => Scaffold(
+            body: StatefulBuilder(
+              builder: (BuildContext buildContext, StateSetter stateSetter) {
+                context = buildContext;
+                setState = stateSetter;
+                return PopScope(
+                  canPop: canPop,
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('Home/PopScope Page'),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         },
       ),
     );
@@ -79,6 +101,7 @@ void main() {
     expect(ModalRoute.of(context)!.popDisposition, RoutePopDisposition.bubble);
   }, variant: TargetPlatformVariant.all());
 
+<<<<<<< HEAD
   testWidgets('pop scope can receive result', (WidgetTester tester) async {
     Object? receivedResult;
     final Object poppedResult = Object();
@@ -164,6 +187,9 @@ void main() {
   testWidgets('toggling canPop on secondary route allows/prevents backs', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('toggling canPop on secondary route allows/prevents backs', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final GlobalKey<NavigatorState> nav = GlobalKey<NavigatorState>();
     bool canPop = true;
     late StateSetter setState;
@@ -194,6 +220,7 @@ void main() {
               ),
             );
           },
+<<<<<<< HEAD
           '/one':
               (BuildContext context) => Scaffold(
                 body: StatefulBuilder(
@@ -212,6 +239,17 @@ void main() {
                         ),
                       ),
                     );
+=======
+          '/one': (BuildContext context) => Scaffold(
+            body: StatefulBuilder(
+              builder: (BuildContext context, StateSetter stateSetter) {
+                oneContext = context;
+                setState = stateSetter;
+                return PopScope(
+                  canPop: canPop,
+                  onPopInvoked: (bool didPop) {
+                    lastPopSuccess = didPop;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                   },
                 ),
               ),
@@ -356,10 +394,27 @@ void main() {
                       return const PopScope<Object?>(canPop: false, child: child);
                     },
                   ),
+<<<<<<< HEAD
                 ),
           },
         ),
       );
+=======
+                );
+                if (!usePopScope) {
+                  return child;
+                }
+                return const PopScope(
+                  canPop: false,
+                  child: child,
+                );
+              },
+            ),
+          ),
+        },
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
         expect(lastFrameworkHandlesBack, isTrue);
@@ -392,8 +447,21 @@ void main() {
               setState = stateSetter;
               return Column(
                 children: <Widget>[
+<<<<<<< HEAD
                   if (usePopScope1) const PopScope<Object?>(canPop: false, child: Text('hello')),
                   if (usePopScope2) const PopScope<Object?>(canPop: false, child: Text('hello')),
+=======
+                  if (usePopScope1)
+                    const PopScope(
+                      canPop: false,
+                      child: Text('hello'),
+                    ),
+                  if (usePopScope2)
+                    const PopScope(
+                      canPop: false,
+                      child: Text('hello'),
+                    ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                 ],
               );
             },

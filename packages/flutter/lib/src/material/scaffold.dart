@@ -106,7 +106,7 @@ enum _ScaffoldSlot {
 ///    top of the app using the [ScaffoldMessengerState.showMaterialBanner] method.
 ///  * [debugCheckHasScaffoldMessenger], which asserts that the given context
 ///    has a [ScaffoldMessenger] ancestor.
-///  * Cookbook: [Display a SnackBar](https://docs.flutter.dev/cookbook/design/snackbars)
+///  * Cookbook: [Display a SnackBar](https://flutter.dev/docs/cookbook/design/snackbars)
 class ScaffoldMessenger extends StatefulWidget {
   /// Creates a widget that manages [SnackBar]s for [Scaffold] descendants.
   const ScaffoldMessenger({super.key, required this.child});
@@ -420,6 +420,7 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
         });
         _updateScaffolds();
       case AnimationStatus.forward:
+        break;
       case AnimationStatus.reverse:
         break;
     }
@@ -447,8 +448,13 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
   /// Removes the current [SnackBar] by running its normal exit animation.
   ///
   /// The closed completer is called after the animation is complete.
+<<<<<<< HEAD
   void hideCurrentSnackBar({SnackBarClosedReason reason = SnackBarClosedReason.hide}) {
     if (_snackBars.isEmpty || _snackBarController!.isDismissed) {
+=======
+  void hideCurrentSnackBar({ SnackBarClosedReason reason = SnackBarClosedReason.hide }) {
+    if (_snackBars.isEmpty || _snackBarController!.status == AnimationStatus.dismissed) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return;
     }
     final Completer<SnackBarClosedReason> completer = _snackBars.first._completer;
@@ -470,7 +476,7 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
   /// Removes all the snackBars currently in queue by clearing the queue
   /// and running normal exit animation on the current snackBar.
   void clearSnackBars() {
-    if (_snackBars.isEmpty || _snackBarController!.isDismissed) {
+    if (_snackBars.isEmpty || _snackBarController!.status == AnimationStatus.dismissed) {
       return;
     }
     final ScaffoldFeatureController<SnackBar, SnackBarClosedReason> currentSnackbar =
@@ -553,6 +559,7 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
       case AnimationStatus.completed:
         _updateScaffolds();
       case AnimationStatus.forward:
+        break;
       case AnimationStatus.reverse:
         break;
     }
@@ -581,10 +588,15 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
   /// Removes the current [MaterialBanner] by running its normal exit animation.
   ///
   /// The closed completer is called after the animation is complete.
+<<<<<<< HEAD
   void hideCurrentMaterialBanner({
     MaterialBannerClosedReason reason = MaterialBannerClosedReason.hide,
   }) {
     if (_materialBanners.isEmpty || _materialBannerController!.isDismissed) {
+=======
+  void hideCurrentMaterialBanner({ MaterialBannerClosedReason reason = MaterialBannerClosedReason.hide }) {
+    if (_materialBanners.isEmpty || _materialBannerController!.status == AnimationStatus.dismissed) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return;
     }
     final Completer<MaterialBannerClosedReason> completer = _materialBanners.first._completer;
@@ -604,7 +616,7 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
   /// Removes all the [MaterialBanner]s currently in queue by clearing the queue
   /// and running normal exit animation on the current [MaterialBanner].
   void clearMaterialBanners() {
-    if (_materialBanners.isEmpty || _materialBannerController!.isDismissed) {
+    if (_materialBanners.isEmpty || _materialBannerController!.status == AnimationStatus.dismissed) {
       return;
     }
     final ScaffoldFeatureController<MaterialBanner, MaterialBannerClosedReason>
@@ -626,7 +638,10 @@ class ScaffoldMessengerState extends State<ScaffoldMessenger> with TickerProvide
         if (_snackBarController!.isCompleted && _snackBarTimer == null) {
           final SnackBar snackBar = _snackBars.first._widget;
           _snackBarTimer = Timer(snackBar.duration, () {
-            assert(_snackBarController!.isForwardOrCompleted);
+            assert(
+              _snackBarController!.status == AnimationStatus.forward ||
+                _snackBarController!.status == AnimationStatus.completed,
+            );
             // Look up MediaQuery again in case the setting changed.
             if (snackBar.action != null && MediaQuery.accessibleNavigationOf(context)) {
               return;
@@ -1245,11 +1260,22 @@ class _ScaffoldLayout extends MultiChildLayoutDelegate {
             isSnackBarFloating ? math.min(contentBottom, safeYOffsetBase) : contentBottom;
       }
 
+<<<<<<< HEAD
       final double xOffset = hasCustomWidth ? (size.width - snackBarWidth!) / 2 : 0.0;
       positionChild(
         _ScaffoldSlot.snackBar,
         Offset(xOffset, snackBarYOffsetBase - snackBarSize.height),
       );
+=======
+      double xOffset = 0.0;
+      if (hasCustomWidth) {
+        xOffset = switch (textDirection) {
+          TextDirection.rtl => (snackBarWidth! - size.width) / 2,
+          TextDirection.ltr => (size.width - snackBarWidth!) / 2,
+        };
+      }
+      positionChild(_ScaffoldSlot.snackBar, Offset(xOffset, snackBarYOffsetBase - snackBarSize.height));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       assert(() {
         // Whether a floating SnackBar has been offset too high.
@@ -1347,9 +1373,6 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
   // The animations applied to the Floating Action Button when it is entering or exiting.
   // Controls the previous widget.child as it exits.
   late AnimationController _previousController;
-  CurvedAnimation? _previousExitScaleAnimation;
-  CurvedAnimation? _previousExitRotationCurvedAnimation;
-  CurvedAnimation? _currentEntranceScaleAnimation;
   late Animation<double> _previousScaleAnimation;
   late TrainHoppingAnimation _previousRotationAnimation;
   // The animations to run, considering the widget's fabMoveAnimation and the current/previous entrance/exit animations.
@@ -1380,9 +1403,6 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
   @override
   void dispose() {
     _previousController.dispose();
-    _previousExitScaleAnimation?.dispose();
-    _previousExitRotationCurvedAnimation?.dispose();
-    _currentEntranceScaleAnimation?.dispose();
     _disposeAnimations();
     super.dispose();
   }
@@ -1401,7 +1421,7 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
     if (oldChildIsNull == newChildIsNull && oldWidget.child?.key == widget.child?.key) {
       return;
     }
-    if (_previousController.isDismissed) {
+    if (_previousController.status == AnimationStatus.dismissed) {
       final double currentValue = widget.currentController.value;
       if (currentValue == 0.0 || oldWidget.child == null) {
         // The current child hasn't started its entrance animation yet. We can
@@ -1434,12 +1454,12 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
   }
 
   void _updateAnimations() {
-    _previousExitScaleAnimation?.dispose();
     // Get the animations for exit and entrance.
-    _previousExitScaleAnimation = CurvedAnimation(
+    final CurvedAnimation previousExitScaleAnimation = CurvedAnimation(
       parent: _previousController,
       curve: Curves.easeIn,
     );
+<<<<<<< HEAD
     _previousExitRotationCurvedAnimation?.dispose();
     _previousExitRotationCurvedAnimation = CurvedAnimation(
       parent: _previousController,
@@ -1453,6 +1473,16 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
 
     _currentEntranceScaleAnimation?.dispose();
     _currentEntranceScaleAnimation = CurvedAnimation(
+=======
+    final Animation<double> previousExitRotationAnimation = Tween<double>(begin: 1.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _previousController,
+        curve: Curves.easeIn,
+      ),
+    );
+
+    final CurvedAnimation currentEntranceScaleAnimation = CurvedAnimation(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       parent: widget.currentController,
       curve: Curves.easeIn,
     );
@@ -1469,6 +1499,7 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
     );
 
     // Aggregate the animations.
+<<<<<<< HEAD
     if (widget.fabMotionAnimator == FloatingActionButtonAnimator.noAnimation) {
       _previousScaleAnimation = moveScaleAnimation;
       _currentScaleAnimation = moveScaleAnimation;
@@ -1496,14 +1527,23 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
     _extendedCurrentScaleAnimation = _currentScaleAnimation.drive(
       CurveTween(curve: const Interval(0.0, 0.1)),
     );
+=======
+    _previousScaleAnimation = AnimationMin<double>(moveScaleAnimation, previousExitScaleAnimation);
+    _currentScaleAnimation = AnimationMin<double>(moveScaleAnimation, currentEntranceScaleAnimation);
+    _extendedCurrentScaleAnimation = _currentScaleAnimation.drive(CurveTween(curve: const Interval(0.0, 0.1)));
+
+    _previousRotationAnimation = TrainHoppingAnimation(previousExitRotationAnimation, moveRotationAnimation);
+    _currentRotationAnimation = TrainHoppingAnimation(currentEntranceRotationAnimation, moveRotationAnimation);
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     _currentScaleAnimation.addListener(_onProgressChanged);
     _previousScaleAnimation.addListener(_onProgressChanged);
   }
 
   void _handlePreviousAnimationStatusChanged(AnimationStatus status) {
     setState(() {
-      if (widget.child != null && status.isDismissed) {
-        assert(widget.currentController.isDismissed);
+      if (widget.child != null && status == AnimationStatus.dismissed) {
+        assert(widget.currentController.status == AnimationStatus.dismissed);
         widget.currentController.forward();
       }
     });
@@ -1518,7 +1558,7 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
     return Stack(
       alignment: Alignment.centerRight,
       children: <Widget>[
-        if (!_previousController.isDismissed)
+        if (_previousController.status != AnimationStatus.dismissed)
           if (_isExtendedFloatingActionButton(_previousChild))
             FadeTransition(opacity: _previousScaleAnimation, child: _previousChild)
           else
@@ -1685,7 +1725,7 @@ class _FloatingActionButtonTransitionState extends State<_FloatingActionButtonTr
 ///    [ScaffoldMessengerState.showMaterialBanner] method to show material banners.
 ///  * [ScaffoldState], which is the state associated with this widget.
 ///  * <https://material.io/design/layout/responsive-layout-grid.html>
-///  * Cookbook: [Add a Drawer to a screen](https://docs.flutter.dev/cookbook/design/drawer)
+///  * Cookbook: [Add a Drawer to a screen](https://flutter.dev/docs/cookbook/design/drawer)
 class Scaffold extends StatefulWidget {
   /// Creates a visual scaffold for Material Design widgets.
   const Scaffold({
@@ -2457,7 +2497,7 @@ class ScaffoldState extends State<Scaffold> with TickerProviderStateMixin, Resto
         _currentBottomSheet = null;
       });
 
-      if (!animationController.isDismissed) {
+      if (animationController.status != AnimationStatus.dismissed) {
         _dismissedBottomSheets.add(bottomSheet);
       }
       completer.complete();
@@ -3267,7 +3307,10 @@ class _StandardBottomSheetState extends State<_StandardBottomSheet> {
   @override
   void initState() {
     super.initState();
-    assert(widget.animationController.isForwardOrCompleted);
+    assert(
+      widget.animationController.status == AnimationStatus.forward
+        || widget.animationController.status == AnimationStatus.completed,
+    );
     widget.animationController.addStatusListener(_handleStatusChange);
   }
 
@@ -3299,7 +3342,7 @@ class _StandardBottomSheetState extends State<_StandardBottomSheet> {
   }
 
   void _handleStatusChange(AnimationStatus status) {
-    if (status.isDismissed) {
+    if (status == AnimationStatus.dismissed) {
       widget.onDismissed?.call();
     }
   }

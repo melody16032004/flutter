@@ -59,12 +59,15 @@ class FlutterFeatureFlags implements FeatureFlags {
   bool get isPreviewDeviceEnabled => isEnabled(previewDevice);
 
   @override
+<<<<<<< HEAD
   bool get isSwiftPackageManagerEnabled => isEnabled(swiftPackageManager);
 
   @override
   bool get isExplicitPackageDependenciesEnabled => isEnabled(explicitPackageDependencies);
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool isEnabled(Feature feature) {
     final String currentChannel = _flutterVersion.channel;
     final FeatureChannelSetting featureSetting = feature.getSettingForChannel(currentChannel);

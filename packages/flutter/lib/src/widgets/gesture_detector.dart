@@ -133,7 +133,7 @@ class GestureRecognizerFactoryWithHandlers<T extends GestureRecognizer>
 /// them to the callbacks. To ignore accessibility events, set
 /// [excludeFromSemantics] to true.
 ///
-/// See <http://flutter.dev/to/gestures> for additional information.
+/// See <http://flutter.dev/gestures/> for additional information.
 ///
 /// Material design applications typically react to touches with ink splash
 /// effects. The [InkWell] class implements this effect and can be used in place
@@ -172,7 +172,7 @@ class GestureRecognizerFactoryWithHandlers<T extends GestureRecognizer>
 /// first served. The child onTap is called, and the parent's is not as the gesture has
 /// been consumed.
 /// For more information on gesture disambiguation see:
-/// [Gesture disambiguation](https://flutter.dev/to/gesture-disambiguation).
+/// [Gesture disambiguation](https://docs.flutter.dev/development/ui/advanced/gestures#gesture-disambiguation).
 ///
 /// Setting [GestureDetector.behavior] to [HitTestBehavior.opaque]
 /// or [HitTestBehavior.translucent] has no impact on parent-child relationships:

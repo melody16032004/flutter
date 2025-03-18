@@ -431,7 +431,6 @@ class DevFS {
     required FileSystem fileSystem,
     required ProcessManager processManager,
     required Artifacts artifacts,
-    required BuildMode buildMode,
     HttpClient? httpClient,
     Duration? uploadRetryThrottle,
     StopwatchFactory stopwatchFactory = const StopwatchFactory(),
@@ -454,6 +453,7 @@ class DevFS {
        _stopwatchFactory = stopwatchFactory,
        _config = config,
        _assetTransformer = DevelopmentAssetTransformer(
+<<<<<<< HEAD
          transformer: AssetTransformer(
            processManager: processManager,
            fileSystem: fileSystem,
@@ -463,6 +463,16 @@ class DevFS {
          fileSystem: fileSystem,
          logger: logger,
        );
+=======
+          transformer: AssetTransformer(
+            processManager: processManager,
+            fileSystem: fileSystem,
+            dartBinaryPath: artifacts.getArtifactPath(Artifact.engineDartBinary),
+          ),
+          fileSystem: fileSystem,
+          logger: logger,
+        );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final FlutterVmService _vmService;
   final _DevFSHttpWriter _httpWriter;
@@ -730,7 +740,6 @@ class DevFS {
       return UpdateFSReport();
     }
 
-    _logger.printTrace('Pending asset builds completed. Writing dirty entries.');
     if (dirtyEntries.isNotEmpty) {
       await (devFSWriter ?? _httpWriter).write(dirtyEntries, _baseUri!, _httpWriter);
     }

@@ -211,6 +211,7 @@ Map<String, String> reverseMapOfListOfString(
 ///
 /// Will modify the input map.
 Map<String, dynamic> removeEmptyValues(Map<String, dynamic> map) {
+<<<<<<< HEAD
   return map..removeWhere(
     (String key, dynamic value) => switch (value) {
       null => true,
@@ -219,6 +220,21 @@ Map<String, dynamic> removeEmptyValues(Map<String, dynamic> map) {
       _ => false,
     },
   );
+=======
+  return map..removeWhere((String key, dynamic value) {
+    if (value == null) {
+      return true;
+    }
+    if (value is Map<String, dynamic>) {
+      final Map<String, dynamic> regularizedMap = removeEmptyValues(value);
+      return regularizedMap.isEmpty;
+    }
+    if (value is Iterable<dynamic>) {
+      return value.isEmpty;
+    }
+    return false;
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 void addNameValue(List<String> names, List<int> values, String name, int value) {

@@ -961,11 +961,14 @@ void main() {
     await tester.pump(const Duration(milliseconds: 750));
 
     final Element actionTextBox = tester.element(find.text('ACTION'));
-    expect(actionTextBox.widget, isA<Text>());
-    final Text(:TextStyle? style) = actionTextBox.widget as Text;
-
-    final TextStyle defaultStyle = DefaultTextStyle.of(actionTextBox).style;
-    expect(defaultStyle.merge(style).color, Colors.lightBlue);
+    final Widget textWidget = actionTextBox.widget;
+    final DefaultTextStyle defaultTextStyle = DefaultTextStyle.of(actionTextBox);
+    if (textWidget is Text) {
+      final TextStyle effectiveStyle = defaultTextStyle.style.merge(textWidget.style);
+      expect(effectiveStyle.color, Colors.lightBlue);
+    } else {
+      expect(false, true);
+    }
   });
 
   testWidgets('Material3 - Snackbar labels can be colored as MaterialColor', (
@@ -2605,6 +2608,7 @@ void main() {
       },
     );
 
+<<<<<<< HEAD
     testWidgets(
       'Material3 - Floating snackbar with custom width is centered when text direction is rtl',
       (WidgetTester tester) async {
@@ -2631,11 +2635,37 @@ void main() {
                     );
                   },
                 ),
+=======
+    testWidgets('Floating snackbar with custom width is centered when text direction is rtl', (WidgetTester tester) async {
+      // Regression test for https://github.com/flutter/flutter/issues/140125.
+      const double customWidth = 400.0;
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Directionality(
+            textDirection: TextDirection.rtl,
+            child: Scaffold(
+              body: Builder(
+                builder: (BuildContext context) {
+                  return GestureDetector(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          behavior: SnackBarBehavior.floating,
+                          width: customWidth,
+                          content: Text('Feeling super snackish'),
+                        ),
+                      );
+                    },
+                    child: const Text('X'),
+                  );
+                },
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               ),
             ),
           ),
         );
 
+<<<<<<< HEAD
         await tester.tap(find.text('X'));
         await tester.pump(); // Start animation.
         await tester.pump(const Duration(milliseconds: 750));
@@ -2686,6 +2716,11 @@ void main() {
         await tester.tap(find.text('X'));
         await tester.pump(); // Start animation.
         await tester.pump(const Duration(milliseconds: 750));
+=======
+      await tester.tap(find.text('X'));
+      await tester.pump(); // start animation
+      await tester.pump(const Duration(milliseconds: 750));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         final Finder materialFinder = find.descendant(
           of: find.byType(SnackBar),
@@ -2995,6 +3030,7 @@ void main() {
       );
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       expect(find.byType(SnackBar), findsOneWidget);
       // The FloatingActionButton helps us identify which Scaffold has the
       // SnackBar here. Since the outer Scaffold contains a FAB, the SnackBar
@@ -3005,6 +3041,51 @@ void main() {
         matchesGoldenFile('m2_snack_bar.scaffold.nested.png'),
       );
       final Offset snackBarTopRight = tester.getTopRight(find.byType(SnackBar));
+=======
+    expect(find.byType(SnackBar), findsOneWidget);
+    // The FloatingActionButton helps us identify which Scaffold has the
+    // SnackBar here. Since the outer Scaffold contains a FAB, the SnackBar
+    // should be above it. If the inner Scaffold had the SnackBar, it would be
+    // overlapping the FAB.
+    await expectLater(
+      find.byType(MaterialApp),
+      matchesGoldenFile('m2_snack_bar.scaffold.nested.png'),
+    );
+    final Offset snackBarTopRight = tester.getTopRight(find.byType(SnackBar));
+    expect(snackBarTopRight.dy, 465.0);
+  });
+
+  testWidgets('Material3 - ScaffoldMessenger presents SnackBars to only the root Scaffold when Scaffolds are nested.', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(useMaterial3: true),
+      debugShowCheckedModeBanner: false, // https://github.com/flutter/flutter/issues/143616
+      home: Scaffold(
+        body: const Scaffold(),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
+      ),
+    ));
+
+    final ScaffoldMessengerState scaffoldMessengerState = tester.state<ScaffoldMessengerState>(
+      find.byType(ScaffoldMessenger),
+    );
+    scaffoldMessengerState.showSnackBar(SnackBar(
+      content: const Text('ScaffoldMessenger'),
+      duration: const Duration(seconds: 2),
+      action: SnackBarAction(label: 'ACTION', onPressed: () {}),
+      behavior: SnackBarBehavior.floating,
+    ));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(SnackBar), findsOneWidget);
+    // The FloatingActionButton helps us identify which Scaffold has the
+    // SnackBar here. Since the outer Scaffold contains a FAB, the SnackBar
+    // should be above it. If the inner Scaffold had the SnackBar, it would be
+    // overlapping the FAB.
+    await expectLater(find.byType(MaterialApp), matchesGoldenFile('m3_snack_bar.scaffold.nested.png'));
+    final Offset snackBarTopRight = tester.getTopRight(find.byType(SnackBar));
+
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(snackBarTopRight.dy, 465.0);
     },
   );
@@ -4156,6 +4237,7 @@ void main() {
 
     expect(completer.isCompleted, false);
   });
+<<<<<<< HEAD
 
   testWidgets('Action text button uses correct overlay color', (WidgetTester tester) async {
     final ThemeData theme = ThemeData();
@@ -4255,6 +4337,8 @@ void main() {
       expect(completer.isCompleted, true);
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Start test for "SnackBar dismiss test".

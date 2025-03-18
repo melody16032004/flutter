@@ -225,8 +225,6 @@ class MaterialPage<T> extends Page<T> {
     this.fullscreenDialog = false,
     this.allowSnapshotting = true,
     super.key,
-    super.canPop,
-    super.onPopInvoked,
     super.name,
     super.arguments,
     super.restorationId,

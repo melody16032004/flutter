@@ -42,12 +42,27 @@ Future<void> testExecutable(FutureOr<void> Function() testMain) {
 
   if (_isLeakTrackingEnabled()) {
     LeakTesting.enable();
+
     LeakTracking.warnForUnsupportedPlatforms = false;
+<<<<<<< HEAD
     // Customized link to documentation on how to troubleshoot leaks,
     // to print in the error message.
     LeakTracking.troubleshootingDocumentationLink =
         'https://github.com/flutter/flutter/blob/main/docs/contributing/testing/Leak-tracking.md';
     LeakTesting.settings = LeakTesting.settings.withIgnored(createdByTestHelpers: true);
+=======
+
+    LeakTesting.settings = LeakTesting.settings.withIgnored(
+      createdByTestHelpers: true,
+      allNotGCed: true,
+      classes: <String>[
+        // TODO(polina-c): CurvedAnimation is leaking, https://github.com/flutter/flutter/issues/145600 [leaks-to-clean]
+        'CurvedAnimation',
+        // TODO(polina-c): _NullElement is leaking, https://github.com/flutter/flutter/issues/145602 [leaks-to-clean]
+        '_NullElement',
+      ],
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   // Enable golden file testing using Skia Gold.

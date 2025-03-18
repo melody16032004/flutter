@@ -54,6 +54,7 @@ void main() {
     expect(parent.size, equals(const Size(100.0, 110.0)));
   });
 
+<<<<<<< HEAD
   test('RenderBaseline different baseline types', () {
     final _RenderBaselineTester child =
         _RenderBaselineTester()
@@ -82,6 +83,8 @@ void main() {
     expect(renderBaseline.getDryBaseline(const BoxConstraints(), TextBaseline.ideographic), isNull);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('RenderFlex and RenderIgnoreBaseline (control test -- with baseline)', () {
     final RenderBox a, b;
     final RenderBox root = RenderFlex(
@@ -143,34 +146,4 @@ void main() {
     expect(aPos.dy, 0.0);
     expect(bPos.dy, 0.0);
   });
-}
-
-class _RenderBaselineTester extends RenderBox {
-  Size boxSize = Size.zero;
-  double? alphabeticBaselineOffset;
-  double? ideographicBaselineOffset;
-
-  @override
-  double? computeDistanceToActualBaseline(TextBaseline baseline) {
-    return switch (baseline) {
-      TextBaseline.alphabetic => alphabeticBaselineOffset,
-      TextBaseline.ideographic => ideographicBaselineOffset,
-    };
-  }
-
-  @override
-  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    return switch (baseline) {
-      TextBaseline.alphabetic => alphabeticBaselineOffset,
-      TextBaseline.ideographic => ideographicBaselineOffset,
-    };
-  }
-
-  @override
-  Size computeDryLayout(covariant BoxConstraints constraints) => constraints.constrain(boxSize);
-
-  @override
-  void performLayout() {
-    size = computeDryLayout(constraints);
-  }
 }

@@ -76,6 +76,7 @@ void main() {
         expect(environment.generateDartPluginRegistry, isFalse);
       });
 
+<<<<<<< HEAD
       final WebBuilder webBuilder = WebBuilder(
         logger: logger,
         processManager: FakeProcessManager.any(),
@@ -95,6 +96,61 @@ void main() {
           const JsCompilerConfig.run(
             nativeNullAssertions: true,
             renderer: WebRendererMode.canvaskit,
+=======
+      expect(environment.engineVersion, '9.8.7');
+      expect(environment.generateDartPluginRegistry, isFalse);
+    });
+
+    final WebBuilder webBuilder = WebBuilder(
+      logger: logger,
+      processManager: FakeProcessManager.any(),
+      buildSystem: buildSystem,
+      usage: testUsage,
+      flutterVersion: flutterVersion,
+      fileSystem: fileSystem,
+      analytics: fakeAnalytics,
+    );
+    await webBuilder.buildWeb(
+      flutterProject,
+      'target',
+      BuildInfo.debug,
+      ServiceWorkerStrategy.offlineFirst,
+      compilerConfigs: <WebCompilerConfig>[
+        const WasmCompilerConfig(
+          optimizationLevel: 0,
+          stripWasm: false,
+          renderer: WebRendererMode.skwasm,
+        ),
+        const JsCompilerConfig.run(
+          nativeNullAssertions: true,
+          renderer: WebRendererMode.canvaskit,
+        ),
+      ],
+    );
+
+    expect(logger.statusText, contains('Compiling target for the Web...'));
+    expect(logger.errorText, isEmpty);
+    // Runs ScrubGeneratedPluginRegistrant migrator.
+    expect(
+      logger.traceText,
+      contains('generated_plugin_registrant.dart not found. Skipping.'),
+    );
+
+    // Sends build config event
+    expect(
+      testUsage.events,
+      unorderedEquals(
+        <TestUsageEvent>[
+      const TestUsageEvent(
+        'build',
+        'web',
+        label: 'web-compile',
+            parameters: CustomDimensions(
+              buildEventSettings:
+                  'optimizationLevel: 4; web-renderer: skwasm,canvaskit; web-target: wasm,js;',
+
+      ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         ],
       );
@@ -104,6 +160,7 @@ void main() {
       // Runs ScrubGeneratedPluginRegistrant migrator.
       expect(logger.traceText, contains('generated_plugin_registrant.dart not found. Skipping.'));
 
+<<<<<<< HEAD
       // Sends build config event
       expect(
         testUsage.events,
@@ -115,6 +172,52 @@ void main() {
             parameters: CustomDimensions(
               buildEventSettings:
                   'optimizationLevel: 0; web-renderer: skwasm,canvaskit; web-target: wasm,js;',
+=======
+    // Sends timing event.
+    final TestTimingEvent timingEvent = testUsage.timings.single;
+    expect(timingEvent.category, 'build');
+    expect(timingEvent.variableName, 'dual-compile');
+    expect(
+      analyticsTimingEventExists(
+        sentEvents: fakeAnalytics.sentEvents,
+        workflow: 'build',
+        variableName: 'dual-compile',
+      ),
+      true,
+    );
+  });
+
+  testUsingContext('WebBuilder throws tool exit on failure', () async {
+    final TestBuildSystem buildSystem = TestBuildSystem.all(BuildResult(
+      success: false,
+      exceptions: <String, ExceptionMeasurement>{
+        'hello': ExceptionMeasurement(
+          'hello',
+          const FormatException('illegal character in input string'),
+          StackTrace.current,
+        ),
+      },
+    ));
+
+    final WebBuilder webBuilder = WebBuilder(
+      logger: logger,
+      processManager: FakeProcessManager.any(),
+      buildSystem: buildSystem,
+      usage: testUsage,
+      flutterVersion: flutterVersion,
+      fileSystem: fileSystem,
+      analytics: fakeAnalytics,
+    );
+    await expectLater(
+        () async => webBuilder.buildWeb(
+              flutterProject,
+              'target',
+              BuildInfo.debug,
+              ServiceWorkerStrategy.offlineFirst,
+              compilerConfigs: <WebCompilerConfig>[
+                const JsCompilerConfig.run(nativeNullAssertions: true, renderer: WebRendererMode.auto),
+              ]
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ),
         ]),

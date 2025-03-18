@@ -6,8 +6,18 @@
 // not migrated to the declarative apply of the Flutter Gradle Plugin.
 // The old (imperative) apply of this plugin is not possible anymore.
 
+<<<<<<< HEAD
 throw new GradleException("You are applying Flutter's main Gradle plugin imperatively using \
 the apply script method, which is not possible anymore. \
 Migrate to applying Gradle plugins with the declarative plugins block: \
 https://flutter.dev/to/flutter-gradle-plugin-apply\n\
 ")
+=======
+logger.error("You are applying Flutter's main Gradle plugin imperatively using \
+the apply script method, which is deprecated and will be removed in a future \
+release. Migrate to applying Gradle plugins with the declarative plugins \
+block: https://flutter.dev/go/flutter-gradle-plugin-apply\n")
+
+def pathToThisDirectory = buildscript.sourceFile.parentFile
+apply from: "$pathToThisDirectory/src/main/groovy/flutter.groovy"
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

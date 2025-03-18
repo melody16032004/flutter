@@ -97,6 +97,7 @@ void main() {
       ..writeAsBytesSync(<int>[1, 2, 3]);
   });
 
+<<<<<<< HEAD
   testWithoutContext(
     'release asset server serves correct mime type and content length for png',
     () async {
@@ -114,6 +115,20 @@ void main() {
       final Response response = await assetServer.handle(
         Request('GET', Uri.parse('http://localhost:8080/assets/foo.png')),
       );
+=======
+  testWithoutContext('release asset server serves correct mime type and content length for png', () async {
+    final ReleaseAssetServer assetServer = ReleaseAssetServer(Uri.base,
+      fileSystem: fileSystem,
+      platform: platform,
+      flutterRoot: '/flutter',
+      webBuildDirectory: 'build/web',
+    );
+    fileSystem.file('build/web/assets/foo.png')
+      ..createSync(recursive: true)
+      ..writeAsBytesSync(kTransparentImage);
+    final Response response = await assetServer
+      .handle(Request('GET', Uri.parse('http://localhost:8080/assets/foo.png')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(response.headers, <String, String>{
         'Content-Type': 'image/png',
@@ -124,6 +139,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testWithoutContext(
     'release asset server serves correct mime type and content length for JavaScript',
     () async {
@@ -141,6 +157,20 @@ void main() {
       final Response response = await assetServer.handle(
         Request('GET', Uri.parse('http://localhost:8080/assets/foo.js')),
       );
+=======
+  testWithoutContext('release asset server serves correct mime type and content length for JavaScript', () async {
+    final ReleaseAssetServer assetServer = ReleaseAssetServer(Uri.base,
+      fileSystem: fileSystem,
+      platform: platform,
+      flutterRoot: '/flutter',
+      webBuildDirectory: 'build/web',
+    );
+    fileSystem.file('build/web/assets/foo.js')
+      ..createSync(recursive: true)
+      ..writeAsStringSync('function main() {}');
+    final Response response = await assetServer
+      .handle(Request('GET', Uri.parse('http://localhost:8080/assets/foo.js')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(response.headers, <String, String>{
         'Content-Type': 'text/javascript',
@@ -151,6 +181,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testWithoutContext(
     'release asset server serves correct mime type and content length for html',
     () async {
@@ -168,6 +199,20 @@ void main() {
       final Response response = await assetServer.handle(
         Request('GET', Uri.parse('http://localhost:8080/assets/foo.html')),
       );
+=======
+  testWithoutContext('release asset server serves correct mime type and content length for html', () async {
+    final ReleaseAssetServer assetServer = ReleaseAssetServer(Uri.base,
+      fileSystem: fileSystem,
+      platform: platform,
+      flutterRoot: '/flutter',
+      webBuildDirectory: 'build/web',
+    );
+    fileSystem.file('build/web/assets/foo.html')
+      ..createSync(recursive: true)
+      ..writeAsStringSync('<!doctype html><html></html>');
+    final Response response = await assetServer
+      .handle(Request('GET', Uri.parse('http://localhost:8080/assets/foo.html')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(response.headers, <String, String>{
         'Content-Type': 'text/html',
@@ -185,7 +230,6 @@ void main() {
       platform: platform,
       flutterRoot: '/flutter',
       webBuildDirectory: 'build/web',
-      needsCoopCoep: false,
     );
     fileSystem.file('flutter/bar.dart')
       ..createSync(recursive: true)
@@ -204,11 +248,11 @@ void main() {
       platform: platform,
       flutterRoot: '/flutter',
       webBuildDirectory: 'build/web',
-      needsCoopCoep: false,
     );
     fileSystem.file('bar.dart')
       ..createSync(recursive: true)
       ..writeAsStringSync('void main() { }');
+<<<<<<< HEAD
     final Response response = await assetServer.handle(
       Request('GET', Uri.parse('http://localhost:8080/bar.dart')),
     );
@@ -265,4 +309,11 @@ void main() {
       expect(headers.containsKey('Cross-Origin-Embedder-Policy'), false);
     },
   );
+=======
+    final Response response = await assetServer
+      .handle(Request('GET', Uri.parse('http://localhost:8080/bar.dart')));
+
+    expect(response.statusCode, HttpStatus.ok);
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

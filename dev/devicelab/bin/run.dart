@@ -119,7 +119,6 @@ Future<void> main(List<String> rawArgs) async {
       deviceId: deviceId,
       resultsFile: resultsFile,
       taskName: taskNames.single,
-      onlyLocalEngine: (args['ab-local-engine-only'] as bool?) ?? false,
     );
   } else {
     await runTasks(
@@ -149,7 +148,6 @@ Future<void> _runABTest({
   required String? deviceId,
   required String resultsFile,
   required String taskName,
-  bool onlyLocalEngine = false,
 }) async {
   print('$taskName A/B test. Will run $runsPerTest times.');
 
@@ -163,26 +161,22 @@ Future<void> _runABTest({
   for (int i = 1; i <= runsPerTest; i++) {
     section('Run #$i');
 
-    if (onlyLocalEngine) {
-      print('Skipping default engine (A)');
-    } else {
-      print('Running with the default engine (A)');
-      final TaskResult defaultEngineResult = await runTask(
-        taskName,
-        silent: silent,
-        deviceId: deviceId,
-      );
+    print('Running with the default engine (A)');
+    final TaskResult defaultEngineResult = await runTask(
+      taskName,
+      silent: silent,
+      deviceId: deviceId,
+    );
 
-      print('Default engine result:');
-      print(const JsonEncoder.withIndent('  ').convert(defaultEngineResult));
+    print('Default engine result:');
+    print(const JsonEncoder.withIndent('  ').convert(defaultEngineResult));
 
-      if (!defaultEngineResult.succeeded) {
-        stderr.writeln('Task failed on the default engine.');
-        exit(1);
-      }
-
-      abTest.addAResult(defaultEngineResult);
+    if (!defaultEngineResult.succeeded) {
+      stderr.writeln('Task failed on the default engine.');
+      exit(1);
     }
+
+    abTest.addAResult(defaultEngineResult);
 
     print('Running with the local engine (B)');
     final TaskResult localEngineResult = await runTask(
@@ -290,12 +284,15 @@ ArgParser createArgParser(List<String> taskNames) {
           'number if the name already exists.',
     )
     ..addFlag(
+<<<<<<< HEAD
       'ab-local-engine-only',
       help:
           'When running the A/B aggregator, do not run benchmarks with the default engine (A), only the local engine (B).\n'
           'Shows the averages and noise report for the local engine without comparison to anything else.',
     )
     ..addFlag(
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       'exit',
       help:
           'Exit on the first test failure. Currently flakes are intentionally (though '

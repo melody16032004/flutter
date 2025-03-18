@@ -32,12 +32,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin<Home> {
   int selectedIndex = 0;
 
   AnimationController buildFaderController() {
+<<<<<<< HEAD
     return AnimationController(vsync: this, duration: const Duration(milliseconds: 300))
       ..addStatusListener((AnimationStatus status) {
         if (status.isDismissed) {
           setState(() {}); // Rebuild unselected destinations offstage.
         }
       });
+=======
+    final AnimationController controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    controller.addStatusListener(
+      (AnimationStatus status) {
+        if (status == AnimationStatus.dismissed) {
+          setState(() {}); // Rebuild unselected destinations offstage.
+        }
+      },
+    );
+    return controller;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

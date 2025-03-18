@@ -21,8 +21,12 @@
 /// @docImport 'src/painting/text_painter.dart';
 library painting;
 
+<<<<<<< HEAD
 export 'dart:ui'
     show PlaceholderAlignment, Shadow, TextHeightBehavior, TextLeadingDistribution, kTextHeightNone;
+=======
+export 'dart:ui' show PlaceholderAlignment, Shadow, TextHeightBehavior, TextLeadingDistribution;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 export 'src/painting/alignment.dart';
 export 'src/painting/basic_types.dart';

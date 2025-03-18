@@ -1025,6 +1025,7 @@ void main() {
     // the individual widths.
     expect(tester.getSize(find.byType(IntrinsicWidth)).width, 5 * 16 + 60 + 3 * 16);
   });
+<<<<<<< HEAD
 
   testWidgets('Wrap alignment flipped spaceInBetween', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -1040,4 +1041,6 @@ void main() {
     );
     verify(tester, <Offset>[const Offset(700.0, 0.0)]);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

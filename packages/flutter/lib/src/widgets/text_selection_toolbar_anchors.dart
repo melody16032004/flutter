@@ -30,17 +30,30 @@ class TextSelectionToolbarAnchors {
     required double endGlyphHeight,
     required List<TextSelectionPoint> selectionEndpoints,
   }) {
-    final Rect selectionRect = getSelectionRect(
-      renderBox,
-      startGlyphHeight,
-      endGlyphHeight,
-      selectionEndpoints,
+    final Rect editingRegion = Rect.fromPoints(
+      renderBox.localToGlobal(Offset.zero),
+      renderBox.localToGlobal(renderBox.size.bottomRight(Offset.zero)),
     );
-    if (selectionRect == Rect.zero) {
+
+    if (editingRegion.left.isNaN || editingRegion.top.isNaN
+      || editingRegion.right.isNaN || editingRegion.bottom.isNaN) {
       return const TextSelectionToolbarAnchors(primaryAnchor: Offset.zero);
     }
 
-    final Rect editingRegion = _getEditingRegion(renderBox);
+    final bool isMultiline = selectionEndpoints.last.point.dy - selectionEndpoints.first.point.dy >
+        endGlyphHeight / 2;
+
+    final Rect selectionRect = Rect.fromLTRB(
+      isMultiline
+          ? editingRegion.left
+          : editingRegion.left + selectionEndpoints.first.point.dx,
+      editingRegion.top + selectionEndpoints.first.point.dy - startGlyphHeight,
+      isMultiline
+          ? editingRegion.right
+          : editingRegion.left + selectionEndpoints.last.point.dx,
+      editingRegion.top + selectionEndpoints.last.point.dy,
+    );
+
     return TextSelectionToolbarAnchors(
       primaryAnchor: Offset(
         selectionRect.left + selectionRect.width / 2,
@@ -53,6 +66,7 @@ class TextSelectionToolbarAnchors {
     );
   }
 
+<<<<<<< HEAD
   /// Returns the [Rect] of the [RenderBox] in global coordinates.
   static Rect _getEditingRegion(RenderBox renderBox) {
     return Rect.fromPoints(
@@ -89,6 +103,8 @@ class TextSelectionToolbarAnchors {
     );
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// The location that the toolbar should attempt to position itself at.
   ///
   /// If the toolbar doesn't fit at this location, use [secondaryAnchor] if it

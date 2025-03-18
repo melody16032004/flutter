@@ -21,19 +21,33 @@ class UserMessages {
   String flutterVersion(String version, String channel, String flutterRoot) =>
       'Flutter version $version on channel $channel at $flutterRoot';
   String get flutterUnknownChannel =>
+<<<<<<< HEAD
       'Currently on an unknown channel. Run `flutter channel` to switch to an official channel.\n'
       "If that doesn't fix the issue, reinstall Flutter by following instructions at https://flutter.dev/setup.";
   String get flutterUnknownVersion =>
       'Cannot resolve current version, possibly due to local changes.\n'
       'Reinstall Flutter by following instructions at https://flutter.dev/setup.';
+=======
+    'Currently on an unknown channel. Run `flutter channel` to switch to an official channel.\n'
+    "If that doesn't fix the issue, reinstall Flutter by following instructions at https://flutter.dev/docs/get-started/install.";
+  String get flutterUnknownVersion =>
+    'Cannot resolve current version, possibly due to local changes.\n'
+    'Reinstall Flutter by following instructions at https://flutter.dev/docs/get-started/install.';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   String flutterRevision(String revision, String age, String date) =>
       'Framework revision $revision ($age), $date';
   String flutterUpstreamRepositoryUrl(String url) => 'Upstream repository $url';
   String get flutterUpstreamRepositoryUnknown =>
+<<<<<<< HEAD
       'Unknown upstream repository.\n'
       'Reinstall Flutter by following instructions at https://flutter.dev/setup.';
   String flutterUpstreamRepositoryUrlEnvMismatch(String url) =>
       'Upstream repository $url is not the same as FLUTTER_GIT_URL';
+=======
+    'Unknown upstream repository.\n'
+    'Reinstall Flutter by following instructions at https://flutter.dev/docs/get-started/install.';
+  String flutterUpstreamRepositoryUrlEnvMismatch(String url) => 'Upstream repository $url is not the same as FLUTTER_GIT_URL';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   String flutterUpstreamRepositoryUrlNonStandard(String url) =>
       'Upstream repository $url is not a standard remote.\n'
       'Set environment variable "FLUTTER_GIT_URL" to $url to dismiss this error.';
@@ -66,7 +80,7 @@ class UserMessages {
   String intellijStatusInfo(String version) => 'version $version';
   String get intellijPluginInfo =>
       'For information about installing plugins, see\n'
-      'https://flutter.dev/to/intellij-setup';
+      'https://flutter.dev/intellij-setup/#installing-the-plugins';
   String intellijMinimumVersion(String minVersion) =>
       'This install is older than the minimum recommended version of $minVersion.';
   String intellijLocation(String installPath) => 'IntelliJ at $installPath';
@@ -203,10 +217,11 @@ class UserMessages {
   String cocoaPodsMissing(String consequence, String installInstructions) =>
       'CocoaPods not installed.\n'
       '$consequence\n'
-      'For installation instructions, $installInstructions';
+      'To install $installInstructions';
   String cocoaPodsUnknownVersion(String consequence, String upgradeInstructions) =>
       'Unknown CocoaPods version installed.\n'
       '$consequence\n'
+<<<<<<< HEAD
       'To update CocoaPods, $upgradeInstructions';
   String cocoaPodsOutdated(
     String currentVersion,
@@ -214,13 +229,17 @@ class UserMessages {
     String consequence,
     String upgradeInstructions,
   ) =>
+=======
+      'To upgrade $upgradeInstructions';
+  String cocoaPodsOutdated(String currentVersion, String recVersion, String consequence, String upgradeInstructions) =>
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       'CocoaPods $currentVersion out of date ($recVersion is recommended).\n'
       '$consequence\n'
-      'To update CocoaPods, $upgradeInstructions';
+      'To upgrade $upgradeInstructions';
   String cocoaPodsBrokenInstall(String consequence, String reinstallInstructions) =>
       'CocoaPods installed but not working.\n'
       '$consequence\n'
-      'For re-installation instructions, $reinstallInstructions';
+      'To re-install $reinstallInstructions';
 
   // Messages used in VisualStudioValidator
   String visualStudioVersion(String name, String version) => '$name version $version';
@@ -369,15 +388,16 @@ class UserMessages {
       'https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html\n';
 
   String androidSdkInstallUrl(Platform platform) {
-    const String baseUrl = 'https://flutter.dev/to/';
+    const String baseUrl = 'https://flutter.dev/docs/get-started/install';
+    const String fragment = '#android-setup';
     if (platform.isMacOS) {
-      return '${baseUrl}macos-android-setup';
+      return '$baseUrl/macos$fragment';
     } else if (platform.isLinux) {
-      return '${baseUrl}linux-android-setup';
+      return '$baseUrl/linux$fragment';
     } else if (platform.isWindows) {
-      return '${baseUrl}windows-android-setup';
+      return '$baseUrl/windows$fragment';
     } else {
-      return '${baseUrl}android-setup';
+      return baseUrl;
     }
   }
 }

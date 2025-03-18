@@ -219,7 +219,10 @@ void main() {
         ],
         actions: <SemanticsAction>[
           SemanticsAction.tap,
+<<<<<<< HEAD
           if (defaultTargetPlatform != TargetPlatform.iOS) SemanticsAction.focus,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ],
       ),
     );
@@ -236,6 +239,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -252,6 +256,21 @@ void main() {
               ],
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
             ),
+=======
+    expect(semantics, hasSemantics(TestSemantics.root(
+      children: <TestSemantics>[
+        TestSemantics.rootChild(
+          id: 1,
+          flags: <SemanticsFlag>[
+            SemanticsFlag.isInMutuallyExclusiveGroup,
+            SemanticsFlag.hasCheckedState,
+            SemanticsFlag.hasEnabledState,
+            SemanticsFlag.isEnabled,
+            SemanticsFlag.isFocusable,
+          ],
+          actions: <SemanticsAction>[
+            SemanticsAction.tap,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ],
         ),
         ignoreRect: true,
@@ -259,10 +278,40 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       Theme(
         data: theme,
         child: Material(child: Radio<int>(value: 2, groupValue: 2, onChanged: (int? i) {})),
+=======
+    expect(semantics, hasSemantics(TestSemantics.root(
+      children: <TestSemantics>[
+        TestSemantics.rootChild(
+          id: 1,
+          flags: <SemanticsFlag>[
+            SemanticsFlag.isInMutuallyExclusiveGroup,
+            SemanticsFlag.hasCheckedState,
+            SemanticsFlag.isChecked,
+            SemanticsFlag.hasEnabledState,
+            SemanticsFlag.isEnabled,
+            SemanticsFlag.isFocusable,
+          ],
+          actions: <SemanticsAction>[
+            SemanticsAction.tap,
+          ],
+        ),
+      ],
+    ), ignoreRect: true, ignoreTransform: true));
+
+    await tester.pumpWidget(Theme(
+      data: theme,
+      child: const Material(
+        child: Radio<int>(
+          value: 1,
+          groupValue: 2,
+          onChanged: null,
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -1050,7 +1099,6 @@ void main() {
       pointer: 1,
     );
     await gesture.addPointer(location: tester.getCenter(find.byKey(key)));
-    addTearDown(gesture.removePointer);
 
     await tester.pump();
 
@@ -1295,7 +1343,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byKey(radioKey)));
     await tester.pumpAndSettle();
 
@@ -1382,7 +1429,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byKey(radioKey)));
     await tester.pumpAndSettle();
 
@@ -1514,7 +1560,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(findRadio()));
     await tester.pumpAndSettle();
 
@@ -1978,7 +2023,6 @@ void main() {
     final Offset center = tester.getCenter(find.byType(Radio<bool>));
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(center);
     await tester.pumpAndSettle();
 
@@ -2046,7 +2090,6 @@ void main() {
     final Offset center = tester.getCenter(find.byType(Radio<bool>));
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(center);
     await tester.pumpAndSettle();
 

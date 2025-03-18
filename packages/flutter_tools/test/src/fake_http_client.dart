@@ -13,6 +13,7 @@ import 'package:collection/collection.dart';
 enum HttpMethod { get, put, delete, post, patch, head }
 
 HttpMethod _fromMethodString(String value) {
+<<<<<<< HEAD
   return switch (value.toLowerCase()) {
     'get' => HttpMethod.get,
     'put' => HttpMethod.put,
@@ -22,6 +23,25 @@ HttpMethod _fromMethodString(String value) {
     'head' => HttpMethod.head,
     _ => throw StateError('Unrecognized HTTP method $value'),
   };
+=======
+  final String name = value.toLowerCase();
+  switch (name) {
+    case 'get':
+      return HttpMethod.get;
+    case 'put':
+      return HttpMethod.put;
+    case 'delete':
+      return HttpMethod.delete;
+    case 'post':
+      return HttpMethod.post;
+    case 'patch':
+      return HttpMethod.patch;
+    case 'head':
+      return HttpMethod.head;
+    default:
+      throw StateError('Unrecognized HTTP method $value');
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 String _toMethodString(HttpMethod method) {

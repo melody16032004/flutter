@@ -3,6 +3,34 @@
 
 version: 2
 updates:
+<<<<<<< HEAD
+=======
+  - package-ecosystem: "bundler"
+    directory: "/dev/ci/mac"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "christopherfujino"
+      - "jmagman"
+      - "keyonghan"
+      - "yusuf-goog"
+    labels:
+      - "team"
+      - "team-infra"
+      - "autosubmit"
+  - package-ecosystem: "docker"
+    directory: "/dev/ci/docker_linux"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "keyonghan"
+      - "yusuf-goog"
+      - "christopherfujino"
+    labels:
+      - "team"
+      - "team-infra"
+      - "autosubmit"
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -11,8 +39,12 @@ updates:
       all-github-actions:
         patterns: [ "*" ]
     reviewers:
+<<<<<<< HEAD
       - "christopherfujino"
       - "jmagman"
+=======
+      - "godofredoc"
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     labels:
       - "team"
       - "team-infra"

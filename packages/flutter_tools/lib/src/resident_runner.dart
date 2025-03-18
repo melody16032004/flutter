@@ -52,6 +52,7 @@ class FlutterDevice {
     this.userIdentifier,
     required this.developmentShaderCompiler,
     this.developmentSceneImporter,
+<<<<<<< HEAD
   }) : generator =
            generator ??
            ResidentCompiler(
@@ -75,6 +76,29 @@ class FlutterDevice {
              platform: globals.platform,
              fileSystem: globals.fs,
            );
+=======
+  }) : generator = generator ?? ResidentCompiler(
+         globals.artifacts!.getArtifactPath(
+           Artifact.flutterPatchedSdkPath,
+           platform: targetPlatform,
+           mode: buildInfo.mode,
+         ),
+         buildMode: buildInfo.mode,
+         trackWidgetCreation: buildInfo.trackWidgetCreation,
+         fileSystemRoots: buildInfo.fileSystemRoots,
+         fileSystemScheme: buildInfo.fileSystemScheme,
+         targetModel: targetModel,
+         dartDefines: buildInfo.dartDefines,
+         packagesPath: buildInfo.packagesPath,
+         frontendServerStarterPath: buildInfo.frontendServerStarterPath,
+         extraFrontEndOptions: buildInfo.extraFrontEndOptions,
+         artifacts: globals.artifacts!,
+         processManager: globals.processManager,
+         logger: globals.logger,
+         platform: globals.platform,
+         fileSystem: globals.fs,
+       );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Create a [FlutterDevice] with optional code generation enabled.
   static Future<FlutterDevice> create(
@@ -166,12 +190,18 @@ class FlutterDevice {
         extraFrontEndOptions: extraFrontEndOptions,
         platformDill: globals.fs.file(platformDillPath).absolute.uri.toString(),
         dartDefines: buildInfo.dartDefines,
+<<<<<<< HEAD
         librariesSpec:
             globals.fs
                 .file(globals.artifacts!.getHostArtifact(HostArtifact.flutterWebLibrariesJson))
                 .uri
                 .toString(),
         packagesPath: buildInfo.packageConfigPath,
+=======
+        librariesSpec: globals.fs.file(globals.artifacts!
+          .getHostArtifact(HostArtifact.flutterWebLibrariesJson)).uri.toString(),
+        packagesPath: buildInfo.packagesPath,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         artifacts: globals.artifacts!,
         processManager: globals.processManager,
         logger: globals.logger,
@@ -206,7 +236,7 @@ class FlutterDevice {
               extraFrontEndOptions: extraFrontEndOptions,
             ),
         assumeInitializeFromDillUpToDate: buildInfo.assumeInitializeFromDillUpToDate,
-        packagesPath: buildInfo.packageConfigPath,
+        packagesPath: buildInfo.packagesPath,
         artifacts: globals.artifacts!,
         processManager: globals.processManager,
         logger: globals.logger,
@@ -398,7 +428,6 @@ class FlutterDevice {
       logger: globals.logger,
       processManager: globals.processManager,
       artifacts: globals.artifacts!,
-      buildMode: buildInfo.mode,
     );
     return devFS!.create();
   }
@@ -557,8 +586,12 @@ class FlutterDevice {
     required PackageConfig packageConfig,
   }) async {
     final Status devFSStatus = globals.logger.startProgress(
+<<<<<<< HEAD
       'Syncing files to device ${device!.displayName}...',
       progressId: 'devFS.update',
+=======
+      'Syncing files to device ${device!.name}...',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     UpdateFSReport report;
     try {
@@ -850,10 +883,12 @@ abstract class ResidentHandlers {
     final Brightness? current = await flutterDevices.first!.vmService!.flutterBrightnessOverride(
       isolateId: views.first.uiIsolate!.id!,
     );
-    final Brightness next = switch (current) {
-      Brightness.light => Brightness.dark,
-      Brightness.dark || null => Brightness.light,
-    };
+    Brightness next;
+    if (current == Brightness.light) {
+      next = Brightness.dark;
+    } else {
+      next = Brightness.light;
+    }
     for (final FlutterDevice? device in flutterDevices) {
       final List<FlutterView> views = await device!.vmService!.getFlutterViews();
       for (final FlutterView view in views) {
@@ -1030,7 +1065,7 @@ abstract class ResidentRunner extends ResidentHandlers {
     this.machine = false,
     ResidentDevtoolsHandlerFactory devtoolsHandler = createDefaultHandler,
   }) : mainPath = globals.fs.file(target).absolute.path,
-       packagesFilePath = debuggingOptions.buildInfo.packageConfigPath,
+       packagesFilePath = debuggingOptions.buildInfo.packagesPath,
        projectRootPath = projectRootPath ?? globals.fs.currentDirectory.path,
        _dillOutputPath = dillOutputPath,
        artifactDirectory =
@@ -1119,10 +1154,10 @@ abstract class ResidentRunner extends ResidentHandlers {
   bool get debuggingEnabled => debuggingOptions.debuggingEnabled;
 
   @override
-  bool get isRunningDebug => !debuggingOptions.webUseWasm && debuggingOptions.buildInfo.isDebug;
+  bool get isRunningDebug => debuggingOptions.buildInfo.isDebug;
 
   @override
-  bool get isRunningProfile => !debuggingOptions.webUseWasm && debuggingOptions.buildInfo.isProfile;
+  bool get isRunningProfile => debuggingOptions.buildInfo.isProfile;
 
   @override
   bool get isRunningRelease => debuggingOptions.buildInfo.isRelease;
@@ -1387,6 +1422,7 @@ abstract class ResidentRunner extends ResidentHandlers {
 
   Future<void> enableObservatory() async {
     assert(debuggingOptions.serveObservatory);
+<<<<<<< HEAD
     final List<Future<vm_service.Response?>> serveObservatoryRequests =
         <Future<vm_service.Response?>>[
           for (final FlutterDevice? device in flutterDevices)
@@ -1395,6 +1431,19 @@ abstract class ResidentRunner extends ResidentHandlers {
               device.vmService?.callMethodWrapper('_serveObservatory') ??
                   Future<vm_service.Response?>.value(),
         ];
+=======
+    final List<Future<vm_service.Response?>> serveObservatoryRequests = <Future<vm_service.Response?>>[];
+    for (final FlutterDevice? device in flutterDevices) {
+      if (device == null) {
+        continue;
+      }
+      // Notify the VM service if the user wants Observatory to be served.
+      serveObservatoryRequests.add(
+        device.vmService?.callMethodWrapper('_serveObservatory') ??
+          Future<vm_service.Response?>.value(),
+      );
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     try {
       await Future.wait(serveObservatoryRequests);
     } on vm_service.RPCError catch (e) {

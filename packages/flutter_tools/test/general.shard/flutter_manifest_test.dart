@@ -34,7 +34,6 @@ void main() {
     expect(flutterManifest.fonts, isEmpty);
     expect(flutterManifest.assets, isEmpty);
     expect(flutterManifest.additionalLicenses, isEmpty);
-    expect(flutterManifest.defaultFlavor, null);
   });
 
   testWithoutContext('FlutterManifest is null when the pubspec.yaml file is not a map', () async {
@@ -1401,6 +1400,7 @@ name: test
     expect(flutterManifest, isNotNull);
     expect(flutterManifest!.dependencies, isEmpty);
   });
+<<<<<<< HEAD
 
   testWithoutContext('FlutterManifest knows if Swift Package Manager is disabled', () async {
     const String manifest = '''
@@ -1550,6 +1550,8 @@ flutter:
               args:
                 - deferredComponentArg''');
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Matcher matchesManifest({String? appVersion, String? buildName, String? buildNumber}) {

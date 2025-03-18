@@ -195,6 +195,7 @@ class _DefaultDoctorValidatorsProvider implements DoctorValidatorsProvider {
 
   @override
   List<Workflow> get workflows {
+<<<<<<< HEAD
     return _workflows ??= <Workflow>[
       if (globals.iosWorkflow!.appliesToHostPlatform) globals.iosWorkflow!,
       if (androidWorkflow?.appliesToHostPlatform ?? false) androidWorkflow!,
@@ -204,6 +205,44 @@ class _DefaultDoctorValidatorsProvider implements DoctorValidatorsProvider {
       if (webWorkflow.appliesToHostPlatform) webWorkflow,
       if (customDeviceWorkflow.appliesToHostPlatform) customDeviceWorkflow,
     ];
+=======
+    if (_workflows == null) {
+      _workflows = <Workflow>[];
+
+      if (globals.iosWorkflow!.appliesToHostPlatform) {
+        _workflows!.add(globals.iosWorkflow!);
+      }
+
+      if (androidWorkflow?.appliesToHostPlatform ?? false) {
+        _workflows!.add(androidWorkflow!);
+      }
+
+      if (fuchsiaWorkflow?.appliesToHostPlatform ?? false) {
+        _workflows!.add(fuchsiaWorkflow!);
+      }
+
+      if (linuxWorkflow.appliesToHostPlatform) {
+        _workflows!.add(linuxWorkflow);
+      }
+
+      if (macOSWorkflow.appliesToHostPlatform) {
+        _workflows!.add(macOSWorkflow);
+      }
+
+      if (windowsWorkflow?.appliesToHostPlatform ?? false) {
+        _workflows!.add(windowsWorkflow!);
+      }
+
+      if (webWorkflow.appliesToHostPlatform) {
+        _workflows!.add(webWorkflow);
+      }
+
+      if (customDeviceWorkflow.appliesToHostPlatform) {
+        _workflows!.add(customDeviceWorkflow);
+      }
+    }
+    return _workflows!;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

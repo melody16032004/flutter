@@ -1106,6 +1106,7 @@ void main() {
     expect(value, equals('One'));
     expect(stateKey.currentState!.value, equals('One'));
   });
+<<<<<<< HEAD
 
   testWidgets('DropdownButtonFormField with onChanged set to null does not throw on form reset', (
     WidgetTester tester,
@@ -1175,4 +1176,6 @@ void main() {
     expect(inputDecorator.isFocused, true);
     expect(inputDecorator.decoration.errorText, 'Required');
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

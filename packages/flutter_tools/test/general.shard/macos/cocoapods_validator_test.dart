@@ -19,10 +19,6 @@ void main() {
       );
       final ValidationResult result = await workflow.validate();
       expect(result.type, ValidationType.success);
-      expect(result.messages.length, 1);
-      final ValidationMessage message = result.messages.first;
-      expect(message.type, ValidationMessageType.information);
-      expect(message.message, contains('CocoaPods version 1000.0.0'));
     });
 
     testWithoutContext('Emits missing status when CocoaPods is not installed', () async {
@@ -32,13 +28,9 @@ void main() {
       );
       final ValidationResult result = await workflow.validate();
       expect(result.type, ValidationType.missing);
-      expect(result.messages.length, 1);
-      final ValidationMessage message = result.messages.first;
-      expect(message.type, ValidationMessageType.error);
-      expect(message.message, contains('CocoaPods not installed'));
-      expect(message.message, contains('getting-started.html#installation'));
     });
 
+<<<<<<< HEAD
     testWithoutContext(
       'Emits partial status when CocoaPods is installed with unknown version',
       () async {
@@ -55,6 +47,13 @@ void main() {
         expect(message.message, contains('getting-started.html#updating-cocoapods'));
       },
     );
+=======
+    testWithoutContext('Emits partial status when CocoaPods is installed with unknown version', () async {
+      final CocoaPodsValidator workflow = CocoaPodsValidator(FakeCocoaPods(CocoaPodsStatus.unknownVersion), UserMessages());
+      final ValidationResult result = await workflow.validate();
+      expect(result.type, ValidationType.partial);
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testWithoutContext('Emits partial status when CocoaPods version is too low', () async {
       const String currentVersion = '1.4.0';

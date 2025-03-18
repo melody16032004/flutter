@@ -911,6 +911,7 @@ void main() {
     expect(controller.position.maxScrollExtent, 472.0);
     expect(controller.position.pixels, 472.0);
   });
+<<<<<<< HEAD
 
   testWidgets('SliverGridDelegate mainAxisExtent add assert', (WidgetTester tester) async {
     Widget buildGridView(SliverGridDelegate delegate) {
@@ -966,4 +967,6 @@ void main() {
       ),
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

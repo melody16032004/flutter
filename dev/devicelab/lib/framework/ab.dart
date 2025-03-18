@@ -117,11 +117,23 @@ class ABTest {
       if (value == null) {
         value = ''.padRight(len);
       } else {
+<<<<<<< HEAD
         value = switch (aligns[column]) {
           FieldJustification.LEFT => value.padRight(len),
           FieldJustification.RIGHT => value.padLeft(len),
           FieldJustification.CENTER => value.padLeft((len + value.length) ~/ 2).padRight(len),
         };
+=======
+        switch (aligns[column]) {
+          case FieldJustification.LEFT:
+            value = value.padRight(len);
+          case FieldJustification.RIGHT:
+            value = value.padLeft(len);
+          case FieldJustification.CENTER:
+            value = value.padLeft((len + value.length) ~/2);
+            value = value.padRight(len);
+        }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
       if (column > 0) {
         value = value.padLeft(len + 1);

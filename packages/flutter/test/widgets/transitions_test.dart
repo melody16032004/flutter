@@ -84,14 +84,19 @@ void main() {
     });
 
     testWidgets('animations work with curves test', (WidgetTester tester) async {
-      final CurvedAnimation curvedAnimation = CurvedAnimation(
+      final Animation<Decoration> curvedDecorationAnimation =
+        decorationTween.animate(CurvedAnimation(
         parent: controller,
         curve: Curves.easeOut,
+<<<<<<< HEAD
       );
       addTearDown(curvedAnimation.dispose);
       final Animation<Decoration> curvedDecorationAnimation = decorationTween.animate(
         curvedAnimation,
       );
+=======
+      ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       final DecoratedBoxTransition transitionUnderTest = DecoratedBoxTransition(
         decoration: curvedDecorationAnimation,

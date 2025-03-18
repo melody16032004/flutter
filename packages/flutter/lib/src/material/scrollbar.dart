@@ -275,11 +275,18 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
     final Brightness brightness = _colorScheme.brightness;
     return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       if (showScrollbar && _trackVisibility.resolve(states)) {
+<<<<<<< HEAD
         return _scrollbarTheme.trackColor?.resolve(states) ??
             switch (brightness) {
               Brightness.light => onSurface.withOpacity(0.03),
               Brightness.dark => onSurface.withOpacity(0.05),
             };
+=======
+        return _scrollbarTheme.trackColor?.resolve(states)
+          ?? (brightness == Brightness.light
+            ? onSurface.withOpacity(0.03)
+            : onSurface.withOpacity(0.05));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
       return const Color(0x00000000);
     });
@@ -290,11 +297,18 @@ class _MaterialScrollbarState extends RawScrollbarState<_MaterialScrollbar> {
     final Brightness brightness = _colorScheme.brightness;
     return MaterialStateProperty.resolveWith((Set<MaterialState> states) {
       if (showScrollbar && _trackVisibility.resolve(states)) {
+<<<<<<< HEAD
         return _scrollbarTheme.trackBorderColor?.resolve(states) ??
             switch (brightness) {
               Brightness.light => onSurface.withOpacity(0.1),
               Brightness.dark => onSurface.withOpacity(0.25),
             };
+=======
+        return _scrollbarTheme.trackBorderColor?.resolve(states)
+          ?? (brightness == Brightness.light
+            ? onSurface.withOpacity(0.1)
+            : onSurface.withOpacity(0.25));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
       return const Color(0x00000000);
     });

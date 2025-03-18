@@ -29,6 +29,7 @@ void main() {
       CupertinoApp(home: Center(child: CupertinoCheckbox(value: false, onChanged: (bool? b) {}))),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -40,11 +41,21 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       CupertinoApp(home: Center(child: CupertinoCheckbox(value: true, onChanged: (bool? b) {}))),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -57,11 +68,22 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isChecked: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       const CupertinoApp(home: Center(child: CupertinoCheckbox(value: false, onChanged: null))),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(CupertinoCheckbox)),
       matchesSemantics(
@@ -72,6 +94,14 @@ void main() {
         hasFocusAction: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(CupertinoCheckbox)), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      // isFocusable is delayed by 1 frame.
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pump();
     // isFocusable should be false now after the 1 frame delay.
@@ -138,6 +168,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -151,6 +182,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      label: 'foo',
+      textDirection: TextDirection.ltr,
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   });
 
@@ -206,6 +248,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -219,6 +262,18 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isFocusable,
+        SemanticsFlag.isCheckStateMixed,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       CupertinoApp(
@@ -226,6 +281,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -239,6 +295,18 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isChecked,
+        SemanticsFlag.isFocusable,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       CupertinoApp(
@@ -246,6 +314,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -258,6 +327,17 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isFocusable,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });

@@ -21,7 +21,6 @@ import '../convert.dart';
 import '../daemon.dart';
 import '../device.dart';
 import '../device_port_forwarder.dart';
-import '../device_vm_service_discovery_for_attach.dart';
 import '../emulator.dart';
 import '../features.dart';
 import '../globals.dart' as globals;
@@ -1014,8 +1013,6 @@ class DeviceDomain extends Domain {
     registerHandler('startDartDevelopmentService', startDartDevelopmentService);
     registerHandler('shutdownDartDevelopmentService', shutdownDartDevelopmentService);
     registerHandler('getDiagnostics', getDiagnostics);
-    registerHandler('startVMServiceDiscoveryForAttach', startVMServiceDiscoveryForAttach);
-    registerHandler('stopVMServiceDiscoveryForAttach', stopVMServiceDiscoveryForAttach);
 
     // Use the device manager discovery so that client provided device types
     // are usable via the daemon protocol.
@@ -1201,7 +1198,7 @@ class DeviceDomain extends Domain {
       debuggingOptions: DebuggingOptions.fromJson(
         castStringKeyedMap(args['debuggingOptions'])!,
         // We are using prebuilts, build info does not matter here.
-        BuildInfo.dummy,
+        BuildInfo.debug,
       ),
       mainPath: _getStringArg(args, 'mainPath'),
       route: _getStringArg(args, 'route'),
@@ -1328,6 +1325,7 @@ class DeviceDomain extends Domain {
 
     return <String>[for (final List<String> diagnostics in diagnosticsLists) ...diagnostics];
   }
+<<<<<<< HEAD
 
   final Map<String, StreamSubscription<Uri>> _vmServiceDiscoverySubscriptions =
       <String, StreamSubscription<Uri>>{};
@@ -1364,6 +1362,8 @@ class DeviceDomain extends Domain {
     final String? id = _getStringArg(args, 'id', required: true);
     await _vmServiceDiscoverySubscriptions.remove(id)?.cancel();
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class DevToolsDomain extends Domain {
@@ -1424,12 +1424,16 @@ Map<String, Object?> _operationResultToMap(OperationResult result) {
 }
 
 Object? _toJsonable(Object? obj) {
-  return switch (obj) {
-    String() || int() || bool() || Map<Object?, Object?>() || List<Object?>() || null => obj,
-    OperationResult() => _operationResultToMap(obj),
-    ToolExit() => obj.message,
-    _ => obj.toString(),
-  };
+  if (obj is String || obj is int || obj is bool || obj is Map<Object?, Object?> || obj is List<Object?> || obj == null) {
+    return obj;
+  }
+  if (obj is OperationResult) {
+    return _operationResultToMap(obj);
+  }
+  if (obj is ToolExit) {
+    return obj.message;
+  }
+  return '$obj';
 }
 
 class NotifyingLogger extends DelegatingLogger {

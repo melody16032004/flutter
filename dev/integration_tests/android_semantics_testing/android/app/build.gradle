@@ -4,8 +4,8 @@
 
 plugins {
     id "com.android.application"
-    id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id "kotlin-android"
 }
 
 def localProperties = new Properties()
@@ -17,7 +17,6 @@ if (localPropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.yourcompany.platforminteraction"
     compileSdk flutter.compileSdkVersion
 
     // Flutter's CI installs the NDK at a non-standard path.
@@ -32,10 +31,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {

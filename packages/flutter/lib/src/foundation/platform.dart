@@ -2,11 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/material.dart';
 /// @docImport 'package:flutter_test/flutter_test.dart';
 library;
 
 import '_platform_io.dart' if (dart.library.js_util) '_platform_web.dart' as platform;
+=======
+import '_platform_io.dart'
+  if (dart.library.js_util) '_platform_web.dart' as platform;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'assertions.dart';
 import 'constants.dart';
 

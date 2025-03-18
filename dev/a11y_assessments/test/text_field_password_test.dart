@@ -30,6 +30,7 @@ void main() {
       expect(passwordField.enabled, isFalse);
     }
   });
+<<<<<<< HEAD
 
   testWidgets('text field passwords do not have hint text', (WidgetTester tester) async {
     await pumpsUseCase(tester, TextFieldPasswordUseCase());
@@ -56,4 +57,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(findHeadingLevelOnes, findsOne);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

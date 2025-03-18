@@ -64,7 +64,19 @@ enum PerformanceOverlayOption {
 /// to true.
 class RenderPerformanceOverlay extends RenderBox {
   /// Creates a performance overlay render object.
+<<<<<<< HEAD
   RenderPerformanceOverlay({int optionsMask = 0}) : _optionsMask = optionsMask;
+=======
+  RenderPerformanceOverlay({
+    int optionsMask = 0,
+    int rasterizerThreshold = 0,
+    bool checkerboardRasterCacheImages = false,
+    bool checkerboardOffscreenLayers = false,
+  }) : _optionsMask = optionsMask,
+       _rasterizerThreshold = rasterizerThreshold,
+       _checkerboardRasterCacheImages = checkerboardRasterCacheImages,
+       _checkerboardOffscreenLayers = checkerboardOffscreenLayers;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// The mask is created by shifting 1 by the index of the specific
   /// [PerformanceOverlayOption] to enable.
@@ -75,6 +87,41 @@ class RenderPerformanceOverlay extends RenderBox {
       return;
     }
     _optionsMask = value;
+    markNeedsPaint();
+  }
+
+  /// The rasterizer threshold is an integer specifying the number of frame
+  /// intervals that the rasterizer must miss before it decides that the frame
+  /// is suitable for capturing an SkPicture trace for further analysis.
+  int get rasterizerThreshold => _rasterizerThreshold;
+  int _rasterizerThreshold;
+  set rasterizerThreshold(int value) {
+    if (value == _rasterizerThreshold) {
+      return;
+    }
+    _rasterizerThreshold = value;
+    markNeedsPaint();
+  }
+
+  /// Whether the raster cache should checkerboard cached entries.
+  bool get checkerboardRasterCacheImages => _checkerboardRasterCacheImages;
+  bool _checkerboardRasterCacheImages;
+  set checkerboardRasterCacheImages(bool value) {
+    if (value == _checkerboardRasterCacheImages) {
+      return;
+    }
+    _checkerboardRasterCacheImages = value;
+    markNeedsPaint();
+  }
+
+  /// Whether the compositor should checkerboard layers rendered to offscreen bitmaps.
+  bool get checkerboardOffscreenLayers => _checkerboardOffscreenLayers;
+  bool _checkerboardOffscreenLayers;
+  set checkerboardOffscreenLayers(bool value) {
+    if (value == _checkerboardOffscreenLayers) {
+      return;
+    }
+    _checkerboardOffscreenLayers = value;
     markNeedsPaint();
   }
 
@@ -127,11 +174,21 @@ class RenderPerformanceOverlay extends RenderBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     assert(needsCompositing);
+<<<<<<< HEAD
     context.addLayer(
       PerformanceOverlayLayer(
         overlayRect: Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
         optionsMask: optionsMask,
       ),
     );
+=======
+    context.addLayer(PerformanceOverlayLayer(
+      overlayRect: Rect.fromLTWH(offset.dx, offset.dy, size.width, size.height),
+      optionsMask: optionsMask,
+      rasterizerThreshold: rasterizerThreshold,
+      checkerboardRasterCacheImages: checkerboardRasterCacheImages,
+      checkerboardOffscreenLayers: checkerboardOffscreenLayers,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }

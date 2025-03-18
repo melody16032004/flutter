@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'icon_button.dart';
 /// @docImport 'navigation_rail.dart';
 /// @docImport 'text_button.dart';
@@ -10,6 +11,8 @@ library;
 
 import 'dart:math' as math;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -30,13 +33,6 @@ import 'theme.dart';
 /// or a button's icon, as in [TextButton.icon]. The badge's default
 /// configuration is intended to work well with a default sized (24)
 /// [Icon].
-///
-/// {@tool dartpad}
-/// This example shows how to create a [Badge] with label and count
-/// wrapped on an icon in an [IconButton].
-///
-/// ** See code in examples/api/lib/material/badge/badge.0.dart **
-/// {@end-tool}
 class Badge extends StatelessWidget {
   /// Create a Badge that stacks [label] on top of [child].
   ///
@@ -80,7 +76,7 @@ class Badge extends StatelessWidget {
   /// The badge's fill color.
   ///
   /// Defaults to the [BadgeTheme]'s background color, or
-  /// [ColorScheme.error] if the theme value is null.
+  /// [ColorScheme.errorColor] if the theme value is null.
   final Color? backgroundColor;
 
   /// The color of the badge's [label] text.
@@ -176,6 +172,7 @@ class Badge extends StatelessWidget {
 
     final BadgeThemeData badgeTheme = BadgeTheme.of(context);
     final BadgeThemeData defaults = _BadgeDefaultsM3(context);
+<<<<<<< HEAD
     final Decoration effectiveDecoration = ShapeDecoration(
       color: backgroundColor ?? badgeTheme.backgroundColor ?? defaults.backgroundColor!,
       shape: const StadiumBorder(),
@@ -198,8 +195,28 @@ class Badge extends StatelessWidget {
             padding: padding ?? badgeTheme.padding ?? defaults.padding!,
             alignment: Alignment.center,
             child: label,
+=======
+    final double effectiveSmallSize = smallSize ?? badgeTheme.smallSize ?? defaults.smallSize!;
+    final double effectiveLargeSize = largeSize ?? badgeTheme.largeSize ?? defaults.largeSize!;
+
+    final Widget badge = DefaultTextStyle(
+      style: (textStyle ?? badgeTheme.textStyle ?? defaults.textStyle!).copyWith(
+        color: textColor ?? badgeTheme.textColor ?? defaults.textColor!,
+      ),
+      child: IntrinsicWidth(
+        child: Container(
+          height: label == null ? effectiveSmallSize : effectiveLargeSize,
+          clipBehavior: Clip.antiAlias,
+          decoration: ShapeDecoration(
+            color: backgroundColor ?? badgeTheme.backgroundColor ?? defaults.backgroundColor!,
+            shape: const StadiumBorder(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
+          padding: label == null ? null : (padding ?? badgeTheme.padding ?? defaults.padding!),
+          alignment: label == null ? null : Alignment.center,
+          child: label ?? SizedBox(width: effectiveSmallSize, height: effectiveSmallSize),
         ),
+<<<<<<< HEAD
       );
     } else {
       final double effectiveSmallSize =
@@ -211,6 +228,10 @@ class Badge extends StatelessWidget {
         decoration: effectiveDecoration,
       );
     }
+=======
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     if (child == null) {
       return badge;
@@ -219,6 +240,7 @@ class Badge extends StatelessWidget {
     final AlignmentGeometry effectiveAlignment =
         alignment ?? badgeTheme.alignment ?? defaults.alignment!;
     final TextDirection textDirection = Directionality.of(context);
+<<<<<<< HEAD
     final Offset defaultOffset =
         textDirection == TextDirection.ltr ? const Offset(4, -4) : const Offset(-4, -4);
     // Adds a offset const Offset(0, 8) to avoiding breaking customers after
@@ -239,6 +261,23 @@ class Badge extends StatelessWidget {
             widthOffset: effectiveWidthOffset,
             textDirection: textDirection,
             child: badge,
+=======
+    final Offset defaultOffset = textDirection == TextDirection.ltr ? const Offset(4, -4) : const Offset(-4, -4);
+    final Offset effectiveOffset = offset ?? badgeTheme.offset ?? defaultOffset;
+
+    return
+      Stack(
+        clipBehavior: Clip.none,
+        children: <Widget>[
+          child!,
+          Positioned.fill(
+            child: _Badge(
+              alignment: effectiveAlignment,
+              offset: label == null ? Offset.zero : effectiveOffset,
+              textDirection: textDirection,
+              child: badge,
+            ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         ),
       ],
@@ -250,24 +289,18 @@ class _Badge extends SingleChildRenderObjectWidget {
   const _Badge({
     required this.alignment,
     required this.offset,
-    required this.widthOffset,
     required this.textDirection,
-    required this.hasLabel,
     super.child, // the badge
   });
 
   final AlignmentGeometry alignment;
   final Offset offset;
-  final double widthOffset;
   final TextDirection textDirection;
-  final bool hasLabel;
 
   @override
   _RenderBadge createRenderObject(BuildContext context) {
     return _RenderBadge(
       alignment: alignment,
-      widthOffset: widthOffset,
-      hasLabel: hasLabel,
       offset: offset,
       textDirection: Directionality.maybeOf(context),
     );
@@ -278,8 +311,6 @@ class _Badge extends SingleChildRenderObjectWidget {
     renderObject
       ..alignment = alignment
       ..offset = offset
-      ..widthOffset = widthOffset
-      ..hasLabel = hasLabel
       ..textDirection = Directionality.maybeOf(context);
   }
 
@@ -296,11 +327,7 @@ class _RenderBadge extends RenderAligningShiftedBox {
     super.textDirection,
     super.alignment,
     required Offset offset,
-    required bool hasLabel,
-    required double widthOffset,
-  }) : _offset = offset,
-       _hasLabel = hasLabel,
-       _widthOffset = widthOffset;
+  }) : _offset = offset;
 
   Offset get offset => _offset;
   Offset _offset;
@@ -309,26 +336,6 @@ class _RenderBadge extends RenderAligningShiftedBox {
       return;
     }
     _offset = value;
-    markNeedsLayout();
-  }
-
-  bool get hasLabel => _hasLabel;
-  bool _hasLabel;
-  set hasLabel(bool value) {
-    if (_hasLabel == value) {
-      return;
-    }
-    _hasLabel = value;
-    markNeedsLayout();
-  }
-
-  double get widthOffset => _widthOffset;
-  double _widthOffset;
-  set widthOffset(double value) {
-    if (_widthOffset == value) {
-      return;
-    }
-    _widthOffset = value;
     markNeedsLayout();
   }
 
@@ -343,6 +350,7 @@ class _RenderBadge extends RenderAligningShiftedBox {
     final double badgeSize = child!.size.height;
     final Alignment resolvedAlignment = alignment.resolve(textDirection);
     final BoxParentData childParentData = child!.parentData! as BoxParentData;
+<<<<<<< HEAD
     Offset badgeLocation =
         offset + resolvedAlignment.alongOffset(Offset(size.width - widthOffset, size.height));
     if (hasLabel) {
@@ -434,6 +442,9 @@ class _RenderIntrinsicHorizontalStadium extends RenderProxyBox {
   @override
   void performLayout() {
     size = _computeSize(layoutChild: ChildLayoutHelper.layoutChild, constraints: constraints);
+=======
+    childParentData.offset = offset + resolvedAlignment.alongOffset(Offset(size.width - badgeSize, size.height - badgeSize));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

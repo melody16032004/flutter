@@ -112,6 +112,7 @@ class Theme extends StatelessWidget {
   /// * [IconTheme.of], that returns [ThemeData.iconTheme] from the closest [Theme] or
   ///   [IconThemeData.fallback] if there is no [IconTheme] ancestor.
   static ThemeData of(BuildContext context) {
+<<<<<<< HEAD
     final _InheritedTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
     final MaterialLocalizations? localizations = Localizations.of<MaterialLocalizations>(
@@ -128,6 +129,12 @@ class Theme extends StatelessWidget {
               themeData: inheritedCupertinoTheme.theme.data,
             ).materialTheme
             : _kFallbackTheme);
+=======
+    final _InheritedTheme? inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
+    final MaterialLocalizations? localizations = Localizations.of<MaterialLocalizations>(context, MaterialLocalizations);
+    final ScriptCategory category = localizations?.scriptCategory ?? ScriptCategory.englishLike;
+    final ThemeData theme = inheritedTheme?.theme.data ?? _kFallbackTheme;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return ThemeData.localize(theme, theme.typography.geometryThemeFor(category));
   }
 
@@ -146,6 +153,7 @@ class Theme extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   CupertinoThemeData _inheritedCupertinoThemeData(BuildContext context) {
     final InheritedCupertinoTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<InheritedCupertinoTheme>();
@@ -153,15 +161,19 @@ class Theme extends StatelessWidget {
         .resolveFrom(context);
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   Widget build(BuildContext context) {
     return _InheritedTheme(
       theme: this,
       child: CupertinoTheme(
-        // If a CupertinoThemeData doesn't exist, we're using a
-        // MaterialBasedCupertinoThemeData here instead of a CupertinoThemeData
-        // because it defers some properties to the Material ThemeData.
-        data: _inheritedCupertinoThemeData(context),
+        // We're using a MaterialBasedCupertinoThemeData here instead of a
+        // CupertinoThemeData because it defers some properties to the Material
+        // ThemeData.
+        data: MaterialBasedCupertinoThemeData(
+          materialTheme: data,
+        ),
         child: _wrapsWidgetThemes(context, child),
       ),
     );

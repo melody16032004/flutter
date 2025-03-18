@@ -39,16 +39,9 @@ void main() {
     expect(controller.offset, 0);
 
     expect(find.text('Group 0 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 0')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 300.0),
-    );
     expect(find.text('Group 0 Tile 1'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 1')),
-      const Rect.fromLTRB(0.0, 300.0, 300.0, 600.0),
-    );
     expect(find.text('Group 0 Tile 2'), findsNothing);
+
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset = 19 * 300.0;
@@ -58,15 +51,7 @@ void main() {
     expect(controller.offset, scrollOffset);
     expect(find.text('Group 0 Tile 18'), findsNothing);
     expect(find.text('Group 0 Tile 19'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 19')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 300.0),
-    );
     expect(find.text('Group 1 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 1 Tile 0')),
-      const Rect.fromLTRB(0.0, 300.0, 300.0, 500.0),
-    );
 
     final List<RenderSliverList> renderSlivers =
         tester.renderObjectList<RenderSliverList>(find.byType(SliverList)).toList();
@@ -119,16 +104,9 @@ void main() {
     expect(controller.offset, 0);
 
     expect(find.text('Group 0 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 0')),
-      const Rect.fromLTRB(0.0, 300.0, 300.0, 600.0),
-    );
     expect(find.text('Group 0 Tile 1'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 1')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 300.0),
-    );
     expect(find.text('Group 0 Tile 2'), findsNothing);
+
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset = 19 * 300.0;
@@ -138,15 +116,7 @@ void main() {
     expect(controller.offset, scrollOffset);
     expect(find.text('Group 0 Tile 18'), findsNothing);
     expect(find.text('Group 0 Tile 19'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 19')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 300.0),
-    );
     expect(find.text('Group 1 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 1 Tile 0')),
-      const Rect.fromLTRB(0.0, 400.0, 300.0, 600.0),
-    );
 
     final List<RenderSliverList> renderSlivers =
         tester.renderObjectList<RenderSliverList>(find.byType(SliverList)).toList();
@@ -201,11 +171,8 @@ void main() {
     expect(controller.offset, 0);
 
     expect(find.text('Group 0 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 0')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 600.0),
-    );
     expect(find.text('Group 0 Tile 1'), findsNothing);
+
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset = 19 * 300.0;
@@ -215,10 +182,6 @@ void main() {
     expect(controller.offset, scrollOffset);
     expect(find.text('Group 0 Tile 18'), findsNothing);
     expect(find.text('Group 0 Tile 19'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 19')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 600.0),
-    );
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset2 = 20 * 300.0;
@@ -226,10 +189,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Group 0 Tile 19'), findsNothing);
     expect(find.text('Group 1 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 1 Tile 0')),
-      const Rect.fromLTRB(0.0, 0.0, 200.0, 600.0),
-    );
 
     final List<RenderSliverList> renderSlivers =
         tester
@@ -287,11 +246,8 @@ void main() {
     expect(controller.offset, 0);
 
     expect(find.text('Group 0 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 0')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 600.0),
-    );
     expect(find.text('Group 0 Tile 1'), findsNothing);
+
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset = 19 * 300.0;
@@ -301,10 +257,6 @@ void main() {
     expect(controller.offset, scrollOffset);
     expect(find.text('Group 0 Tile 18'), findsNothing);
     expect(find.text('Group 0 Tile 19'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 0 Tile 19')),
-      const Rect.fromLTRB(0.0, 0.0, 300.0, 600.0),
-    );
     expect(find.text('Group 1 Tile 0'), findsNothing);
 
     const double scrollOffset2 = 20 * 300.0;
@@ -312,10 +264,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Group 0 Tile 19'), findsNothing);
     expect(find.text('Group 1 Tile 0'), findsOneWidget);
-    expect(
-      tester.getRect(find.text('Group 1 Tile 0')),
-      const Rect.fromLTRB(100.0, 0.0, 300.0, 600.0),
-    );
 
     final List<RenderSliverList> renderSlivers =
         tester

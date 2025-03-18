@@ -680,11 +680,15 @@ void main() {
                                   SemanticsFlag.isEnabled,
                                   SemanticsFlag.isFocusable,
                                 ],
+<<<<<<< HEAD
                                 actions: <SemanticsAction>[
                                   SemanticsAction.tap,
                                   if (defaultTargetPlatform != TargetPlatform.iOS)
                                     SemanticsAction.focus,
                                 ],
+=======
+                                actions: <SemanticsAction>[SemanticsAction.tap],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                                 tooltip: 'Back',
                                 textDirection: TextDirection.ltr,
                               ),
@@ -738,10 +742,14 @@ void main() {
                           SemanticsFlag.isEnabled,
                           SemanticsFlag.isFocusable,
                         ],
+<<<<<<< HEAD
                         actions: <SemanticsAction>[
                           SemanticsAction.tap,
                           if (defaultTargetPlatform != TargetPlatform.iOS) SemanticsAction.focus,
                         ],
+=======
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                         label: 'Suggestions',
                         textDirection: TextDirection.ltr,
                       ),
@@ -844,11 +852,15 @@ void main() {
                               SemanticsFlag.isEnabled,
                               SemanticsFlag.isFocusable,
                             ],
+<<<<<<< HEAD
                             actions: <SemanticsAction>[
                               SemanticsAction.tap,
                               if (defaultTargetPlatform != TargetPlatform.iOS)
                                 SemanticsAction.focus,
                             ],
+=======
+                            actions: <SemanticsAction>[SemanticsAction.tap],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                             tooltip: 'Back',
                             textDirection: TextDirection.ltr,
                           ),
@@ -886,10 +898,14 @@ void main() {
                           SemanticsFlag.isEnabled,
                           SemanticsFlag.isFocusable,
                         ],
+<<<<<<< HEAD
                         actions: <SemanticsAction>[
                           SemanticsAction.tap,
                           if (defaultTargetPlatform != TargetPlatform.iOS) SemanticsAction.focus,
                         ],
+=======
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                         label: 'Suggestions',
                         textDirection: TextDirection.ltr,
                       ),

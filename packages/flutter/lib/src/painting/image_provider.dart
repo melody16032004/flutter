@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 // Examples can assume:
 // late BuildContext context;
 
@@ -9,6 +10,8 @@
 /// @docImport '_web_image_info_io.dart';
 library;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
@@ -24,12 +27,17 @@ import 'binding.dart';
 import 'image_cache.dart';
 import 'image_stream.dart';
 
-/// Signature for the callback taken by [ImageProvider._createErrorHandlerAndKey].
+/// Signature for the callback taken by [_createErrorHandlerAndKey].
 typedef _KeyAndErrorHandlerCallback<T> = void Function(T key, ImageErrorListener handleError);
 
+<<<<<<< HEAD
 /// Signature used for error handling by [ImageProvider._createErrorHandlerAndKey].
 typedef _AsyncKeyErrorHandler<T> =
     Future<void> Function(T key, Object exception, StackTrace? stack);
+=======
+/// Signature used for error handling by [_createErrorHandlerAndKey].
+typedef _AsyncKeyErrorHandler<T> = Future<void> Function(T key, Object exception, StackTrace? stack);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 /// Configuration information passed to the [ImageProvider.resolve] method to
 /// select a specific image.
@@ -679,7 +687,7 @@ abstract class ImageProvider<T extends Object> {
 }
 
 /// A class that exists to facilitate backwards compatibility in the transition
-/// from [ImageProvider.loadBuffer] to [ImageProvider.loadImage]
+/// from [ImageProvider.load] to [ImageProvider.loadBuffer] to [ImageProvider.loadImage]
 class _AbstractImageStreamCompleter extends ImageStreamCompleter {}
 
 /// Key for the image obtained by an [AssetImage] or [ExactAssetImage].

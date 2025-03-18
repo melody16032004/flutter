@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/rendering.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 import 'package:vector_math/vector_math_64.dart';
 
@@ -522,6 +519,7 @@ abstract final class MatrixUtils {
 
     // Model matrix by first translating the object from the origin of the world
     // by radius in the z axis and then rotating against the world.
+<<<<<<< HEAD
     result =
         result *
                 (switch (orientation) {
@@ -530,6 +528,13 @@ abstract final class MatrixUtils {
                     } *
                     Matrix4.translationValues(0.0, 0.0, radius))
             as Matrix4;
+=======
+    result = result * ((
+        orientation == Axis.horizontal
+            ? Matrix4.rotationY(angle)
+            : Matrix4.rotationX(angle)
+    ) * Matrix4.translationValues(0.0, 0.0, radius)) as Matrix4;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Essentially perspective * view * model.
     return result;

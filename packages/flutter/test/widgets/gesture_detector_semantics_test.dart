@@ -394,6 +394,7 @@ void main() {
           ),
         );
 
+<<<<<<< HEAD
         expect(
           semantics,
           isNot(
@@ -402,6 +403,11 @@ void main() {
             ),
           ),
         );
+=======
+        expect(semantics, isNot(includesNodeWith(
+          actions: <SemanticsAction>[SemanticsAction.tap],
+        )));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         semantics.dispose();
       });

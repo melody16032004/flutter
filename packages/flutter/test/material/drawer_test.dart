@@ -130,6 +130,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(seconds: 1));
 
+<<<<<<< HEAD
     expect(
       semantics,
       isNot(
@@ -139,13 +140,20 @@ void main() {
         ),
       ),
     );
+=======
+    expect(semantics, isNot(includesNodeWith(
+      label: const DefaultMaterialLocalizations().modalBarrierDismissLabel,
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    )));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   }, variant: TargetPlatformVariant.only(TargetPlatform.android));
 
   testWidgets('Scaffold drawerScrimColor', (WidgetTester tester) async {
-    // The scrim is a ColoredBox within a Semantics node labeled "Dismiss",
+    // The scrim is a Container within a Semantics node labeled "Dismiss",
     // within a DrawerController. Sorry.
+<<<<<<< HEAD
     Widget getScrim() {
       return tester
           .widget<Semantics>(
@@ -157,6 +165,21 @@ void main() {
             ),
           )
           .child!;
+=======
+    Container getScrim() {
+      return tester.widget<Container>(
+        find.descendant(
+          of: find.descendant(
+            of: find.byType(DrawerController),
+            matching: find.byWidgetPredicate((Widget widget) {
+              return widget is Semantics
+                  && widget.properties.label == 'Dismiss';
+            }),
+          ),
+          matching: find.byType(Container),
+        ),
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -186,8 +209,7 @@ void main() {
     scaffoldKey.currentState!.openDrawer();
     await tester.pumpAndSettle();
 
-    ColoredBox scrim = getScrim() as ColoredBox;
-    expect(scrim.color, Colors.black54);
+    expect(getScrim().color, Colors.black54);
 
     await tester.tap(find.byType(Drawer));
     await tester.pumpAndSettle();
@@ -199,8 +221,7 @@ void main() {
     scaffoldKey.currentState!.openDrawer();
     await tester.pumpAndSettle();
 
-    scrim = getScrim() as ColoredBox;
-    expect(scrim.color, const Color(0xFF323232));
+    expect(getScrim().color, const Color(0xFF323232));
 
     await tester.tap(find.byType(Drawer));
     await tester.pumpAndSettle();

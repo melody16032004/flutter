@@ -77,6 +77,7 @@ void main() {
 
     // Check error message is thrown
     expect(
+<<<<<<< HEAD
       result.stderr,
       contains(
         'Your project is configured to compile against Android SDK 30, but '
@@ -91,5 +92,18 @@ void main() {
       ),
     );
     expect(result.stderr, contains('Add the following to ${projectGradleFile.path}:'));
+=======
+        result.stdout,
+        contains(
+            'Warning: The plugin test_plugin requires Android SDK version 31 or higher.'));
+    expect(
+      result.stderr,
+      contains('One or more plugins require a higher Android SDK version.'),
+    );
+    expect(
+        result.stderr,
+        contains(
+            'Fix this issue by adding the following to ${projectGradleFile.path}'));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

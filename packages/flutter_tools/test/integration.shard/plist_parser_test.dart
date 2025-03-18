@@ -279,6 +279,7 @@ void main() {
     expect(logger.statusText, isEmpty);
     expect(logger.errorText, isEmpty);
   }, skip: !platform.isMacOS); // [intended] requires macos tool chain.
+<<<<<<< HEAD
 
   testWithoutContext('PlistParser.plistJsonContent can parse pbxproj file', () async {
     final String xcodeProjectFile = fileSystem.path.join(
@@ -359,4 +360,6 @@ void main() {
     expect(projectFileAsJson, isNull);
     expect(logger.errorText, isNotEmpty);
   }, skip: !platform.isMacOS); // [intended] requires macos tool chain.
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

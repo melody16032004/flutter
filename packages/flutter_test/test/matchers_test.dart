@@ -716,6 +716,7 @@ void main() {
         customSemanticsActionIds: <int>[CustomSemanticsAction.getIdentifier(action)],
         currentValueLength: 10,
         maxValueLength: 15,
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: Uri(path: 'l'),
         role: ui.SemanticsRole.none,
@@ -787,6 +788,72 @@ void main() {
           customActions: <CustomSemanticsAction>[action],
         ),
       );
+=======
+      );
+      final _FakeSemanticsNode node = _FakeSemanticsNode(data);
+
+      expect(node, matchesSemantics(
+         rect: const Rect.fromLTRB(0.0, 0.0, 10.0, 10.0),
+         size: const Size(10.0, 10.0),
+         elevation: 3.0,
+         thickness: 4.0,
+         platformViewId: 105,
+         currentValueLength: 10,
+         maxValueLength: 15,
+         /* Flags */
+         hasCheckedState: true,
+         isChecked: true,
+         isCheckStateMixed: true,
+         isSelected: true,
+         isButton: true,
+         isSlider: true,
+         isKeyboardKey: true,
+         isLink: true,
+         isTextField: true,
+         isReadOnly: true,
+         hasEnabledState: true,
+         isFocused: true,
+         isFocusable: true,
+         isEnabled: true,
+         isInMutuallyExclusiveGroup: true,
+         isHeader: true,
+         isObscured: true,
+         isMultiline: true,
+         namesRoute: true,
+         scopesRoute: true,
+         isHidden: true,
+         isImage: true,
+         isLiveRegion: true,
+         hasToggledState: true,
+         isToggled: true,
+         hasImplicitScrolling: true,
+         hasExpandedState: true,
+         isExpanded: true,
+         /* Actions */
+         hasTapAction: true,
+         hasLongPressAction: true,
+         hasScrollLeftAction: true,
+         hasScrollRightAction: true,
+         hasScrollUpAction: true,
+         hasScrollDownAction: true,
+         hasIncreaseAction: true,
+         hasDecreaseAction: true,
+         hasShowOnScreenAction: true,
+         hasMoveCursorForwardByCharacterAction: true,
+         hasMoveCursorBackwardByCharacterAction: true,
+         hasMoveCursorForwardByWordAction: true,
+         hasMoveCursorBackwardByWordAction: true,
+         hasSetTextAction: true,
+         hasSetSelectionAction: true,
+         hasCopyAction: true,
+         hasCutAction: true,
+         hasPasteAction: true,
+         hasDidGainAccessibilityFocusAction: true,
+         hasDidLoseAccessibilityFocusAction: true,
+         hasDismissAction: true,
+         customActions: <CustomSemanticsAction>[action],
+      ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWidgets('Can match child semantics', (WidgetTester tester) async {
@@ -1015,9 +1082,12 @@ void main() {
         customSemanticsActionIds: <int>[CustomSemanticsAction.getIdentifier(action)],
         currentValueLength: 10,
         maxValueLength: 15,
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: Uri(path: 'l'),
         role: ui.SemanticsRole.none,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       final _FakeSemanticsNode node = _FakeSemanticsNode(data);
 
@@ -1081,7 +1151,6 @@ void main() {
           hasDidGainAccessibilityFocusAction: true,
           hasDidLoseAccessibilityFocusAction: true,
           hasDismissAction: true,
-          hasFocusAction: true,
           customActions: <CustomSemanticsAction>[action],
         ),
       );
@@ -1111,9 +1180,12 @@ void main() {
         platformViewId: 105,
         currentValueLength: 10,
         maxValueLength: 15,
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: null,
         role: ui.SemanticsRole.none,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       final _FakeSemanticsNode node = _FakeSemanticsNode(data);
 
@@ -1177,7 +1249,6 @@ void main() {
           hasDidGainAccessibilityFocusAction: false,
           hasDidLoseAccessibilityFocusAction: false,
           hasDismissAction: false,
-          hasFocusAction: false,
         ),
       );
     });
@@ -1214,9 +1285,12 @@ void main() {
         platformViewId: 105,
         currentValueLength: 10,
         maxValueLength: 15,
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: null,
         role: ui.SemanticsRole.none,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       final _FakeSemanticsNode emptyNode = _FakeSemanticsNode(emptyData);
 
@@ -1245,9 +1319,12 @@ void main() {
         currentValueLength: 10,
         maxValueLength: 15,
         customSemanticsActionIds: <int>[CustomSemanticsAction.getIdentifier(action)],
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: Uri(path: 'l'),
         role: ui.SemanticsRole.none,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       final _FakeSemanticsNode fullNode = _FakeSemanticsNode(fullData);
 
@@ -1332,9 +1409,12 @@ void main() {
         currentValueLength: 10,
         maxValueLength: 15,
         customSemanticsActionIds: <int>[CustomSemanticsAction.getIdentifier(action)],
+<<<<<<< HEAD
         headingLevel: 0,
         linkUrl: null,
         role: ui.SemanticsRole.none,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       final _FakeSemanticsNode node = _FakeSemanticsNode(data);
 

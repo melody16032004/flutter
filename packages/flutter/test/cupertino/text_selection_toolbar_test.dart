@@ -205,7 +205,12 @@ void main() {
 
     // Adding 7 more children overflows onto a third page.
     setState(() {
-      children.addAll(List<TestBox>.filled(6, const TestBox()));
+      children.add(const TestBox());
+      children.add(const TestBox());
+      children.add(const TestBox());
+      children.add(const TestBox());
+      children.add(const TestBox());
+      children.add(const TestBox());
     });
     await tester.pumpAndSettle();
     expect(find.byType(TestBox), findsNWidgets(7));

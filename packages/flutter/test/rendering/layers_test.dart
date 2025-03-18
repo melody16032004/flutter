@@ -431,6 +431,9 @@ void main() {
     final PerformanceOverlayLayer layer = PerformanceOverlayLayer(
       overlayRect: Rect.zero,
       optionsMask: 0,
+      rasterizerThreshold: 0,
+      checkerboardRasterCacheImages: false,
+      checkerboardOffscreenLayers: false,
     );
     checkNeedsAddToScene(layer, () {
       layer.overlayRect = unitRect;
@@ -536,6 +539,7 @@ void main() {
       // Causes grandChild to pass its engine layer as `oldLayer`
       grandChild.toImage(const Rect.fromLTRB(0, 0, 10, 10));
 
+<<<<<<< HEAD
       // Ensure we can render the same scene again after rendering an interior
       // layer.
       parent.buildScene(SceneBuilder());
@@ -543,6 +547,12 @@ void main() {
     // TODO(yjbanov): `toImage` doesn't work in HTML: https://github.com/flutter/flutter/issues/49857
     skip: isBrowser && !isSkiaWeb,
   );
+=======
+    // Ensure we can render the same scene again after rendering an interior
+    // layer.
+    parent.buildScene(SceneBuilder());
+  }, skip: isBrowser && !isCanvasKit); // TODO(yjbanov): `toImage` doesn't work in HTML: https://github.com/flutter/flutter/issues/49857
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test(
     'ContainerLayer.toImageSync can render interior layer',
@@ -559,6 +569,7 @@ void main() {
       // Causes grandChild to pass its engine layer as `oldLayer`
       grandChild.toImageSync(const Rect.fromLTRB(0, 0, 10, 10));
 
+<<<<<<< HEAD
       // Ensure we can render the same scene again after rendering an interior
       // layer.
       parent.buildScene(SceneBuilder());
@@ -566,6 +577,12 @@ void main() {
     // TODO(yjbanov): `toImage` doesn't work in HTML: https://github.com/flutter/flutter/issues/49857
     skip: isBrowser && !isSkiaWeb,
   );
+=======
+    // Ensure we can render the same scene again after rendering an interior
+    // layer.
+    parent.buildScene(SceneBuilder());
+  }, skip: isBrowser && !isCanvasKit); // TODO(yjbanov): `toImage` doesn't work in HTML: https://github.com/flutter/flutter/issues/49857
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('PictureLayer does not let you call dispose unless refcount is 0', () {
     PictureLayer layer = PictureLayer(Rect.zero);

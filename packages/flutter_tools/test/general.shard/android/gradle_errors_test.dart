@@ -740,6 +740,7 @@ assembleProfile
           usesAndroidX: true,
         );
 
+<<<<<<< HEAD
         expect(
           testLogger.statusText,
           contains(
@@ -768,6 +769,35 @@ assembleProfile
         ProcessManager: () => processManager,
       },
     );
+=======
+      expect(
+        testLogger.statusText,
+        contains(
+          '\n'
+          '┌─ Flutter Fix ─────────────────────────────────────────────────────────────────────────────────┐\n'
+          '│ The plugin webview_flutter requires a higher Android SDK version.                             │\n'
+          '│ Fix this issue by adding the following to the file /android/app/build.gradle:                 │\n'
+          '│ android {                                                                                     │\n'
+          '│   defaultConfig {                                                                             │\n'
+          '│     minSdkVersion 21                                                                          │\n'
+          '│   }                                                                                           │\n'
+          '│ }                                                                                             │\n'
+          '│                                                                                               │\n'
+          '│ Following this change, your app will not be available to users running Android SDKs below 21. │\n'
+          '│ Consider searching for a version of this plugin that supports these lower versions of the     │\n'
+          '│ Android SDK instead.                                                                          │\n'
+          '│ For more information, see:                                                                    │\n'
+          '│ https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration          │\n'
+          '└───────────────────────────────────────────────────────────────────────────────────────────────┘\n'
+        )
+      );
+    }, overrides: <Type, Generator>{
+      GradleUtils: () => FakeGradleUtils(),
+      Platform: () => fakePlatform('android'),
+      FileSystem: () => fileSystem,
+      ProcessManager: () => processManager,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   // https://issuetracker.google.com/issues/141126614
@@ -876,11 +906,17 @@ Execution failed for task ':app:generateDebugFeatureTransitiveDeps'.
           '│ To regenerate the lockfiles run: `./gradlew :generateLockfiles` in /android/build.gradle │\n'
           '│ To remove dependency locking, remove the `dependencyLocking` from /android/build.gradle  │\n'
           '└──────────────────────────────────────────────────────────────────────────────────────────┘\n'
+<<<<<<< HEAD
           '',
         ),
       );
     },
     overrides: <Type, Generator>{
+=======
+        )
+      );
+    }, overrides: <Type, Generator>{
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       GradleUtils: () => FakeGradleUtils(),
       Platform: () => fakePlatform('linux'),
       FileSystem: () => fileSystem,
@@ -888,10 +924,27 @@ Execution failed for task ':app:generateDebugFeatureTransitiveDeps'.
     },
   );
 
+<<<<<<< HEAD
   testUsingContext(
     'generates correct gradle command for windows environment',
     () async {
       await lockFileDepMissingHandler.handler(
+=======
+  group('Incompatible Kotlin version', () {
+    testWithoutContext('pattern', () {
+      expect(
+        incompatibleKotlinVersionHandler.test('Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 1.5.1, expected version is 1.1.15.'),
+        isTrue,
+      );
+      expect(
+        incompatibleKotlinVersionHandler.test("class 'kotlin.Unit' was compiled with an incompatible version of Kotlin."),
+        isTrue,
+      );
+    });
+
+    testUsingContext('suggestion', () async {
+      await incompatibleKotlinVersionHandler.handler(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         project: FlutterProject.fromDirectoryTest(fileSystem.currentDirectory),
         usesAndroidX: true,
         line: '',
@@ -1344,6 +1397,7 @@ Could not compile build file '…/example/android/build.gradle'.
           usesAndroidX: true,
         );
 
+<<<<<<< HEAD
         // Ensure the error notes the incompatible Gradle/AGP/Java versions, links to related resources,
         // and a portion of the path to where to change their gradle version.
         expect(
@@ -1364,6 +1418,20 @@ Could not compile build file '…/example/android/build.gradle'.
         ProcessManager: () => processManager,
       },
     );
+=======
+      // Ensure the error notes the incompatible Gradle/AGP/Java versions, links to related resources,
+      // and a portion of the path to where to change their gradle version.
+      expect(testLogger.statusText, contains('Gradle version is incompatible with the Java version'));
+      expect(testLogger.statusText, contains('docs.flutter.dev/go/android-java-gradle-error'));
+      expect(testLogger.statusText, contains('gradle-wrapper.properties'));
+      expect(testLogger.statusText, contains('https://docs.gradle.org/current/userguide/compatibility.html#java'));
+    }, overrides: <Type, Generator>{
+      GradleUtils: () => FakeGradleUtils(),
+      Platform: () => fakePlatform('android'),
+      FileSystem: () => fileSystem,
+      ProcessManager: () => processManager,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testUsingContext(

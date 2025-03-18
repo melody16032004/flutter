@@ -353,6 +353,7 @@ class _HighlightSpan {
   }
 
   TextStyle? textStyle(SyntaxHighlighterStyle? style) {
+<<<<<<< HEAD
     return switch (type) {
       _HighlightType.number => style!.numberStyle,
       _HighlightType.comment => style!.commentStyle,
@@ -362,5 +363,24 @@ class _HighlightSpan {
       _HighlightType.klass => style!.classStyle,
       _HighlightType.constant => style!.constantStyle,
     };
+=======
+    if (type == _HighlightType.number) {
+      return style!.numberStyle;
+    } else if (type == _HighlightType.comment) {
+      return style!.commentStyle;
+    } else if (type == _HighlightType.keyword) {
+      return style!.keywordStyle;
+    } else if (type == _HighlightType.string) {
+      return style!.stringStyle;
+    } else if (type == _HighlightType.punctuation) {
+      return style!.punctuationStyle;
+    } else if (type == _HighlightType.klass) {
+      return style!.classStyle;
+    } else if (type == _HighlightType.constant) {
+      return style!.constantStyle;
+    } else {
+      return style!.baseStyle;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }

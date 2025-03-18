@@ -640,6 +640,7 @@ class HotRunner extends ResidentRunner {
         }
         uiIsolatesIds.add(view.uiIsolate!.id);
         // Reload the isolate.
+<<<<<<< HEAD
         final Future<vm_service.Isolate?> reloadIsolate = device.vmService!.getIsolateOrNull(
           view.uiIsolate!.id!,
         );
@@ -671,6 +672,34 @@ class HotRunner extends ResidentRunner {
             }
           }),
         );
+=======
+        final Future<vm_service.Isolate?> reloadIsolate = device.vmService!
+          .getIsolateOrNull(view.uiIsolate!.id!);
+        operations.add(reloadIsolate.then((vm_service.Isolate? isolate) async {
+          if ((isolate != null) && isPauseEvent(isolate.pauseEvent!.kind!)) {
+            // The embedder requires that the isolate is unpaused, because the
+            // runInView method requires interaction with dart engine APIs that
+            // are not thread-safe, and thus must be run on the same thread that
+            // would be blocked by the pause. Simply un-pausing is not sufficient,
+            // because this does not prevent the isolate from immediately hitting
+            // a breakpoint (for example if the breakpoint was placed in a loop
+            // or in a frequently called method) or an exception. Instead, all
+            // breakpoints are first disabled and exception pause mode set to
+            // None, and then the isolate resumed.
+            // These settings to not need restoring as Hot Restart results in
+            // new isolates, which will be configured by the editor as they are
+            // started.
+            final List<Future<void>> breakpointAndExceptionRemoval = <Future<void>>[
+              device.vmService!.service.setIsolatePauseMode(isolate.id!,
+                exceptionPauseMode: vm_service.ExceptionPauseMode.kNone),
+              for (final vm_service.Breakpoint breakpoint in isolate.breakpoints!)
+                device.vmService!.service.removeBreakpoint(isolate.id!, breakpoint.id!),
+            ];
+            await Future.wait(breakpointAndExceptionRemoval);
+            await device.vmService!.service.resume(view.uiIsolate!.id!);
+          }
+        }));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
 
       // The engine handles killing and recreating isolates that it has spawned
@@ -706,7 +735,7 @@ class HotRunner extends ResidentRunner {
       }
     }
     await Future.wait(operations);
-    globals.printTrace('Finished waiting on operations.');
+
     await _launchFromDevFS();
     restartTimer.stop();
     globals.printTrace(
@@ -1552,6 +1581,7 @@ String _describePausedIsolates(int pausedIsolatesFound, String serviceEventKind)
     message.write('$pausedIsolatesFound isolates are ');
     plural = true;
   }
+<<<<<<< HEAD
   message.write(switch (serviceEventKind) {
     vm_service.EventKind.kPauseStart => 'paused (probably due to --start-paused)',
     vm_service.EventKind.kPauseExit =>
@@ -1563,6 +1593,26 @@ String _describePausedIsolates(int pausedIsolatesFound, String serviceEventKind)
     '' => 'paused for various reasons',
     _ => 'paused',
   });
+=======
+  switch (serviceEventKind) {
+    case vm_service.EventKind.kPauseStart:
+      message.write('paused (probably due to --start-paused)');
+    case vm_service.EventKind.kPauseExit:
+      message.write('paused because ${ plural ? 'they have' : 'it has' } terminated');
+    case vm_service.EventKind.kPauseBreakpoint:
+      message.write('paused in the debugger on a breakpoint');
+    case vm_service.EventKind.kPauseInterrupted:
+      message.write('paused due in the debugger');
+    case vm_service.EventKind.kPauseException:
+      message.write('paused in the debugger after an exception was thrown');
+    case vm_service.EventKind.kPausePostRequest:
+      message.write('paused');
+    case '':
+      message.write('paused for various reasons');
+    default:
+      message.write('paused');
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   return message.toString();
 }
 

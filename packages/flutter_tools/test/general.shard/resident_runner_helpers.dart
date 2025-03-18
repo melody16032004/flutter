@@ -142,6 +142,7 @@ class FakeDartDevelopmentServiceException implements DartDevelopmentServiceExcep
 
   @override
   final String message;
+<<<<<<< HEAD
   static const String defaultMessage =
       'A DDS instance is already connected at http://localhost:8181';
 
@@ -149,6 +150,9 @@ class FakeDartDevelopmentServiceException implements DartDevelopmentServiceExcep
   Map<String, Object?> toJson() {
     throw UnimplementedError();
   }
+=======
+  static const String defaultMessage = 'A DDS instance is already connected at http://localhost:8181';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class TestFlutterDevice extends FlutterDevice {

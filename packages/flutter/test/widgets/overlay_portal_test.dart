@@ -25,7 +25,7 @@ class _ManyRelayoutBoundaries extends StatelessWidget {
   }
 }
 
-void rebuildLayoutBuilderSubtree(RenderBox descendant, WidgetTester tester) {
+void rebuildLayoutBuilderSubtree(RenderBox descendant) {
   assert(descendant is! RenderConstrainedLayoutBuilder<BoxConstraints, RenderBox>);
 
   RenderObject? node = descendant.parent;
@@ -33,12 +33,16 @@ void rebuildLayoutBuilderSubtree(RenderBox descendant, WidgetTester tester) {
     if (node is! RenderConstrainedLayoutBuilder<BoxConstraints, RenderBox>) {
       node = node.parent;
     } else {
+<<<<<<< HEAD
       final Element layoutBuilderElement = tester.element(
         find.byElementPredicate(
           (Element element) => element.widget is LayoutBuilder && element.renderObject == node,
         ),
       );
       layoutBuilderElement.markNeedsBuild();
+=======
+      node.markNeedsBuild();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return;
     }
   }
@@ -926,7 +930,7 @@ void main() {
     renderChild1.markNeedsLayout();
     // Dirty both render subtree branches.
     childBox.markNeedsLayout();
-    rebuildLayoutBuilderSubtree(overlayChildBox, tester);
+    rebuildLayoutBuilderSubtree(overlayChildBox);
 
     // Make sure childBox's depth is greater than that of the overlay
     // child, and childBox's parent isn't dirty (childBox is a dirty relayout
@@ -1441,7 +1445,7 @@ void main() {
 
       widgetKey.currentContext!.findRenderObject()!.markNeedsLayout();
       childBox.markNeedsLayout();
-      rebuildLayoutBuilderSubtree(overlayChildBox, tester);
+      rebuildLayoutBuilderSubtree(overlayChildBox);
       // Make sure childBox's depth is greater than that of the overlay child.
       expect(widgetKey.currentContext!.findRenderObject()!.depth, lessThan(overlayChildBox.depth));
 
@@ -1540,7 +1544,7 @@ void main() {
 
       targetGlobalKey.currentContext!.findRenderObject()!.markNeedsLayout();
       childBox.markNeedsLayout();
-      rebuildLayoutBuilderSubtree(overlayChildBox, tester);
+      rebuildLayoutBuilderSubtree(overlayChildBox);
       setState1(() {});
       setState2(() {});
       targetMovedToOverlayEntry3 = true;

@@ -2089,6 +2089,7 @@ void main() {
     final TextStyle? dataTextStyle = _getTextRenderObject(tester, 'Data 1').text.style;
     expect(dataTextStyle, defaultTextStyle.style);
   });
+<<<<<<< HEAD
 
   // This is a regression test for https://github.com/flutter/flutter/issues/143340.
   testWidgets('DataColumn label can be centered', (WidgetTester tester) async {
@@ -2211,6 +2212,8 @@ void main() {
     expect(table.columnWidths![1], const IntrinsicColumnWidth());
     expect(table.columnWidths![2], const IntrinsicColumnWidth(flex: 1));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 RenderParagraph _getTextRenderObject(WidgetTester tester, String text) {

@@ -453,7 +453,7 @@ class SingleActivator with Diagnosticable, MenuSerializableShortcut implements S
   /// In the following example, the shortcut `Control + C` increases the
   /// counter:
   ///
-  /// ** See code in examples/api/lib/widgets/shortcuts/single_activator.0.dart **
+  /// ** See code in examples/api/lib/widgets/shortcuts/single_activator.single_activator.0.dart **
   /// {@end-tool}
   const SingleActivator(
     this.trigger, {
@@ -643,7 +643,7 @@ class SingleActivator with Diagnosticable, MenuSerializableShortcut implements S
 ///
 /// {@tool dartpad}
 /// In the following example, when a key combination results in a question mark,
-/// the [SnackBar] gets shown:
+/// the counter is increased:
 ///
 /// ** See code in examples/api/lib/widgets/shortcuts/character_activator.0.dart **
 /// {@end-tool}
@@ -966,8 +966,8 @@ class ShortcutManager with Diagnosticable, ChangeNotifier {
 /// deletion intent may be to delete a character in a text input, or to delete
 /// a file in a file menu.
 ///
-/// See the article on
-/// [Using Actions and Shortcuts](https://flutter.dev/to/actions-shortcuts)
+/// See the article on [Using Actions and
+/// Shortcuts](https://docs.flutter.dev/development/ui/advanced/actions_and_shortcuts)
 /// for a detailed explanation.
 ///
 /// {@tool dartpad}
@@ -1177,8 +1177,8 @@ class _ShortcutsState extends State<Shortcuts> {
 /// a descendant of this widget handles the key, then the key event will not
 /// reach this widget for handling.
 ///
-/// See the article on
-/// [Using Actions and Shortcuts](https://flutter.dev/to/actions-shortcuts)
+/// See the article on [Using Actions and
+/// Shortcuts](https://docs.flutter.dev/development/ui/advanced/actions_and_shortcuts)
 /// for a detailed explanation.
 ///
 /// See also:

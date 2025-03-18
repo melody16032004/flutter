@@ -19,8 +19,12 @@ const List<String> kReleaseChannels = <String>[
   FrameworkRepository.defaultBranch,
 ];
 
+<<<<<<< HEAD
 const String kReleaseDocumentationUrl =
     'https://github.com/flutter/flutter/blob/main/docs/releases/Flutter-Cherrypick-Process.md';
+=======
+const String kReleaseDocumentationUrl = 'https://github.com/flutter/flutter/wiki/Flutter-Cherrypick-Process';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 const String kLuciPackagingConsoleLink =
     'https://ci.chromium.org/p/dart-internal/g/flutter_packaging/console';
@@ -32,12 +36,17 @@ const String discordReleaseChannel =
 
 const String flutterReleaseHotline = 'https://mail.google.com/chat/u/0/#chat/space/AAAA6RKcK2k';
 
+<<<<<<< HEAD
 const String hotfixToStableWiki = 'https://github.com/flutter/flutter/blob/main/CHANGELOG.md';
+=======
+const String hotfixToStableWiki =
+    'https://github.com/flutter/flutter/wiki/Hotfixes-to-the-Stable-Channel';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 const String flutterAnnounceGroup = 'https://groups.google.com/g/flutter-announce';
 
 const String hotfixDocumentationBestPractices =
-    'https://github.com/flutter/flutter/blob/main/docs/releases/Hotfix-Documentation-Best-Practices.md';
+    'https://github.com/flutter/flutter/wiki/Hotfix-Documentation-Best-Practices';
 
 final RegExp releaseCandidateBranchRegex = RegExp(r'flutter-(\d+)\.(\d+)-candidate\.(\d+)');
 
@@ -148,6 +157,7 @@ String getNewPrLink({
 }) {
   assert(state.releaseChannel.isNotEmpty);
   assert(state.releaseVersion.isNotEmpty);
+<<<<<<< HEAD
   final (pb.Repository repository, String repoLabel) = switch (repoName) {
     'flutter' => (state.framework, 'Framework'),
     'engine' => (state.engine, 'Engine'),
@@ -158,6 +168,23 @@ String getNewPrLink({
   };
   final String candidateBranch = repository.candidateBranch;
   final String workingBranch = repository.workingBranch;
+=======
+  late final String candidateBranch;
+  late final String workingBranch;
+  late final String repoLabel;
+  switch (repoName) {
+    case 'flutter':
+      candidateBranch = state.framework.candidateBranch;
+      workingBranch = state.framework.workingBranch;
+      repoLabel = 'Framework';
+    case 'engine':
+      candidateBranch = state.engine.candidateBranch;
+      workingBranch = state.engine.workingBranch;
+      repoLabel = 'Engine';
+    default:
+      throw ConductorException('Expected repoName to be one of flutter or engine but got $repoName.');
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   assert(candidateBranch.isNotEmpty);
   assert(workingBranch.isNotEmpty);
   final String title =

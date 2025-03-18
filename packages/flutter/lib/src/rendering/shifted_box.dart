@@ -15,7 +15,6 @@ import 'box.dart';
 import 'debug.dart';
 import 'debug_overflow_indicator.dart';
 import 'layer.dart';
-import 'layout_helper.dart';
 import 'object.dart';
 import 'stack.dart' show RelativeRect;
 
@@ -59,9 +58,8 @@ abstract class RenderShiftedBox extends RenderBox with RenderObjectWithChildMixi
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
     double? result;
     final RenderBox? child = this.child;
-    assert(!debugNeedsLayout);
     if (child != null) {
-      assert(!child.debugNeedsLayout);
+      assert(!debugNeedsLayout);
       result = child.getDistanceToActualBaseline(baseline);
       final BoxParentData childParentData = child.parentData! as BoxParentData;
       if (result != null) {
@@ -119,15 +117,18 @@ class RenderPadding extends RenderShiftedBox {
        _padding = padding,
        super(child);
 
-  EdgeInsets? _resolvedPaddingCache;
-  EdgeInsets get _resolvedPadding {
-    final EdgeInsets returnValue = _resolvedPaddingCache ??= padding.resolve(textDirection);
-    assert(returnValue.isNonNegative);
-    return returnValue;
+  EdgeInsets? _resolvedPadding;
+
+  void _resolve() {
+    if (_resolvedPadding != null) {
+      return;
+    }
+    _resolvedPadding = padding.resolve(textDirection);
+    assert(_resolvedPadding!.isNonNegative);
   }
 
   void _markNeedResolution() {
-    _resolvedPaddingCache = null;
+    _resolvedPadding = null;
     markNeedsLayout();
   }
 
@@ -162,57 +163,86 @@ class RenderPadding extends RenderShiftedBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    final double totalHorizontalPadding = _resolvedPadding!.left + _resolvedPadding!.right;
+    final double totalVerticalPadding = _resolvedPadding!.top + _resolvedPadding!.bottom;
     if (child != null) {
       // Relies on double.infinity absorption.
+<<<<<<< HEAD
       return child!.getMinIntrinsicWidth(math.max(0.0, height - padding.vertical)) +
           padding.horizontal;
+=======
+      return child!.getMinIntrinsicWidth(math.max(0.0, height - totalVerticalPadding)) + totalHorizontalPadding;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return padding.horizontal;
+    return totalHorizontalPadding;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    final double totalHorizontalPadding = _resolvedPadding!.left + _resolvedPadding!.right;
+    final double totalVerticalPadding = _resolvedPadding!.top + _resolvedPadding!.bottom;
     if (child != null) {
       // Relies on double.infinity absorption.
+<<<<<<< HEAD
       return child!.getMaxIntrinsicWidth(math.max(0.0, height - padding.vertical)) +
           padding.horizontal;
+=======
+      return child!.getMaxIntrinsicWidth(math.max(0.0, height - totalVerticalPadding)) + totalHorizontalPadding;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return padding.horizontal;
+    return totalHorizontalPadding;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    final double totalHorizontalPadding = _resolvedPadding!.left + _resolvedPadding!.right;
+    final double totalVerticalPadding = _resolvedPadding!.top + _resolvedPadding!.bottom;
     if (child != null) {
       // Relies on double.infinity absorption.
+<<<<<<< HEAD
       return child!.getMinIntrinsicHeight(math.max(0.0, width - padding.horizontal)) +
           padding.vertical;
+=======
+      return child!.getMinIntrinsicHeight(math.max(0.0, width - totalHorizontalPadding)) + totalVerticalPadding;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return padding.vertical;
+    return totalVerticalPadding;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    final double totalHorizontalPadding = _resolvedPadding!.left + _resolvedPadding!.right;
+    final double totalVerticalPadding = _resolvedPadding!.top + _resolvedPadding!.bottom;
     if (child != null) {
       // Relies on double.infinity absorption.
+<<<<<<< HEAD
       return child!.getMaxIntrinsicHeight(math.max(0.0, width - padding.horizontal)) +
           padding.vertical;
+=======
+      return child!.getMaxIntrinsicHeight(math.max(0.0, width - totalHorizontalPadding)) + totalVerticalPadding;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return padding.vertical;
+    return totalVerticalPadding;
   }
 
   @override
   @protected
   Size computeDryLayout(covariant BoxConstraints constraints) {
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    assert(_resolvedPadding != null);
     if (child == null) {
-      return constraints.constrain(Size(padding.horizontal, padding.vertical));
+      return constraints.constrain(Size(
+        _resolvedPadding!.left + _resolvedPadding!.right,
+        _resolvedPadding!.top + _resolvedPadding!.bottom,
+      ));
     }
-    final BoxConstraints innerConstraints = constraints.deflate(padding);
+    final BoxConstraints innerConstraints = constraints.deflate(_resolvedPadding!);
     final Size childSize = child!.getDryLayout(innerConstraints);
+<<<<<<< HEAD
     return constraints.constrain(
       Size(padding.horizontal + childSize.width, padding.vertical + childSize.height),
     );
@@ -232,20 +262,41 @@ class RenderPadding extends RenderShiftedBox {
   }
 
   @override
+=======
+    return constraints.constrain(Size(
+      _resolvedPadding!.left + childSize.width + _resolvedPadding!.right,
+      _resolvedPadding!.top + childSize.height + _resolvedPadding!.bottom,
+    ));
+  }
+
+  @override
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performLayout() {
     final BoxConstraints constraints = this.constraints;
-    final EdgeInsets padding = _resolvedPadding;
+    _resolve();
+    assert(_resolvedPadding != null);
     if (child == null) {
-      size = constraints.constrain(Size(padding.horizontal, padding.vertical));
+      size = constraints.constrain(Size(
+        _resolvedPadding!.left + _resolvedPadding!.right,
+        _resolvedPadding!.top + _resolvedPadding!.bottom,
+      ));
       return;
     }
-    final BoxConstraints innerConstraints = constraints.deflate(padding);
+    final BoxConstraints innerConstraints = constraints.deflate(_resolvedPadding!);
     child!.layout(innerConstraints, parentUsesSize: true);
     final BoxParentData childParentData = child!.parentData! as BoxParentData;
+<<<<<<< HEAD
     childParentData.offset = Offset(padding.left, padding.top);
     size = constraints.constrain(
       Size(padding.horizontal + child!.size.width, padding.vertical + child!.size.height),
     );
+=======
+    childParentData.offset = Offset(_resolvedPadding!.left, _resolvedPadding!.top);
+    size = constraints.constrain(Size(
+      _resolvedPadding!.left + child!.size.width + _resolvedPadding!.right,
+      _resolvedPadding!.top + child!.size.height + _resolvedPadding!.bottom,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -253,11 +304,15 @@ class RenderPadding extends RenderShiftedBox {
     super.debugPaintSize(context, offset);
     assert(() {
       final Rect outerRect = offset & size;
+<<<<<<< HEAD
       debugPaintPadding(
         context.canvas,
         outerRect,
         child != null ? _resolvedPaddingCache!.deflateRect(outerRect) : null,
       );
+=======
+      debugPaintPadding(context.canvas, outerRect, child != null ? _resolvedPadding!.deflateRect(outerRect) : null);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return true;
     }());
   }
@@ -285,16 +340,14 @@ abstract class RenderAligningShiftedBox extends RenderShiftedBox {
        _textDirection = textDirection,
        super(child);
 
-  /// The [Alignment] to use for aligning the child.
-  ///
-  /// This is the [alignment] resolved against [textDirection]. Subclasses should
-  /// use [resolvedAlignment] instead of [alignment] directly, for computing the
-  /// child's offset.
-  ///
-  /// The [performLayout] method will be called when the value changes.
-  @protected
-  Alignment get resolvedAlignment => _resolvedAlignment ??= alignment.resolve(textDirection);
   Alignment? _resolvedAlignment;
+
+  void _resolve() {
+    if (_resolvedAlignment != null) {
+      return;
+    }
+    _resolvedAlignment = alignment.resolve(textDirection);
+  }
 
   void _markNeedResolution() {
     _resolvedAlignment = null;
@@ -349,12 +402,14 @@ abstract class RenderAligningShiftedBox extends RenderShiftedBox {
   /// this object's own size has been set.
   @protected
   void alignChild() {
+    _resolve();
     assert(child != null);
     assert(!child!.debugNeedsLayout);
     assert(child!.hasSize);
     assert(hasSize);
+    assert(_resolvedAlignment != null);
     final BoxParentData childParentData = child!.parentData! as BoxParentData;
-    childParentData.offset = resolvedAlignment.alongOffset(size - child!.size as Offset);
+    childParentData.offset = _resolvedAlignment!.alongOffset(size - child!.size as Offset);
   }
 
   @override
@@ -697,22 +752,6 @@ class RenderConstrainedOverflowBox extends RenderAligningShiftedBox {
   }
 
   @override
-  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    final RenderBox? child = this.child;
-    if (child == null) {
-      return null;
-    }
-    final BoxConstraints childConstraints = _getInnerConstraints(constraints);
-    final double? result = child.getDryBaseline(childConstraints, baseline);
-    if (result == null) {
-      return null;
-    }
-    final Size childSize = child.getDryLayout(childConstraints);
-    final Size size = getDryLayout(constraints);
-    return result + resolvedAlignment.alongOffset(size - childSize as Offset).dy;
-  }
-
-  @override
   void performLayout() {
     if (child != null) {
       child!.layout(_getInnerConstraints(constraints), parentUsesSize: true);
@@ -867,22 +906,6 @@ class RenderConstraintsTransformBox extends RenderAligningShiftedBox
     return childSize == null ? constraints.smallest : constraints.constrain(childSize);
   }
 
-  @override
-  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    final RenderBox? child = this.child;
-    if (child == null) {
-      return null;
-    }
-    final BoxConstraints childConstraints = constraintsTransform(constraints);
-    final double? result = child.getDryBaseline(childConstraints, baseline);
-    if (result == null) {
-      return null;
-    }
-    final Size childSize = child.getDryLayout(childConstraints);
-    final Size size = constraints.constrain(childSize);
-    return result + resolvedAlignment.alongOffset(size - childSize as Offset).dy;
-  }
-
   Rect _overflowContainerRect = Rect.zero;
   Rect _overflowChildRect = Rect.zero;
   bool _isOverflowing = false;
@@ -913,7 +936,9 @@ class RenderConstraintsTransformBox extends RenderAligningShiftedBox
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    if (child == null) {
+    // There's no point in drawing the child if we're empty, or there is no
+    // child.
+    if (child == null || size.isEmpty) {
       return;
     }
 
@@ -934,9 +959,6 @@ class RenderConstraintsTransformBox extends RenderAligningShiftedBox
 
     // Display the overflow indicator if clipBehavior is Clip.none.
     assert(() {
-      if (size.isEmpty) {
-        return true;
-      }
       switch (clipBehavior) {
         case Clip.none:
           paintOverflowIndicator(context, offset, _overflowContainerRect, _overflowChildRect);
@@ -1040,6 +1062,7 @@ class RenderSizedOverflowBox extends RenderAligningShiftedBox {
 
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
+<<<<<<< HEAD
     return child?.getDistanceToActualBaseline(baseline) ??
         super.computeDistanceToActualBaseline(baseline);
   }
@@ -1049,14 +1072,12 @@ class RenderSizedOverflowBox extends RenderAligningShiftedBox {
     final RenderBox? child = this.child;
     if (child == null) {
       return null;
+=======
+    if (child != null) {
+      return child!.getDistanceToActualBaseline(baseline);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    final double? result = child.getDryBaseline(constraints, baseline);
-    if (result == null) {
-      return null;
-    }
-    final Size childSize = child.getDryLayout(constraints);
-    final Size size = getDryLayout(constraints);
-    return result + resolvedAlignment.alongOffset(size - childSize as Offset).dy;
+    return super.computeDistanceToActualBaseline(baseline);
   }
 
   @override
@@ -1221,22 +1242,6 @@ class RenderFractionallySizedOverflowBox extends RenderAligningShiftedBox {
       return constraints.constrain(childSize);
     }
     return constraints.constrain(_getInnerConstraints(constraints).constrain(Size.zero));
-  }
-
-  @override
-  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    final RenderBox? child = this.child;
-    if (child == null) {
-      return null;
-    }
-    final BoxConstraints childConstraints = _getInnerConstraints(constraints);
-    final double? result = child.getDryBaseline(childConstraints, baseline);
-    if (result == null) {
-      return null;
-    }
-    final Size childSize = child.getDryLayout(childConstraints);
-    final Size size = getDryLayout(constraints);
-    return result + resolvedAlignment.alongOffset(size - childSize as Offset).dy;
   }
 
   @override
@@ -1435,6 +1440,7 @@ class RenderCustomSingleChildLayoutBox extends RenderShiftedBox {
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     final RenderBox? child = this.child;
     if (child == null) {
@@ -1457,6 +1463,8 @@ class RenderCustomSingleChildLayoutBox extends RenderShiftedBox {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performLayout() {
     size = _getSize(constraints);
     if (child != null) {
@@ -1518,6 +1526,7 @@ class RenderBaseline extends RenderShiftedBox {
     markNeedsLayout();
   }
 
+<<<<<<< HEAD
   ({Size size, double top}) _computeSizes(
     covariant BoxConstraints constraints,
     ChildLayouter layoutChild,
@@ -1552,12 +1561,23 @@ class RenderBaseline extends RenderShiftedBox {
     final double? result2 = child?.getDryBaseline(constraints.loosen(), baselineType);
     if (result1 == null || result2 == null) {
       return null;
+=======
+  @override
+  @protected
+  Size computeDryLayout(covariant BoxConstraints constraints) {
+    if (child != null) {
+      assert(debugCannotComputeDryLayout(
+        reason: 'Baseline metrics are only available after a full layout.',
+      ));
+      return Size.zero;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
-    return this.baseline + result1 - result2;
+    return constraints.smallest;
   }
 
   @override
   void performLayout() {
+<<<<<<< HEAD
     final (:Size size, :double top) = _computeSizes(
       constraints,
       ChildLayoutHelper.layoutChild,
@@ -1565,6 +1585,21 @@ class RenderBaseline extends RenderShiftedBox {
     );
     this.size = size;
     (child?.parentData as BoxParentData?)?.offset = Offset(0.0, top);
+=======
+    if (child != null) {
+      final BoxConstraints constraints = this.constraints;
+      child!.layout(constraints.loosen(), parentUsesSize: true);
+      final double childBaseline = child!.getDistanceToBaseline(baselineType)!;
+      final double actualBaseline = baseline;
+      final double top = actualBaseline - childBaseline;
+      final BoxParentData childParentData = child!.parentData! as BoxParentData;
+      childParentData.offset = Offset(0.0, top);
+      final Size childSize = child!.size;
+      size = constraints.constrain(Size(childSize.width, top + childSize.height));
+    } else {
+      size = constraints.smallest;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

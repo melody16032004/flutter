@@ -40,6 +40,9 @@ interface class FlutterTestRunner {
     String? tags,
     String? excludeTags,
     bool enableVmService = false,
+<<<<<<< HEAD
+=======
+    bool ipv6 = false,
     bool machine = false,
     String? precompiledDillPath,
     Map<String, String>? precompiledDillFiles,
@@ -51,11 +54,78 @@ interface class FlutterTestRunner {
     String? icudtlPath,
     Directory? coverageDirectory,
     bool web = false,
+    bool useWasm = false,
     String? randomSeed,
     String? reporter,
     String? fileReporter,
     String? timeout,
-    bool failFast = false,
+    bool runSkipped = false,
+    int? shardIndex,
+    int? totalShards,
+    Device? integrationTestDevice,
+    String? integrationTestUserIdentifier,
+    TestTimeRecorder? testTimeRecorder,
+    TestCompilerNativeAssetsBuilder? nativeAssetsBuilder,
+  });
+
+  /// Runs tests using the experimental strategy of spawning each test in a
+  /// separate lightweight Engine.
+  Future<int> runTestsBySpawningLightweightEngines(
+    List<Uri> testFiles, {
+    required DebuggingOptions debuggingOptions,
+    List<String> names = const <String>[],
+    List<String> plainNames = const <String>[],
+    String? tags,
+    String? excludeTags,
+    bool machine = false,
+    bool updateGoldens = false,
+    required int? concurrency,
+    String? testAssetDirectory,
+    FlutterProject? flutterProject,
+    String? icudtlPath,
+    String? randomSeed,
+    String? reporter,
+    String? fileReporter,
+    String? timeout,
+    bool runSkipped = false,
+    int? shardIndex,
+    int? totalShards,
+    TestTimeRecorder? testTimeRecorder,
+    TestCompilerNativeAssetsBuilder? nativeAssetsBuilder,
+  });
+}
+
+class _FlutterTestRunnerImpl implements FlutterTestRunner {
+  const _FlutterTestRunnerImpl();
+
+  @override
+  Future<int> runTests(
+    TestWrapper testWrapper,
+    List<Uri> testFiles, {
+    required DebuggingOptions debuggingOptions,
+    List<String> names = const <String>[],
+    List<String> plainNames = const <String>[],
+    String? tags,
+    String? excludeTags,
+    bool enableVmService = false,
+    bool ipv6 = false,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
+    bool machine = false,
+    String? precompiledDillPath,
+    Map<String, String>? precompiledDillFiles,
+    bool updateGoldens = false,
+    TestWatcher? watcher,
+    required int? concurrency,
+    String? testAssetDirectory,
+    FlutterProject? flutterProject,
+    String? icudtlPath,
+    Directory? coverageDirectory,
+    bool web = false,
+    bool useWasm = false,
+    String? randomSeed,
+    String? reporter,
+    String? fileReporter,
+    String? timeout,
     bool runSkipped = false,
     int? shardIndex,
     int? totalShards,
@@ -70,6 +140,7 @@ interface class FlutterTestRunner {
 
     // Compute the command-line arguments for package:test.
     final List<String> testArgs = <String>[
+<<<<<<< HEAD
       if (!globals.terminal.supportsColor) '--no-color',
       if (debuggingOptions.startPaused) '--pause-after-load',
       if (machine) ...<String>['-r', 'json'] else if (reporter != null) ...<String>['-r', reporter],
@@ -85,6 +156,38 @@ interface class FlutterTestRunner {
       if (runSkipped) '--run-skipped',
       if (totalShards != null) '--total-shards=$totalShards',
       if (shardIndex != null) '--shard-index=$shardIndex',
+=======
+      if (!globals.terminal.supportsColor)
+        '--no-color',
+      if (debuggingOptions.startPaused)
+        '--pause-after-load',
+      if (machine)
+        ...<String>['-r', 'json']
+      else if (reporter != null)
+        ...<String>['-r', reporter],
+      if (fileReporter != null)
+        '--file-reporter=$fileReporter',
+      if (timeout != null)
+        ...<String>['--timeout', timeout],
+      if (concurrency != null)
+        '--concurrency=$concurrency',
+      for (final String name in names)
+        ...<String>['--name', name],
+      for (final String plainName in plainNames)
+        ...<String>['--plain-name', plainName],
+      if (randomSeed != null)
+        '--test-randomize-ordering-seed=$randomSeed',
+      if (tags != null)
+        ...<String>['--tags', tags],
+      if (excludeTags != null)
+        ...<String>['--exclude-tags', excludeTags],
+      if (runSkipped)
+        '--run-skipped',
+      if (totalShards != null)
+        '--total-shards=$totalShards',
+      if (shardIndex != null)
+        '--shard-index=$shardIndex',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       '--chain-stack-traces',
     ];
 
@@ -104,7 +207,7 @@ interface class FlutterTestRunner {
         testFiles: testFiles.map((Uri uri) => uri.toFilePath()).toList(),
         buildInfo: debuggingOptions.buildInfo,
         webRenderer: debuggingOptions.webRenderer,
-        useWasm: debuggingOptions.webUseWasm,
+        useWasm: useWasm,
       );
       testArgs
         ..add('--platform=chrome')
@@ -129,6 +232,7 @@ interface class FlutterTestRunner {
             fileSystem: globals.fs,
             platform: globals.platform,
             processManager: globals.processManager,
+<<<<<<< HEAD
             operatingSystemUtils: globals.os,
             browserFinder: findChromeExecutable,
             logger: globals.logger,
@@ -138,6 +242,22 @@ interface class FlutterTestRunner {
           useWasm: debuggingOptions.webUseWasm,
         );
       });
+=======
+            chromiumLauncher: ChromiumLauncher(
+              fileSystem: globals.fs,
+              platform: globals.platform,
+              processManager: globals.processManager,
+              operatingSystemUtils: globals.os,
+              browserFinder: findChromeExecutable,
+              logger: globals.logger,
+            ),
+            testTimeRecorder: testTimeRecorder,
+            webRenderer: debuggingOptions.webRenderer,
+            useWasm: useWasm,
+          );
+        },
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       await testWrapper.main(testArgs);
       return exitCode;
     }
@@ -589,7 +709,6 @@ class SpawnPlugin extends PlatformPlugin {
     String? reporter,
     String? fileReporter,
     String? timeout,
-    bool failFast = false,
     bool runSkipped = false,
     int? shardIndex,
     int? totalShards,
@@ -634,6 +753,7 @@ class SpawnPlugin extends PlatformPlugin {
 
     // Compute the command-line arguments for package:test.
     final List<String> packageTestArgs = <String>[
+<<<<<<< HEAD
       if (!globals.terminal.supportsColor) '--no-color',
       if (machine) ...<String>['-r', 'json'] else if (reporter != null) ...<String>['-r', reporter],
       if (fileReporter != null) '--file-reporter=$fileReporter',
@@ -648,6 +768,36 @@ class SpawnPlugin extends PlatformPlugin {
       if (runSkipped) '--run-skipped',
       if (totalShards != null) '--total-shards=$totalShards',
       if (shardIndex != null) '--shard-index=$shardIndex',
+=======
+      if (!globals.terminal.supportsColor)
+        '--no-color',
+      if (machine)
+        ...<String>['-r', 'json']
+      else if (reporter != null)
+        ...<String>['-r', reporter],
+      if (fileReporter != null)
+        '--file-reporter=$fileReporter',
+      if (timeout != null)
+        ...<String>['--timeout', timeout],
+      if (concurrency != null)
+        '--concurrency=$concurrency',
+      for (final String name in names)
+        ...<String>['--name', name],
+      for (final String plainName in plainNames)
+        ...<String>['--plain-name', plainName],
+      if (randomSeed != null)
+        '--test-randomize-ordering-seed=$randomSeed',
+      if (tags != null)
+        ...<String>['--tags', tags],
+      if (excludeTags != null)
+        ...<String>['--exclude-tags', excludeTags],
+      if (runSkipped)
+        '--run-skipped',
+      if (totalShards != null)
+        '--total-shards=$totalShards',
+      if (shardIndex != null)
+        '--shard-index=$shardIndex',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       '--chain-stack-traces',
     ];
 
@@ -695,9 +845,17 @@ class SpawnPlugin extends PlatformPlugin {
       '--non-interactive',
       '--use-test-fonts',
       '--disable-asset-fonts',
+<<<<<<< HEAD
       '--packages=${debuggingOptions.buildInfo.packageConfigPath}',
       if (testAssetDirectory != null) '--flutter-assets-dir=$testAssetDirectory',
       if (debuggingOptions.nullAssertions) '--dart-flags=--null_assertions',
+=======
+      '--packages=${debuggingOptions.buildInfo.packagesPath}',
+      if (testAssetDirectory != null)
+        '--flutter-assets-dir=$testAssetDirectory',
+      if (debuggingOptions.nullAssertions)
+        '--dart-flags=--null_assertions',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ...debuggingOptions.dartEntrypointArgs,
       rootTestIsolateSpawnerDillFile.absolute.path,
     ];

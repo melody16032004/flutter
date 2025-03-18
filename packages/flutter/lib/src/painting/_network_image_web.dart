@@ -188,11 +188,20 @@ class NetworkImage extends image_provider.ImageProvider<image_provider.NetworkIm
       return loadViaDecode();
     }
 
+<<<<<<< HEAD
     if (!isSkiaWeb) {
       // This branch is only hit by the HTML renderer, which is deprecated. The
       // HTML renderer supports loading images with CORS restrictions, so we
       // don't need to catch errors and try loading the image in an <img> tag
       // in this case.
+=======
+    // We use a different method when headers are set because the
+    // `ui_web.createImageCodecFromUrl` method is not capable of handling headers.
+    if (isCanvasKit || containsNetworkImageHeaders) {
+      final Completer<web.XMLHttpRequest> completer =
+          Completer<web.XMLHttpRequest>();
+      final web.XMLHttpRequest request = httpRequestFactory();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Resolve the Codec before passing it to
       // [MultiFrameImageStreamCompleter] so any errors aren't reported

@@ -96,6 +96,7 @@ void main() {
         },
       );
 
+<<<<<<< HEAD
       testUsingContext(
         'does not check that Flutter installation is up-to-date with --machine flag present anywhere',
         () async {
@@ -123,6 +124,11 @@ void main() {
           final FlutterCommandRunner runner =
               createTestCommandRunner(DummyFlutterCommand()) as FlutterCommandRunner;
           final FakeFlutterVersion version = globals.flutterVersion as FakeFlutterVersion;
+=======
+      testUsingContext('does not check that Flutter installation is up-to-date with CI=true in environment', () async {
+        final FlutterCommandRunner runner = createTestCommandRunner(DummyFlutterCommand()) as FlutterCommandRunner;
+        final FakeFlutterVersion version = globals.flutterVersion as FakeFlutterVersion;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
           await runner.run(<String>['dummy', '--version']);
 
@@ -446,21 +452,4 @@ class FakeStdio extends Stdio {
   int? get terminalLines => hasFakeTerminal ? 24 : null;
   @override
   bool get supportsAnsiEscapes => hasFakeTerminal;
-}
-
-final class _FlutterCommandWithItsOwnMachineFlag extends FlutterCommand {
-  _FlutterCommandWithItsOwnMachineFlag() {
-    argParser.addFlag('machine', negatable: false);
-  }
-
-  @override
-  String get name => 'dummy-with-machine';
-
-  @override
-  Future<FlutterCommandResult> runCommand() async {
-    return FlutterCommandResult.success();
-  }
-
-  @override
-  String get description => 'does nothing, this time with --machine';
 }

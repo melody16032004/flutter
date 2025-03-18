@@ -67,8 +67,15 @@ class BuildArchitectureMigration extends ProjectMigrator {
   final Directory _buildDirectory;
 
   @override
+<<<<<<< HEAD
   Future<void> migrate() async {
     final Directory oldRunnerDirectory = _buildDirectory.parent.childDirectory('runner');
+=======
+  void migrate() {
+    final Directory oldRunnerDirectory = _buildDirectory
+      .parent
+      .childDirectory('runner');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     if (oldRunnerDirectory.existsSync()) {
       logger.printTrace('''
 Deleting previous build folder ${oldRunnerDirectory.path}.

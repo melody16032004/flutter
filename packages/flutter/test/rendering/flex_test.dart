@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -937,23 +935,27 @@ void main() {
     expect(box3.size, const Size(100.0, 100.0));
   });
 
-  test('children with no baselines are top-aligned', () {
-    const BoxConstraints square = BoxConstraints.tightFor(width: 100.0, height: 100.0);
-    final RenderConstrainedBox box1 = RenderConstrainedBox(additionalConstraints: square);
-    final RenderConstrainedBox box2 = RenderConstrainedBox(additionalConstraints: square);
+  test('Intrinsics throw if alignment is baseline', () {
+    final RenderDecoratedBox box = RenderDecoratedBox(
+      decoration: const BoxDecoration(),
+    );
     final RenderFlex flex = RenderFlex(
       textDirection: TextDirection.ltr,
-      children: <RenderBox>[box1, box2],
+      children: <RenderBox>[box],
       crossAxisAlignment: CrossAxisAlignment.baseline,
       textBaseline: TextBaseline.alphabetic,
-      verticalDirection: VerticalDirection.up,
     );
-    layout(flex);
+    layout(flex, constraints: const BoxConstraints(
+      minWidth: 200.0, maxWidth: 200.0, minHeight: 200.0, maxHeight: 200.0,
+    ));
 
-    // Not start-aligned.
-    expect(box1.localToGlobal(Offset.zero).dy, 0.0);
-    expect(box2.localToGlobal(Offset.zero).dy, 0.0);
+    final Matcher cannotCalculateIntrinsics = throwsA(isAssertionError.having(
+      (AssertionError e) => e.message,
+      'message',
+      'Intrinsics are not available for CrossAxisAlignment.baseline.',
+    ));
 
+<<<<<<< HEAD
     flex.verticalDirection = VerticalDirection.down;
     pumpFrame();
     expect(box1.localToGlobal(Offset.zero).dy, 0.0);
@@ -1264,6 +1266,12 @@ void main() {
       expect(flex.getDryLayout(BoxConstraints.loose(size)), const Size(300.0, 10.0));
       expect(flex.getDryBaseline(BoxConstraints.loose(size), TextBaseline.alphabetic), 10.0);
     });
+=======
+    expect(() => flex.getMaxIntrinsicHeight(100), cannotCalculateIntrinsics);
+    expect(() => flex.getMinIntrinsicHeight(100), cannotCalculateIntrinsics);
+    expect(() => flex.getMaxIntrinsicWidth(100), cannotCalculateIntrinsics);
+    expect(() => flex.getMinIntrinsicWidth(100), cannotCalculateIntrinsics);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   test('Can call methods that check overflow even if overflow value is not set', () {
@@ -1298,6 +1306,7 @@ void main() {
     expect(exceptions, hasLength(1));
   });
 }
+<<<<<<< HEAD
 
 class RenderFlowBaselineTestBox extends RenderBox {
   static const Size gridSize = Size(10, 10);
@@ -1342,3 +1351,5 @@ class RenderFlowBaselineTestBox extends RenderBox {
     size = computeDryLayout(constraints);
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

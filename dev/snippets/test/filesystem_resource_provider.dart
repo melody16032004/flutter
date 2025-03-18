@@ -6,8 +6,13 @@ import 'dart:io' as io;
 import 'dart:typed_data';
 
 import 'package:analyzer/file_system/file_system.dart';
+<<<<<<< HEAD
 import 'package:analyzer/source/file_source.dart';
 import 'package:analyzer/source/source.dart';
+=======
+import 'package:analyzer/src/generated/source.dart';
+import 'package:analyzer/src/source/source_resource.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:file/file.dart' as file;
 import 'package:file/local.dart' as file;
 import 'package:meta/meta.dart';
@@ -94,11 +99,6 @@ class FileSystemResourceProvider implements ResourceProvider {
       }
       return true;
     }());
-  }
-
-  @override
-  Link getLink(String path) {
-    throw UnimplementedError('getLink Not Implemented');
   }
 }
 

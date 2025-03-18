@@ -302,8 +302,13 @@ class RenderSliverMainAxisGroup extends RenderSliver
       assert(() {
         if (child != null && maxPaintExtent.isInfinite) {
           throw FlutterError(
+<<<<<<< HEAD
             'Unreachable sliver found, you may have a sliver following '
             'a sliver with an infinite extent. ',
+=======
+            'Unreachable sliver found, you may have a sliver behind '
+            'a sliver with infinite extent. '
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           );
         }
         return true;
@@ -357,6 +362,7 @@ class RenderSliverMainAxisGroup extends RenderSliver
 
   @override
   void paint(PaintingContext context, Offset offset) {
+<<<<<<< HEAD
     if (firstChild == null) {
       return;
     }
@@ -390,20 +396,14 @@ class RenderSliverMainAxisGroup extends RenderSliver
         addExtent = true;
     }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     RenderSliver? child = lastChild;
-    while (child != null) {
-      final double mainAxisDelta = childMainAxisPosition(child);
-      final double crossAxisDelta = childCrossAxisPosition(child);
-      Offset childOffset = Offset(
-        originOffset.dx + mainAxisUnit.dx * mainAxisDelta + crossAxisUnit.dx * crossAxisDelta,
-        originOffset.dy + mainAxisUnit.dy * mainAxisDelta + crossAxisUnit.dy * crossAxisDelta,
-      );
-      if (addExtent) {
-        childOffset += mainAxisUnit * child.geometry!.paintExtent;
-      }
 
+    while (child != null) {
       if (child.geometry!.visible) {
-        context.paintChild(child, childOffset);
+        final SliverPhysicalParentData childParentData = child.parentData! as SliverPhysicalParentData;
+        context.paintChild(child, offset + childParentData.paintOffset);
       }
       child = childBefore(child);
     }

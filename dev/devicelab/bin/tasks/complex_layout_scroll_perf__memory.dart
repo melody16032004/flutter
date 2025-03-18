@@ -9,6 +9,7 @@ import 'package:flutter_devicelab/tasks/perf_tests.dart';
 
 Future<void> main() async {
   deviceOperatingSystem = DeviceOperatingSystem.android;
+<<<<<<< HEAD
   await task(
     MemoryTest(
       '${flutterDirectory.path}/dev/benchmarks/complex_layout',
@@ -17,4 +18,11 @@ Future<void> main() async {
       requiresTapToStart: true,
     ).run,
   );
+=======
+  await task(MemoryTest(
+    '${flutterDirectory.path}/dev/benchmarks/complex_layout',
+    'test_memory/scroll_perf.dart',
+    'com.yourcompany.complexLayout',
+  ).run);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

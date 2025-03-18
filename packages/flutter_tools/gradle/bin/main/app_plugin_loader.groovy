@@ -17,7 +17,11 @@ class FlutterAppPluginLoaderPlugin implements Plugin<Settings> {
             settings.ext.flutterSdkPath = properties.getProperty("flutter.sdk")
             assert settings.ext.flutterSdkPath != null, "flutter.sdk not set in local.properties"
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         // Load shared gradle functions
         settings.apply from: Paths.get(settings.ext.flutterSdkPath, "packages", "flutter_tools", "gradle", "src", "main", "groovy", "native_plugin_loader.groovy")
 

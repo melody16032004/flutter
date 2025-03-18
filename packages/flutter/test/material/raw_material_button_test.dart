@@ -151,6 +151,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -173,6 +174,28 @@ void main() {
           ],
         ),
         ignoreTransform: true,
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics(
+            id: 1,
+            flags: <SemanticsFlag>[
+              SemanticsFlag.hasEnabledState,
+              SemanticsFlag.isButton,
+              SemanticsFlag.isEnabled,
+              SemanticsFlag.isFocusable,
+            ],
+            actions: <SemanticsAction>[
+              SemanticsAction.tap,
+            ],
+            label: '+',
+            textDirection: TextDirection.ltr,
+            rect: const Rect.fromLTRB(0.0, 0.0, 48.0, 48.0),
+            children: <TestSemantics>[],
+          ),
+        ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 

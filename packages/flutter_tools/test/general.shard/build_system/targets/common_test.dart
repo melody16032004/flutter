@@ -71,14 +71,31 @@ void main() {
     androidEnvironment.defines.remove(kBuildMode);
     expect(
       const KernelSnapshot().build(androidEnvironment),
+<<<<<<< HEAD
       throwsA(isA<MissingDefineException>()),
     );
   });
 
+=======
+      throwsA(isA<MissingDefineException>()));
+  });
+
+  const String emptyNativeAssets = '''
+format-version:
+  - 1
+  - 0
+  - 0
+native-assets: {}
+''';
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWithoutContext('KernelSnapshot handles null result from kernel compilation', () async {
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
       ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = androidEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -86,6 +103,7 @@ void main() {
       mode: BuildMode.profile,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
@@ -111,6 +129,33 @@ void main() {
         ],
         exitCode: 1,
       ),
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.profile, <String>[]),
+        '--track-widget-creation',
+        '--aot',
+        '--tfa',
+        '--target-os',
+        'android',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], exitCode: 1),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
 
     await expectLater(() => const KernelSnapshot().build(androidEnvironment), throwsException);
@@ -121,6 +166,9 @@ void main() {
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
       ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = androidEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -128,6 +176,7 @@ void main() {
       mode: BuildMode.profile,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
@@ -153,6 +202,33 @@ void main() {
         ],
         stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n',
       ),
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.profile, <String>[]),
+        '--track-widget-creation',
+        '--aot',
+        '--tfa',
+        '--target-os',
+        'android',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
 
     await const KernelSnapshot().build(androidEnvironment);
@@ -160,6 +236,7 @@ void main() {
     expect(processManager, hasNoRemainingExpectations);
   });
 
+<<<<<<< HEAD
   testWithoutContext(
     'KernelSnapshot correctly handles an empty string in ExtraFrontEndOptions',
     () async {
@@ -207,9 +284,15 @@ void main() {
   );
 
   testWithoutContext('KernelSnapshot correctly forwards FrontendServerStarterPath', () async {
+=======
+  testWithoutContext('KernelSnapshot correctly handles an empty string in ExtraFrontEndOptions', () async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
       ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = androidEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -217,6 +300,7 @@ void main() {
       mode: BuildMode.profile,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartBinary),
@@ -248,14 +332,52 @@ void main() {
       androidEnvironment
         ..defines[kFrontendServerStarterPath] = 'path/to/frontend_server_starter.dart',
     );
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.profile, <String>[]),
+        '--track-widget-creation',
+        '--aot',
+        '--tfa',
+        '--target-os',
+        'android',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+    ]);
+
+    await const KernelSnapshot()
+      .build(androidEnvironment..defines[kExtraFrontEndOptions] = '');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(processManager, hasNoRemainingExpectations);
   });
 
+<<<<<<< HEAD
   testWithoutContext('KernelSnapshot correctly forwards ExtraFrontEndOptions', () async {
+=======
+  testWithoutContext('KernelSnapshot correctly forwards FrontendServerStarterPath', () async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
       ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = androidEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -263,6 +385,7 @@ void main() {
       mode: BuildMode.profile,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
@@ -295,6 +418,86 @@ void main() {
     await const KernelSnapshot().build(
       androidEnvironment..defines[kExtraFrontEndOptions] = 'foo,bar',
     );
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartBinary),
+        '--disable-dart-dev',
+        'path/to/frontend_server_starter.dart',
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.profile, <String>[]),
+        '--track-widget-creation',
+        '--aot',
+        '--tfa',
+        '--target-os',
+        'android',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+    ]);
+
+    await const KernelSnapshot()
+      .build(androidEnvironment..defines[kFrontendServerStarterPath] = 'path/to/frontend_server_starter.dart');
+
+    expect(processManager, hasNoRemainingExpectations);
+  });
+
+  testWithoutContext('KernelSnapshot correctly forwards ExtraFrontEndOptions', () async {
+    fileSystem.file('.dart_tool/package_config.json')
+      ..createSync(recursive: true)
+      ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
+    final String build = androidEnvironment.buildDir.path;
+    final String flutterPatchedSdkPath = artifacts.getArtifactPath(
+      Artifact.flutterPatchedSdkPath,
+      platform: TargetPlatform.android_arm,
+      mode: BuildMode.profile,
+    );
+    processManager.addCommands(<FakeCommand>[
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.profile, <String>[]),
+        '--track-widget-creation',
+        '--aot',
+        '--tfa',
+        '--target-os',
+        'android',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'foo',
+        'bar',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+    ]);
+
+    await const KernelSnapshot()
+      .build(androidEnvironment..defines[kExtraFrontEndOptions] = 'foo,bar');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(processManager, hasNoRemainingExpectations);
   });
@@ -303,7 +506,9 @@ void main() {
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
       ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
-
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = androidEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -311,6 +516,7 @@ void main() {
       mode: BuildMode.debug,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
@@ -341,11 +547,90 @@ void main() {
       androidEnvironment
         ..defines[kBuildMode] = BuildMode.debug.cliName
         ..defines[kTrackWidgetCreation] = 'false',
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.debug, <String>[]),
+        '--no-link-platform',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--incremental',
+        '--initialize-from-dill',
+        '$build/app.dill',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+    ]);
+
+    await const KernelSnapshot().build(androidEnvironment
+      ..defines[kBuildMode] = BuildMode.debug.cliName
+      ..defines[kTrackWidgetCreation] = 'false');
+
+    expect(processManager, hasNoRemainingExpectations);
+  });
+
+  testWithoutContext('KernelSnapshot forces platform linking on debug for darwin target platforms', () async {
+    fileSystem.file('.dart_tool/package_config.json')
+      ..createSync(recursive: true)
+      ..writeAsStringSync('{"configVersion": 2, "packages":[]}');
+    androidEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
+    final String build = androidEnvironment.buildDir.path;
+    final String flutterPatchedSdkPath = artifacts.getArtifactPath(
+      Artifact.flutterPatchedSdkPath,
+      platform: TargetPlatform.darwin,
+      mode: BuildMode.debug,
+    );
+    processManager.addCommands(<FakeCommand>[
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.debug, <String>[]),
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--incremental',
+        '--initialize-from-dill',
+        '$build/app.dill',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey $build/app.dill 0\n'),
+    ]);
+
+    await const KernelSnapshot().build(androidEnvironment
+      ..defines[kTargetPlatform]  = getNameForTargetPlatform(TargetPlatform.darwin)
+      ..defines[kBuildMode] = BuildMode.debug.cliName
+      ..defines[kTrackWidgetCreation] = 'false'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     expect(processManager, hasNoRemainingExpectations);
   });
 
+<<<<<<< HEAD
   testWithoutContext(
     'KernelSnapshot forces platform linking on debug for darwin target platforms',
     () async {
@@ -395,6 +680,8 @@ void main() {
     },
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWithoutContext('KernelSnapshot does use track widget creation on debug builds', () async {
     fileSystem.file('.dart_tool/package_config.json')
       ..createSync(recursive: true)
@@ -410,6 +697,9 @@ void main() {
       fileSystem: fileSystem,
       logger: logger,
     );
+    testEnvironment.buildDir.childFile('native_assets.yaml')
+      ..createSync(recursive: true)
+      ..writeAsStringSync(emptyNativeAssets);
     final String build = testEnvironment.buildDir.path;
     final String flutterPatchedSdkPath = artifacts.getArtifactPath(
       Artifact.flutterPatchedSdkPath,
@@ -417,6 +707,7 @@ void main() {
       mode: BuildMode.debug,
     );
     processManager.addCommands(<FakeCommand>[
+<<<<<<< HEAD
       FakeCommand(
         command: <String>[
           artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
@@ -443,6 +734,33 @@ void main() {
         stdout:
             'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey /build/653e11a8e6908714056a57cd6b4f602a/app.dill 0\n',
       ),
+=======
+      FakeCommand(command: <String>[
+        artifacts.getArtifactPath(Artifact.engineDartAotRuntime),
+        '--disable-dart-dev',
+        artifacts.getArtifactPath(Artifact.frontendServerSnapshotForEngineDartSdk),
+        '--sdk-root',
+        '$flutterPatchedSdkPath/',
+        '--target=flutter',
+        '--no-print-incremental-dependencies',
+        ...buildModeOptions(BuildMode.debug, <String>[]),
+        '--track-widget-creation',
+        '--no-link-platform',
+        '--packages',
+        '/.dart_tool/package_config.json',
+        '--output-dill',
+        '$build/app.dill',
+        '--depfile',
+        '$build/kernel_snapshot.d',
+        '--incremental',
+        '--initialize-from-dill',
+        '$build/app.dill',
+        '--native-assets',
+        '$build/native_assets.yaml',
+        '--verbosity=error',
+        'file:///lib/main.dart',
+      ], stdout: 'result $kBoundaryKey\n$kBoundaryKey\n$kBoundaryKey /build/653e11a8e6908714056a57cd6b4f602a/app.dill 0\n'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
 
     await const KernelSnapshot().build(testEnvironment);

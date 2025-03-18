@@ -1068,6 +1068,7 @@ void main() {
     expect(fieldKey.currentState!.hasInteractedByUser, isFalse);
   });
 
+<<<<<<< HEAD
   testWidgets('forceErrorText forces an error state when first init', (WidgetTester tester) async {
     const String forceErrorText = 'Forcing error.';
 
@@ -1228,6 +1229,10 @@ void main() {
   testWidgets('Validator is nullified and error text behaves accordingly', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('Validator is nullified and error text behaves accordingly',
+      (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     bool useValidator = false;
     late StateSetter setState;
@@ -1290,6 +1295,7 @@ void main() {
     await tester.pump();
     expect(find.text('test_error'), findsNothing);
   });
+<<<<<<< HEAD
 
   testWidgets('AutovalidateMode.onUnfocus', (WidgetTester tester) async {
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -1539,4 +1545,6 @@ void main() {
     expect(find.text('foo/error'), findsOneWidget);
     expect(find.text('bar/error'), findsOneWidget);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

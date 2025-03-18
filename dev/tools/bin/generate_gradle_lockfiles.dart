@@ -2,19 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 // For `android` directory in the repo, this script generates:
 //     1. The top-level build.gradle (android/build.gradle).
 //     2. The top level settings.gradle (android/settings.gradle).
 //     3. The gradle wrapper file (android/gradle/wrapper/gradle-wrapper.properties).
 // Then it generate the lockfiles for each Gradle project.
 // To regenerate these files, run `dart dev/tools/bin/generate_gradle_lockfiles.dart`.
+=======
+// This script generates `android/build.gradle` for each directory specify in the stdin.
+// Then it generate the lockfiles for each Gradle project.
+// To regenerate these files, run `find . -type d -name 'android' | dart dev/tools/bin/generate_gradle_lockfiles.dart`
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:args/args.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
+<<<<<<< HEAD
 import 'package:yaml/yaml.dart';
 
 void main(List<String> arguments) {
@@ -39,6 +45,23 @@ void main(List<String> arguments) {
               'Run the script using the config file at ./configs/lockfile_exclusion.yaml to skip the specified subdirectories.',
           defaultsTo: true,
         );
+=======
+import 'package:path/path.dart' as path;
+
+void main(List<String> arguments) {
+  const String usageMessage = "Usage: find . -type d -name 'android' | dart dev/tools/bin/generate_gradle_lockfiles.dart\n"
+      'If you would rather enter the files manually, just run `dart dev/tools/bin/generate_gradle_lockfiles.dart`,\n'
+      "enter the absolute paths to the app's android directory, then press CTRL-D.\n"
+      "If you don't wish to re-generate the settings.gradle, build.gradle, and gradle-wrapper.properties files,\n"
+      "add the flag '--no-gradle-generation'";
+
+  final ArgParser argParser = ArgParser()
+    ..addFlag(
+      'gradle-generation',
+      help: 'Re-generate gradle files in each processed directory.',
+      defaultsTo: true,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   ArgResults args;
   try {
@@ -54,11 +77,9 @@ void main(List<String> arguments) {
   /// Re-generate gradle files in each processed directory.
   final bool gradleGeneration = (args['gradle-generation'] as bool?) ?? true;
 
-  // Skip android subdirectories specified in the ./config/lockfile_exclusion.yaml file.
-  final bool useExclusion = (args['exclusion'] as bool?) ?? true;
-
   const FileSystem fileSystem = LocalFileSystem();
 
+<<<<<<< HEAD
   final Directory repoRoot =
       (() {
         final String repoRootPath =
@@ -94,10 +115,16 @@ void main(List<String> arguments) {
   }
 
   for (final Directory androidDirectory in androidDirectories) {
+=======
+  for (final String androidDirectoryPath in androidDirectories) {
+    final Directory androidDirectory = fileSystem.directory(path.normalize(androidDirectoryPath));
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     if (!androidDirectory.existsSync()) {
       throw '$androidDirectory does not exist';
     }
 
+<<<<<<< HEAD
     if (exclusionSet.contains(androidDirectory.path)) {
       print(
         '${androidDirectory.path} is included in the exclusion config file at ${exclusionFile.path} - skipping',
@@ -124,6 +151,17 @@ void main(List<String> arguments) {
       print(
         '${androidDirectory.childFile('settings.gradle').path}(.kts) does not exist - skipping',
       );
+=======
+    final File rootBuildGradle = androidDirectory.childFile('build.gradle');
+    if (!rootBuildGradle.existsSync()) {
+      print('${rootBuildGradle.path} does not exist - skipping');
+      continue;
+    }
+
+    final File settingsGradle = androidDirectory.childFile('settings.gradle');
+    if (!settingsGradle.existsSync()) {
+      print('${settingsGradle.path} does not exist - skipping');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       continue;
     }
 
@@ -287,8 +325,13 @@ buildscript {
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+<<<<<<< HEAD
     id "com.android.application" version "8.7.0" apply false
     id "org.jetbrains.kotlin.android" version "1.8.10" apply false
+=======
+    id "com.android.application" version "7.3.0" apply false
+    id "org.jetbrains.kotlin.android" version "1.7.10" apply false
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 include ":app"
@@ -299,7 +342,11 @@ distributionBase=GRADLE_USER_HOME
 distributionPath=wrapper/dists
 zipStoreBase=GRADLE_USER_HOME
 zipStorePath=wrapper/dists
+<<<<<<< HEAD
 distributionUrl=https\://services.gradle.org/distributions/gradle-8.10.2-all.zip
+=======
+distributionUrl=https\://services.gradle.org/distributions/gradle-7.6.3-all.zip
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 ''';
 
 Iterable<Directory> discoverAndroidDirectories(Directory repoRoot) {

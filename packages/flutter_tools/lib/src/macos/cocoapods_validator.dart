@@ -52,6 +52,7 @@ class CocoaPodsValidator extends DoctorValidator {
         );
       case CocoaPodsStatus.unknownVersion:
         status = ValidationType.partial;
+<<<<<<< HEAD
         messages.add(
           ValidationMessage.hint(
             _userMessages.cocoaPodsUnknownVersion(
@@ -60,6 +61,10 @@ class CocoaPodsValidator extends DoctorValidator {
             ),
           ),
         );
+=======
+        messages.add(ValidationMessage.hint(
+          _userMessages.cocoaPodsUnknownVersion(unknownCocoaPodsConsequence, cocoaPodsInstallInstructions)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       case CocoaPodsStatus.belowMinimumVersion:
       case CocoaPodsStatus.belowRecommendedVersion:
         status = ValidationType.partial;

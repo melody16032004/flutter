@@ -755,6 +755,7 @@ class ToggleButtons extends StatelessWidget {
             toggleButtonsTheme.disabledColor ??
             theme.colorScheme.onSurface.withOpacity(0.38);
       }
+<<<<<<< HEAD
       final TextStyle currentTextStyle =
           textStyle ?? toggleButtonsTheme.textStyle ?? theme.textTheme.bodyMedium!;
       final BoxConstraints? currentConstraints = constraints ?? toggleButtonsTheme.constraints;
@@ -768,6 +769,33 @@ class ToggleButtons extends StatelessWidget {
             Axis.horizontal => const Size(0.0, kMinInteractiveDimension),
             Axis.vertical => const Size(kMinInteractiveDimension, 0.0),
           };
+=======
+      final TextStyle currentTextStyle = textStyle
+        ?? toggleButtonsTheme.textStyle
+        ?? theme.textTheme.bodyMedium!;
+      final BoxConstraints? currentConstraints = constraints
+        ?? toggleButtonsTheme.constraints;
+      final Size minimumSize = currentConstraints == null
+        ? const Size.square(kMinInteractiveDimension)
+        : Size(currentConstraints.minWidth, currentConstraints.minHeight);
+      final Size? maximumSize = currentConstraints == null
+        ? null
+        : Size(currentConstraints.maxWidth, currentConstraints.maxHeight);
+      final Size minPaddingSize;
+      switch (tapTargetSize ?? theme.materialTapTargetSize) {
+        case MaterialTapTargetSize.padded:
+          if (direction == Axis.horizontal) {
+            minPaddingSize = const Size(
+              0.0,
+              kMinInteractiveDimension,
+            );
+          } else {
+            minPaddingSize = const Size(
+              kMinInteractiveDimension,
+              0.0,
+            );
+          }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           assert(minPaddingSize.width >= 0.0);
           assert(minPaddingSize.height >= 0.0);
         case MaterialTapTargetSize.shrinkWrap:
@@ -1184,19 +1212,19 @@ class _SelectToggleButtonRenderObject extends RenderShiftedBox {
   }
 
   static double _maxHeight(RenderBox? box, double width) {
-    return box?.getMaxIntrinsicHeight(width) ?? 0.0;
+    return box == null ? 0.0 : box.getMaxIntrinsicHeight(width);
   }
 
   static double _minHeight(RenderBox? box, double width) {
-    return box?.getMinIntrinsicHeight(width) ?? 0.0;
+    return box == null ? 0.0 : box.getMinIntrinsicHeight(width);
   }
 
   static double _minWidth(RenderBox? box, double height) {
-    return box?.getMinIntrinsicWidth(height) ?? 0.0;
+    return box == null ? 0.0 : box.getMinIntrinsicWidth(height);
   }
 
   static double _maxWidth(RenderBox? box, double height) {
-    return box?.getMaxIntrinsicWidth(height) ?? 0.0;
+    return box == null ? 0.0 : box.getMaxIntrinsicWidth(height);
   }
 
   @override
@@ -1242,6 +1270,7 @@ class _SelectToggleButtonRenderObject extends RenderShiftedBox {
     return _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
   }
 
+<<<<<<< HEAD
   EdgeInsetsDirectional get _childPadding {
     assert(child != null);
     // It does not matter what [textDirection] or [verticalDirection] is,
@@ -1282,6 +1311,8 @@ class _SelectToggleButtonRenderObject extends RenderShiftedBox {
         };
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   void performLayout() {
     size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
@@ -1303,8 +1334,8 @@ class _SelectToggleButtonRenderObject extends RenderShiftedBox {
   }
 
   Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
-    final RenderBox? child = this.child;
     if (child == null) {
+<<<<<<< HEAD
       final Size horizontalSize = Size(
         leadingBorderSide.width + trailingBorderSide.width,
         borderSide.width * 2.0,
@@ -1313,11 +1344,54 @@ class _SelectToggleButtonRenderObject extends RenderShiftedBox {
         Axis.horizontal => constraints.constrain(horizontalSize),
         Axis.vertical => constraints.constrain(horizontalSize.flipped),
       };
+=======
+      if (direction == Axis.horizontal) {
+        return constraints.constrain(Size(
+          leadingBorderSide.width + trailingBorderSide.width,
+          borderSide.width * 2.0,
+        ));
+      } else {
+        return constraints.constrain(Size(
+          borderSide.width * 2.0,
+          leadingBorderSide.width + trailingBorderSide.width,
+        ));
+      }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
 
-    final EdgeInsetsDirectional childPadding = _childPadding;
-    final BoxConstraints innerConstraints = constraints.deflate(childPadding);
-    return constraints.constrain(childPadding.inflateSize(layoutChild(child, innerConstraints)));
+    final double leftConstraint;
+    final double rightConstraint;
+    final double topConstraint;
+    final double bottomConstraint;
+
+    // It does not matter what [textDirection] or [verticalDirection] is,
+    // since deflating the size constraints horizontally/vertically
+    // and the returned size accounts for the width of both sides.
+    if (direction == Axis.horizontal) {
+      rightConstraint = trailingBorderSide.width;
+      leftConstraint = leadingBorderSide.width;
+      topConstraint = borderSide.width;
+      bottomConstraint = borderSide.width;
+    } else {
+      rightConstraint = borderSide.width;
+      leftConstraint = borderSide.width;
+      topConstraint = leadingBorderSide.width;
+      bottomConstraint = trailingBorderSide.width;
+    }
+    final BoxConstraints innerConstraints = constraints.deflate(
+      EdgeInsets.only(
+        left: leftConstraint,
+        top: topConstraint,
+        right: rightConstraint,
+        bottom: bottomConstraint,
+      ),
+    );
+    final Size childSize = layoutChild(child!, innerConstraints);
+
+    return constraints.constrain(Size(
+      leftConstraint + childSize.width + rightConstraint,
+      topConstraint + childSize.height + bottomConstraint,
+    ));
   }
 
   @override
@@ -1676,6 +1750,7 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     final RenderBox? child = this.child;
     if (child == null) {
@@ -1691,6 +1766,8 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performLayout() {
     size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
     if (child != null) {
@@ -1709,10 +1786,19 @@ class _RenderInputPadding extends RenderShiftedBox {
     }
 
     // Only adjust one axis to ensure the correct button is tapped.
+<<<<<<< HEAD
     final Offset center = switch (direction) {
       Axis.horizontal => Offset(position.dx, child!.size.height / 2),
       Axis.vertical => Offset(child!.size.width / 2, position.dy),
     };
+=======
+    Offset center;
+    if (direction == Axis.horizontal) {
+      center = Offset(position.dx, child!.size.height / 2);
+    } else {
+      center = Offset(child!.size.width / 2, position.dy);
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return result.addWithRawTransform(
       transform: MatrixUtils.forceToPoint(center),
       position: center,

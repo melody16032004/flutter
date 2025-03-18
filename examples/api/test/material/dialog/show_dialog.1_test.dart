@@ -9,7 +9,17 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Show dialog', (WidgetTester tester) async {
     const String dialogTitle = 'Basic dialog title';
+<<<<<<< HEAD
     await tester.pumpWidget(const example.ShowDialogExampleApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ShowDialogExampleApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(find.text(dialogTitle), findsNothing);
 

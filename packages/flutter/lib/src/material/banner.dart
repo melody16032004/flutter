@@ -279,14 +279,15 @@ class MaterialBanner extends StatefulWidget {
 
 class _MaterialBannerState extends State<MaterialBanner> {
   bool _wasVisible = false;
-  CurvedAnimation? _heightAnimation;
-  CurvedAnimation? _slideOutCurvedAnimation;
 
   @override
   void initState() {
     super.initState();
     widget.animation?.addStatusListener(_onAnimationStatusChanged);
+<<<<<<< HEAD
     _setCurvedAnimations();
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -295,10 +296,10 @@ class _MaterialBannerState extends State<MaterialBanner> {
     if (widget.animation != oldWidget.animation) {
       oldWidget.animation?.removeStatusListener(_onAnimationStatusChanged);
       widget.animation?.addStatusListener(_onAnimationStatusChanged);
-      _setCurvedAnimations();
     }
   }
 
+<<<<<<< HEAD
   void _setCurvedAnimations() {
     _heightAnimation?.dispose();
     _slideOutCurvedAnimation?.dispose();
@@ -317,20 +318,25 @@ class _MaterialBannerState extends State<MaterialBanner> {
     }
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   void dispose() {
     widget.animation?.removeStatusListener(_onAnimationStatusChanged);
-    _heightAnimation?.dispose();
-    _slideOutCurvedAnimation?.dispose();
     super.dispose();
   }
 
-  void _onAnimationStatusChanged(AnimationStatus status) {
-    if (status.isCompleted) {
-      if (widget.onVisible != null && !_wasVisible) {
-        widget.onVisible!();
-      }
-      _wasVisible = true;
+  void _onAnimationStatusChanged(AnimationStatus animationStatus) {
+    switch (animationStatus) {
+      case AnimationStatus.dismissed:
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+        break;
+      case AnimationStatus.completed:
+        if (widget.onVisible != null && !_wasVisible) {
+          widget.onVisible!();
+        }
+        _wasVisible = true;
     }
   }
 
@@ -358,6 +364,7 @@ class _MaterialBannerState extends State<MaterialBanner> {
         bannerTheme.leadingPadding ??
         const EdgeInsetsDirectional.only(end: 16.0);
 
+<<<<<<< HEAD
     final Widget actionsBar = ConstrainedBox(
       constraints: BoxConstraints(minHeight: widget.minActionBarHeight),
       child: Padding(
@@ -370,6 +377,16 @@ class _MaterialBannerState extends State<MaterialBanner> {
             children: widget.actions,
           ),
         ),
+=======
+    final Widget actionsBar = Container(
+      alignment: AlignmentDirectional.centerEnd,
+      constraints: const BoxConstraints(minHeight: 52.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: OverflowBar(
+        overflowAlignment: widget.overflowAlignment,
+        spacing: 8,
+        children: widget.actions,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -386,8 +403,8 @@ class _MaterialBannerState extends State<MaterialBanner> {
     final TextStyle? textStyle =
         widget.contentTextStyle ?? bannerTheme.contentTextStyle ?? defaults.contentTextStyle;
 
-    Widget materialBanner = Padding(
-      padding: margin,
+    Widget materialBanner = Container(
+      margin: margin,
       child: Material(
         elevation: elevation,
         color: backgroundColor,
@@ -436,10 +453,14 @@ class _MaterialBannerState extends State<MaterialBanner> {
 
     materialBanner = SafeArea(child: materialBanner);
 
+    final CurvedAnimation heightAnimation = CurvedAnimation(parent: widget.animation!, curve: _materialBannerHeightCurve);
     final Animation<Offset> slideOutAnimation = Tween<Offset>(
       begin: const Offset(0.0, -1.0),
       end: Offset.zero,
-    ).animate(_slideOutCurvedAnimation!);
+    ).animate(CurvedAnimation(
+      parent: widget.animation!,
+      curve: const Threshold(0.0),
+    ));
 
     materialBanner = Semantics(
       container: true,
@@ -460,11 +481,11 @@ class _MaterialBannerState extends State<MaterialBanner> {
       materialBannerTransition = materialBanner;
     } else {
       materialBannerTransition = AnimatedBuilder(
-        animation: _heightAnimation!,
+        animation: heightAnimation,
         builder: (BuildContext context, Widget? child) {
           return Align(
             alignment: AlignmentDirectional.bottomStart,
-            heightFactor: _heightAnimation!.value,
+            heightFactor: heightAnimation.value,
             child: child,
           );
         },

@@ -142,6 +142,7 @@ void main() {
           late final TwoDimensionalChildBuilderDelegate delegate;
           addTearDown(() => delegate.dispose());
 
+<<<<<<< HEAD
           return MaterialApp(
             home: PrimaryScrollController(
               controller: controller,
@@ -412,6 +413,152 @@ void main() {
       },
       variant: TargetPlatformVariant.all(),
     );
+=======
+      // Vertical default
+      controller = ScrollController();
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(buildForPrimaryScrollController());
+      await tester.pumpAndSettle();
+
+      switch (defaultTargetPlatform) {
+      // Mobile platforms inherit the PSC without explicitly setting
+      // primary
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.iOS:
+          expect(controller.hasClients, isTrue);
+          expect(controller.position.axis, Axis.vertical);
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
+          expect(controller.hasClients, isFalse);
+      }
+
+      // Vertical explicitly true
+      controller = ScrollController();
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(buildForPrimaryScrollController(
+        explicitPrimary: true,
+      ));
+      await tester.pumpAndSettle();
+
+      switch (defaultTargetPlatform) {
+        // Primary explicitly true is always adopted.
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.iOS:
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
+          expect(controller.hasClients, isTrue);
+          expect(controller.position.axis, Axis.vertical);
+      }
+
+      // Vertical explicitly false
+      controller = ScrollController();
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(buildForPrimaryScrollController(
+        explicitPrimary: false,
+      ));
+      await tester.pumpAndSettle();
+
+      switch (defaultTargetPlatform) {
+      // Primary explicitly false is never adopted.
+        case TargetPlatform.android:
+        case TargetPlatform.fuchsia:
+        case TargetPlatform.iOS:
+        case TargetPlatform.linux:
+        case TargetPlatform.macOS:
+        case TargetPlatform.windows:
+          expect(controller.hasClients, isFalse);
+      }
+
+      // Assertions
+      final List<Object> exceptions = <Object>[];
+      final FlutterExceptionHandler? oldHandler = FlutterError.onError;
+      FlutterError.onError = (FlutterErrorDetails details) {
+        exceptions.add(details.exception);
+      };
+      // Vertical asserts ScrollableDetails.controller has not been provided if
+      // primary is explicitly set
+      controller = ScrollController();
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(buildForPrimaryScrollController(
+        explicitPrimary: true,
+        addControllerConflict: true,
+      ));
+      expect(exceptions.length, 1);
+      expect(exceptions[0], isAssertionError);
+      expect(
+        (exceptions[0] as AssertionError).message,
+        contains('TwoDimensionalScrollView.primary was explicitly set to true'),
+      );
+      exceptions.clear();
+
+      // Horizontal asserts ScrollableDetails.controller has not been provided
+      // if primary is explicitly set true
+      controller = ScrollController();
+      addTearDown(controller.dispose);
+      await tester.pumpWidget(buildForPrimaryScrollController(
+        mainAxis: Axis.horizontal,
+        explicitPrimary: true,
+        addControllerConflict: true,
+      ));
+      expect(exceptions.length, 1);
+      expect(exceptions[0], isAssertionError);
+      expect(
+        (exceptions[0] as AssertionError).message,
+        contains('TwoDimensionalScrollView.primary was explicitly set to true'),
+      );
+      FlutterError.onError = oldHandler;
+    }, variant: TargetPlatformVariant.all());
+
+    testWidgets('TwoDimensionalScrollable receives the correct details from TwoDimensionalScrollView', (WidgetTester tester) async {
+      late BuildContext capturedContext;
+      // Default
+      late final TwoDimensionalChildBuilderDelegate delegate1;
+      addTearDown(() => delegate1.dispose());
+      await tester.pumpWidget(MaterialApp(
+        home: SimpleBuilderTableView(
+          delegate: delegate1 = TwoDimensionalChildBuilderDelegate(
+            builder: (BuildContext context, ChildVicinity vicinity) {
+              capturedContext = context;
+              return Text(vicinity.toString());
+            },
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      TwoDimensionalScrollableState scrollable = TwoDimensionalScrollable.of(
+        capturedContext,
+      );
+      expect(scrollable.widget.verticalDetails.direction, AxisDirection.down);
+      expect(scrollable.widget.horizontalDetails.direction, AxisDirection.right);
+      expect(scrollable.widget.diagonalDragBehavior, DiagonalDragBehavior.none);
+      expect(scrollable.widget.dragStartBehavior, DragStartBehavior.start);
+
+      // Customized
+      late final TwoDimensionalChildBuilderDelegate delegate2;
+      addTearDown(() => delegate2.dispose());
+      await tester.pumpWidget(MaterialApp(
+        home: SimpleBuilderTableView(
+          verticalDetails: const ScrollableDetails.vertical(reverse: true),
+          horizontalDetails: const ScrollableDetails.horizontal(reverse: true),
+          diagonalDragBehavior: DiagonalDragBehavior.weightedContinuous,
+          dragStartBehavior: DragStartBehavior.down,
+          delegate: delegate2 = TwoDimensionalChildBuilderDelegate(
+            builder: _testChildBuilder,
+          ),
+        ),
+      ));
+      await tester.pumpAndSettle();
+      scrollable = TwoDimensionalScrollable.of(capturedContext);
+      expect(scrollable.widget.verticalDetails.direction, AxisDirection.up);
+      expect(scrollable.widget.horizontalDetails.direction, AxisDirection.left);
+      expect(scrollable.widget.diagonalDragBehavior, DiagonalDragBehavior.weightedContinuous);
+      expect(scrollable.widget.dragStartBehavior, DragStartBehavior.down);
+    }, variant: TargetPlatformVariant.all());
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testWidgets('Interrupt fling with tap stops scrolling', (WidgetTester tester) async {
       // Regression test for https://github.com/flutter/flutter/issues/133529
@@ -956,6 +1103,7 @@ void main() {
         expect(horizontalController.position.pixels, 0.0);
       });
     });
+<<<<<<< HEAD
 
     testWidgets('Dismiss keyboard onDrag and keep dismissed on drawer opened', (
       WidgetTester tester,
@@ -1005,5 +1153,7 @@ void main() {
 
       expect(tester.testTextInput.isVisible, isFalse);
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

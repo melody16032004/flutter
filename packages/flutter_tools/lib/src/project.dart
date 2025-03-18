@@ -33,6 +33,7 @@ export 'xcode_project.dart';
 
 /// Enum for each officially supported platform.
 enum SupportedPlatform {
+<<<<<<< HEAD
   android(name: 'android'),
   ios(name: 'ios'),
   linux(name: 'linux'),
@@ -45,6 +46,16 @@ enum SupportedPlatform {
   const SupportedPlatform({required this.name});
 
   final String name;
+=======
+  android,
+  ios,
+  linux,
+  macos,
+  web,
+  windows,
+  fuchsia,
+  root, // Special platform to represent the root project directory
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class FlutterProjectFactory {
@@ -269,6 +280,7 @@ class FlutterProject {
 
   /// Returns a list of platform names that are supported by the project.
   List<SupportedPlatform> getSupportedPlatforms({bool includeRoot = false}) {
+<<<<<<< HEAD
     return <SupportedPlatform>[
       if (includeRoot) SupportedPlatform.root,
       if (android.existsSync()) SupportedPlatform.android,
@@ -279,6 +291,31 @@ class FlutterProject {
       if (windows.existsSync()) SupportedPlatform.windows,
       if (fuchsia.existsSync()) SupportedPlatform.fuchsia,
     ];
+=======
+    final List<SupportedPlatform> platforms = includeRoot ? <SupportedPlatform>[SupportedPlatform.root] : <SupportedPlatform>[];
+    if (android.existsSync()) {
+      platforms.add(SupportedPlatform.android);
+    }
+    if (ios.exists) {
+      platforms.add(SupportedPlatform.ios);
+    }
+    if (web.existsSync()) {
+      platforms.add(SupportedPlatform.web);
+    }
+    if (macos.existsSync()) {
+      platforms.add(SupportedPlatform.macos);
+    }
+    if (linux.existsSync()) {
+      platforms.add(SupportedPlatform.linux);
+    }
+    if (windows.existsSync()) {
+      platforms.add(SupportedPlatform.windows);
+    }
+    if (fuchsia.existsSync()) {
+      platforms.add(SupportedPlatform.fuchsia);
+    }
+    return platforms;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// The directory that will contain the example if an example exists.
@@ -553,9 +590,7 @@ class AndroidProject extends FlutterProjectPlatform {
         // pluginManagement block of the settings.gradle file.
         // See https://docs.gradle.org/current/userguide/composite_builds.html#included_plugin_builds,
         // as well as the settings.gradle and build.gradle templates.
-        final bool declarativeApply = line.contains(
-          RegExp(r'dev\.flutter\.(?:(?:flutter-gradle-plugin)|(?:`flutter-gradle-plugin`))'),
-        );
+        final bool declarativeApply = line.contains('dev.flutter.flutter-gradle-plugin');
 
         // This case allows for flutter run/build to work for modules. It does
         // not guarantee the Flutter Gradle Plugin is applied.
@@ -917,6 +952,7 @@ $javaGradleCompatUrl
       'No `<meta-data android:name="flutterEmbedding" android:value="2"/>` in ${appManifestFile.absolute.path}',
     );
   }
+<<<<<<< HEAD
 
   static const bool _impellerEnabledByDefault = true;
 
@@ -955,6 +991,8 @@ $javaGradleCompatUrl
     }
     return _impellerEnabledByDefault;
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Iteration of the embedding Java API in the engine used by the Android project.

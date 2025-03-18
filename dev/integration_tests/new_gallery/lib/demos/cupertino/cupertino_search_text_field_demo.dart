@@ -69,11 +69,23 @@ class _CupertinoSearchTextFieldDemoState extends State<CupertinoSearchTextFieldD
 
   Widget _buildPlatformList() {
     if (_searchPlatform.isNotEmpty) {
+<<<<<<< HEAD
       final String search = _searchPlatform.toLowerCase();
       filteredPlatforms = <String>[
         for (final String platform in filteredPlatforms)
           if (platform.toLowerCase().contains(search)) platform,
       ];
+=======
+      final List<String> tempList = <String>[];
+      for (int i = 0; i < filteredPlatforms.length; i++) {
+        if (filteredPlatforms[i]
+            .toLowerCase()
+            .contains(_searchPlatform.toLowerCase())) {
+          tempList.add(filteredPlatforms[i]);
+        }
+      }
+      filteredPlatforms = tempList;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     return ListView.builder(
       itemCount: filteredPlatforms.length,

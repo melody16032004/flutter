@@ -21,7 +21,7 @@ import '../../../src/fakes.dart';
 
 void main() {
   late Environment environment;
-  late MemoryFileSystem fileSystem;
+  late FileSystem fileSystem;
   late Artifacts artifacts;
   late FakeProcessManager processManager;
   late File binary;

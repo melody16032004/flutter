@@ -16,7 +16,6 @@ import '../base/file_system.dart';
 import '../base/logger.dart';
 import '../base/platform.dart';
 import '../base/utils.dart';
-import '../build_info.dart';
 import '../cache.dart';
 import '../convert.dart';
 import '../reporting/reporting.dart';
@@ -177,6 +176,7 @@ abstract class Target {
     ErrorHandlingFileSystem.deleteIfExists(stamp);
   }
 
+<<<<<<< HEAD
   void _writeStamp(List<File> inputs, List<File> outputs, Environment environment) {
     String getPath(File file) => file.path;
     final Map<String, Object> result = <String, Object>{
@@ -184,7 +184,28 @@ abstract class Target {
       'outputs': outputs.map(getPath).toList(),
       if (buildKey case final String key) 'buildKey': key,
     };
+=======
+  void _writeStamp(
+    List<File> inputs,
+    List<File> outputs,
+    Environment environment,
+  ) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final File stamp = _findStampFile(environment);
+    final List<String> inputPaths = <String>[];
+    for (final File input in inputs) {
+      inputPaths.add(input.path);
+    }
+    final List<String> outputPaths = <String>[];
+    for (final File output in outputs) {
+      outputPaths.add(output.path);
+    }
+    final String? key = buildKey;
+    final Map<String, Object> result = <String, Object>{
+      'inputs': inputPaths,
+      'outputs': outputPaths,
+      if (key != null) 'buildKey': key,
+    };
     if (!stamp.existsSync()) {
       stamp.createSync();
     }
@@ -739,13 +760,6 @@ class FlutterBuildSystem extends BuildSystem {
     FileSystem fileSystem,
     Map<String, File> currentOutputs,
   ) {
-    if (environment.defines[kXcodePreAction] == 'PrepareFramework') {
-      // If the current build is the PrepareFramework Xcode pre-action, skip
-      // updating the last build identifier and cleaning up the previous build
-      // since this build is not a complete build.
-      return;
-    }
-
     final String currentBuildId = fileSystem.path.basename(environment.buildDir.path);
     final File lastBuildIdFile = environment.outputDir.childFile('.last_build_id');
     if (!lastBuildIdFile.existsSync()) {

@@ -16,7 +16,6 @@ import 'base/utils.dart';
 import 'build_info.dart';
 import 'devfs.dart';
 import 'device_port_forwarder.dart';
-import 'device_vm_service_discovery_for_attach.dart';
 import 'project.dart';
 import 'vmservice.dart';
 import 'web/compile.dart';
@@ -562,19 +561,23 @@ enum DeviceConnectionInterface { attached, wireless }
 
 /// Returns the `DeviceConnectionInterface` enum based on its string name.
 DeviceConnectionInterface getDeviceConnectionInterfaceForName(String name) {
-  return switch (name) {
-    'attached' => DeviceConnectionInterface.attached,
-    'wireless' => DeviceConnectionInterface.wireless,
-    _ => throw Exception('Unsupported DeviceConnectionInterface name "$name"'),
-  };
+  switch (name) {
+    case 'attached':
+      return DeviceConnectionInterface.attached;
+    case 'wireless':
+      return DeviceConnectionInterface.wireless;
+  }
+  throw Exception('Unsupported DeviceConnectionInterface name "$name"');
 }
 
 /// Returns a `DeviceConnectionInterface`'s string name.
 String getNameForDeviceConnectionInterface(DeviceConnectionInterface connectionInterface) {
-  return switch (connectionInterface) {
-    DeviceConnectionInterface.attached => 'attached',
-    DeviceConnectionInterface.wireless => 'wireless',
-  };
+  switch (connectionInterface) {
+    case DeviceConnectionInterface.attached:
+      return 'attached';
+    case DeviceConnectionInterface.wireless:
+      return 'wireless';
+  }
 }
 
 /// A device is a physical hardware that can run a Flutter application.
@@ -711,6 +714,7 @@ abstract class Device {
   /// Clear the device's logs.
   void clearLogs();
 
+<<<<<<< HEAD
   /// Get the [VMServiceDiscoveryForAttach] instance for this device, which
   /// discovers, and forwards any necessary ports to the vm service uri of a
   /// running app on the device.
@@ -739,6 +743,8 @@ abstract class Device {
     logger: logger,
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Start an app package on the current device.
   ///
   /// [platformArgs] allows callers to pass platform-specific arguments to the
@@ -913,11 +919,20 @@ enum ImpellerStatus {
 
   const ImpellerStatus._(this.asBool);
 
+<<<<<<< HEAD
   factory ImpellerStatus.fromBool(bool? b) => switch (b) {
     true => enabled,
     false => disabled,
     null => platformDefault,
   };
+=======
+  factory ImpellerStatus.fromBool(bool? b) {
+    if (b == null) {
+      return platformDefault;
+    }
+    return b ? enabled : disabled;
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final bool? asBool;
 }
@@ -963,8 +978,12 @@ class DebuggingOptions {
     this.webEnableExpressionEvaluation = false,
     this.webHeaders = const <String, String>{},
     this.webLaunchUrl,
+<<<<<<< HEAD
     WebRendererMode? webRenderer,
     this.webUseWasm = false,
+=======
+    this.webRenderer = WebRendererMode.auto,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     this.vmserviceOutFile,
     this.fastStart = false,
     this.nullAssertions = false,
@@ -977,6 +996,7 @@ class DebuggingOptions {
     this.enableEmbedderApi = false,
     this.usingCISystem = false,
     this.debugLogsDirectoryPath,
+<<<<<<< HEAD
     this.enableDevTools = true,
     this.ipv6 = false,
     this.google3WorkspaceRoot,
@@ -1044,6 +1064,63 @@ class DebuggingOptions {
        google3WorkspaceRoot = null,
        printDtd = false,
        webRenderer = webRenderer ?? WebRendererMode.getDefault(useWasm: webUseWasm);
+=======
+   }) : debuggingEnabled = true;
+
+  DebuggingOptions.disabled(this.buildInfo, {
+      this.dartEntrypointArgs = const <String>[],
+      this.port,
+      this.hostname,
+      this.tlsCertPath,
+      this.tlsCertKeyPath,
+      this.webEnableExposeUrl,
+      this.webUseSseForDebugProxy = true,
+      this.webUseSseForDebugBackend = true,
+      this.webUseSseForInjectedClient = true,
+      this.webRunHeadless = false,
+      this.webBrowserDebugPort,
+      this.webBrowserFlags = const <String>[],
+      this.webLaunchUrl,
+      this.webHeaders = const <String, String>{},
+      this.webRenderer = WebRendererMode.auto,
+      this.cacheSkSL = false,
+      this.traceAllowlist,
+      this.enableImpeller = ImpellerStatus.platformDefault,
+      this.enableVulkanValidation = false,
+      this.uninstallFirst = false,
+      this.enableDartProfiling = true,
+      this.enableEmbedderApi = false,
+      this.usingCISystem = false,
+      this.debugLogsDirectoryPath,
+    }) : debuggingEnabled = false,
+      useTestFonts = false,
+      startPaused = false,
+      dartFlags = '',
+      disableServiceAuthCodes = false,
+      enableDds = true,
+      cacheStartupProfile = false,
+      enableSoftwareRendering = false,
+      skiaDeterministicRendering = false,
+      traceSkia = false,
+      traceSkiaAllowlist = null,
+      traceSystrace = false,
+      traceToFile = null,
+      endlessTraceBuffer = false,
+      dumpSkpOnShaderCompilation = false,
+      purgePersistentCache = false,
+      verboseSystemLogs = false,
+      hostVmServicePort = null,
+      disablePortPublication = false,
+      deviceVmServicePort = null,
+      ddsPort = null,
+      devToolsServerAddress = null,
+      vmserviceOutFile = null,
+      fastStart = false,
+      webEnableExpressionEvaluation = false,
+      nullAssertions = false,
+      nativeNullAssertions = false,
+      serveObservatory = false;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   DebuggingOptions._({
     required this.buildInfo,
@@ -1087,7 +1164,10 @@ class DebuggingOptions {
     required this.webHeaders,
     required this.webLaunchUrl,
     required this.webRenderer,
+<<<<<<< HEAD
     required this.webUseWasm,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     required this.vmserviceOutFile,
     required this.fastStart,
     required this.nullAssertions,
@@ -1183,9 +1263,12 @@ class DebuggingOptions {
   /// Which web renderer to use for the debugging session
   final WebRendererMode webRenderer;
 
+<<<<<<< HEAD
   /// Whether to compile to webassembly
   final bool webUseWasm;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// A file where the VM Service URL should be written after the application is started.
   final String? vmserviceOutFile;
   final bool fastStart;
@@ -1294,7 +1377,10 @@ class DebuggingOptions {
     'webLaunchUrl': webLaunchUrl,
     'webHeaders': webHeaders,
     'webRenderer': webRenderer.name,
+<<<<<<< HEAD
     'webUseWasm': webUseWasm,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     'vmserviceOutFile': vmserviceOutFile,
     'fastStart': fastStart,
     'nullAssertions': nullAssertions,
@@ -1317,6 +1403,7 @@ class DebuggingOptions {
   };
 
   static DebuggingOptions fromJson(Map<String, Object?> json, BuildInfo buildInfo) =>
+<<<<<<< HEAD
       DebuggingOptions._(
         buildInfo: buildInfo,
         debuggingEnabled: json['debuggingEnabled']! as bool,
@@ -1380,6 +1467,63 @@ class DebuggingOptions {
         google3WorkspaceRoot: json['google3WorkspaceRoot'] as String?,
         printDtd: (json['printDtd'] as bool?) ?? false,
       );
+=======
+    DebuggingOptions._(
+      buildInfo: buildInfo,
+      debuggingEnabled: json['debuggingEnabled']! as bool,
+      startPaused: json['startPaused']! as bool,
+      dartFlags: json['dartFlags']! as String,
+      dartEntrypointArgs: (json['dartEntrypointArgs']! as List<dynamic>).cast<String>(),
+      disableServiceAuthCodes: json['disableServiceAuthCodes']! as bool,
+      enableDds: json['enableDds']! as bool,
+      cacheStartupProfile: json['cacheStartupProfile']! as bool,
+      enableSoftwareRendering: json['enableSoftwareRendering']! as bool,
+      skiaDeterministicRendering: json['skiaDeterministicRendering']! as bool,
+      traceSkia: json['traceSkia']! as bool,
+      traceAllowlist: json['traceAllowlist'] as String?,
+      traceSkiaAllowlist: json['traceSkiaAllowlist'] as String?,
+      traceSystrace: json['traceSystrace']! as bool,
+      traceToFile: json['traceToFile'] as String?,
+      endlessTraceBuffer: json['endlessTraceBuffer']! as bool,
+      dumpSkpOnShaderCompilation: json['dumpSkpOnShaderCompilation']! as bool,
+      cacheSkSL: json['cacheSkSL']! as bool,
+      purgePersistentCache: json['purgePersistentCache']! as bool,
+      useTestFonts: json['useTestFonts']! as bool,
+      verboseSystemLogs: json['verboseSystemLogs']! as bool,
+      hostVmServicePort: json['hostVmServicePort'] as int? ,
+      deviceVmServicePort: json['deviceVmServicePort'] as int?,
+      disablePortPublication: json['disablePortPublication']! as bool,
+      ddsPort: json['ddsPort'] as int?,
+      devToolsServerAddress: json['devToolsServerAddress'] != null ? Uri.parse(json['devToolsServerAddress']! as String) : null,
+      port: json['port'] as String?,
+      hostname: json['hostname'] as String?,
+      tlsCertPath: json['tlsCertPath'] as String?,
+      tlsCertKeyPath: json['tlsCertKeyPath'] as String?,
+      webEnableExposeUrl: json['webEnableExposeUrl'] as bool?,
+      webUseSseForDebugProxy: json['webUseSseForDebugProxy']! as bool,
+      webUseSseForDebugBackend: json['webUseSseForDebugBackend']! as bool,
+      webUseSseForInjectedClient: json['webUseSseForInjectedClient']! as bool,
+      webRunHeadless: json['webRunHeadless']! as bool,
+      webBrowserDebugPort: json['webBrowserDebugPort'] as int?,
+      webBrowserFlags: (json['webBrowserFlags']! as List<dynamic>).cast<String>(),
+      webEnableExpressionEvaluation: json['webEnableExpressionEvaluation']! as bool,
+      webHeaders: (json['webHeaders']! as Map<dynamic, dynamic>).cast<String, String>(),
+      webLaunchUrl: json['webLaunchUrl'] as String?,
+      webRenderer: WebRendererMode.values.byName(json['webRenderer']! as String),
+      vmserviceOutFile: json['vmserviceOutFile'] as String?,
+      fastStart: json['fastStart']! as bool,
+      nullAssertions: json['nullAssertions']! as bool,
+      nativeNullAssertions: json['nativeNullAssertions']! as bool,
+      enableImpeller: ImpellerStatus.fromBool(json['enableImpeller'] as bool?),
+      enableVulkanValidation: (json['enableVulkanValidation'] as bool?) ?? false,
+      uninstallFirst: (json['uninstallFirst'] as bool?) ?? false,
+      serveObservatory: (json['serveObservatory'] as bool?) ?? false,
+      enableDartProfiling: (json['enableDartProfiling'] as bool?) ?? true,
+      enableEmbedderApi: (json['enableEmbedderApi'] as bool?) ?? false,
+      usingCISystem: (json['usingCISystem'] as bool?) ?? false,
+      debugLogsDirectoryPath: json['debugLogsDirectoryPath'] as String?,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class LaunchResult {

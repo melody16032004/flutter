@@ -355,31 +355,32 @@ void main() {
       logs.clear();
     }, variant: KeySimulatorTransitModeVariant.all());
 
-    testWidgets(
-      'FocusManager ignores app lifecycle changes on Android and iOS.',
-      (WidgetTester tester) async {
-        Future<void> setAppLifecycleState(AppLifecycleState state) async {
-          final ByteData? message = const StringCodec().encodeMessage(state.toString());
-          await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
-              .handlePlatformMessage('flutter/lifecycle', message, (_) {});
-        }
+    testWidgets('FocusManager ignores app lifecycle changes on Android.', (WidgetTester tester) async {
+      final bool shouldRespond = kIsWeb || defaultTargetPlatform != TargetPlatform.android;
+      if (shouldRespond) {
+        return;
+      }
 
-        final BuildContext context = await setupWidget(tester);
-        final FocusScopeNode scope = FocusScopeNode(debugLabel: 'Scope');
-        addTearDown(scope.dispose);
-        final FocusAttachment scopeAttachment = scope.attach(context);
-        final FocusNode focusNode = FocusNode(debugLabel: 'Focus Node');
-        addTearDown(focusNode.dispose);
-        final FocusAttachment focusNodeAttachment = focusNode.attach(context);
-        scopeAttachment.reparent(parent: tester.binding.focusManager.rootScope);
-        focusNodeAttachment.reparent(parent: scope);
-        focusNode.requestFocus();
-        await tester.pump();
-        expect(focusNode.hasPrimaryFocus, isTrue);
+      Future<void> setAppLifecycleState(AppLifecycleState state) async {
+        final ByteData? message = const StringCodec().encodeMessage(state.toString());
+        await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+            .handlePlatformMessage('flutter/lifecycle', message, (_) {});
+      }
 
-        await setAppLifecycleState(AppLifecycleState.paused);
-        expect(focusNode.hasPrimaryFocus, isTrue);
+      final BuildContext context = await setupWidget(tester);
+      final FocusScopeNode scope = FocusScopeNode(debugLabel: 'Scope');
+      addTearDown(scope.dispose);
+      final FocusAttachment scopeAttachment = scope.attach(context);
+      final FocusNode focusNode = FocusNode(debugLabel: 'Focus Node');
+      addTearDown(focusNode.dispose);
+      final FocusAttachment focusNodeAttachment = focusNode.attach(context);
+      scopeAttachment.reparent(parent: tester.binding.focusManager.rootScope);
+      focusNodeAttachment.reparent(parent: scope);
+      focusNode.requestFocus();
+      await tester.pump();
+      expect(focusNode.hasPrimaryFocus, isTrue);
 
+<<<<<<< HEAD
         await setAppLifecycleState(AppLifecycleState.resumed);
         expect(focusNode.hasPrimaryFocus, isTrue);
       },
@@ -389,8 +390,21 @@ void main() {
         TargetPlatform.iOS,
       }),
     );
+=======
+      await setAppLifecycleState(AppLifecycleState.paused);
+      expect(focusNode.hasPrimaryFocus, isTrue);
+
+      await setAppLifecycleState(AppLifecycleState.resumed);
+      expect(focusNode.hasPrimaryFocus, isTrue);
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testWidgets('FocusManager responds to app lifecycle changes.', (WidgetTester tester) async {
+      final bool shouldRespond = kIsWeb || defaultTargetPlatform != TargetPlatform.android;
+      if (!shouldRespond) {
+        return;
+      }
+
       Future<void> setAppLifecycleState(AppLifecycleState state) async {
         final ByteData? message = const StringCodec().encodeMessage(state.toString());
         await TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -415,7 +429,7 @@ void main() {
 
       await setAppLifecycleState(AppLifecycleState.resumed);
       expect(focusNode.hasPrimaryFocus, isTrue);
-    }, variant: TargetPlatformVariant.desktop());
+    });
 
     testWidgets('Node is removed completely even if app is paused.', (WidgetTester tester) async {
       Future<void> setAppLifecycleState(AppLifecycleState state) async {
@@ -928,6 +942,7 @@ void main() {
       child4Attachment.reparent(parent: parent2);
       child4.requestFocus();
       await tester.pump();
+<<<<<<< HEAD
       final FocusScopeNode rootScope = tester.binding.focusManager.rootScope;
       final List<FocusNode> preamble = <FocusNode>[
         rootScope.children.first.children.first, // The View Node,
@@ -971,6 +986,14 @@ void main() {
           scope1,
         ]),
       );
+=======
+      expect(child4.ancestors, equals(<FocusNode>[parent2, scope2, tester.binding.focusManager.rootScope]));
+      expect(tester.binding.focusManager.rootScope.descendants, equals(<FocusNode>[child1, child2, parent1, scope1, child3, child4, parent2, scope2]));
+      scope2Attachment.reparent(parent: child2);
+      await tester.pump();
+      expect(child4.ancestors, equals(<FocusNode>[parent2, scope2, child2, parent1, scope1, tester.binding.focusManager.rootScope]));
+      expect(tester.binding.focusManager.rootScope.descendants, equals(<FocusNode>[child1, child3, child4, parent2, scope2, child2, parent1, scope1]));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWidgets('Can move focus between scopes and keep focus', (WidgetTester tester) async {
@@ -1536,6 +1559,7 @@ void main() {
       expect(FocusManager.instance.highlightMode, equals(FocusHighlightMode.touch));
     });
 
+<<<<<<< HEAD
     testWidgets('Scopes can be focused without sending focus to descendants.', (
       WidgetTester tester,
     ) async {
@@ -1570,6 +1594,8 @@ void main() {
       expect(childFocusNode.hasPrimaryFocus, isFalse);
     });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     testWidgets('implements debugFillProperties', (WidgetTester tester) async {
       final DiagnosticPropertiesBuilder builder = DiagnosticPropertiesBuilder();
       final FocusScopeNode scope = FocusScopeNode(debugLabel: 'Scope Label');
@@ -1629,25 +1655,16 @@ void main() {
         equalsIgnoringHashCodes(
           'FocusManager#00000\n'
           ' │ primaryFocus: FocusNode#00000(Child 4 [PRIMARY FOCUS])\n'
-          ' │ primaryFocusCreator: Container-[GlobalKey#00000] ←\n'
-          ' │   _FocusInheritedScope ← _FocusScopeWithExternalFocusNode ←\n'
-          ' │   _FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery\n'
-          ' │   ← _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
-          ' │   _RawViewInternal-[_DeprecatedRawViewKey TestFlutterView#00000]\n'
-          ' │   ← RawView ← View ← [root]\n'
+          ' │ primaryFocusCreator: Container-[GlobalKey#00000] ← MediaQuery ←\n'
+          ' │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
+          ' │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+          ' │   [root]\n'
           ' │\n'
           ' └─rootScope: FocusScopeNode#00000(Root Focus Scope [IN FOCUS PATH])\n'
           '   │ IN FOCUS PATH\n'
           '   │ focusedChildren: FocusScopeNode#00000([IN FOCUS PATH])\n'
           '   │\n'
-          '   ├─Child 1: _FocusTraversalGroupNode#00000(FocusTraversalGroup)\n'
-          '   │ │ context: Focus\n'
-          '   │ │ NOT FOCUSABLE\n'
-          '   │ │\n'
-          '   │ └─Child 1: FocusScopeNode#00000(View Scope)\n'
-          '   │     context: _FocusScopeWithExternalFocusNode\n'
-          '   │\n'
-          '   ├─Child 2: FocusScopeNode#00000(Scope 1)\n'
+          '   ├─Child 1: FocusScopeNode#00000(Scope 1)\n'
           '   │ │ context: Container-[GlobalKey#00000]\n'
           '   │ │\n'
           '   │ └─Child 1: FocusNode#00000(Parent 1)\n'
@@ -1659,7 +1676,7 @@ void main() {
           '   │   └─Child 2: FocusNode#00000\n'
           '   │       context: Container-[GlobalKey#00000]\n'
           '   │\n'
-          '   └─Child 3: FocusScopeNode#00000([IN FOCUS PATH])\n'
+          '   └─Child 2: FocusScopeNode#00000([IN FOCUS PATH])\n'
           '     │ context: Container-[GlobalKey#00000]\n'
           '     │ IN FOCUS PATH\n'
           '     │ focusedChildren: FocusNode#00000(Child 4 [PRIMARY FOCUS])\n'
@@ -2278,10 +2295,14 @@ void main() {
       debugPrint = oldDebugPrint;
     }
     final String messagesStr = messages.toString();
+<<<<<<< HEAD
     expect(
       messagesStr,
       contains(RegExp(r'   └─Child \d+: FocusScopeNode#[a-f0-9]{5}\(parent1 \[PRIMARY FOCUS\]\)')),
     );
+=======
+    expect(messagesStr, contains(RegExp(r'   └─Child 1: FocusScopeNode#[a-f0-9]{5}\(parent1 \[PRIMARY FOCUS\]\)')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(messagesStr, contains('FOCUS: Notified 2 dirty nodes'));
     expect(
       messagesStr,

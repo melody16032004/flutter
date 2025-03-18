@@ -13,12 +13,15 @@ TimelineEvent newGPUTraceEvent(double ms) => TimelineEvent(<String, dynamic>{
   'args': <String, String>{'MemoryBudgetUsageMB': ms.toString()},
 });
 
+<<<<<<< HEAD
 TimelineEvent newMetalGPUTraceEvent(double ms) => TimelineEvent(<String, dynamic>{
   'name': 'AllocatorMTL',
   'ph': 'b',
   'args': <String, String>{'MemoryBudgetUsageMB': ms.toString()},
 });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 void main() {
   test('Can process GPU memory usage times.', () {
     final GPUMemorySumarizer summarizer = GPUMemorySumarizer(<TimelineEvent>[
@@ -26,19 +29,6 @@ void main() {
       newGPUTraceEvent(1024),
       newGPUTraceEvent(512),
       newGPUTraceEvent(2048),
-    ]);
-
-    expect(summarizer.computeAverageMemoryUsage(), closeTo(1152, 0.1));
-    expect(summarizer.computePercentileMemoryUsage(50.0), closeTo(1024, 0.1));
-    expect(summarizer.computeWorstMemoryUsage(), 2048);
-  });
-
-  test('Can process Metal GPU memory usage times.', () {
-    final GPUMemorySumarizer summarizer = GPUMemorySumarizer(<TimelineEvent>[
-      newMetalGPUTraceEvent(1024),
-      newMetalGPUTraceEvent(1024),
-      newMetalGPUTraceEvent(512),
-      newMetalGPUTraceEvent(2048),
     ]);
 
     expect(summarizer.computeAverageMemoryUsage(), closeTo(1152, 0.1));

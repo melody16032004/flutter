@@ -11,7 +11,6 @@ import 'package:flutter_tools/src/base/file_system.dart';
 import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/base/process.dart';
-import 'package:flutter_tools/src/base/version.dart';
 import 'package:flutter_tools/src/build_system/build_system.dart';
 import 'package:flutter_tools/src/cache.dart';
 import 'package:flutter_tools/src/commands/build.dart';
@@ -32,12 +31,10 @@ import '../../src/test_build_system.dart';
 import '../../src/test_flutter_command_runner.dart';
 
 class FakeXcodeProjectInterpreterWithBuildSettings extends FakeXcodeProjectInterpreter {
-  FakeXcodeProjectInterpreterWithBuildSettings({
-    this.overrides = const <String, String>{},
-    Version? version,
-  }) : version = version ?? Version(14, 0, 0);
+  FakeXcodeProjectInterpreterWithBuildSettings({ this.overrides = const <String, String>{} });
 
   final Map<String, String> overrides;
+
   @override
   Future<Map<String, String>> getBuildSettings(
     String projectPath, {
@@ -50,9 +47,6 @@ class FakeXcodeProjectInterpreterWithBuildSettings extends FakeXcodeProjectInter
       'DEVELOPMENT_TEAM': 'abc',
     };
   }
-
-  @override
-  final Version version;
 }
 
 final Platform macosPlatform = FakePlatform(
@@ -72,7 +66,12 @@ class FakePlistUtils extends Fake implements PlistParser {
 }
 
 void main() {
+<<<<<<< HEAD
   late MemoryFileSystem fileSystem;
+=======
+  late FileSystem fileSystem;
+  late TestUsage usage;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   late FakeProcessManager fakeProcessManager;
   late ProcessUtils processUtils;
   late FakePlistUtils plistUtils;
@@ -449,6 +448,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testUsingContext(
     'ipa build uses new "debugging" export method when on Xcode versions > 15.3',
     () async {
@@ -676,6 +676,12 @@ void main() {
       await createTestCommandRunner(
         command,
       ).run(const <String>['build', 'ipa', '--export-method', 'enterprise', '--no-pub']);
+=======
+  testUsingContext('ipa build reports method from --export-options-plist when used', () async {
+    final File exportOptions = fileSystem.file('/ExportOptions.plist')
+      ..createSync();
+    createMinimalMockProjectFiles();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       const String expectedIpaPlistContents = '''
 <?xml version="1.0" encoding="UTF-8"?>
@@ -1310,6 +1316,7 @@ void main() {
         command,
       ).run(<String>['build', 'ipa', '--no-pub', '--export-options-plist', exportOptions.path]);
 
+<<<<<<< HEAD
       expect(
         logger.statusText,
         contains(
@@ -1330,6 +1337,49 @@ void main() {
       XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
     },
   );
+=======
+    createMinimalMockProjectFiles();
+
+    plistUtils.fileContents[plistPath] = <String,String>{
+      'CFBundleIdentifier': 'io.flutter.someProject',
+    };
+
+    final BuildCommand command = BuildCommand(
+      artifacts: artifacts,
+      androidSdk: FakeAndroidSdk(),
+      buildSystem: TestBuildSystem.all(BuildResult(success: true)),
+      logger: logger,
+      fileSystem: fileSystem,
+      processUtils: processUtils,
+      osUtils: FakeOperatingSystemUtils(),
+    );
+    await createTestCommandRunner(command).run(
+        <String>['build', 'ipa', '--no-pub']);
+
+    expect(
+      logger.statusText,
+      contains(
+        '[!] App Settings Validation\n'
+        '    ! Version Number: Missing\n'
+        '    ! Build Number: Missing\n'
+        '    ! Display Name: Missing\n'
+        '    ! Deployment Target: Missing\n'
+        '    • Bundle Identifier: io.flutter.someProject\n'
+        '    ! You must set up the missing app settings.\n'
+    ));
+    expect(
+      logger.statusText,
+      contains('To update the settings, please refer to https://docs.flutter.dev/deployment/ios')
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    Logger: () => logger,
+    ProcessManager: () => fakeProcessManager,
+    Platform: () => macosPlatform,
+    XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+    PlistParser: () => plistUtils,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Trace error if xcresult is empty.',
@@ -1360,6 +1410,7 @@ void main() {
         throwsToolExit(),
       );
 
+<<<<<<< HEAD
       expect(logger.traceText, contains('xcresult parser: Unrecognized top level json format.'));
       expect(fakeProcessManager, hasNoRemainingExpectations);
     },
@@ -1372,6 +1423,53 @@ void main() {
       XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
     },
   );
+=======
+    plistUtils.fileContents[plistPath] = <String,String>{
+      'CFBundleIdentifier': 'io.flutter.someProject',
+      'CFBundleDisplayName': 'Awesome Gallery',
+      // Will not use CFBundleName since CFBundleDisplayName is present.
+      'CFBundleName': 'Awesome Gallery 2',
+      'MinimumOSVersion': '17.0',
+      'CFBundleVersion': '666',
+      'CFBundleShortVersionString': '12.34.56',
+    };
+
+    final BuildCommand command = BuildCommand(
+      artifacts: artifacts,
+      androidSdk: FakeAndroidSdk(),
+      buildSystem: TestBuildSystem.all(BuildResult(success: true)),
+      logger: logger,
+      fileSystem: fileSystem,
+      processUtils: processUtils,
+      osUtils: FakeOperatingSystemUtils(),
+    );
+    await createTestCommandRunner(command).run(
+        <String>['build', 'ipa', '--no-pub']);
+
+    expect(
+      logger.statusText,
+      contains(
+        '[✓] App Settings Validation\n'
+        '    • Version Number: 12.34.56\n'
+        '    • Build Number: 666\n'
+        '    • Display Name: Awesome Gallery\n'
+        '    • Deployment Target: 17.0\n'
+        '    • Bundle Identifier: io.flutter.someProject\n'
+      )
+    );
+    expect(
+      logger.statusText,
+      contains('To update the settings, please refer to https://docs.flutter.dev/deployment/ios')
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    Logger: () => logger,
+    ProcessManager: () => fakeProcessManager,
+    Platform: () => macosPlatform,
+    XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+    PlistParser: () => plistUtils,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Display xcresult issues on console if parsed.',
@@ -1397,10 +1495,59 @@ void main() {
       ]);
       createMinimalMockProjectFiles();
 
+<<<<<<< HEAD
       await expectLater(
         createTestCommandRunner(command).run(const <String>['build', 'ipa', '--no-pub']),
         throwsToolExit(),
       );
+=======
+    createMinimalMockProjectFiles();
+
+    plistUtils.fileContents[plistPath] = <String,String>{
+      'CFBundleIdentifier': 'io.flutter.someProject',
+      // Will use CFBundleName since CFBundleDisplayName is absent.
+      'CFBundleName': 'Awesome Gallery',
+      'MinimumOSVersion': '17.0',
+      'CFBundleVersion': '666',
+      'CFBundleShortVersionString': '12.34.56',
+    };
+
+    final BuildCommand command = BuildCommand(
+      artifacts: artifacts,
+      androidSdk: FakeAndroidSdk(),
+      buildSystem: TestBuildSystem.all(BuildResult(success: true)),
+      logger: logger,
+      fileSystem: fileSystem,
+      processUtils: processUtils,
+      osUtils: FakeOperatingSystemUtils(),
+    );
+    await createTestCommandRunner(command).run(
+        <String>['build', 'ipa', '--no-pub']);
+
+    expect(
+      logger.statusText,
+      contains(
+        '[✓] App Settings Validation\n'
+        '    • Version Number: 12.34.56\n'
+        '    • Build Number: 666\n'
+        '    • Display Name: Awesome Gallery\n'
+        '    • Deployment Target: 17.0\n'
+        '    • Bundle Identifier: io.flutter.someProject\n'
+      ),
+    );
+    expect(
+      logger.statusText,
+      contains('To update the settings, please refer to https://docs.flutter.dev/deployment/ios'),
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fileSystem,
+    Logger: () => logger,
+    ProcessManager: () => fakeProcessManager,
+    Platform: () => macosPlatform,
+    XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+    PlistParser: () => plistUtils,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(logger.errorText, contains("Use of undeclared identifier 'asdas'"));
       expect(

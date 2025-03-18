@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:package_config/package_config.dart';
@@ -11,6 +10,7 @@ import '../base/common.dart';
 import '../base/file_system.dart';
 import '../base/logger.dart';
 
+<<<<<<< HEAD
 /// Loads the package configuration of the current isolate.
 Future<PackageConfig> currentPackageConfig() async {
   return loadPackageConfigUri(Isolate.packageConfigSync!);
@@ -50,6 +50,8 @@ File findPackageConfigFileOrDefault(Directory dir) {
       dir.childDirectory('.dart_tool').childFile('package_config.json');
 }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// Load the package configuration from [file] or throws a [ToolExit]
 /// if the operation would fail.
 ///

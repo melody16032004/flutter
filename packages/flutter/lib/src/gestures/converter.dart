@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'dart:ui';
-library;
 
 import 'dart:ui' as ui show PointerChange, PointerData, PointerSignalKind;
 
@@ -290,7 +288,6 @@ abstract final class PointerEventConverter {
                 position: position,
                 scrollDelta: scrollDelta,
                 embedderId: datum.embedderId,
-                onRespond: datum.respond,
               );
             case ui.PointerSignalKind.scrollInertiaCancel:
               return PointerScrollInertiaCancelEvent(

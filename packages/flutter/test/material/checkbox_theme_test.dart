@@ -497,6 +497,7 @@ void main() {
     );
     expect(lerped.side, const BorderSide(width: 3.5));
   });
+<<<<<<< HEAD
 
   testWidgets('MaterialStateBorderSide properly lerp in CheckboxThemeData.side', (
     WidgetTester tester,
@@ -532,6 +533,8 @@ void main() {
 
     expect(getCheckboxRenderBox(), paints..drrect(color: colorScheme.primary));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Future<void> _pointGestureToCheckbox(WidgetTester tester) async {

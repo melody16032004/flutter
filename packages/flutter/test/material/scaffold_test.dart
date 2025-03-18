@@ -2871,6 +2871,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+<<<<<<< HEAD
   // Regression test for https://github.com/flutter/flutter/issues/115924.
   testWidgets('Default ScaffoldMessenger can access ambient theme', (WidgetTester tester) async {
     final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =
@@ -2911,6 +2912,25 @@ void main() {
               );
             },
           ),
+=======
+   testWidgets('ScaffoldMessenger showSnackBar default animatiom', (WidgetTester tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (BuildContext context) {
+            return ElevatedButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('I am a snack bar.'),
+                    showCloseIcon: true,
+                  ),
+                );
+              },
+              child: const Text('Show SnackBar'),
+            );
+          },
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       ),
     );
@@ -3286,6 +3306,7 @@ void main() {
     // The bottom sheet is dismissed.
     expect(find.byKey(sheetKey), findsNothing);
   });
+<<<<<<< HEAD
 
   // This is a regression test for https://github.com/flutter/flutter/issues/145585.
   testWidgets('FAB default entrance and exit animations', (WidgetTester tester) async {
@@ -3476,6 +3497,8 @@ void main() {
       expect(tester.getSize(find.byKey(bodyKey)).height, 400);
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _GeometryListener extends StatefulWidget {

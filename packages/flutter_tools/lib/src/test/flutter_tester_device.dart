@@ -116,9 +116,17 @@ class FlutterTesterTestDevice extends TestDevice {
       '--non-interactive',
       '--use-test-fonts',
       '--disable-asset-fonts',
+<<<<<<< HEAD
       '--packages=${debuggingOptions.buildInfo.packageConfigPath}',
       if (testAssetDirectory != null) '--flutter-assets-dir=$testAssetDirectory',
       if (debuggingOptions.nullAssertions) '--dart-flags=--null_assertions',
+=======
+      '--packages=${debuggingOptions.buildInfo.packagesPath}',
+      if (testAssetDirectory != null)
+        '--flutter-assets-dir=$testAssetDirectory',
+      if (debuggingOptions.nullAssertions)
+        '--dart-flags=--null_assertions',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ...debuggingOptions.dartEntrypointArgs,
       entrypointPath,
     ];
@@ -351,6 +359,7 @@ class FlutterTesterTestDevice extends TestDevice {
 }
 
 String _getExitCodeMessage(int exitCode) {
+<<<<<<< HEAD
   return switch (exitCode) {
     1 => 'Shell subprocess cleanly reported an error. Check the logs above for an error message.',
     0 => 'Shell subprocess ended cleanly. Did main() call exit()?',
@@ -360,6 +369,24 @@ String _getExitCodeMessage(int exitCode) {
     -0x02 => 'Shell subprocess terminated by ^C (SIGINT, $exitCode).', // ProcessSignal.SIGINT
     _ => 'Shell subprocess crashed with unexpected exit code $exitCode.',
   };
+=======
+  switch (exitCode) {
+    case 1:
+      return 'Shell subprocess cleanly reported an error. Check the logs above for an error message.';
+    case 0:
+      return 'Shell subprocess ended cleanly. Did main() call exit()?';
+    case -0x0f: // ProcessSignal.SIGTERM
+      return 'Shell subprocess crashed with SIGTERM ($exitCode).';
+    case -0x0b: // ProcessSignal.SIGSEGV
+      return 'Shell subprocess crashed with segmentation fault.';
+    case -0x06: // ProcessSignal.SIGABRT
+      return 'Shell subprocess crashed with SIGABRT ($exitCode).';
+    case -0x02: // ProcessSignal.SIGINT
+      return 'Shell subprocess terminated by ^C (SIGINT, $exitCode).';
+    default:
+      return 'Shell subprocess crashed with unexpected exit code $exitCode.';
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 StreamChannel<String> _webSocketToStreamChannel(WebSocket webSocket) {

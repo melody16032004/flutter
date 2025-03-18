@@ -571,6 +571,7 @@ abstract class WidgetStateBorderSide extends BorderSide
   /// widget or theme.
   @override
   BorderSide? resolve(Set<WidgetState> states);
+<<<<<<< HEAD
 
   /// Linearly interpolate between two [WidgetStateProperty]s of [BorderSide].
   static WidgetStateProperty<BorderSide?>? lerp(
@@ -616,6 +617,8 @@ class _LerpSides implements WidgetStateProperty<BorderSide?> {
     }
     return BorderSide.lerp(resolvedA, resolvedB, t);
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _WidgetStateBorderSide extends WidgetStateBorderSide {
@@ -1128,11 +1131,11 @@ class WidgetStatePropertyAll<T> implements WidgetStateProperty<T> {
 /// or loses the focus it will [update] its controller's [value] and
 /// notify listeners of the change.
 ///
-/// When calling `setState` in a [WidgetStatesController] listener, use the
+/// When calling `setState` in a [MaterialStatesController] listener, use the
 /// [SchedulerBinding.addPostFrameCallback] to delay the call to `setState` after
 /// the frame has been rendered. It's generally prudent to use the
 /// [SchedulerBinding.addPostFrameCallback] because some of the widgets that
-/// depend on [WidgetStatesController] may call [update] in their build method.
+/// depend on [MaterialStatesController] may call [update] in their build method.
 /// In such cases, listener's that call `setState` - during the build phase - will cause
 /// an error.
 ///

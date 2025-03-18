@@ -196,7 +196,6 @@ class NestedScrollView extends StatefulWidget {
     this.dragStartBehavior = DragStartBehavior.start,
     this.floatHeaderSlivers = false,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.restorationId,
     this.scrollBehavior,
   });
@@ -305,11 +304,6 @@ class NestedScrollView extends StatefulWidget {
   ///
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
-
-  /// {@macro flutter.widgets.scrollable.hitTestBehavior}
-  ///
-  /// Defaults to [HitTestBehavior.opaque].
-  final HitTestBehavior hitTestBehavior;
 
   /// {@macro flutter.widgets.scrollable.restorationId}
   final String? restorationId;
@@ -511,7 +505,6 @@ class NestedScrollViewState extends State<NestedScrollView> {
             handle: _absorberHandle,
             clipBehavior: widget.clipBehavior,
             restorationId: widget.restorationId,
-            hitTestBehavior: widget.hitTestBehavior,
           );
         },
       ),
@@ -529,7 +522,6 @@ class _NestedScrollViewCustomScrollView extends CustomScrollView {
     required super.slivers,
     required this.handle,
     required super.clipBehavior,
-    super.hitTestBehavior,
     super.dragStartBehavior,
     super.restorationId,
   });
@@ -644,11 +636,14 @@ class _NestedScrollCoordinator implements ScrollActivityDelegate, ScrollHoldCont
   late _NestedScrollController _outerController;
   late _NestedScrollController _innerController;
 
+<<<<<<< HEAD
   bool get outOfRange {
     return (_outerPosition?.outOfRange ?? false) ||
         _innerPositions.any((_NestedScrollPosition position) => position.outOfRange);
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   _NestedScrollPosition? get _outerPosition {
     if (!_outerController.hasClients) {
       return null;
@@ -1202,7 +1197,8 @@ class _NestedScrollController extends ScrollController {
   }
 
   Iterable<_NestedScrollPosition> get nestedPositions {
-    return positions.cast<_NestedScrollPosition>();
+    // TODO(vegorov): use instance method version of castFrom when it is available.
+    return Iterable.castFrom<ScrollPosition, _NestedScrollPosition>(positions);
   }
 }
 
@@ -1408,7 +1404,6 @@ class _NestedScrollPosition extends ScrollPosition implements ScrollActivityDele
     if (simulation == null) {
       return IdleScrollActivity(this);
     }
-
     switch (mode) {
       case _NestedBallisticScrollActivityMode.outer:
         assert(metrics != null);
@@ -1421,7 +1416,7 @@ class _NestedScrollPosition extends ScrollPosition implements ScrollActivityDele
           metrics,
           simulation,
           context.vsync,
-          shouldIgnorePointer,
+          activity?.shouldIgnorePointer ?? true,
         );
       case _NestedBallisticScrollActivityMode.inner:
         return _NestedInnerBallisticScrollActivity(
@@ -1429,10 +1424,14 @@ class _NestedScrollPosition extends ScrollPosition implements ScrollActivityDele
           this,
           simulation,
           context.vsync,
-          shouldIgnorePointer,
+          activity?.shouldIgnorePointer ?? true,
         );
       case _NestedBallisticScrollActivityMode.independent:
+<<<<<<< HEAD
         return BallisticScrollActivity(this, simulation, context.vsync, shouldIgnorePointer);
+=======
+        return BallisticScrollActivity(this, simulation, context.vsync, activity?.shouldIgnorePointer ?? true);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
   }
 

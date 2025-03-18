@@ -2,17 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 import 'tabs_utils.dart';
 
 Widget boilerplate({
@@ -46,8 +50,12 @@ Widget buildFrame({
   EdgeInsetsGeometry? padding,
   TextDirection textDirection = TextDirection.ltr,
   TabAlignment? tabAlignment,
+<<<<<<< HEAD
   TabBarThemeData? tabBarTheme,
   Decoration? indicator,
+=======
+  TabBarTheme? tabBarTheme,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool? useMaterial3,
 }) {
   if (secondaryTabBar) {
@@ -86,7 +94,6 @@ Widget buildFrame({
         indicatorColor: indicatorColor,
         padding: padding,
         tabAlignment: tabAlignment,
-        indicator: indicator,
       ),
     ),
   );
@@ -120,6 +127,9 @@ Widget buildLeftRightApp({
 }
 
 void main() {
+  // TODO(polina-c): dispose TabController, https://github.com/flutter/flutter/issues/144910 [leaks-to-clean]
+  LeakTesting.settings = LeakTesting.settings.withIgnoredAll();
+
   setUp(() {
     debugResetSemanticsIdCounter();
   });
@@ -3888,6 +3898,7 @@ void main() {
               rect: TestSemantics.fullScreen,
               children: <TestSemantics>[
                 TestSemantics(
+<<<<<<< HEAD
                   id: 3,
                   rect: TestSemantics.fullScreen,
                   flags: <SemanticsFlag>[SemanticsFlag.hasImplicitScrolling],
@@ -3925,6 +3936,32 @@ void main() {
                       ],
                     ),
                   ],
+=======
+                    id: 3,
+                    rect: TestSemantics.fullScreen,
+                    flags: <SemanticsFlag>[SemanticsFlag.hasImplicitScrolling],
+                    children: <TestSemantics>[
+                      TestSemantics(
+                        id: 4,
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+                        flags: <SemanticsFlag>[
+                          SemanticsFlag.isSelected,
+                          SemanticsFlag.isFocusable,
+                        ],
+                        label: 'TAB #0\nTab 1 of 2',
+                        rect: const Rect.fromLTRB(0.0, 0.0, 116.0, kTextTabBarHeight),
+                        transform: Matrix4.translationValues(0.0, 276.0, 0.0),
+                      ),
+                      TestSemantics(
+                        id: 5,
+                        flags: <SemanticsFlag>[SemanticsFlag.isFocusable],
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+                        label: 'TAB #1\nTab 2 of 2',
+                        rect: const Rect.fromLTRB(0.0, 0.0, 116.0, kTextTabBarHeight),
+                        transform: Matrix4.translationValues(116.0, 276.0, 0.0),
+                      ),
+                    ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                 ),
               ],
             ),
@@ -4165,6 +4202,7 @@ void main() {
               rect: TestSemantics.fullScreen,
               children: <TestSemantics>[
                 TestSemantics(
+<<<<<<< HEAD
                   id: 3,
                   rect: TestSemantics.fullScreen,
                   flags: <SemanticsFlag>[SemanticsFlag.hasImplicitScrolling],
@@ -4202,6 +4240,32 @@ void main() {
                       ],
                     ),
                   ],
+=======
+                    id: 3,
+                    rect: TestSemantics.fullScreen,
+                    flags: <SemanticsFlag>[SemanticsFlag.hasImplicitScrolling],
+                    children: <TestSemantics>[
+                      TestSemantics(
+                        id: 4,
+                        flags: <SemanticsFlag>[
+                          SemanticsFlag.isSelected,
+                          SemanticsFlag.isFocusable,
+                        ],
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+                        label: 'Semantics override 0\nTab 1 of 2',
+                        rect: const Rect.fromLTRB(0.0, 0.0, 116.0, kTextTabBarHeight),
+                        transform: Matrix4.translationValues(0.0, 276.0, 0.0),
+                      ),
+                      TestSemantics(
+                        id: 5,
+                        flags: <SemanticsFlag>[SemanticsFlag.isFocusable],
+                        actions: <SemanticsAction>[SemanticsAction.tap],
+                        label: 'Semantics override 1\nTab 2 of 2',
+                        rect: const Rect.fromLTRB(0.0, 0.0, 116.0, kTextTabBarHeight),
+                        transform: Matrix4.translationValues(116.0, 276.0, 0.0),
+                      ),
+                    ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                 ),
               ],
             ),
@@ -6008,16 +6072,24 @@ void main() {
               ],
               id: 2,
               rect: TestSemantics.fullScreen,
+<<<<<<< HEAD
               actions: 1 | SemanticsAction.focus.index,
               role: SemanticsRole.tab,
+=======
+              actions: 1,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
             TestSemantics(
               label: 'TAB2${kIsWeb ? '' : '\nTab 2 of 2'}',
               flags: <SemanticsFlag>[SemanticsFlag.isFocusable, SemanticsFlag.hasSelectedState],
               id: 3,
               rect: TestSemantics.fullScreen,
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
               role: SemanticsRole.tab,
+=======
+              actions: <SemanticsAction>[SemanticsAction.tap],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
             TestSemantics(
               id: 4,
@@ -7112,6 +7184,30 @@ void main() {
     // and tabAlignment is set to center.
     await tester.pumpWidget(buildTabBar(dividerHeight: 0.0, tabAlignment: TabAlignment.center));
     expect(tester.getSize(find.byType(TabBar)).width, 307.5);
+
+    // Test default tab bar width when the divider color is set to transparent
+    // and tabAlignment is set to startOffset.
+    await tester.pumpWidget(buildTabBar(
+      dividerColor: Colors.transparent,
+      tabAlignment: TabAlignment.startOffset,
+    ));
+    expect(tester.getSize(find.byType(TabBar)).width, 359.5);
+
+    // Test default tab bar width when the divider color is set to transparent
+    // and tabAlignment is set to start.
+    await tester.pumpWidget(buildTabBar(
+      dividerColor: Colors.transparent,
+      tabAlignment: TabAlignment.start,
+    ));
+    expect(tester.getSize(find.byType(TabBar)).width, 307.5);
+
+    // Test default tab bar width when the divider color is set to transparent
+    // and tabAlignment is set to center.
+    await tester.pumpWidget(buildTabBar(
+      dividerColor: Colors.transparent,
+      tabAlignment: TabAlignment.center,
+    ));
+    expect(tester.getSize(find.byType(TabBar)).width, 307.5);
   });
 
   group('Material 2', () {
@@ -7451,6 +7547,7 @@ void main() {
     expect(find.text('View 0'), findsNothing);
     expect(find.text('View 2'), findsOneWidget);
   });
+<<<<<<< HEAD
 
   testWidgets('Tab indicator painter image configuration', (WidgetTester tester) async {
     final List<String> tabs = <String>['A', 'B'];
@@ -8857,4 +8954,6 @@ void main() {
       ),
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

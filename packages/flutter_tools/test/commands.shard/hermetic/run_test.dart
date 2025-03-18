@@ -13,7 +13,6 @@ import 'package:flutter_tools/src/base/common.dart';
 import 'package:flutter_tools/src/base/file_system.dart';
 import 'package:flutter_tools/src/base/io.dart';
 import 'package:flutter_tools/src/base/logger.dart';
-import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/base/terminal.dart';
 import 'package:flutter_tools/src/build_info.dart';
 import 'package:flutter_tools/src/cache.dart';
@@ -28,7 +27,11 @@ import 'package:flutter_tools/src/project.dart';
 import 'package:flutter_tools/src/reporting/reporting.dart';
 import 'package:flutter_tools/src/resident_runner.dart';
 import 'package:flutter_tools/src/runner/flutter_command.dart';
+<<<<<<< HEAD
 import 'package:flutter_tools/src/web/compile.dart';
+=======
+import 'package:flutter_tools/src/vmservice.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:test/fake.dart';
 import 'package:unified_analytics/unified_analytics.dart' as analytics;
 import 'package:vm_service/vm_service.dart';
@@ -1242,6 +1245,7 @@ void main() {
             throwsToolExit(),
           );
 
+<<<<<<< HEAD
           final DebuggingOptions options = await command.createDebuggingOptions(true);
           expect(options.webHeaders, <String, String>{'hurray': 'flutter,flutter=hurray'});
         },
@@ -1252,6 +1256,38 @@ void main() {
           DeviceManager: () => testDeviceManager,
         },
       );
+=======
+        await expectLater(
+          () => command.createDebuggingOptions(true),
+          throwsToolExit(message: 'Invalid web headers: hurray/headers=flutter'),
+        );
+      }, overrides: <Type, Generator>{
+        FileSystem: () => fileSystem,
+        ProcessManager: () => FakeProcessManager.any(),
+        Logger: () => logger,
+        DeviceManager: () => testDeviceManager,
+      });
+
+      testUsingContext('accepts headers with commas in them', () async {
+        final RunCommand command = RunCommand();
+        await expectLater(
+          () => createTestCommandRunner(command).run(<String>[
+            'run',
+            '--no-pub', '--no-hot',
+            '--web-header', 'hurray=flutter,flutter=hurray',
+          ]), throwsToolExit());
+
+        final DebuggingOptions options = await command.createDebuggingOptions(true);
+        expect(options.webHeaders, <String, String>{
+          'hurray': 'flutter,flutter=hurray'
+        });
+      }, overrides: <Type, Generator>{
+        FileSystem: () => fileSystem,
+        ProcessManager: () => FakeProcessManager.any(),
+        Logger: () => logger,
+        DeviceManager: () => testDeviceManager,
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 
@@ -1269,6 +1305,7 @@ void main() {
         final TestRunCommandWithFakeResidentRunner command = TestRunCommandWithFakeResidentRunner();
         command.fakeResidentRunner = residentRunner;
 
+<<<<<<< HEAD
         await createTestCommandRunner(command).run(<String>['run', '--no-pub']);
         // The sync completer where we initially set `terminal.singleCharMode` to
         // `true` does not execute in unit tests, so explicitly check the
@@ -1282,6 +1319,170 @@ void main() {
         FileSystem: () => MemoryFileSystem.test(),
         ProcessManager: () => FakeProcessManager.any(),
       },
+=======
+      await createTestCommandRunner(command).run(<String>[
+        'run',
+        '--no-pub',
+      ]);
+      // The sync completer where we initially set `terminal.singleCharMode` to
+      // `true` does not execute in unit tests, so explicitly check the
+      // `setSingleCharModeHistory` that the finally block ran, setting this
+      // back to `false`.
+      expect(fakeTerminal.setSingleCharModeHistory, contains(false));
+    }, overrides: <Type, Generator>{
+      AnsiTerminal: () => fakeTerminal,
+      Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+      FileSystem: () => MemoryFileSystem.test(),
+      ProcessManager: () => FakeProcessManager.any(),
+    });
+
+    testUsingContext('Flutter run catches StdinException while setting terminal singleCharMode to false', () async {
+      fakeTerminal.hasStdin = false;
+      final FakeResidentRunner residentRunner = FakeResidentRunner();
+      final TestRunCommandWithFakeResidentRunner command = TestRunCommandWithFakeResidentRunner();
+      command.fakeResidentRunner = residentRunner;
+
+      try {
+        await createTestCommandRunner(command).run(<String>[
+          'run',
+          '--no-pub',
+        ]);
+      } catch (err) { // ignore: avoid_catches_without_on_clauses
+        fail('Expected no error, got $err');
+      }
+      expect(fakeTerminal.setSingleCharModeHistory, isEmpty);
+    }, overrides: <Type, Generator>{
+      AnsiTerminal: () => fakeTerminal,
+      Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+      FileSystem: () => MemoryFileSystem.test(),
+      ProcessManager: () => FakeProcessManager.any(),
+    });
+  });
+
+  testUsingContext('Flutter run catches service has disappear errors and throws a tool exit', () async {
+    final FakeResidentRunner residentRunner = FakeResidentRunner();
+    residentRunner.rpcError = RPCError('flutter._listViews', RPCErrorCodes.kServiceDisappeared, '');
+    final TestRunCommandWithFakeResidentRunner command = TestRunCommandWithFakeResidentRunner();
+    command.fakeResidentRunner = residentRunner;
+
+    await expectToolExitLater(createTestCommandRunner(command).run(<String>[
+      'run',
+      '--no-pub',
+    ]), contains('Lost connection to device.'));
+  }, overrides: <Type, Generator>{
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+    FileSystem: () => MemoryFileSystem.test(),
+    ProcessManager: () => FakeProcessManager.any(),
+  });
+
+  testUsingContext('Flutter run does not catch other RPC errors', () async {
+    final FakeResidentRunner residentRunner = FakeResidentRunner();
+    residentRunner.rpcError = RPCError('flutter._listViews', RPCErrorCodes.kInvalidParams, '');
+    final TestRunCommandWithFakeResidentRunner command = TestRunCommandWithFakeResidentRunner();
+    command.fakeResidentRunner = residentRunner;
+
+    await expectLater(() => createTestCommandRunner(command).run(<String>[
+      'run',
+      '--no-pub',
+    ]), throwsA(isA<RPCError>()));
+  }, overrides: <Type, Generator>{
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+    FileSystem: () => MemoryFileSystem.test(),
+    ProcessManager: () => FakeProcessManager.any(),
+  });
+
+  testUsingContext('Passes sksl bundle info the build options', () async {
+    final TestRunCommandWithFakeResidentRunner command = TestRunCommandWithFakeResidentRunner();
+
+    await expectLater(() => createTestCommandRunner(command).run(<String>[
+      'run',
+      '--no-pub',
+      '--bundle-sksl-path=foo.json',
+    ]), throwsToolExit(message: 'No SkSL shader bundle found at foo.json'));
+  }, overrides: <Type, Generator>{
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+    FileSystem: () => MemoryFileSystem.test(),
+    ProcessManager: () => FakeProcessManager.any(),
+  });
+
+  testUsingContext('Configures web connection options to use web sockets by default', () async {
+    final RunCommand command = RunCommand();
+    await expectLater(() => createTestCommandRunner(command).run(<String>[
+      'run',
+      '--no-pub',
+    ]), throwsToolExit());
+
+    final DebuggingOptions options = await command.createDebuggingOptions(true);
+
+    expect(options.webUseSseForDebugBackend, false);
+    expect(options.webUseSseForDebugProxy, false);
+    expect(options.webUseSseForInjectedClient, false);
+  }, overrides: <Type, Generator>{
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+    FileSystem: () => MemoryFileSystem.test(),
+    ProcessManager: () => FakeProcessManager.any(),
+  });
+
+  testUsingContext('flags propagate to debugging options', () async {
+    final RunCommand command = RunCommand();
+    await expectLater(() => createTestCommandRunner(command).run(<String>[
+      'run',
+      '--start-paused',
+      '--disable-service-auth-codes',
+      '--use-test-fonts',
+      '--trace-skia',
+      '--trace-systrace',
+      '--trace-to-file=path/to/trace.binpb',
+      '--verbose-system-logs',
+      '--null-assertions',
+      '--native-null-assertions',
+      '--enable-impeller',
+      '--enable-vulkan-validation',
+      '--trace-systrace',
+      '--enable-software-rendering',
+      '--skia-deterministic-rendering',
+      '--enable-embedder-api',
+      '--ci',
+      '--debug-logs-dir=path/to/logs'
+    ]), throwsToolExit());
+
+    final DebuggingOptions options = await command.createDebuggingOptions(false);
+
+    expect(options.startPaused, true);
+    expect(options.disableServiceAuthCodes, true);
+    expect(options.useTestFonts, true);
+    expect(options.traceSkia, true);
+    expect(options.traceSystrace, true);
+    expect(options.traceToFile, 'path/to/trace.binpb');
+    expect(options.verboseSystemLogs, true);
+    expect(options.nullAssertions, true);
+    expect(options.nativeNullAssertions, true);
+    expect(options.traceSystrace, true);
+    expect(options.enableImpeller, ImpellerStatus.enabled);
+    expect(options.enableVulkanValidation, true);
+    expect(options.enableSoftwareRendering, true);
+    expect(options.skiaDeterministicRendering, true);
+    expect(options.usingCISystem, true);
+    expect(options.debugLogsDirectoryPath, 'path/to/logs');
+  }, overrides: <Type, Generator>{
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+    FileSystem: () => MemoryFileSystem.test(),
+    ProcessManager: () => FakeProcessManager.any(),
+  });
+
+  testUsingContext('fails when "--web-launch-url" is not supported', () async {
+    final RunCommand command = RunCommand();
+    await expectLater(
+          () => createTestCommandRunner(command).run(<String>[
+        'run',
+        '--web-launch-url=http://flutter.dev',
+      ]),
+      throwsA(isException.having(
+            (Exception exception) => exception.toString(),
+        'toString',
+        isNot(contains('web-launch-url')),
+      )),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     testUsingContext(
@@ -1737,6 +1938,7 @@ class TestRunCommandForUsageValues extends RunCommand {
   }
 
   @override
+<<<<<<< HEAD
   Future<BuildInfo> getBuildInfo({
     FlutterProject? project,
     BuildMode? forcedBuildMode,
@@ -1749,6 +1951,10 @@ class TestRunCommandForUsageValues extends RunCommand {
       treeShakeIcons: false,
       packageConfigPath: '.dart_tool/package_config.json',
     );
+=======
+  Future<BuildInfo> getBuildInfo({ BuildMode? forcedBuildMode, File? forcedTargetFile }) async {
+    return const BuildInfo(BuildMode.debug, null, treeShakeIcons: false);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

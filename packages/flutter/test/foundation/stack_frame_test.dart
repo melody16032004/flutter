@@ -26,6 +26,7 @@ void main() {
     expect(StackFrame.fromStackString(stackFrameNoCols), stackFrameNoColsFrames);
   });
 
+<<<<<<< HEAD
   test(
     'Parses web stack',
     // Wasm stacks are not reliable, even in debug mode, so the stack
@@ -36,6 +37,14 @@ void main() {
       expect(StackFrame.fromStackString(webStackTrace), webStackTraceFrames);
     },
   );
+=======
+  test('Parses web stack', () {
+    expect(
+      StackFrame.fromStackString(webStackTrace),
+      webStackTraceFrames,
+    );
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   test('Parses ...', () {
     expect(StackFrame.fromStackTraceLine('...'), StackFrame.stackOverFlowElision);

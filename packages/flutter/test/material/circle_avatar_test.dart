@@ -12,7 +12,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
+<<<<<<< HEAD
 
+=======
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import '../image_data.dart';
 import '../painting/mocks_for_image_cache.dart';
 
@@ -87,10 +91,17 @@ void main() {
     expect(decoration.image!.fit, equals(BoxFit.cover));
   });
 
+<<<<<<< HEAD
   testWidgets('CircleAvatar backgroundImage is used as a fallback for foregroundImage', (
     WidgetTester tester,
   ) async {
     addTearDown(imageCache.clear);
+=======
+  testWidgets('CircleAvatar backgroundImage is used as a fallback for foregroundImage',
+  // TODO(polina-c): make sure images are disposed, https://github.com/flutter/flutter/issues/141388 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final ErrorImageProvider errorImage = ErrorImageProvider();
     bool caughtForegroundImageError = false;
     await tester.pumpWidget(

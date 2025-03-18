@@ -19,7 +19,6 @@ import '../build_info.dart';
 import '../convert.dart';
 import '../device.dart';
 import '../device_port_forwarder.dart';
-import '../device_vm_service_discovery_for_attach.dart';
 import '../project.dart';
 import '../protocol_discovery.dart';
 import '../vmservice.dart';
@@ -780,6 +779,7 @@ class AndroidDevice extends Device {
 
   @override
   void clearLogs() {
+<<<<<<< HEAD
     final RunResult result = _processUtils.runSync(adbCommandForDevice(<String>['logcat', '-c']));
     // Do not log to standard error because that causes test to fail.
     if (result.exitCode != 0) {
@@ -788,6 +788,9 @@ class AndroidDevice extends Device {
         ' stdout: ${result.stdout} stderr: ${result.stderr}',
       );
     }
+=======
+    _processUtils.runSync(adbCommandForDevice(<String>['logcat', '-c']));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -809,6 +812,7 @@ class AndroidDevice extends Device {
   }
 
   @override
+<<<<<<< HEAD
   VMServiceDiscoveryForAttach getVMServiceDiscoveryForAttach({
     String? appId,
     String? fuchsiaModule,
@@ -828,6 +832,8 @@ class AndroidDevice extends Device {
   );
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   late final DevicePortForwarder? portForwarder = () {
     final String? adbPath = _androidSdk.adbPath;
     if (adbPath == null) {
@@ -907,7 +913,7 @@ Map<String, String> parseAdbDeviceProperties(String str) {
 ///
 /// Example output:
 ///
-/// ```none
+/// ```
 /// Applications Memory Usage (in Kilobytes):
 /// Uptime: 441088659 Realtime: 521464097
 ///

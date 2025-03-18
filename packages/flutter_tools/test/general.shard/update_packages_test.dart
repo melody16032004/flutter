@@ -24,7 +24,6 @@ dependencies:
   # To update these, use "flutter update-packages --force-upgrade".
   collection: 1.14.11
   meta: 1.1.8
-  macros: 0.0.1
   typed_data: 1.1.6
   vector_math: 2.0.8
 
@@ -187,6 +186,7 @@ void main() {
   testWithoutContext('PubspecYaml Loads dependencies', () async {
     final PubspecYaml pubspecYaml = PubspecYaml(flutter);
     expect(
+<<<<<<< HEAD
       pubspecYaml.allDependencies
           .map<String>(
             (PubspecDependency dependency) => '${dependency.name}: ${dependency.version}',
@@ -261,4 +261,47 @@ void main() {
     final String contents = flutter.childFile('pubspec.yaml').readAsStringSync();
     expect(contents, isNot(contains('_macros: 0.0.1')));
   });
+=======
+        pubspecYaml.allDependencies
+            .map<String>((PubspecDependency dependency) => '${dependency.name}: ${dependency.version}')
+            .toSet(),
+        equals(<String>{
+          'collection: 1.14.11',
+          'meta: 1.1.8',
+          'typed_data: 1.1.6',
+          'vector_math: 2.0.8',
+          'sky_engine: ',
+          'gallery: ',
+          'flutter_test: ',
+          'flutter_goldens: ',
+          'archive: 2.0.11',
+        }));
+    expect(
+        pubspecYaml.allExplicitDependencies
+            .map<String>((PubspecDependency dependency) => '${dependency.name}: ${dependency.version}')
+            .toSet(),
+        equals(<String>{
+          'collection: 1.14.11',
+          'meta: 1.1.8',
+          'typed_data: 1.1.6',
+          'vector_math: 2.0.8',
+          'sky_engine: ',
+          'gallery: ',
+          'flutter_test: ',
+          'flutter_goldens: ',
+        }));
+    expect(
+        pubspecYaml.dependencies
+            .map<String>((PubspecDependency dependency) => '${dependency.name}: ${dependency.version}')
+            .toSet(),
+        equals(<String>{
+          'collection: 1.14.11',
+          'meta: 1.1.8',
+          'typed_data: 1.1.6',
+          'vector_math: 2.0.8',
+          'sky_engine: ',
+          'gallery: ',
+        }));
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

@@ -280,9 +280,6 @@ class FlutterCommandRunner extends CommandRunner<void> {
     }
   }
 
-  // See https://github.com/flutter/flutter/issues/145158.
-  late bool _machineFlagPresentInAnyCliArg;
-
   @override
   Future<void> run(Iterable<String> args) {
     // Have invocations of 'build', 'custom-devices', and 'pub' print out
@@ -298,10 +295,10 @@ class FlutterCommandRunner extends CommandRunner<void> {
       }
     }
 
-    _machineFlagPresentInAnyCliArg = args.contains('--${FlutterGlobalOptions.kMachineFlag}');
     return super.run(args);
   }
 
+<<<<<<< HEAD
   /// Whether to perform a flutter version check, which prints a warning if old.
   ///
   /// This method should be narrowly used in the following manner:
@@ -356,6 +353,8 @@ class FlutterCommandRunner extends CommandRunner<void> {
     return versionCheckFlag;
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   Future<void> runCommand(ArgResults topLevelResults) async {
     final Map<Type, Object?> contextOverrides = <Type, Object?>{};
@@ -445,9 +444,22 @@ class FlutterCommandRunner extends CommandRunner<void> {
         }
 
         globals.flutterVersion.ensureVersionFile();
+<<<<<<< HEAD
         final bool machineFlag =
             topLevelResults[FlutterGlobalOptions.kMachineFlag] as bool? ?? false;
         if (await _shouldCheckForUpdates(topLevelResults, topLevelMachineFlag: machineFlag)) {
+=======
+        final bool machineFlag = topLevelResults[FlutterGlobalOptions.kMachineFlag] as bool? ?? false;
+        final bool ci = await globals.botDetector.isRunningOnBot;
+        final bool redirectedCompletion = !globals.stdio.hasTerminal &&
+            (topLevelResults.command?.name ?? '').endsWith('-completion');
+        final bool isMachine = machineFlag || ci || redirectedCompletion;
+        final bool versionCheckFlag = topLevelResults[FlutterGlobalOptions.kVersionCheckFlag] as bool? ?? false;
+        final bool explicitVersionCheckPassed = topLevelResults.wasParsed(FlutterGlobalOptions.kVersionCheckFlag) && versionCheckFlag;
+
+        if (topLevelResults.command?.name != 'upgrade' &&
+            (explicitVersionCheckPassed || (versionCheckFlag && !isMachine))) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           await globals.flutterVersion.checkFlutterVersionFreshness();
         }
 

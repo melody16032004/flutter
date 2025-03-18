@@ -196,6 +196,7 @@ Future<int> _handleToolError(
     }
 
     globals.analytics.send(Event.exception(exception: error.runtimeType.toString()));
+<<<<<<< HEAD
     await asyncGuard(
       () async {
         final CrashReportSender crashReportSender = CrashReportSender(
@@ -215,6 +216,24 @@ Future<int> _handleToolError(
         globals.printError('Error sending crash report: $error');
       },
     );
+=======
+    await asyncGuard(() async {
+      final CrashReportSender crashReportSender = CrashReportSender(
+        usage: globals.flutterUsage,
+        platform: globals.platform,
+        logger: globals.logger,
+        operatingSystemUtils: globals.os,
+      );
+      await crashReportSender.sendReport(
+        error: error,
+        stackTrace: stackTrace!,
+        getFlutterVersion: getFlutterVersion,
+        command: args.join(' '),
+      );
+    }, onError: (dynamic error) {
+      globals.printError('Error sending crash report: $error');
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     globals.printError('Oops; flutter has exited unexpectedly: "$error".');
 

@@ -25,6 +25,7 @@ void main() {
     ValueNotifier<MagnifierInfo> magnifierInfo,
   ) async {
     final Future<void> magnifierShown = magnifierController.show(
+<<<<<<< HEAD
       context: context,
       builder:
           (BuildContext context) =>
@@ -32,6 +33,17 @@ void main() {
     );
     await tester.pump();
     await tester.pump(const Duration(seconds: 2));
+=======
+        context: context,
+        builder: (_) => CupertinoTextMagnifier(
+              controller: magnifierController,
+              magnifierInfo: magnifierInfo,
+            ));
+
+    WidgetsBinding.instance.scheduleFrame();
+    await tester.pumpAndSettle();
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await magnifierShown;
   }
 

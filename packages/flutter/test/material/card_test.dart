@@ -13,12 +13,12 @@ void main() {
     final ColorScheme colors = theme.colorScheme;
     await tester.pumpWidget(MaterialApp(theme: theme, home: const Scaffold(body: Card())));
 
-    final Padding padding = _getCardPadding(tester);
+    final Container container = _getCardContainer(tester);
     final Material material = _getCardMaterial(tester);
 
     expect(material.clipBehavior, Clip.none);
     expect(material.elevation, 1.0);
-    expect(padding.padding, const EdgeInsets.all(4.0));
+    expect(container.margin, const EdgeInsets.all(4.0));
     expect(material.color, colors.surfaceContainerLow);
     expect(material.shadowColor, colors.shadow);
     expect(
@@ -36,12 +36,12 @@ void main() {
     final ColorScheme colors = theme.colorScheme;
     await tester.pumpWidget(MaterialApp(theme: theme, home: const Scaffold(body: Card.filled())));
 
-    final Padding padding = _getCardPadding(tester);
+    final Container container = _getCardContainer(tester);
     final Material material = _getCardMaterial(tester);
 
     expect(material.clipBehavior, Clip.none);
     expect(material.elevation, 0.0);
-    expect(padding.padding, const EdgeInsets.all(4.0));
+    expect(container.margin, const EdgeInsets.all(4.0));
     expect(material.color, colors.surfaceContainerHighest);
     expect(material.shadowColor, colors.shadow);
     expect(material.surfaceTintColor, Colors.transparent);
@@ -56,12 +56,12 @@ void main() {
     final ColorScheme colors = theme.colorScheme;
     await tester.pumpWidget(MaterialApp(theme: theme, home: const Scaffold(body: Card.outlined())));
 
-    final Padding padding = _getCardPadding(tester);
+    final Container container = _getCardContainer(tester);
     final Material material = _getCardMaterial(tester);
 
     expect(material.clipBehavior, Clip.none);
     expect(material.elevation, 0.0);
-    expect(padding.padding, const EdgeInsets.all(4.0));
+    expect(container.margin, const EdgeInsets.all(4.0));
     expect(material.color, colors.surface);
     expect(material.shadowColor, colors.shadow);
     expect(material.surfaceTintColor, Colors.transparent);
@@ -96,6 +96,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -126,6 +127,43 @@ void main() {
         ),
         ignoreTransform: true,
         ignoreRect: true,
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics(
+            id: 1,
+            elevation: 1.0,
+            thickness: 0.0,
+            children: <TestSemantics>[
+              TestSemantics(
+                id: 2,
+                label: 'I am text!',
+                textDirection: TextDirection.ltr,
+              ),
+              TestSemantics(
+                id: 3,
+                label: 'Moar text!!1',
+                textDirection: TextDirection.ltr,
+              ),
+              TestSemantics(
+                id: 4,
+                label: 'Button',
+                textDirection: TextDirection.ltr,
+                actions: <SemanticsAction>[
+                  SemanticsAction.tap,
+                ],
+                flags: <SemanticsFlag>[
+                  SemanticsFlag.hasEnabledState,
+                  SemanticsFlag.isButton,
+                  SemanticsFlag.isEnabled,
+                  SemanticsFlag.isFocusable,
+                ],
+              ),
+            ],
+          ),
+        ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -275,8 +313,17 @@ Material _getCardMaterial(WidgetTester tester) {
   );
 }
 
+<<<<<<< HEAD
 Padding _getCardPadding(WidgetTester tester) {
   return tester.widget<Padding>(
     find.descendant(of: find.byType(Card), matching: find.byType(Padding)),
+=======
+Container _getCardContainer(WidgetTester tester) {
+  return tester.widget<Container>(
+    find.descendant(
+      of: find.byType(Card),
+      matching: find.byType(Container),
+    ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 }

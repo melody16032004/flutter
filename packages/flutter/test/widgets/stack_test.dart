@@ -878,6 +878,7 @@ void main() {
       const Rect.fromLTWH(0.0, 0.0, 100.0, 100.0),
     );
     expect(
+<<<<<<< HEAD
       tester.getRect(find.byType(SizedBox).at(2)),
       const Rect.fromLTWH(700.0, 0.0, 100.0, 100.0),
     );
@@ -905,6 +906,17 @@ void main() {
       tester.getRect(find.byType(SizedBox).at(8)),
       const Rect.fromLTWH(0.0, 500.0, 100.0, 100.0),
     );
+=======
+      exception, endsWith(
+      '← [root]"\n' // End of ownership chain.
+      'Typically, the Directionality widget is introduced by the MaterialApp or WidgetsApp widget at the '
+      'top of your application widget tree. It determines the ambient reading direction and is used, for '
+      'example, to determine how to lay out text, how to interpret "start" and "end" values, and to resolve '
+      'EdgeInsetsDirectional, AlignmentDirectional, and other *Directional objects.\n'
+      'Instead of providing a Directionality widget, another solution would be passing a non-directional '
+      "'alignment', or an explicit 'textDirection', to the Stack.",
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   testWidgets(

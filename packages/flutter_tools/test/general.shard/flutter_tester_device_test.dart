@@ -332,6 +332,7 @@ class TestFlutterTesterDevice extends FlutterTesterTestDevice {
     required bool enableImpeller,
     super.flutterProject,
   }) : super(
+<<<<<<< HEAD
          id: 999,
          flutterTesterBinPath: '/',
          logger: BufferLogger.test(),
@@ -354,6 +355,49 @@ class TestFlutterTesterDevice extends FlutterTesterTestDevice {
          fontConfigManager: FontConfigManager(),
          nativeAssetsBuilder: FakeNativeAssetsBuilder(),
        );
+=======
+    id: 999,
+    shellPath: '/',
+    logger: BufferLogger.test(),
+    debuggingOptions: DebuggingOptions.enabled(
+      const BuildInfo(
+        BuildMode.debug,
+        '',
+        treeShakeIcons: false,
+      ),
+      hostVmServicePort: 1234,
+      dartEntrypointArgs: dartEntrypointArgs,
+      enableImpeller: enableImpeller ? ImpellerStatus.enabled : ImpellerStatus.platformDefault,
+    ),
+    machine: false,
+    host: InternetAddress.loopbackIPv6,
+    testAssetDirectory: null,
+    flutterProject: null,
+    icudtlPath: null,
+    compileExpression: null,
+    fontConfigManager: FontConfigManager(),
+    uriConverter: uriConverter,
+  );
+  late DartDevelopmentService dds;
+
+  final Completer<Uri> _ddsServiceUriCompleter = Completer<Uri>();
+
+  Future<Uri> ddsServiceUriFuture() => _ddsServiceUriCompleter.future;
+
+  @override
+  Future<DartDevelopmentService> startDds(
+    Uri uri, {
+    UriConverter? uriConverter,
+  }) async {
+    _ddsServiceUriCompleter.complete(uri);
+    dds = FakeDartDevelopmentService(
+      Uri.parse('http://localhost:${debuggingOptions.hostVmServicePort}'),
+      Uri.parse('http://localhost:8080'),
+      uriConverter: uriConverter,
+    );
+    return dds;
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Future<FlutterVmService> connectToVmServiceImpl(

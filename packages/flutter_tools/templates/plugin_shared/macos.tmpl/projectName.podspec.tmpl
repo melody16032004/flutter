@@ -20,6 +20,7 @@ Pod::Spec.new do |s|
   # `../src/*` so that the C sources can be shared among all target platforms.
 {{/withFfiPluginHook}}
   s.source           = { :path => '.' }
+<<<<<<< HEAD
   {{#withSwiftPackageManager}}
   s.source_files = '{{projectName}}/Sources/{{projectName}}/**/*'
   {{/withSwiftPackageManager}}
@@ -38,6 +39,9 @@ Pod::Spec.new do |s|
   # s.resource_bundles = {'{{projectName}}_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
   {{/withSwiftPackageManager}}
 
+=======
+  s.source_files     = 'Classes/**/*'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   s.dependency 'FlutterMacOS'
 
   s.platform = :osx, '10.11'

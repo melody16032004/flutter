@@ -47,7 +47,6 @@ class DataColumn {
     this.numeric = false,
     this.onSort,
     this.mouseCursor,
-    this.headingRowAlignment,
   });
 
   /// The column heading.
@@ -119,17 +118,6 @@ class DataColumn {
   /// See also:
   ///  * [WidgetStateMouseCursor], which can be used to create a [MouseCursor].
   final MaterialStateProperty<MouseCursor?>? mouseCursor;
-
-  /// Defines the horizontal layout of the [label] and sort indicator in the
-  /// heading row.
-  ///
-  /// If [headingRowAlignment] value is [MainAxisAlignment.center] and [onSort] is
-  /// not null, then a [SizedBox] with a width of sort arrow icon size and sort
-  /// arrow padding will be placed before the [label] to ensure the label is
-  /// centered in the column.
-  ///
-  /// If null, then defaults to [MainAxisAlignment.start].
-  final MainAxisAlignment? headingRowAlignment;
 }
 
 /// Row configuration and cell data for a [DataTable].
@@ -875,16 +863,12 @@ class DataTable extends StatelessWidget {
     required bool ascending,
     required MaterialStateProperty<Color?>? overlayColor,
     required MouseCursor? mouseCursor,
-    required MainAxisAlignment headingRowAlignment,
   }) {
     final ThemeData themeData = Theme.of(context);
     final DataTableThemeData dataTableTheme = DataTableTheme.of(context);
     label = Row(
       textDirection: numeric ? TextDirection.rtl : null,
-      mainAxisAlignment: headingRowAlignment,
       children: <Widget>[
-        if (headingRowAlignment == MainAxisAlignment.center && onSort != null)
-          const SizedBox(width: _SortArrowState._arrowIconSize + _sortArrowPadding),
         label,
         if (onSort != null) ...<Widget>[
           _SortArrow(
@@ -1192,6 +1176,7 @@ class DataTable extends StatelessWidget {
         sorted: dataColumnIndex == sortColumnIndex,
         ascending: sortAscending,
         overlayColor: effectiveHeadingRowColor,
+<<<<<<< HEAD
         mouseCursor:
             column.mouseCursor?.resolve(headerStates) ??
             dataTableTheme.headingCellCursor?.resolve(headerStates),
@@ -1199,6 +1184,9 @@ class DataTable extends StatelessWidget {
             column.headingRowAlignment ??
             dataTableTheme.headingRowAlignment ??
             MainAxisAlignment.start,
+=======
+        mouseCursor: column.mouseCursor?.resolve(headerStates) ?? dataTableTheme.headingCellCursor?.resolve(headerStates),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       rowIndex = 1;
       for (final DataRow row in rows) {
@@ -1328,11 +1316,11 @@ class _SortArrow extends StatefulWidget {
 }
 
 class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
-  late final AnimationController _opacityController;
-  late final CurvedAnimation _opacityAnimation;
+  late AnimationController _opacityController;
+  late Animation<double> _opacityAnimation;
 
-  late final AnimationController _orientationController;
-  late final Animation<double> _orientationAnimation;
+  late AnimationController _orientationController;
+  late Animation<double> _orientationAnimation;
   double _orientationOffset = 0.0;
 
   bool? _up;
@@ -1368,7 +1356,7 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
   }
 
   void _resetOrientationAnimation(AnimationStatus status) {
-    if (status.isCompleted) {
+    if (status == AnimationStatus.completed) {
       assert(_orientationAnimation.value == math.pi);
       _orientationOffset += math.pi;
       _orientationController.value = 0.0; // TODO(ianh): This triggers a pointless rebuild.
@@ -1381,7 +1369,7 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
     bool skipArrow = false;
     final bool? newUp = widget.up ?? _up;
     if (oldWidget.visible != widget.visible) {
-      if (widget.visible && _opacityController.isDismissed) {
+      if (widget.visible && (_opacityController.status == AnimationStatus.dismissed)) {
         _orientationController.stop();
         _orientationController.value = 0.0;
         _orientationOffset = newUp! ? 0.0 : math.pi;
@@ -1394,7 +1382,7 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
       }
     }
     if ((_up != newUp) && !skipArrow) {
-      if (_orientationController.isDismissed) {
+      if (_orientationController.status == AnimationStatus.dismissed) {
         _orientationController.forward();
       } else {
         _orientationController.reverse();
@@ -1407,7 +1395,6 @@ class _SortArrowState extends State<_SortArrow> with TickerProviderStateMixin {
   void dispose() {
     _opacityController.dispose();
     _orientationController.dispose();
-    _opacityAnimation.dispose();
     super.dispose();
   }
 

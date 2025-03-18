@@ -86,8 +86,17 @@ class SliverLayoutDimensions {
   }
 
   @override
+<<<<<<< HEAD
   int get hashCode =>
       Object.hash(scrollOffset, precedingScrollExtent, viewportMainAxisExtent, crossAxisExtent);
+=======
+  int get hashCode => Object.hash(
+    scrollOffset,
+    precedingScrollExtent,
+    viewportMainAxisExtent,
+    viewportMainAxisExtent
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// The direction in which a sliver's contents are ordered, relative to the

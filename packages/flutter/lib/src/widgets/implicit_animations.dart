@@ -373,9 +373,19 @@ abstract class ImplicitlyAnimatedWidgetState<T extends ImplicitlyAnimatedWidget>
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     controller.addStatusListener((AnimationStatus status) {
       if (status.isCompleted) {
         widget.onEnd?.call();
+=======
+    _controller.addStatusListener((AnimationStatus status) {
+      switch (status) {
+        case AnimationStatus.completed:
+          widget.onEnd?.call();
+        case AnimationStatus.dismissed:
+        case AnimationStatus.forward:
+        case AnimationStatus.reverse:
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       }
     });
     _constructTweens();
@@ -2188,10 +2198,10 @@ class AnimatedPhysicalModel extends ImplicitlyAnimatedWidget {
   const AnimatedPhysicalModel({
     super.key,
     required this.child,
-    this.shape = BoxShape.rectangle,
+    required this.shape,
     this.clipBehavior = Clip.none,
-    this.borderRadius,
-    this.elevation = 0.0,
+    this.borderRadius = BorderRadius.zero,
+    required this.elevation,
     required this.color,
     this.animateColor = true,
     required this.shadowColor,
@@ -2217,9 +2227,7 @@ class AnimatedPhysicalModel extends ImplicitlyAnimatedWidget {
   final Clip clipBehavior;
 
   /// The target border radius of the rounded corners for a rectangle shape.
-  ///
-  /// If null, treated as [BorderRadius.zero].
-  final BorderRadius? borderRadius;
+  final BorderRadius borderRadius;
 
   /// The target z-coordinate relative to the parent at which to place this
   /// physical object.
@@ -2263,6 +2271,7 @@ class _AnimatedPhysicalModelState extends AnimatedWidgetBaseState<AnimatedPhysic
 
   @override
   void forEachTween(TweenVisitor<dynamic> visitor) {
+<<<<<<< HEAD
     _borderRadius =
         visitor(
               _borderRadius,
@@ -2287,6 +2296,12 @@ class _AnimatedPhysicalModelState extends AnimatedWidgetBaseState<AnimatedPhysic
               (dynamic value) => ColorTween(begin: value as Color),
             )
             as ColorTween?;
+=======
+    _borderRadius = visitor(_borderRadius, widget.borderRadius, (dynamic value) => BorderRadiusTween(begin: value as BorderRadius)) as BorderRadiusTween?;
+    _elevation = visitor(_elevation, widget.elevation, (dynamic value) => Tween<double>(begin: value as double)) as Tween<double>?;
+    _color = visitor(_color, widget.color, (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
+    _shadowColor = visitor(_shadowColor, widget.shadowColor, (dynamic value) => ColorTween(begin: value as Color)) as ColorTween?;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

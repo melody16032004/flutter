@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/widgets.dart';
 ///
 /// @docImport '_goldens_io.dart';
@@ -10,6 +11,8 @@
 /// @docImport 'widget_tester.dart';
 library;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -91,7 +94,7 @@ abstract class GoldenFileComparator {
   /// historical golden files.
   ///
   /// Version numbers are used in golden file tests for package:flutter. You can
-  /// learn more about these tests [here](https://github.com/flutter/flutter/blob/main/docs/contributing/testing/Writing-a-golden-file-test-for-package-flutter.md).
+  /// learn more about these tests [here](https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter).
   Uri getTestUri(Uri key, int? version) {
     if (version == null) {
       return key;
@@ -193,7 +196,11 @@ abstract class GoldenFileComparator {
 ///
 ///  * [flutter_test] for more information about how to configure tests at the
 ///    directory-level.
-GoldenFileComparator goldenFileComparator = const TrivialComparator._();
+GoldenFileComparator get goldenFileComparator => _goldenFileComparator;
+GoldenFileComparator _goldenFileComparator = const TrivialComparator._();
+set goldenFileComparator(GoldenFileComparator value) {
+  _goldenFileComparator = value;
+}
 
 /// Compares image pixels against a golden image file.
 ///
@@ -207,7 +214,7 @@ GoldenFileComparator goldenFileComparator = const TrivialComparator._();
 /// fake async constraints that are normally imposed on widget tests (i.e. the
 /// need or the ability to call [WidgetTester.pump] to advance the microtask
 /// queue). Prior to the invocation, the test framework will render only the
-/// [Element] to be compared on the screen.
+/// [widgets.Element] to be compared on the screen.
 ///
 /// See also:
 ///
@@ -285,7 +292,7 @@ abstract class WebGoldenComparator {
   /// historical golden files.
   ///
   /// Version numbers are used in golden file tests for package:flutter. You can
-  /// learn more about these tests [here](https://github.com/flutter/flutter/blob/main/docs/contributing/testing/Writing-a-golden-file-test-for-package-flutter.md).
+  /// learn more about these tests [here](https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter).
   Uri getTestUri(Uri key, int? version) {
     if (version == null) {
       return key;

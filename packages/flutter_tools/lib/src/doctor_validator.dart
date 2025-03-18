@@ -161,6 +161,7 @@ class ValidationResult {
   final String? statusInfo;
   final List<ValidationMessage> messages;
 
+<<<<<<< HEAD
   String get leadingBox => switch (type) {
     ValidationType.crash => '[☠]',
     ValidationType.missing => '[✗]',
@@ -171,16 +172,38 @@ class ValidationResult {
   /// The time taken to perform the validation, set by [DoctorValidator.validate].
   Duration? get executionTime => _executionTime;
   Duration? _executionTime;
+=======
+  String get leadingBox {
+    switch (type) {
+      case ValidationType.crash:
+        return '[☠]';
+      case ValidationType.missing:
+        return '[✗]';
+      case ValidationType.success:
+        return '[✓]';
+      case ValidationType.notAvailable:
+      case ValidationType.partial:
+        return '[!]';
+    }
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   String get coloredLeadingBox {
-    return globals.terminal.color(leadingBox, switch (type) {
-      ValidationType.success => TerminalColor.green,
-      ValidationType.crash || ValidationType.missing => TerminalColor.red,
-      ValidationType.notAvailable || ValidationType.partial => TerminalColor.yellow,
-    });
+    switch (type) {
+      case ValidationType.crash:
+        return globals.terminal.color(leadingBox, TerminalColor.red);
+      case ValidationType.missing:
+        return globals.terminal.color(leadingBox, TerminalColor.red);
+      case ValidationType.success:
+        return globals.terminal.color(leadingBox, TerminalColor.green);
+      case ValidationType.notAvailable:
+      case ValidationType.partial:
+        return globals.terminal.color(leadingBox, TerminalColor.yellow);
+    }
   }
 
   /// The string representation of the type.
+<<<<<<< HEAD
   String get typeStr => switch (type) {
     ValidationType.crash => 'crash',
     ValidationType.missing => 'missing',
@@ -188,6 +211,22 @@ class ValidationResult {
     ValidationType.notAvailable => 'notAvailable',
     ValidationType.partial => 'partial',
   };
+=======
+  String get typeStr {
+    switch (type) {
+      case ValidationType.crash:
+        return 'crash';
+      case ValidationType.missing:
+        return 'missing';
+      case ValidationType.success:
+        return 'installed';
+      case ValidationType.notAvailable:
+        return 'notAvailable';
+      case ValidationType.partial:
+        return 'partial';
+    }
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   String toString() {
@@ -239,6 +278,7 @@ class ValidationMessage {
 
   bool get isInformation => type == ValidationMessageType.information;
 
+<<<<<<< HEAD
   String get indicator => switch (type) {
     ValidationMessageType.error => '✗',
     ValidationMessageType.hint => '!',
@@ -251,6 +291,28 @@ class ValidationMessage {
       ValidationMessageType.hint => TerminalColor.yellow,
       ValidationMessageType.information => TerminalColor.green,
     });
+=======
+  String get indicator {
+    switch (type) {
+      case ValidationMessageType.error:
+        return '✗';
+      case ValidationMessageType.hint:
+        return '!';
+      case ValidationMessageType.information:
+        return '•';
+    }
+  }
+
+  String get coloredIndicator {
+    switch (type) {
+      case ValidationMessageType.error:
+        return globals.terminal.color(indicator, TerminalColor.red);
+      case ValidationMessageType.hint:
+        return globals.terminal.color(indicator, TerminalColor.yellow);
+      case ValidationMessageType.information:
+        return globals.terminal.color(indicator, TerminalColor.green);
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

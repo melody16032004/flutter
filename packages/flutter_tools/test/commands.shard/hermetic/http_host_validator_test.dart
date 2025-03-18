@@ -231,12 +231,19 @@ void main() {
         expect(result.type, equals(ValidationType.partial));
         expect(
           result.messages,
+<<<<<<< HEAD
           contains(
             const ValidationMessage.error(
               'Environment variable PUB_HOSTED_URL does not specify a valid URL: "::Not A Uri::"\n'
               'Please see https://flutter.dev/to/use-mirror-site for an example of how to use it.',
             ),
           ),
+=======
+          contains(const ValidationMessage.error(
+            'Environment variable PUB_HOSTED_URL does not specify a valid URL: "::Not A Uri::"\n'
+            'Please see https://flutter.dev/community/china for an example of how to use it.',
+          )),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         );
       });
 
@@ -258,12 +265,19 @@ void main() {
         expect(result.type, equals(ValidationType.partial));
         expect(
           result.messages,
+<<<<<<< HEAD
           contains(
             const ValidationMessage.error(
               'Environment variable FLUTTER_STORAGE_BASE_URL does not specify a valid URL: ""\n'
               'Please see https://flutter.dev/to/use-mirror-site for an example of how to use it.',
             ),
           ),
+=======
+          contains(const ValidationMessage.error(
+            'Environment variable FLUTTER_STORAGE_BASE_URL does not specify a valid URL: ""\n'
+            'Please see https://flutter.dev/community/china for an example of how to use it.'
+          )),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         );
       });
     });

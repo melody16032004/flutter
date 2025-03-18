@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../widgets/feedback_tester.dart';
 import '../widgets/semantics_tester.dart';
+import 'feedback_tester.dart';
 
 Widget wrap({required Widget child}) {
   return MediaQuery(
@@ -125,9 +125,45 @@ void main() {
               label: 'CCC\nccc',
             ),
           ],
+<<<<<<< HEAD
         ),
       ),
     );
+=======
+          actions: SemanticsAction.tap.index,
+          label: 'aaa\nAAA',
+        ),
+        TestSemantics.rootChild(
+          id: 3,
+          rect: const Rect.fromLTWH(0.0, 0.0, 800.0, 56.0),
+          transform: Matrix4.translationValues(0.0, 56.0, 0.0),
+          flags: <SemanticsFlag>[
+            SemanticsFlag.hasCheckedState,
+            SemanticsFlag.hasEnabledState,
+            SemanticsFlag.isChecked,
+            SemanticsFlag.isEnabled,
+            SemanticsFlag.isFocusable,
+          ],
+          actions: SemanticsAction.tap.index,
+          label: 'bbb\nBBB',
+        ),
+        TestSemantics.rootChild(
+          id: 5,
+          rect: const Rect.fromLTWH(0.0, 0.0, 800.0, 56.0),
+          transform: Matrix4.translationValues(0.0, 112.0, 0.0),
+          flags: <SemanticsFlag>[
+            SemanticsFlag.hasCheckedState,
+            SemanticsFlag.hasEnabledState,
+            SemanticsFlag.isEnabled,
+            SemanticsFlag.isFocusable,
+            SemanticsFlag.isInMutuallyExclusiveGroup,
+          ],
+          actions: SemanticsAction.tap.index,
+          label: 'CCC\nccc',
+        ),
+      ],
+    )));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });

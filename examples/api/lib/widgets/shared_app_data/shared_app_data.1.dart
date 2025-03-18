@@ -7,19 +7,29 @@ import 'package:flutter/material.dart';
 
 /// Flutter code sample for [SharedAppData].
 
-void main() {
-  runApp(const SharedAppDataExampleApp());
-}
+// A single lazily-constructed object that's shared with the entire application
+// via `SharedObject.of(context)`. The value of the object can be changed with
+// `SharedObject.reset(context)`. Resetting the value will cause all of the
+// widgets that depend on it to be rebuilt.
+class SharedObject {
+  SharedObject._();
 
-class SharedAppDataExampleApp extends StatelessWidget {
-  const SharedAppDataExampleApp({super.key});
+  static final Object _sharedObjectKey = Object();
 
   @override
+<<<<<<< HEAD
   Widget build(BuildContext context) {
     return const MaterialApp(home: SharedAppDataExample());
-  }
-}
+=======
+  String toString() => describeIdentity(this);
 
+  static void reset(BuildContext context) {
+    // Calling SharedAppData.setValue() causes dependent widgets to be rebuilt.
+    SharedAppData.setValue<Object, SharedObject>(context, _sharedObjectKey, SharedObject._());
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
+  }
+
+<<<<<<< HEAD
 class SharedAppDataExample extends StatelessWidget {
   const SharedAppDataExample({super.key});
 
@@ -29,6 +39,12 @@ class SharedAppDataExample extends StatelessWidget {
       appBar: AppBar(title: const Text('SharedAppData Sample')),
       body: const Center(child: CustomWidget()),
     );
+=======
+  static SharedObject of(BuildContext context) {
+    // If a value for _sharedObjectKey has never been set then the third
+    // callback parameter is used to generate an initial value.
+    return SharedAppData.getValue<Object, SharedObject>(context, _sharedObjectKey, () => SharedObject._());
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 
@@ -49,16 +65,11 @@ class CustomWidget extends StatelessWidget {
   }
 }
 
-// A single lazily-constructed object that's shared with the entire application
-// via `SharedObject.of(context)`. The value of the object can be changed with
-// `SharedObject.reset(context)`. Resetting the value will cause all of the
-// widgets that depend on it to be rebuilt.
-class SharedObject {
-  SharedObject._();
-
-  static final Object _sharedObjectKey = Object();
+class Home extends StatelessWidget {
+  const Home({super.key});
 
   @override
+<<<<<<< HEAD
   String toString() => describeIdentity(this);
 
   static void reset(BuildContext context) {
@@ -73,6 +84,15 @@ class SharedObject {
       context,
       _sharedObjectKey,
       () => SharedObject._(),
+=======
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(child: CustomWidget()),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(home: Home()));
 }

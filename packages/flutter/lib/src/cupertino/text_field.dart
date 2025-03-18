@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-library;
-
 import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle;
 
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
@@ -183,7 +180,7 @@ class _CupertinoTextFieldSelectionGestureDetectorBuilder
 ///    Design UI conventions.
 ///  * [EditableText], which is the raw text editing control at the heart of a
 ///    [TextField].
-///  * Learn how to use a [TextEditingController] in one of our [cookbook recipes](https://docs.flutter.dev/cookbook/forms/text-field-changes#2-use-a-texteditingcontroller).
+///  * Learn how to use a [TextEditingController] in one of our [cookbook recipes](https://flutter.dev/docs/cookbook/forms/text-field-changes#2-use-a-texteditingcontroller).
 ///  * <https://developer.apple.com/design/human-interface-guidelines/ios/controls/text-fields/>
 class CupertinoTextField extends StatefulWidget {
   /// Creates an iOS-style text field.
@@ -226,7 +223,6 @@ class CupertinoTextField extends StatefulWidget {
   ///    characters" and how it may differ from the intuitive meaning.
   const CupertinoTextField({
     super.key,
-    this.groupId = EditableText,
     this.controller,
     this.focusNode,
     this.undoController,
@@ -367,7 +363,6 @@ class CupertinoTextField extends StatefulWidget {
   ///    characters" and how it may differ from the intuitive meaning.
   const CupertinoTextField.borderless({
     super.key,
-    this.groupId = EditableText,
     this.controller,
     this.focusNode,
     this.undoController,
@@ -472,9 +467,6 @@ class CupertinoTextField extends StatefulWidget {
        keyboardType =
            keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
        enableInteractiveSelection = enableInteractiveSelection ?? (!readOnly || !obscureText);
-
-  /// {@macro flutter.widgets.editableText.groupId}
-  final Object groupId;
 
   /// Controls the text being edited.
   ///
@@ -1518,6 +1510,7 @@ class _CupertinoTextFieldState extends State<CupertinoTextField>
               );
     }
 
+<<<<<<< HEAD
     // Use the default disabled color only if the box decoration was not set.
     final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
       border: resolvedBorder,
@@ -1527,6 +1520,11 @@ class _CupertinoTextFieldState extends State<CupertinoTextField>
               : (widget.decoration == _kDefaultRoundedBorderDecoration
                   ? disabledColor
                   : widget.decoration?.color),
+=======
+    final BoxDecoration? effectiveDecoration = widget.decoration?.copyWith(
+      border: resolvedBorder,
+      color: enabled ? decorationColor : disabledColor,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     final Color selectionColor =
@@ -1577,8 +1575,13 @@ class _CupertinoTextFieldState extends State<CupertinoTextField>
                 widget.magnifierConfiguration ?? CupertinoTextField._iosMagnifierConfiguration,
             // Only show the selection highlight when the text field is focused.
             selectionColor: _effectiveFocusNode.hasFocus ? selectionColor : null,
+<<<<<<< HEAD
             selectionControls: widget.selectionEnabled ? textSelectionControls : null,
             groupId: widget.groupId,
+=======
+            selectionControls: widget.selectionEnabled
+              ? textSelectionControls : null,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             onChanged: widget.onChanged,
             onSelectionChanged: _handleSelectionChanged,
             onEditingComplete: widget.onEditingComplete,
@@ -1632,6 +1635,7 @@ class _CupertinoTextFieldState extends State<CupertinoTextField>
                 _requestKeyboard();
               },
       onDidGainAccessibilityFocus: handleDidGainAccessibilityFocus,
+<<<<<<< HEAD
       onDidLoseAccessibilityFocus: handleDidLoseAccessibilityFocus,
       onFocus:
           enabled
@@ -1663,6 +1667,8 @@ class _CupertinoTextFieldState extends State<CupertinoTextField>
                 }
               }
               : null,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       child: TextFieldTapRegion(
         child: IgnorePointer(
           ignoring: !enabled,

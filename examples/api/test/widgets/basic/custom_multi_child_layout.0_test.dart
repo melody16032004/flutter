@@ -8,7 +8,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('has four containers', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(const example.CustomMultiChildLayoutApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.CustomMultiChildLayoutApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final Finder containerFinder = find.byType(Container);
     expect(containerFinder, findsNWidgets(4));
   });

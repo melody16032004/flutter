@@ -53,9 +53,6 @@ android {
         free {}
         paid {}
     }
-    buildFeatures {
-        buildConfig true
-    }
 }
 
 flutter {

@@ -43,7 +43,7 @@ void main() {
       find.descendant(of: find.byType(CupertinoButton), matching: find.byType(DecoratedBox)),
     );
     BoxDecoration boxDecoration = decoratedBox.decoration as BoxDecoration;
-    expect(boxDecoration.color, CupertinoColors.transparent);
+    expect(boxDecoration.color, const Color(0x00000000));
 
     // Make a "down" gesture on the button.
     final Offset center = tester.getCenter(find.byType(CupertinoTextSelectionToolbarButton));
@@ -72,7 +72,7 @@ void main() {
       ),
     );
     boxDecoration = decoratedBox.decoration as BoxDecoration;
-    expect(boxDecoration.color, CupertinoColors.transparent);
+    expect(boxDecoration.color, const Color(0x00000000));
   });
 
   testWidgets('passing null to onPressed disables the button', (WidgetTester tester) async {

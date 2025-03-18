@@ -51,12 +51,15 @@ abstract class FeatureFlags {
   /// Whether native assets compilation and bundling is enabled.
   bool get isPreviewDeviceEnabled => true;
 
+<<<<<<< HEAD
   /// Whether Swift Package Manager dependency management is enabled.
   bool get isSwiftPackageManagerEnabled => false;
 
   /// Whether explicit package dependency management is enabled.
   bool get isExplicitPackageDependenciesEnabled => false;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Whether a particular feature is enabled for the current channel.
   ///
   /// Prefer using one of the specific getters above instead of this API.
@@ -76,8 +79,11 @@ const List<Feature> allFeatures = <Feature>[
   cliAnimation,
   nativeAssets,
   previewDevice,
+<<<<<<< HEAD
   swiftPackageManager,
   explicitPackageDependencies,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 ];
 
 /// All current Flutter feature flags that can be configured.
@@ -168,6 +174,7 @@ const Feature previewDevice = Feature(
   beta: FeatureChannelSetting(available: true),
 );
 
+<<<<<<< HEAD
 /// Enable Swift Package Manager as a darwin dependency manager.
 const Feature swiftPackageManager = Feature(
   name: 'support for Swift Package Manager for iOS and macOS',
@@ -196,6 +203,8 @@ const Feature explicitPackageDependencies = Feature(
   stable: FeatureChannelSetting(available: true),
 );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// A [Feature] is a process for conditionally enabling tool features.
 ///
 /// All settings are optional, and if not provided will generally default to
@@ -282,11 +291,15 @@ class Feature {
 
   /// Retrieve the correct setting for the provided `channel`.
   FeatureChannelSetting getSettingForChannel(String channel) {
-    return switch (channel) {
-      'stable' => stable,
-      'beta' => beta,
-      'master' || _ => master,
-    };
+    switch (channel) {
+      case 'stable':
+        return stable;
+      case 'beta':
+        return beta;
+      case 'master':
+      default:
+        return master;
+    }
   }
 }
 

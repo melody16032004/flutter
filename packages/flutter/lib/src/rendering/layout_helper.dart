@@ -10,10 +10,10 @@ import 'box.dart';
 /// that the [RenderBox] would have if it were laid out with the given
 /// [BoxConstraints].
 ///
-/// [ChildLayoutHelper.dryLayoutChild] and [ChildLayoutHelper.layoutChild] adhere
-/// to this signature.
+/// The methods of [ChildLayoutHelper] adhere to this signature.
 typedef ChildLayouter = Size Function(RenderBox child, BoxConstraints constraints);
 
+<<<<<<< HEAD
 /// Signature for a function that takes a [RenderBox] and returns the baseline
 /// offset this [RenderBox] would have if it were laid out with the given
 /// [BoxConstraints].
@@ -23,6 +23,8 @@ typedef ChildLayouter = Size Function(RenderBox child, BoxConstraints constraint
 typedef ChildBaselineGetter =
     double? Function(RenderBox child, BoxConstraints constraints, TextBaseline baseline);
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// A collection of static functions to layout a [RenderBox] child with the
 /// given set of [BoxConstraints].
 ///
@@ -62,6 +64,7 @@ abstract final class ChildLayoutHelper {
     child.layout(constraints, parentUsesSize: true);
     return child.size;
   }
+<<<<<<< HEAD
 
   /// Convenience function that calls [RenderBox.getDryBaseline].
   static double? getDryBaseline(
@@ -80,4 +83,6 @@ abstract final class ChildLayoutHelper {
     assert(child.constraints == constraints);
     return child.getDistanceToBaseline(baseline, onlyReal: true);
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

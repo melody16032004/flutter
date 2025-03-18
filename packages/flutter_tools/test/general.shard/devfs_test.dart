@@ -122,6 +122,7 @@ void main() {
         httpAddress: Uri.parse('http://localhost'),
       );
 
+<<<<<<< HEAD
       final DevFS devFS = DevFS(
         fakeVmServiceHost.vmService,
         'test',
@@ -137,6 +138,21 @@ void main() {
       expect(() async => devFS.create(), throwsA(isA<DevFSException>()));
     },
   );
+=======
+    final DevFS devFS = DevFS(
+      fakeVmServiceHost.vmService,
+      'test',
+      fileSystem.currentDirectory,
+      osUtils: osUtils,
+      fileSystem: fileSystem,
+      logger: BufferLogger.test(),
+      httpClient: FakeHttpClient.any(),
+      processManager: FakeProcessManager.empty(),
+      artifacts: Artifacts.test(),
+    );
+    expect(() async => devFS.create(), throwsA(isA<DevFSException>()));
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testWithoutContext('DevFS destroy is resilient to vmservice disconnection', () async {
     final FileSystem fileSystem = MemoryFileSystem.test();
@@ -156,7 +172,6 @@ void main() {
       httpClient: FakeHttpClient.any(),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     expect(await devFS.create(), isNotNull);
@@ -230,7 +245,6 @@ void main() {
       uploadRetryThrottle: Duration.zero,
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
     await devFS.create();
 
@@ -266,7 +280,6 @@ void main() {
       httpClient: FakeHttpClient.any(),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     await devFS.create();
@@ -301,6 +314,7 @@ void main() {
         httpAddress: Uri.parse('http://localhost'),
       );
 
+<<<<<<< HEAD
       final DevFS devFS = DevFS(
         fakeVmServiceHost.vmService,
         'test',
@@ -313,6 +327,19 @@ void main() {
         artifacts: Artifacts.test(),
         buildMode: BuildMode.debug,
       );
+=======
+    final DevFS devFS = DevFS(
+      fakeVmServiceHost.vmService,
+      'test',
+      fileSystem.currentDirectory,
+      fileSystem: fileSystem,
+      logger: BufferLogger.test(),
+      osUtils: FakeOperatingSystemUtils(),
+      httpClient: FakeHttpClient.any(),
+      processManager: FakeProcessManager.empty(),
+      artifacts: Artifacts.test(),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await devFS.create();
       final DateTime? previousCompile = devFS.lastCompiled;
@@ -357,7 +384,6 @@ void main() {
       httpClient: HttpClient(),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     await devFS.create();
@@ -409,7 +435,6 @@ void main() {
       httpClient: FakeHttpClient.any(),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     await devFS.create();
@@ -493,7 +518,6 @@ void main() {
       ),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     await devFS.create();
@@ -539,7 +563,6 @@ void main() {
       httpClient: FakeHttpClient.any(),
       processManager: FakeProcessManager.empty(),
       artifacts: Artifacts.test(),
-      buildMode: BuildMode.debug,
     );
 
     await devFS.create();
@@ -656,7 +679,10 @@ void main() {
         config: Config.test(),
         processManager: FakeProcessManager.empty(),
         artifacts: Artifacts.test(),
+<<<<<<< HEAD
         buildMode: BuildMode.debug,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
 
       await devFS.create();
@@ -717,7 +743,10 @@ void main() {
         config: Config.test(),
         processManager: FakeProcessManager.empty(),
         artifacts: Artifacts.test(),
+<<<<<<< HEAD
         buildMode: BuildMode.debug,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
 
       await devFS.create();
@@ -808,7 +837,6 @@ void main() {
         config: Config.test(),
         processManager: processManager,
         artifacts: artifacts,
-        buildMode: BuildMode.debug,
       );
 
       await devFS.create();
@@ -889,7 +917,6 @@ void main() {
         config: Config.test(),
         processManager: processManager,
         artifacts: artifacts,
-        buildMode: BuildMode.debug,
       );
 
       await devFS.create();

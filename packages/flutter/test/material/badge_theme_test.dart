@@ -98,7 +98,7 @@ void main() {
     // text width = 48 = fontSize * 4, text height = fontSize
     expect(tester.getSize(find.text('1234')), const Size(48, 12));
 
-    expect(tester.getTopLeft(find.text('1234')), const Offset(33, 2));
+    expect(tester.getTopLeft(find.text('1234')), const Offset(33, 4));
 
     expect(tester.getSize(find.byType(Badge)), const Size(24, 24)); // default Icon size
     expect(tester.getTopLeft(find.byType(Badge)), Offset.zero);
@@ -108,11 +108,15 @@ void main() {
     expect(textStyle.color, black);
 
     final RenderBox box = tester.renderObject(find.byType(Badge));
+<<<<<<< HEAD
     expect(
       box,
       paints
         ..rrect(rrect: RRect.fromLTRBR(28, -2, 86, 18, const Radius.circular(10)), color: green),
     );
+=======
+    expect(box, paints..rrect(rrect: RRect.fromLTRBR(28, 0, 86, 20, const Radius.circular(10)), color: green));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   // This test is essentially the same as 'Badge uses ThemeData badge theme'. In
@@ -142,17 +146,21 @@ void main() {
     );
 
     expect(tester.getSize(find.text('1234')), const Size(48, 12));
-    expect(tester.getTopLeft(find.text('1234')), const Offset(33, 2));
+    expect(tester.getTopLeft(find.text('1234')), const Offset(33, 4));
     expect(tester.getSize(find.byType(Badge)), const Size(24, 24)); // default Icon size
     expect(tester.getTopLeft(find.byType(Badge)), Offset.zero);
     final TextStyle textStyle = tester.renderObject<RenderParagraph>(find.text('1234')).text.style!;
     expect(textStyle.fontSize, 12);
     expect(textStyle.color, black);
     final RenderBox box = tester.renderObject(find.byType(Badge));
+<<<<<<< HEAD
     expect(
       box,
       paints
         ..rrect(rrect: RRect.fromLTRBR(28, -2, 86, 18, const Radius.circular(10)), color: green),
     );
+=======
+    expect(box, paints..rrect(rrect: RRect.fromLTRBR(28, 0, 86, 20, const Radius.circular(10)), color: green));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

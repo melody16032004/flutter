@@ -67,7 +67,7 @@ const List<StackFrame> expectedDebugStackFrames = <StackFrame>[
 /// Tests that we do not crash while parsing Web stack traces.
 ///
 /// This test is run in debug, profile, and release modes.
-void main() async {
+void main() {
   final StringBuffer output = StringBuffer();
   try {
     try {
@@ -98,10 +98,21 @@ void main() async {
     output.writeln(unexpectedStackTrace);
     output.writeln('--- TEST FAILED ---');
   }
+<<<<<<< HEAD
   await web.window
       .fetch('/test-result'.toJS, web.RequestInit(method: 'POST', body: '$output'.toJS))
       .toDart;
   print(output);
+=======
+  print(output);
+  web.window.fetch(
+    '/test-result'.toJS,
+    web.RequestInit(
+      method: 'POST',
+      body: '$output'.toJS,
+    )
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 @noInline

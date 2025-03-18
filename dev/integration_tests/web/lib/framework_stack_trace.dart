@@ -35,10 +35,21 @@ Future<void> main() async {
     output.writeln('--- TEST FAILED ---');
   }
 
+<<<<<<< HEAD
   await web.window
       .fetch('/test-result'.toJS, web.RequestInit(method: 'POST', body: '$output'.toJS))
       .toDart;
   print(output);
+=======
+  print(output);
+  web.window.fetch(
+    '/test-result'.toJS,
+    web.RequestInit(
+      method: 'POST',
+      body: '$output'.toJS,
+    )
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 bool _errorMessageFormattedCorrectly(String errorMessage) {

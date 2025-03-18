@@ -137,7 +137,19 @@ class PlatformSelectableRegionContextMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+<<<<<<< HEAD
       children: <Widget>[const Positioned.fill(child: HtmlElementView(viewType: _viewType)), child],
+=======
+      alignment: Alignment.center,
+      children: <Widget>[
+        const Positioned.fill(
+          child: HtmlElementView(
+            viewType: _viewType,
+          ),
+        ),
+        child,
+      ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }

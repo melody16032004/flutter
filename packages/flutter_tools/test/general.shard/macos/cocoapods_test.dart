@@ -9,8 +9,11 @@ import 'package:flutter_tools/src/base/platform.dart';
 import 'package:flutter_tools/src/base/version.dart';
 import 'package:flutter_tools/src/build_info.dart';
 import 'package:flutter_tools/src/cache.dart';
+<<<<<<< HEAD
 import 'package:flutter_tools/src/dart/pub.dart';
 import 'package:flutter_tools/src/features.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter_tools/src/flutter_plugins.dart';
 import 'package:flutter_tools/src/ios/xcodeproj.dart';
 import 'package:flutter_tools/src/macos/cocoapods.dart';
@@ -28,7 +31,7 @@ import '../../src/fakes.dart';
 enum _StdioStream { stdout, stderr }
 
 void main() {
-  late MemoryFileSystem fileSystem;
+  late FileSystem fileSystem;
   late FakeProcessManager fakeProcessManager;
   late CocoaPods cocoaPodsUnderTest;
   late BufferLogger logger;
@@ -554,6 +557,7 @@ void main() {
       expect(fakeProcessManager, hasNoRemainingExpectations);
     });
 
+<<<<<<< HEAD
     testUsingContext(
       "doesn't throw, if using Swift Package Manager and Podfile is missing.",
       () async {
@@ -571,6 +575,8 @@ void main() {
       },
     );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     testUsingContext('throws, if specs repo is outdated.', () async {
       final FlutterProject projectUnderTest = setupProjectUnderTest();
       pretendPodIsInstalled();
@@ -702,6 +708,7 @@ end''');
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           cocoaPodsUnderTest.processPods(
             xcodeProject: projectUnderTest.ios,
@@ -727,6 +734,29 @@ end''');
         );
       },
     );
+=======
+      await expectLater(cocoaPodsUnderTest.processPods(
+        xcodeProject: projectUnderTest.ios,
+        buildMode: BuildMode.debug,
+      ), throwsToolExit());
+      expect(
+        logger.errorText,
+        contains(
+          'The plugin "$fakePluginName" requires a higher minimum iOS '
+          'deployment version than your application is targeting.'
+        ),
+      );
+      // The error should contain specific instructions for fixing the build
+      // based on parsing the plugin's podspec.
+      expect(
+        logger.errorText,
+        contains(
+          "To build, increase your application's deployment target to at least "
+          '15.0 as described at https://docs.flutter.dev/deployment/ios'
+        ),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext(
       'throws if plugin requires higher minimum iOS version using "deployment_target"',
@@ -768,6 +798,7 @@ end''');
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           cocoaPodsUnderTest.processPods(
             xcodeProject: projectUnderTest.ios,
@@ -793,6 +824,29 @@ end''');
         );
       },
     );
+=======
+      await expectLater(cocoaPodsUnderTest.processPods(
+        xcodeProject: projectUnderTest.ios,
+        buildMode: BuildMode.debug,
+      ), throwsToolExit());
+      expect(
+        logger.errorText,
+        contains(
+          'The plugin "$fakePluginName" requires a higher minimum iOS '
+          'deployment version than your application is targeting.'
+        ),
+      );
+      // The error should contain specific instructions for fixing the build
+      // based on parsing the plugin's podspec.
+      expect(
+        logger.errorText,
+        contains(
+          "To build, increase your application's deployment target to at least "
+          '15.0 as described at https://docs.flutter.dev/deployment/ios'
+        ),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext(
       'throws if plugin requires higher minimum iOS version with darwin layout',
@@ -835,6 +889,7 @@ end''');
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           cocoaPodsUnderTest.processPods(
             xcodeProject: projectUnderTest.ios,
@@ -860,6 +915,29 @@ end''');
         );
       },
     );
+=======
+      await expectLater(cocoaPodsUnderTest.processPods(
+        xcodeProject: projectUnderTest.ios,
+        buildMode: BuildMode.debug,
+      ), throwsToolExit());
+      expect(
+        logger.errorText,
+        contains(
+          'The plugin "$fakePluginName" requires a higher minimum iOS '
+          'deployment version than your application is targeting.'
+        ),
+      );
+      // The error should contain specific instructions for fixing the build
+      // based on parsing the plugin's podspec.
+      expect(
+        logger.errorText,
+        contains(
+          "To build, increase your application's deployment target to at least "
+          '15.0 as described at https://docs.flutter.dev/deployment/ios'
+        ),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext('throws if plugin requires unknown higher minimum iOS version', () async {
       final FlutterProject projectUnderTest = setupProjectUnderTest();
@@ -923,7 +1001,7 @@ end''');
         logger.errorText,
         contains(
           "To build, increase your application's deployment target as "
-          'described at https://flutter.dev/to/ios-deploy',
+          'described at https://docs.flutter.dev/deployment/ios',
         ),
       );
       expect(
@@ -1006,6 +1084,7 @@ Specs satisfying the `GoogleMaps (~> 8.0)` dependency were found, but they requi
       },
     );
 
+<<<<<<< HEAD
     testUsingContext(
       'throws if plugin has a dependency that requires a higher minimum macOS version',
       () async {
@@ -1096,6 +1175,24 @@ Specs satisfying the `GoogleMaps (~> 8.0)` dependency were found, but they requi
             .childFile('$fakePluginName.podspec');
         podspec.createSync(recursive: true);
         podspec.writeAsStringSync('''
+=======
+    testUsingContext('throws if plugin requires higher minimum macOS version using "platform"', () async {
+      final FlutterProject projectUnderTest = setupProjectUnderTest();
+      pretendPodIsInstalled();
+      pretendPodVersionIs('100.0.0');
+      fileSystem.file(fileSystem.path.join('project', 'macos', 'Podfile'))
+        ..createSync()
+        ..writeAsStringSync('Existing Podfile');
+      const String fakePluginName = 'some_plugin';
+      final File podspec = projectUnderTest.macos.ephemeralDirectory
+          .childDirectory('.symlinks')
+          .childDirectory('plugins')
+          .childDirectory(fakePluginName)
+          .childDirectory('macos')
+          .childFile('$fakePluginName.podspec');
+      podspec.createSync(recursive: true);
+      podspec.writeAsStringSync('''
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 Pod::Spec.new do |spec|
   spec.name             = '$fakePluginName'
   spec.version          = '0.0.1'
@@ -1119,6 +1216,7 @@ end''');
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           cocoaPodsUnderTest.processPods(
             xcodeProject: projectUnderTest.macos,
@@ -1144,6 +1242,29 @@ end''');
         );
       },
     );
+=======
+      await expectLater(cocoaPodsUnderTest.processPods(
+        xcodeProject: projectUnderTest.macos,
+        buildMode: BuildMode.debug,
+      ), throwsToolExit());
+      expect(
+        logger.errorText,
+        contains(
+          'The plugin "$fakePluginName" requires a higher minimum macOS '
+          'deployment version than your application is targeting.'
+        ),
+      );
+      // The error should contain specific instructions for fixing the build
+      // based on parsing the plugin's podspec.
+      expect(
+        logger.errorText,
+        contains(
+          "To build, increase your application's deployment target to at least "
+          '12.7 as described at https://docs.flutter.dev/deployment/macos'
+        ),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext(
       'throws if plugin requires higher minimum macOS version using "deployment_target"',
@@ -1186,6 +1307,7 @@ end''');
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           cocoaPodsUnderTest.processPods(
             xcodeProject: projectUnderTest.macos,
@@ -1211,6 +1333,29 @@ end''');
         );
       },
     );
+=======
+      await expectLater(cocoaPodsUnderTest.processPods(
+        xcodeProject: projectUnderTest.macos,
+        buildMode: BuildMode.debug,
+      ), throwsToolExit());
+      expect(
+        logger.errorText,
+        contains(
+          'The plugin "$fakePluginName" requires a higher minimum macOS '
+          'deployment version than your application is targeting.'
+        ),
+      );
+      // The error should contain specific instructions for fixing the build
+      // based on parsing the plugin's podspec.
+      expect(
+        logger.errorText,
+        contains(
+          "To build, increase your application's deployment target to at least "
+          '12.7 as described at https://docs.flutter.dev/deployment/macos'
+        ),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     final Map<String, String> possibleErrors = <String, String>{
       'symbol not found':
@@ -1645,11 +1790,7 @@ Specs satisfying the `$fakePluginName (from `Flutter/ephemeral/.symlinks/plugins
 }
 
 class FakeXcodeProjectInterpreter extends Fake implements XcodeProjectInterpreter {
-  FakeXcodeProjectInterpreter({
-    this.isInstalled = true,
-    this.buildSettings = const <String, String>{},
-    this.version,
-  });
+  FakeXcodeProjectInterpreter({this.isInstalled = true, this.buildSettings = const <String, String>{}});
 
   @override
   final bool isInstalled;
@@ -1662,7 +1803,4 @@ class FakeXcodeProjectInterpreter extends Fake implements XcodeProjectInterprete
   }) async => buildSettings;
 
   final Map<String, String> buildSettings;
-
-  @override
-  Version? version;
 }

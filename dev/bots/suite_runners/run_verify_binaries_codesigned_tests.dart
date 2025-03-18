@@ -116,6 +116,21 @@ List<String> unsignedBinaries(String flutterRoot) {
   ].map((String relativePath) => path.join(flutterRoot, 'bin', 'cache', relativePath)).toList();
 }
 
+/// Binaries that are not expected to be codesigned.
+///
+/// This list should be kept in sync with the actual contents of Flutter's cache.
+List<String> unsignedBinaries(String flutterRoot) {
+  return <String>[
+    'artifacts/engine/darwin-x64-release/FlutterMacOS.xcframework/macos-arm64_x86_64/dSYMs/FlutterMacOS.framework.dSYM/Contents/Resources/DWARF/FlutterMacOS',
+    'artifacts/engine/ios-release/Flutter.xcframework/ios-arm64/dSYMs/Flutter.framework.dSYM/Contents/Resources/DWARF/Flutter',
+    'artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator/dSYMs/Flutter.framework.dSYM/Contents/Resources/DWARF/Flutter',
+    'artifacts/engine/ios-release/extension_safe/Flutter.xcframework/ios-arm64/dSYMs/Flutter.framework.dSYM/Contents/Resources/DWARF/Flutter',
+    'artifacts/engine/ios-release/extension_safe/Flutter.xcframework/ios-arm64_x86_64-simulator/dSYMs/Flutter.framework.dSYM/Contents/Resources/DWARF/Flutter',
+  ]
+  .map((String relativePath) => path.join(flutterRoot, 'bin', 'cache', relativePath)).toList();
+}
+
+
 /// xcframeworks that are expected to be codesigned.
 ///
 /// This list should be kept in sync with the actual contents of Flutter's
@@ -149,6 +164,7 @@ Future<void> verifyExist(
     path.join(flutterRoot, 'bin', 'cache'),
     processManager: processManager,
   );
+<<<<<<< HEAD
   final List<String> expectedSigned =
       binariesWithEntitlements(flutterRoot) + binariesWithoutEntitlements(flutterRoot);
   final List<String> expectedUnsigned = unsignedBinaries(flutterRoot);
@@ -160,12 +176,25 @@ Future<void> verifyExist(
         binaryPath
       else
         throw Exception('Found unexpected binary in cache: $binaryPath'),
+=======
+  final List<String> expectedSigned = binariesWithEntitlements(flutterRoot) + binariesWithoutEntitlements(flutterRoot);
+  final List<String> expectedUnsigned = unsignedBinaries(flutterRoot);
+  final Set<String> foundFiles = <String>{
+    for (final String binaryPath in binaryPaths)
+      if (expectedSigned.contains(binaryPath)) binaryPath
+      else if (expectedUnsigned.contains(binaryPath)) binaryPath
+      else throw Exception('Found unexpected binary in cache: $binaryPath'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   };
 
   if (foundFiles.length < expectedSigned.length) {
     final List<String> unfoundFiles = <String>[
+<<<<<<< HEAD
       for (final String file in expectedSigned)
         if (!foundFiles.contains(file)) file,
+=======
+      for (final String file in expectedSigned) if (!foundFiles.contains(file)) file,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ];
     print(
       'Expected binaries not found in cache:\n\n${unfoundFiles.join('\n')}\n\n'

@@ -603,7 +603,6 @@ class _BottomNavigationTile extends StatelessWidget {
 
     result = Semantics(
       selected: selected,
-      button: true,
       container: true,
       child: Stack(children: <Widget>[result, Semantics(label: indexLabel)]),
     );
@@ -750,7 +749,15 @@ class _Label extends StatelessWidget {
       );
     }
 
+<<<<<<< HEAD
     text = Align(alignment: Alignment.bottomCenter, heightFactor: 1.0, child: text);
+=======
+    text = Align(
+      alignment: Alignment.bottomCenter,
+      heightFactor: 1.0,
+      child: Container(child: text),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     if (item.label != null) {
       // Do not grow text in bottom navigation bar when we can show a tooltip
@@ -764,7 +771,7 @@ class _Label extends StatelessWidget {
 
 class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerProviderStateMixin {
   List<AnimationController> _controllers = <AnimationController>[];
-  List<CurvedAnimation> _animations = <CurvedAnimation>[];
+  late List<CurvedAnimation> _animations;
 
   // A queue of color splashes currently being animated.
   final Queue<_Circle> _circles = Queue<_Circle>();
@@ -781,9 +788,6 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
     }
     for (final _Circle circle in _circles) {
       circle.dispose();
-    }
-    for (final CurvedAnimation animation in _animations) {
-      animation.dispose();
     }
     _circles.clear();
 
@@ -846,9 +850,6 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
     for (final _Circle circle in _circles) {
       circle.dispose();
     }
-    for (final CurvedAnimation animation in _animations) {
-      animation.dispose();
-    }
     super.dispose();
   }
 
@@ -857,6 +858,7 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
   void _pushCircle(int index) {
     if (widget.items[index].backgroundColor != null) {
       _circles.add(
+<<<<<<< HEAD
         _Circle(state: this, index: index, color: widget.items[index].backgroundColor!, vsync: this)
           ..controller.addStatusListener((AnimationStatus status) {
             if (status.isCompleted) {
@@ -867,6 +869,29 @@ class _BottomNavigationBarState extends State<BottomNavigationBar> with TickerPr
               });
             }
           }),
+=======
+        _Circle(
+          state: this,
+          index: index,
+          color: widget.items[index].backgroundColor!,
+          vsync: this,
+        )..controller.addStatusListener(
+          (AnimationStatus status) {
+            switch (status) {
+              case AnimationStatus.completed:
+                setState(() {
+                  final _Circle circle = _circles.removeFirst();
+                  _backgroundColor = circle.color;
+                  circle.dispose();
+                });
+              case AnimationStatus.dismissed:
+              case AnimationStatus.forward:
+              case AnimationStatus.reverse:
+                break;
+            }
+          },
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
     }
   }
@@ -1212,7 +1237,6 @@ class _Circle {
 
   void dispose() {
     controller.dispose();
-    animation.dispose();
   }
 }
 

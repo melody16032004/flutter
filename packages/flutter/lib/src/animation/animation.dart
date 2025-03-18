@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/scheduler.dart';
 /// @docImport 'package:flutter/widgets.dart';
 library;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'package:flutter/foundation.dart';
 
@@ -30,6 +33,7 @@ enum AnimationStatus {
   reverse,
 
   /// The animation is stopped at the end.
+<<<<<<< HEAD
   completed;
 
   /// Whether the animation is stopped at the beginning.
@@ -55,6 +59,9 @@ enum AnimationStatus {
     forward || completed => true,
     reverse || dismissed => false,
   };
+=======
+  completed,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Signature for listeners attached using [Animation.addStatusListener].
@@ -238,9 +245,10 @@ abstract class Animation<T> extends Listenable implements ValueListenable<T> {
   T get value;
 
   /// Whether this animation is stopped at the beginning.
-  bool get isDismissed => status.isDismissed;
+  bool get isDismissed => status == AnimationStatus.dismissed;
 
   /// Whether this animation is stopped at the end.
+<<<<<<< HEAD
   bool get isCompleted => status.isCompleted;
 
   /// Whether this animation is running in either direction.
@@ -252,6 +260,9 @@ abstract class Animation<T> extends Listenable implements ValueListenable<T> {
 
   /// {@macro flutter.animation.AnimationStatus.isForwardOrCompleted}
   bool get isForwardOrCompleted => status.isForwardOrCompleted;
+=======
+  bool get isCompleted => status == AnimationStatus.completed;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Chains a [Tween] (or [CurveTween]) to this [Animation].
   ///
@@ -281,7 +292,7 @@ abstract class Animation<T> extends Listenable implements ValueListenable<T> {
   /// {@end-tool}
   /// {@tool snippet}
   ///
-  /// The `alignment1.value` could then be used in a widget's build method, for
+  /// The `_alignment.value` could then be used in a widget's build method, for
   /// instance, to position a child using an [Align] widget such that the
   /// position of the child shifts over time from the top left to the top right.
   ///

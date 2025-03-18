@@ -41,6 +41,12 @@ const List<String> kDefaultClang = <String>[
 ];
 
 void main() {
+  group('SnapshotType', () {
+    test('does not throw, if target platform is null', () {
+      expect(() => SnapshotType(null, BuildMode.release), returnsNormally);
+    });
+  });
+
   group('GenSnapshot', () {
     late GenSnapshot genSnapshot;
     late Artifacts artifacts;

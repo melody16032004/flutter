@@ -1175,7 +1175,7 @@ void main() {
     expect(firstToggleButtonDy, secondToggleButtonDy);
     expect(firstToggleButtonDy, closeTo(elevatedButtonDy - 1.7, 0.1));
     expect(firstToggleButtonDy, closeTo(textDy - 9.7, 0.1));
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/99933
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/99933
 
   testWidgets('Directionality test', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -1900,7 +1900,13 @@ void main() {
                 SemanticsFlag.hasCheckedState,
                 SemanticsFlag.isFocusable,
               ],
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               rect: const Rect.fromLTRB(0.0, 0.0, 87.0, 48.0),
             ),
             TestSemantics(
@@ -1911,8 +1917,15 @@ void main() {
                 SemanticsFlag.hasCheckedState,
                 SemanticsFlag.isFocusable,
               ],
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
               rect: const Rect.fromLTRB(0.0, 0.0, 88.0, 48.0),
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+              rect: const Rect.fromLTRB(0.0, 0.0, 88.0, 48.0)
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
             TestSemantics(
               flags: <SemanticsFlag>[
@@ -1922,7 +1935,13 @@ void main() {
                 SemanticsFlag.hasCheckedState,
                 SemanticsFlag.isFocusable,
               ],
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               rect: const Rect.fromLTRB(0.0, 0.0, 88.0, 48.0),
             ),
           ],
@@ -1962,7 +1981,13 @@ void main() {
                 SemanticsFlag.hasCheckedState,
                 SemanticsFlag.isFocusable,
               ],
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
             TestSemantics(
               flags: <SemanticsFlag>[
@@ -1973,7 +1998,13 @@ void main() {
                 SemanticsFlag.hasCheckedState,
                 SemanticsFlag.isFocusable,
               ],
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ],
         ),

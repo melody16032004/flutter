@@ -17,6 +17,7 @@ void main() {
   late List<String> events;
   late BaseTapAndDragGestureRecognizer tapAndDrag;
 
+<<<<<<< HEAD
   void setUpTapAndPanGestureRecognizer({
     bool eagerVictoryOnDrag = true, // This is the default for [BaseTapAndDragGestureRecognizer].
   }) {
@@ -43,6 +44,30 @@ void main() {
           ..onCancel = () {
             events.add('cancel');
           };
+=======
+  void setUpTapAndPanGestureRecognizer() {
+    tapAndDrag = TapAndPanGestureRecognizer()
+      ..dragStartBehavior = DragStartBehavior.down
+      ..maxConsecutiveTap = 3
+      ..onTapDown = (TapDragDownDetails details) {
+        events.add('down#${details.consecutiveTapCount}');
+      }
+      ..onTapUp = (TapDragUpDetails details) {
+        events.add('up#${details.consecutiveTapCount}');
+      }
+      ..onDragStart = (TapDragStartDetails details) {
+        events.add('panstart#${details.consecutiveTapCount}');
+      }
+      ..onDragUpdate = (TapDragUpdateDetails details) {
+        events.add('panupdate#${details.consecutiveTapCount}');
+      }
+      ..onDragEnd = (TapDragEndDetails details) {
+        events.add('panend#${details.consecutiveTapCount}');
+      }
+      ..onCancel = () {
+        events.add('cancel');
+      };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     addTearDown(tapAndDrag.dispose);
   }
 
@@ -654,6 +679,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testGesture(
     'Recognizer loses when competing against a DragGestureRecognizer for a drag when eagerVictoryOnDrag is disabled',
     (GestureTester tester) {
@@ -755,6 +781,9 @@ void main() {
   testGesture('Beats LongPressGestureRecognizer on a consecutive tap greater than one', (
     GestureTester tester,
   ) {
+=======
+  testGesture('Beats LongPressGestureRecognizer on a consecutive tap greater than one', (GestureTester tester) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     setUpTapAndPanGestureRecognizer();
 
     final LongPressGestureRecognizer longpress =

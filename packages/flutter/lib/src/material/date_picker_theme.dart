@@ -83,7 +83,6 @@ class DatePickerThemeData with Diagnosticable {
     this.inputDecorationTheme,
     this.cancelButtonStyle,
     this.confirmButtonStyle,
-    this.locale,
   });
 
   /// Overrides the default value of [Dialog.backgroundColor].
@@ -356,10 +355,6 @@ class DatePickerThemeData with Diagnosticable {
   /// Overrides the default style of the confirm (OK) button of a [DatePickerDialog].
   final ButtonStyle? confirmButtonStyle;
 
-  /// An optional [locale] argument can be used to set the locale for the date
-  /// picker. It defaults to the ambient locale provided by [Localizations].
-  final Locale? locale;
-
   /// Creates a copy of this object with the given fields replaced with the
   /// new values.
   DatePickerThemeData copyWith({
@@ -400,7 +395,6 @@ class DatePickerThemeData with Diagnosticable {
     InputDecorationTheme? inputDecorationTheme,
     ButtonStyle? cancelButtonStyle,
     ButtonStyle? confirmButtonStyle,
-    Locale? locale,
   }) {
     return DatePickerThemeData(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -444,7 +438,6 @@ class DatePickerThemeData with Diagnosticable {
       inputDecorationTheme: inputDecorationTheme ?? this.inputDecorationTheme,
       cancelButtonStyle: cancelButtonStyle ?? this.cancelButtonStyle,
       confirmButtonStyle: confirmButtonStyle ?? this.confirmButtonStyle,
-      locale: locale ?? this.locale,
     );
   }
 
@@ -569,7 +562,6 @@ class DatePickerThemeData with Diagnosticable {
       inputDecorationTheme: t < 0.5 ? a?.inputDecorationTheme : b?.inputDecorationTheme,
       cancelButtonStyle: ButtonStyle.lerp(a?.cancelButtonStyle, b?.cancelButtonStyle, t),
       confirmButtonStyle: ButtonStyle.lerp(a?.confirmButtonStyle, b?.confirmButtonStyle, t),
-      locale: t < 0.5 ? a?.locale : b?.locale,
     );
   }
 
@@ -622,7 +614,6 @@ class DatePickerThemeData with Diagnosticable {
     inputDecorationTheme,
     cancelButtonStyle,
     confirmButtonStyle,
-    locale,
   ]);
 
   @override
@@ -630,6 +621,7 @@ class DatePickerThemeData with Diagnosticable {
     if (identical(this, other)) {
       return true;
     }
+<<<<<<< HEAD
     return other is DatePickerThemeData &&
         other.backgroundColor == backgroundColor &&
         other.elevation == elevation &&
@@ -669,6 +661,46 @@ class DatePickerThemeData with Diagnosticable {
         other.cancelButtonStyle == cancelButtonStyle &&
         other.confirmButtonStyle == confirmButtonStyle &&
         other.locale == locale;
+=======
+    return other is DatePickerThemeData
+      && other.backgroundColor == backgroundColor
+      && other.elevation == elevation
+      && other.shadowColor == shadowColor
+      && other.surfaceTintColor == surfaceTintColor
+      && other.shape == shape
+      && other.headerBackgroundColor == headerBackgroundColor
+      && other.headerForegroundColor == headerForegroundColor
+      && other.headerHeadlineStyle == headerHeadlineStyle
+      && other.headerHelpStyle == headerHelpStyle
+      && other.weekdayStyle == weekdayStyle
+      && other.dayStyle == dayStyle
+      && other.dayForegroundColor == dayForegroundColor
+      && other.dayBackgroundColor == dayBackgroundColor
+      && other.dayOverlayColor == dayOverlayColor
+      && other.dayShape == dayShape
+      && other.todayForegroundColor == todayForegroundColor
+      && other.todayBackgroundColor == todayBackgroundColor
+      && other.todayBorder == todayBorder
+      && other.yearStyle == yearStyle
+      && other.yearForegroundColor == yearForegroundColor
+      && other.yearBackgroundColor == yearBackgroundColor
+      && other.yearOverlayColor == yearOverlayColor
+      && other.rangePickerBackgroundColor == rangePickerBackgroundColor
+      && other.rangePickerElevation == rangePickerElevation
+      && other.rangePickerShadowColor == rangePickerShadowColor
+      && other.rangePickerSurfaceTintColor == rangePickerSurfaceTintColor
+      && other.rangePickerShape == rangePickerShape
+      && other.rangePickerHeaderBackgroundColor == rangePickerHeaderBackgroundColor
+      && other.rangePickerHeaderForegroundColor == rangePickerHeaderForegroundColor
+      && other.rangePickerHeaderHeadlineStyle == rangePickerHeaderHeadlineStyle
+      && other.rangePickerHeaderHelpStyle == rangePickerHeaderHelpStyle
+      && other.rangeSelectionBackgroundColor == rangeSelectionBackgroundColor
+      && other.rangeSelectionOverlayColor == rangeSelectionOverlayColor
+      && other.dividerColor == dividerColor
+      && other.inputDecorationTheme == inputDecorationTheme
+      && other.cancelButtonStyle == cancelButtonStyle
+      && other.confirmButtonStyle == confirmButtonStyle;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -824,6 +856,7 @@ class DatePickerThemeData with Diagnosticable {
       ),
     );
     properties.add(ColorProperty('dividerColor', dividerColor, defaultValue: null));
+<<<<<<< HEAD
     properties.add(
       DiagnosticsProperty<InputDecorationTheme>(
         'inputDecorationTheme',
@@ -842,6 +875,11 @@ class DatePickerThemeData with Diagnosticable {
       ),
     );
     properties.add(DiagnosticsProperty<Locale>('locale', locale, defaultValue: null));
+=======
+    properties.add(DiagnosticsProperty<InputDecorationTheme>('inputDecorationTheme', inputDecorationTheme, defaultValue: null));
+    properties.add(DiagnosticsProperty<ButtonStyle>('cancelButtonStyle', cancelButtonStyle, defaultValue: null));
+    properties.add(DiagnosticsProperty<ButtonStyle>('confirmButtonStyle', confirmButtonStyle, defaultValue: null));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

@@ -37,6 +37,7 @@ class DeferredComponentsGenSnapshotValidatorTarget extends Target {
 
   /// The abis to validate.
   List<String> get _abis {
+<<<<<<< HEAD
     return <String>[
       for (final AndroidAotDeferredComponentsBundle target in deferredComponentsDependencies)
         if (deferredComponentsTargets.contains(target.name))
@@ -44,6 +45,17 @@ class DeferredComponentsGenSnapshotValidatorTarget extends Target {
             getNameForTargetPlatform(target.dependency.targetPlatform),
           ).archName,
     ];
+=======
+    final List<String> abis = <String>[];
+    for (final AndroidAotDeferredComponentsBundle target in deferredComponentsDependencies) {
+      if (deferredComponentsTargets.contains(target.name)) {
+        abis.add(
+          getAndroidArchForName(getNameForTargetPlatform(target.dependency.targetPlatform)).archName
+        );
+      }
+    }
+    return abis;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

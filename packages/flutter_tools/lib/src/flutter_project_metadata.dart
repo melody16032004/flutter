@@ -33,11 +33,22 @@ sealed class ParsedFlutterTemplateType implements CliEnum {
     return null;
   }
 
+<<<<<<< HEAD
   /// Returns template types that are enabled based on the current [featureFlags].
   static List<ParsedFlutterTemplateType> enabledValues(FeatureFlags featureFlags) {
     return _values.toList()..retainWhere((ParsedFlutterTemplateType templateType) {
       return templateType.isEnabled(featureFlags);
     });
+=======
+  static List<FlutterProjectType> get enabledValues {
+    return <FlutterProjectType>[
+      for (final FlutterProjectType value in values)
+        if (value == FlutterProjectType.packageFfi) ...<FlutterProjectType>[
+          if (featureFlags.isNativeAssetsEnabled) value
+        ] else
+          value,
+    ];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Whether the flag is enabled based on a flag being set.

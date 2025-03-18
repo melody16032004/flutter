@@ -12,12 +12,24 @@ Future<void> main() async {
       String.fromEnvironment('test.valueA') + String.fromEnvironment('test.valueB');
   if (combined == 'Example,AValue') {
     output.write('--- TEST SUCCEEDED ---');
+    print('--- TEST SUCCEEDED ---');
   } else {
     output.write('--- TEST FAILED ---');
+    print('--- TEST FAILED ---');
   }
 
+<<<<<<< HEAD
   await web.window
       .fetch('/test-result'.toJS, web.RequestInit(method: 'POST', body: '$output'.toJS))
       .toDart;
   print(output);
+=======
+  web.window.fetch(
+    '/test-result'.toJS,
+    web.RequestInit(
+      method: 'POST',
+      body: '$output'.toJS,
+    )
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

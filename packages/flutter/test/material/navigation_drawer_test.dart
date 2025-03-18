@@ -328,7 +328,6 @@ void main() {
         isFocusable: true,
         isSelected: true,
         hasTapAction: true,
-        hasFocusAction: true,
       ),
     );
     expect(
@@ -338,7 +337,6 @@ void main() {
         textDirection: TextDirection.ltr,
         isFocusable: true,
         hasTapAction: true,
-        hasFocusAction: true,
       ),
     );
 
@@ -351,7 +349,6 @@ void main() {
         textDirection: TextDirection.ltr,
         isFocusable: true,
         hasTapAction: true,
-        hasFocusAction: true,
       ),
     );
     expect(
@@ -362,7 +359,6 @@ void main() {
         isFocusable: true,
         isSelected: true,
         hasTapAction: true,
-        hasFocusAction: true,
       ),
     );
   });
@@ -481,7 +477,7 @@ void main() {
     await tester.tap(find.text('Accessible'));
     expect(selectedIndex, 1);
 
-    await tester.pumpAndSettle();
+    tester.pumpAndSettle();
   });
 }
 

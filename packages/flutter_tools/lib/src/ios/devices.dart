@@ -22,7 +22,6 @@ import '../build_info.dart';
 import '../convert.dart';
 import '../device.dart';
 import '../device_port_forwarder.dart';
-import '../device_vm_service_discovery_for_attach.dart';
 import '../globals.dart' as globals;
 import '../macos/xcdevice.dart';
 import '../mdns_discovery.dart';
@@ -483,6 +482,7 @@ class IOSDevice extends Device {
       );
       if (!buildResult.success) {
         _logger.printError('Could not build the precompiled application for the device.');
+<<<<<<< HEAD
         await diagnoseXcodeBuildFailure(
           buildResult,
           analytics: globals.analytics,
@@ -491,6 +491,9 @@ class IOSDevice extends Device {
           platform: SupportedPlatform.ios,
           project: package.project.parent,
         );
+=======
+        await diagnoseXcodeBuildFailure(buildResult, globals.flutterUsage, _logger, globals.analytics);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         _logger.printError('');
         return LaunchResult.failed();
       }
@@ -777,12 +780,27 @@ class IOSDevice extends Device {
 
     final List<Future<Uri?>> discoveryOptions = <Future<Uri?>>[
       vmUrlFromMDns,
+<<<<<<< HEAD
       // vmServiceDiscovery uses device logs (`idevicesyslog`), which doesn't work
       // on wireless devices.
       if (vmServiceDiscovery != null && !isWirelesslyConnected) vmServiceDiscovery.uri,
     ];
 
     Uri? localUri = await Future.any(<Future<Uri?>>[...discoveryOptions, cancelCompleter.future]);
+=======
+    ];
+
+    // vmServiceDiscovery uses device logs (`idevicesyslog`), which doesn't work
+    // on wireless devices.
+    if (vmServiceDiscovery != null && !isWirelesslyConnected) {
+      final Future<Uri?> vmUrlFromLogs = vmServiceDiscovery.uri;
+      discoveryOptions.add(vmUrlFromLogs);
+    }
+
+    Uri? localUri = await Future.any(
+      <Future<Uri?>>[...discoveryOptions, cancelCompleter.future],
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // If the first future to return is null, wait for the other to complete
     // unless canceled.
@@ -1051,6 +1069,7 @@ class IOSDevice extends Device {
   void clearLogs() {}
 
   @override
+<<<<<<< HEAD
   VMServiceDiscoveryForAttach getVMServiceDiscoveryForAttach({
     String? appId,
     String? fuchsiaModule,
@@ -1090,6 +1109,8 @@ class IOSDevice extends Device {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool get supportsScreenshot {
     if (isCoreDevice) {
       // `idevicescreenshot` stopped working with iOS 17 / Xcode 15

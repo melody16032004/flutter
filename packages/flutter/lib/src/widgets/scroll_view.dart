@@ -30,6 +30,7 @@ import 'scrollable.dart';
 import 'scrollable_helpers.dart';
 import 'sliver.dart';
 import 'sliver_prototype_extent_list.dart';
+import 'sliver_varied_extent_list.dart';
 import 'viewport.dart';
 
 // Examples can assume:
@@ -121,7 +122,6 @@ abstract class ScrollView extends StatelessWidget {
     this.keyboardDismissBehavior = ScrollViewKeyboardDismissBehavior.manual,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
   }) : assert(
          !(controller != null && (primary ?? false)),
          'Primary ScrollViews obtain their ScrollController via inheritance '
@@ -387,11 +387,6 @@ abstract class ScrollView extends StatelessWidget {
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
 
-  /// {@macro flutter.widgets.scrollable.hitTestBehavior}
-  ///
-  /// Defaults to [HitTestBehavior.opaque].
-  final HitTestBehavior hitTestBehavior;
-
   /// Returns the [AxisDirection] in which the scroll view scrolls.
   ///
   /// Combines the [scrollDirection] with the [reverse] boolean to obtain the
@@ -492,7 +487,6 @@ abstract class ScrollView extends StatelessWidget {
       scrollBehavior: scrollBehavior,
       semanticChildCount: semanticChildCount,
       restorationId: restorationId,
-      hitTestBehavior: hitTestBehavior,
       viewportBuilder: (BuildContext context, ViewportOffset offset) {
         return buildViewport(context, offset, axisDirection, slivers);
       },
@@ -509,11 +503,17 @@ abstract class ScrollView extends StatelessWidget {
       return NotificationListener<ScrollUpdateNotification>(
         child: scrollableResult,
         onNotification: (ScrollUpdateNotification notification) {
+<<<<<<< HEAD
           final FocusScopeNode currentScope = FocusScope.of(context);
           if (notification.dragDetails != null &&
               !currentScope.hasPrimaryFocus &&
               currentScope.hasFocus) {
             FocusManager.instance.primaryFocus?.unfocus();
+=======
+          final FocusScopeNode focusScope = FocusScope.of(context);
+          if (notification.dragDetails != null && focusScope.hasFocus) {
+            focusScope.unfocus();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           }
           return false;
         },
@@ -698,7 +698,6 @@ class CustomScrollView extends ScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   });
 
   /// The slivers to place inside the viewport.
@@ -838,7 +837,6 @@ abstract class BoxScrollView extends ScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   });
 
   /// The amount of space by which to inset the children.
@@ -1231,12 +1229,12 @@ abstract class BoxScrollView extends ScrollView {
 ///    scrolling.
 ///  * [ScrollNotification] and [NotificationListener], which can be used to watch
 ///    the scroll position without using a [ScrollController].
-///  * The [catalog of layout widgets](https://docs.flutter.dev/ui/widgets/layout).
-///  * Cookbook: [Use lists](https://docs.flutter.dev/cookbook/lists/basic-list)
-///  * Cookbook: [Work with long lists](https://docs.flutter.dev/cookbook/lists/long-lists)
-///  * Cookbook: [Create a horizontal list](https://docs.flutter.dev/cookbook/lists/horizontal-list)
-///  * Cookbook: [Create lists with different types of items](https://docs.flutter.dev/cookbook/lists/mixed-list)
-///  * Cookbook: [Implement swipe to dismiss](https://docs.flutter.dev/cookbook/gestures/dismissible)
+///  * The [catalog of layout widgets](https://flutter.dev/widgets/layout/).
+///  * Cookbook: [Use lists](https://flutter.dev/docs/cookbook/lists/basic-list)
+///  * Cookbook: [Work with long lists](https://flutter.dev/docs/cookbook/lists/long-lists)
+///  * Cookbook: [Create a horizontal list](https://flutter.dev/docs/cookbook/lists/horizontal-list)
+///  * Cookbook: [Create lists with different types of items](https://flutter.dev/docs/cookbook/lists/mixed-list)
+///  * Cookbook: [Implement swipe to dismiss](https://flutter.dev/docs/cookbook/gestures/dismissible)
 class ListView extends BoxScrollView {
   /// Creates a scrollable, linear array of widgets from an explicit [List].
   ///
@@ -1281,7 +1279,6 @@ class ListView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : assert(
          (itemExtent == null && prototypeItem == null) ||
              (itemExtent == null && itemExtentBuilder == null) ||
@@ -1358,7 +1355,6 @@ class ListView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : assert(itemCount == null || itemCount >= 0),
        assert(semanticChildCount == null || semanticChildCount <= itemCount!),
        assert(
@@ -1449,7 +1445,6 @@ class ListView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : assert(itemCount >= 0),
        itemExtent = null,
        itemExtentBuilder = null,
@@ -1503,7 +1498,6 @@ class ListView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : assert(
          (itemExtent == null && prototypeItem == null) ||
              (itemExtent == null && itemExtentBuilder == null) ||
@@ -1889,7 +1883,6 @@ class GridView extends BoxScrollView {
     super.clipBehavior,
     super.keyboardDismissBehavior,
     super.restorationId,
-    super.hitTestBehavior,
   }) : childrenDelegate = SliverChildListDelegate(
          children,
          addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -1944,7 +1937,6 @@ class GridView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : childrenDelegate = SliverChildBuilderDelegate(
          itemBuilder,
          findChildIndexCallback: findChildIndexCallback,
@@ -1977,7 +1969,6 @@ class GridView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   });
 
   /// Creates a scrollable, 2D array of widgets with a fixed number of tiles in
@@ -2017,7 +2008,6 @@ class GridView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : gridDelegate = SliverGridDelegateWithFixedCrossAxisCount(
          crossAxisCount: crossAxisCount,
          mainAxisSpacing: mainAxisSpacing,
@@ -2069,7 +2059,6 @@ class GridView extends BoxScrollView {
     super.keyboardDismissBehavior,
     super.restorationId,
     super.clipBehavior,
-    super.hitTestBehavior,
   }) : gridDelegate = SliverGridDelegateWithMaxCrossAxisExtent(
          maxCrossAxisExtent: maxCrossAxisExtent,
          mainAxisSpacing: mainAxisSpacing,

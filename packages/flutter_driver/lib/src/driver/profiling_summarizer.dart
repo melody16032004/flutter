@@ -12,7 +12,7 @@ import 'timeline.dart';
 const Set<String> kProfilingEvents = <String>{_kCpuProfile, _kGpuProfile, _kMemoryProfile};
 
 // These field names need to be in-sync with:
-// https://github.com/flutter/engine/blob/main/shell/profiling/sampling_profiler.cc
+// https://github.com/flutter/engine/blob/master/shell/profiling/sampling_profiler.cc
 const String _kCpuProfile = 'CpuUsage';
 const String _kGpuProfile = 'GpuUsage';
 const String _kMemoryProfile = 'MemoryUsage';
@@ -115,12 +115,25 @@ class ProfilingSummarizer {
   }
 
   static ProfileType _getProfileType(String? eventName) {
+<<<<<<< HEAD
     return switch (eventName) {
       _kCpuProfile => ProfileType.CPU,
       _kGpuProfile => ProfileType.GPU,
       _kMemoryProfile => ProfileType.Memory,
       _ => throw Exception('Invalid profiling event: $eventName.'),
     };
+=======
+    switch (eventName) {
+      case _kCpuProfile:
+        return ProfileType.CPU;
+      case _kGpuProfile:
+        return ProfileType.GPU;
+      case _kMemoryProfile:
+        return ProfileType.Memory;
+      default:
+        throw Exception('Invalid profiling event: $eventName.');
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   double _getProfileValue(ProfileType profileType, TimelineEvent e) {

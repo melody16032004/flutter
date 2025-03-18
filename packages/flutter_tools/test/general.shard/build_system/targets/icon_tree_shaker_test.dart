@@ -552,6 +552,7 @@ void main() {
     expect(processManager, hasNoRemainingExpectations);
   });
 
+<<<<<<< HEAD
   testWithoutContext('Allow system font fallback when fontFamily is null', () async {
     final Environment environment = createEnvironment(<String, String>{
       kIconTreeShakerFlag: 'true',
@@ -637,6 +638,8 @@ void main() {
     },
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWithoutContext('ConstFinder non-zero exit', () async {
     final Environment environment = createEnvironment(<String, String>{
       kIconTreeShakerFlag: 'true',
@@ -676,20 +679,6 @@ const String validConstFinderResult = '''
     {
       "codePoint": 59470,
       "fontFamily": "MaterialIcons",
-      "fontPackage": null,
-      "matchTextDirection": false
-    }
-  ],
-  "nonConstantLocations": []
-}
-''';
-
-const String emptyConstFinderResult = '''
-{
-  "constantInstances": [
-    {
-      "codePoint": 59470,
-      "fontFamily": null,
       "fontPackage": null,
       "matchTextDirection": false
     }
@@ -757,5 +746,3 @@ const String invalidFontManifestJson = '''
   ]
 }
 ''';
-
-const String emptyFontManifestJson = '[]';

@@ -6,7 +6,6 @@ import 'dart:async';
 
 import 'package:args/command_runner.dart';
 import 'package:file/memory.dart';
-import 'package:file_testing/file_testing.dart';
 import 'package:flutter_tools/src/artifacts.dart';
 import 'package:flutter_tools/src/base/file_system.dart';
 import 'package:flutter_tools/src/base/logger.dart';
@@ -53,7 +52,12 @@ final FakePlatform macosPlatformCustomEnv = FakePlatform(
 final Platform notMacosPlatform = FakePlatform(environment: <String, String>{'FLUTTER_ROOT': '/'});
 
 void main() {
+<<<<<<< HEAD
   late MemoryFileSystem fileSystem;
+=======
+  late FileSystem fileSystem;
+  late TestUsage usage;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   late FakeProcessManager fakeProcessManager;
   late ProcessUtils processUtils;
   late BufferLogger logger;
@@ -95,12 +99,16 @@ void main() {
 
   // Creates a FakeCommand for the xcodebuild call to build the app
   // in the given configuration.
+<<<<<<< HEAD
   FakeCommand setUpFakeXcodeBuildHandler(
     String configuration, {
     bool verbose = false,
     void Function(List<String> command)? onRun,
     List<String>? additionalCommandArguments,
   }) {
+=======
+  FakeCommand setUpFakeXcodeBuildHandler(String configuration, { bool verbose = false, void Function(List<String> command)? onRun }) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final FlutterProject flutterProject = FlutterProject.fromDirectory(fileSystem.currentDirectory);
     final Directory flutterBuildDir = fileSystem.directory(getMacOSBuildDirectory());
     return FakeCommand(
@@ -122,7 +130,10 @@ void main() {
         'SYMROOT=${fileSystem.path.join(flutterBuildDir.absolute.path, 'Build', 'Products')}',
         if (verbose) 'VERBOSE_SCRIPT_LOGGING=YES' else '-quiet',
         'COMPILER_INDEX_STORE_ENABLE=NO',
+<<<<<<< HEAD
         if (additionalCommandArguments != null) ...additionalCommandArguments,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ],
       stdout: '''
 STDOUT STUFF
@@ -166,6 +177,7 @@ STDERR STUFF
       );
       createCoreMockProjectFiles();
 
+<<<<<<< HEAD
       expect(
         createTestCommandRunner(command).run(const <String>['build', 'macos', '--no-pub']),
         throwsToolExit(
@@ -183,6 +195,19 @@ STDERR STUFF
       FeatureFlags: () => TestFeatureFlags(isMacOSEnabled: true),
     },
   );
+=======
+    expect(createTestCommandRunner(command).run(
+      const <String>['build', 'macos', '--no-pub']
+    ), throwsToolExit(message: 'No macOS desktop project configured. See '
+      'https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding macOS support to a project.'));
+  }, overrides: <Type, Generator>{
+    Platform: () => macosPlatform,
+    FileSystem: () => fileSystem,
+    ProcessManager: () => FakeProcessManager.any(),
+    FeatureFlags: () => TestFeatureFlags(isMacOSEnabled: true),
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'macOS build successfully with renamed .xcodeproj/.xcworkspace files',
@@ -786,6 +811,7 @@ STDERR STUFF
     "s": 2400
   }
 ]''');
+<<<<<<< HEAD
                 fileSystem.file('build/flutter_size_01/trace.arm64.json')
                   ..createSync(recursive: true)
                   ..writeAsStringSync('{}');
@@ -941,4 +967,17 @@ STDERR STUFF
       FeatureFlags: () => TestFeatureFlags(isMacOSEnabled: true),
     },
   );
+=======
+        fileSystem.file('build/flutter_size_01/trace.arm64.json')
+          ..createSync(recursive: true)
+          ..writeAsStringSync('{}');
+      }),
+    ]),
+    Platform: () => macosPlatform,
+    FeatureFlags: () => TestFeatureFlags(isMacOSEnabled: true),
+    FileSystemUtils: () => FileSystemUtils(fileSystem: fileSystem, platform: macosPlatform),
+    Usage: () => usage,
+    Analytics: () => fakeAnalytics,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

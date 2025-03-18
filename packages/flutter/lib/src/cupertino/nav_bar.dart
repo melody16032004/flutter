@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'refresh.dart';
-library;
-
 import 'dart:math' as math;
 import 'dart:ui' show ImageFilter;
 
@@ -1560,6 +1557,7 @@ class _RenderLargeTitle extends RenderShiftedBox {
 
   double _scale = 1.0;
 
+<<<<<<< HEAD
   static double _computeTitleScale(Size childSize, BoxConstraints constraints) {
     const double maxHeight = _kNavBarLargeTitleHeightExtension - _kNavBarBottomPadding;
     final double scale = 1.0 + 0.03 * (constraints.maxHeight - maxHeight) / maxHeight;
@@ -1598,9 +1596,13 @@ class _RenderLargeTitle extends RenderShiftedBox {
         alignment.alongOffset(constraints.biggest - scaledChildSize as Offset).dy;
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   void performLayout() {
     final RenderBox? child = this.child;
+    Size childSize = Size.zero;
+
     size = constraints.biggest;
 
     if (child == null) {
@@ -1609,9 +1611,19 @@ class _RenderLargeTitle extends RenderShiftedBox {
 
     final BoxConstraints childConstraints = constraints.widthConstraints().loosen();
     child.layout(childConstraints, parentUsesSize: true);
-    _scale = _computeTitleScale(child.size, constraints);
+
+    final double maxScale = child.size.width != 0.0
+      ? clampDouble(constraints.maxWidth / child.size.width, 1.0, 1.1)
+      : 1.1;
+    _scale = clampDouble(
+      1.0 + (constraints.maxHeight - (_kNavBarLargeTitleHeightExtension - _kNavBarBottomPadding)) / (_kNavBarLargeTitleHeightExtension - _kNavBarBottomPadding) * 0.03,
+      1.0,
+      maxScale,
+    );
+
+    childSize = child.size * _scale;
     final BoxParentData childParentData = child.parentData! as BoxParentData;
-    childParentData.offset = alignment.alongOffset(size - (child.size * _scale) as Offset);
+    childParentData.offset = alignment.alongOffset(size - childSize as Offset);
   }
 
   @override
@@ -2418,13 +2430,12 @@ class _TransitionableNavigationBar extends StatelessWidget {
 /// Similarly, the `bottomNavBar` parameter is the nav bar that was at the
 /// bottom regardless of the push/pop direction.
 ///
-/// If [MediaQueryData.padding] is still present in this widget's
-/// [BuildContext], that padding will become part of the transitional navigation
-/// bar as well.
+/// If [MediaQuery.padding] is still present in this widget's [BuildContext],
+/// that padding will become part of the transitional navigation bar as well.
 ///
-/// [MediaQueryData.padding] should be consistent between the from/to routes and
-/// the Hero overlay. Inconsistent [MediaQueryData.padding] will produce
-/// undetermined results.
+/// [MediaQuery.padding] should be consistent between the from/to routes and
+/// the Hero overlay. Inconsistent [MediaQuery.padding] will produce undetermined
+/// results.
 class _NavigationBarTransition extends StatelessWidget {
   _NavigationBarTransition({
     required this.animation,

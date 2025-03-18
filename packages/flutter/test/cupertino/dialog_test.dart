@@ -19,6 +19,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../widgets/semantics_tester.dart';
 
 void main() {
+<<<<<<< HEAD
   testWidgets('Overall appearance is correct for the light theme', (WidgetTester tester) async {
     await tester.pumpWidget(
       TestScaffoldApp(
@@ -81,6 +82,9 @@ void main() {
   });
 
   testWidgets('Taps on button calls onPressed', (WidgetTester tester) async {
+=======
+  testWidgets('Alert dialog control test', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     bool didDelete = false;
 
     await tester.pumpWidget(
@@ -643,7 +647,6 @@ void main() {
     final DefaultTextStyle widget = tester.widget(find.byType(DefaultTextStyle));
 
     expect(widget.style.color!.withAlpha(255), CupertinoColors.systemGreen.color);
-    expect(widget.style.fontFamily, 'CupertinoSystemText');
   });
 
   testWidgets('Dialog dark theme', (WidgetTester tester) async {
@@ -681,6 +684,7 @@ void main() {
 
   testWidgets('Has semantic annotations', (WidgetTester tester) async {
     final SemanticsTester semantics = SemanticsTester(tester);
+<<<<<<< HEAD
     await tester.pumpWidget(
       const CupertinoApp(
         home: CupertinoAlertDialog(
@@ -693,6 +697,18 @@ void main() {
         ),
       ),
     );
+=======
+    await tester.pumpWidget(const MaterialApp(home: Material(
+      child: CupertinoAlertDialog(
+        title: Text('The Title'),
+        content: Text('Content'),
+        actions: <Widget>[
+          CupertinoDialogAction(child: Text('Cancel')),
+          CupertinoDialogAction(child: Text('OK')),
+        ],
+      ),
+    )));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(
       semantics,
@@ -928,8 +944,12 @@ void main() {
     // regular font. However, when using the test font, "Cancel" becomes 2 lines which
     // is why the height we're verifying for "Cancel" is larger than "OK".
 
+<<<<<<< HEAD
     if (!kIsWeb || isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(tester.getSize(find.text('The Title')), equals(const Size(270.0, 132.0)));
     }
     expect(tester.getTopLeft(find.text('The Title')), equals(const Offset(265.0, 80.0 + 24.0)));
@@ -1089,7 +1109,7 @@ void main() {
 
     // Check that the title/message section is not displayed
     expect(actionScrollController.offset, 0.0);
-    expect(tester.getTopLeft(find.widgetWithText(CupertinoDialogAction, 'One')).dy, equals(270.75));
+    expect(tester.getTopLeft(find.widgetWithText(CupertinoDialogAction, 'One')).dy, equals(277.5));
 
     // Check that the button's vertical size is the same.
     expect(
@@ -1663,7 +1683,7 @@ void main() {
 
   testWidgets('Dialog widget insets by MediaQuery viewInsets', (WidgetTester tester) async {
     await tester.pumpWidget(
-      const CupertinoApp(
+      const MaterialApp(
         home: MediaQuery(
           data: MediaQueryData(),
           child: CupertinoAlertDialog(content: Placeholder(fallbackHeight: 200.0)),
@@ -1674,7 +1694,7 @@ void main() {
     final Rect placeholderRectWithoutInsets = tester.getRect(find.byType(Placeholder));
 
     await tester.pumpWidget(
-      const CupertinoApp(
+      const MaterialApp(
         home: MediaQuery(
           data: MediaQueryData(viewInsets: EdgeInsets.fromLTRB(40.0, 30.0, 20.0, 10.0)),
           child: CupertinoAlertDialog(content: Placeholder(fallbackHeight: 200.0)),
@@ -1691,6 +1711,70 @@ void main() {
     expect(
       tester.getRect(find.byType(Placeholder)),
       placeholderRectWithoutInsets.translate(10, 10),
+    );
+  });
+
+  testWidgets('Material2 - Default cupertino dialog golden', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      createAppWithButtonThatLaunchesDialog(
+        useMaterial3: false,
+        dialogBuilder: (BuildContext context) {
+          return MediaQuery.withClampedTextScaling(
+            minScaleFactor: 3.0,
+            maxScaleFactor: 3.0,
+            child: const RepaintBoundary(
+              child: CupertinoAlertDialog(
+                title: Text('Title'),
+                content: Text('text'),
+                actions: <Widget>[
+                  CupertinoDialogAction(child: Text('No')),
+                  CupertinoDialogAction(child: Text('OK')),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
+    await tester.tap(find.text('Go'));
+    await tester.pumpAndSettle();
+
+    await expectLater(
+      find.byType(CupertinoAlertDialog),
+      matchesGoldenFile('m2_dialog_test.cupertino.default.png'),
+    );
+  });
+
+  testWidgets('Material3 - Default cupertino dialog golden', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      createAppWithButtonThatLaunchesDialog(
+        useMaterial3: true,
+        dialogBuilder: (BuildContext context) {
+          return MediaQuery.withClampedTextScaling(
+            minScaleFactor: 3.0,
+            maxScaleFactor: 3.0,
+            child: const RepaintBoundary(
+              child: CupertinoAlertDialog(
+                title: Text('Title'),
+                content: Text('text'),
+                actions: <Widget>[
+                  CupertinoDialogAction(child: Text('No')),
+                  CupertinoDialogAction(child: Text('OK')),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+
+    await tester.tap(find.text('Go'));
+    await tester.pumpAndSettle();
+
+    await expectLater(
+      find.byType(CupertinoAlertDialog),
+      matchesGoldenFile('m3_dialog_test.cupertino.default.png'),
     );
   });
 
@@ -1806,7 +1890,7 @@ void main() {
   ) async {
     // https://github.com/flutter/flutter/pull/81278
     await tester.pumpWidget(
-      const CupertinoApp(
+      const MaterialApp(
         home: MediaQuery(
           data: MediaQueryData(),
           child: CupertinoAlertDialog(
@@ -2011,6 +2095,7 @@ RenderBox findScrollableActionsSectionRenderBox(WidgetTester tester) {
   return actionsSection as RenderBox;
 }
 
+<<<<<<< HEAD
 Widget createAppWithButtonThatLaunchesDialog({required WidgetBuilder dialogBuilder}) {
   return CupertinoApp(
     home: Center(
@@ -2023,6 +2108,47 @@ Widget createAppWithButtonThatLaunchesDialog({required WidgetBuilder dialogBuild
             child: const Text('Go'),
           );
         },
+=======
+Widget createAppWithButtonThatLaunchesDialog({
+  required WidgetBuilder dialogBuilder,
+  bool? useMaterial3,
+}) {
+  return MaterialApp(
+    theme: ThemeData(useMaterial3: useMaterial3),
+    home: Material(
+      child: Center(
+        child: Builder(builder: (BuildContext context) {
+          return ElevatedButton(
+            onPressed: () {
+              showDialog<void>(
+                context: context,
+                builder: dialogBuilder,
+              );
+            },
+            child: const Text('Go'),
+          );
+        }),
+      ),
+    ),
+  );
+}
+
+Widget boilerplate(Widget child) {
+  return Directionality(
+    textDirection: TextDirection.ltr,
+    child: child,
+  );
+}
+
+Widget createAppWithCenteredButton(Widget child) {
+  return MaterialApp(
+    home: Material(
+      child: Center(
+        child: ElevatedButton(
+          onPressed: null,
+          child: child,
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     ),
   );
@@ -2072,6 +2198,7 @@ class _RestorableDialogTestWidget extends StatelessWidget {
     );
   }
 }
+<<<<<<< HEAD
 
 // Shows an app that has a button with text "Go", and clicking this button
 // displays the `dialog` and hides the button.
@@ -2150,3 +2277,5 @@ class LegacyAction extends StatelessWidget {
     );
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

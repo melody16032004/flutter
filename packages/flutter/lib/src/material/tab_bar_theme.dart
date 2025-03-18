@@ -352,9 +352,12 @@ class TabBarThemeData with Diagnosticable {
     this.splashFactory,
     this.mouseCursor,
     this.tabAlignment,
+<<<<<<< HEAD
     this.textScaler,
     this.indicatorAnimation,
     this.splashBorderRadius,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   /// Overrides the default value for [TabBar.indicator].
@@ -411,6 +414,7 @@ class TabBarThemeData with Diagnosticable {
   /// Overrides the default value for [TabBar.tabAlignment].
   final TabAlignment? tabAlignment;
 
+<<<<<<< HEAD
   /// Overrides the default value for [TabBar.textScaler].
   final TextScaler? textScaler;
 
@@ -420,6 +424,8 @@ class TabBarThemeData with Diagnosticable {
   /// Defines the clipping radius of splashes that extend outside the bounds of the tab.
   final BorderRadius? splashBorderRadius;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Creates a copy of this object but with the given fields replaced with the
   /// new values.
   TabBarThemeData copyWith({
@@ -437,9 +443,12 @@ class TabBarThemeData with Diagnosticable {
     InteractiveInkFeatureFactory? splashFactory,
     MaterialStateProperty<MouseCursor?>? mouseCursor,
     TabAlignment? tabAlignment,
+<<<<<<< HEAD
     TextScaler? textScaler,
     TabIndicatorAnimation? indicatorAnimation,
     BorderRadius? splashBorderRadius,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) {
     return TabBarThemeData(
       indicator: indicator ?? this.indicator,
@@ -456,9 +465,12 @@ class TabBarThemeData with Diagnosticable {
       splashFactory: splashFactory ?? this.splashFactory,
       mouseCursor: mouseCursor ?? this.mouseCursor,
       tabAlignment: tabAlignment ?? this.tabAlignment,
+<<<<<<< HEAD
       textScaler: textScaler ?? this.textScaler,
       indicatorAnimation: indicatorAnimation ?? this.indicatorAnimation,
       splashBorderRadius: splashBorderRadius ?? this.splashBorderRadius,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 
@@ -489,9 +501,12 @@ class TabBarThemeData with Diagnosticable {
       splashFactory: t < 0.5 ? a.splashFactory : b.splashFactory,
       mouseCursor: t < 0.5 ? a.mouseCursor : b.mouseCursor,
       tabAlignment: t < 0.5 ? a.tabAlignment : b.tabAlignment,
+<<<<<<< HEAD
       textScaler: t < 0.5 ? a.textScaler : b.textScaler,
       indicatorAnimation: t < 0.5 ? a.indicatorAnimation : b.indicatorAnimation,
       splashBorderRadius: BorderRadius.lerp(a.splashBorderRadius, a.splashBorderRadius, t),
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 
@@ -511,9 +526,12 @@ class TabBarThemeData with Diagnosticable {
     splashFactory,
     mouseCursor,
     tabAlignment,
+<<<<<<< HEAD
     textScaler,
     indicatorAnimation,
     splashBorderRadius,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 
   @override
@@ -524,6 +542,7 @@ class TabBarThemeData with Diagnosticable {
     if (other.runtimeType != runtimeType) {
       return false;
     }
+<<<<<<< HEAD
     return other is TabBarThemeData &&
         other.indicator == indicator &&
         other.indicatorColor == indicatorColor &&
@@ -612,5 +631,22 @@ class TabBarThemeData with Diagnosticable {
         defaultValue: null,
       ),
     );
+=======
+    return other is TabBarTheme
+        && other.indicator == indicator
+        && other.indicatorColor == indicatorColor
+        && other.indicatorSize == indicatorSize
+        && other.dividerColor == dividerColor
+        && other.dividerHeight == dividerHeight
+        && other.labelColor == labelColor
+        && other.labelPadding == labelPadding
+        && other.labelStyle == labelStyle
+        && other.unselectedLabelColor == unselectedLabelColor
+        && other.unselectedLabelStyle == unselectedLabelStyle
+        && other.overlayColor == overlayColor
+        && other.splashFactory == splashFactory
+        && other.mouseCursor == mouseCursor
+        && other.tabAlignment == tabAlignment;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }

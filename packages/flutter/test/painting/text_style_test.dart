@@ -2,9 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 import 'dart:ui'
     as ui
     show FontFeature, FontVariation, ParagraphStyle, Shadow, TextStyle, lerpDouble;
+=======
+import 'dart:ui' as ui show FontFeature, FontVariation, ParagraphStyle, Shadow, TextStyle;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'package:flutter/painting.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -457,6 +461,7 @@ void main() {
     expect(c.hashCode, isNot(d.hashCode));
   });
 
+<<<<<<< HEAD
   test('TextStyle shadows', () {
     const ui.Shadow shadow1 = ui.Shadow(blurRadius: 1.0, offset: Offset(1.0, 1.0));
     const ui.Shadow shadow2 = ui.Shadow(
@@ -495,6 +500,8 @@ void main() {
     expect(lerp12.shadows?[1].offset, Offset.lerp(shadow2.offset, shadow4.offset, 0.5));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('TextStyle foreground and color combos', () {
     const Color red = Color.fromARGB(255, 255, 0, 0);
     const Color blue = Color.fromARGB(255, 0, 0, 255);
@@ -653,11 +660,6 @@ void main() {
     expect(
       style.apply(leadingDistribution: TextLeadingDistribution.proportional).leadingDistribution,
       TextLeadingDistribution.proportional,
-    );
-
-    expect(
-      const TextStyle(height: kTextHeightNone).apply(heightFactor: 1000, heightDelta: 1000).height,
-      kTextHeightNone,
     );
   });
 

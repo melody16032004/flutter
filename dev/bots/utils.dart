@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:convert';
 import 'dart:core' hide print;
 import 'dart:io' as system show exit;
 import 'dart:io' hide exit;
@@ -11,6 +10,7 @@ import 'dart:math' as math;
 
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
+<<<<<<< HEAD
 import 'package:analyzer/source/line_info.dart';
 import 'package:collection/collection.dart';
 import 'package:file/file.dart' as fs;
@@ -34,12 +34,22 @@ typedef OutputChecker = String? Function(CommandResult);
 const Duration _quietTimeout = Duration(
   minutes: 10,
 ); // how long the output should be hidden between calls to printProgress before just being verbose
+=======
+import 'package:meta/meta.dart';
+import 'package:path/path.dart' as path;
+
+const Duration _quietTimeout = Duration(minutes: 10); // how long the output should be hidden between calls to printProgress before just being verbose
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 // If running from LUCI set to False.
 final bool isLuci = Platform.environment['LUCI_CI'] == 'True';
 final bool hasColor = stdout.supportsAnsiEscapes && !isLuci;
+<<<<<<< HEAD
 final bool _isRandomizationOff =
     bool.tryParse(Platform.environment['TEST_RANDOMIZATION_OFF'] ?? '') ?? false;
+=======
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 final String bold = hasColor ? '\x1B[1m' : ''; // shard titles
 final String red = hasColor ? '\x1B[31m' : ''; // errors
@@ -55,6 +65,7 @@ final String gray =
 final String white = hasColor ? '\x1B[37m' : ''; // last log line (usually renders as light gray)
 final String reset = hasColor ? '\x1B[0m' : '';
 
+<<<<<<< HEAD
 final String exe = Platform.isWindows ? '.exe' : '';
 final String bat = Platform.isWindows ? '.bat' : '';
 final String flutterRoot = path.dirname(path.dirname(path.dirname(path.fromUri(Platform.script))));
@@ -98,6 +109,8 @@ void enableDryRun() {
 
 bool? _dryRun;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 const int kESC = 0x1B;
 const int kOpenSquareBracket = 0x5B;
 const int kCSIParameterRangeStart = 0x30;
@@ -106,6 +119,7 @@ const int kCSIIntermediateRangeStart = 0x20;
 const int kCSIIntermediateRangeEnd = 0x2F;
 const int kCSIFinalRangeStart = 0x40;
 const int kCSIFinalRangeEnd = 0x7E;
+
 
 String get redLine {
   if (hasColor) {
@@ -310,7 +324,7 @@ void _printLoudly(String message) {
 
 // THE FOLLOWING CODE IS A VIOLATION OF OUR STYLE GUIDE
 // BECAUSE IT INTRODUCES A VERY FLAKY RACE CONDITION
-// https://github.com/flutter/flutter/blob/main/docs/contributing/Style-guide-for-Flutter-repo.md#never-check-if-a-port-is-available-before-using-it-never-add-timeouts-and-other-race-conditions
+// https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#never-check-if-a-port-is-available-before-using-it-never-add-timeouts-and-other-race-conditions
 // DO NOT USE THE FOLLOWING FUNCTIONS
 // DO NOT WRITE CODE LIKE THE FOLLOWING FUNCTIONS
 // https://github.com/flutter/flutter/issues/109474
@@ -339,6 +353,7 @@ Future<bool> _isPortAvailable(int port) async {
 String locationInFile(ResolvedUnitResult unit, AstNode node, String workingDirectory) {
   return '${path.relative(path.relative(unit.path, from: workingDirectory))}:${unit.lineInfo.getLocation(node.offset).lineNumber}';
 }
+<<<<<<< HEAD
 
 /// Whether the given [AstNode] within the `compilationUnit` is under the effect
 /// of an inline ignore directive described by `ignoreDirectivePattern`.
@@ -743,3 +758,5 @@ Future<String?> verifyVersion(File file) async {
   }
   return null;
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "version": "6_1_0",
+=======
+  "version": "v0_206",
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   "md.comp.outlined-icon-button.container.height": 40.0,
   "md.comp.outlined-icon-button.container.shape": "md.sys.shape.corner.full",

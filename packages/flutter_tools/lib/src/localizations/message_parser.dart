@@ -110,6 +110,7 @@ class Node {
   }) : children = children ?? <Node>[];
 
   // Token constructors.
+<<<<<<< HEAD
   Node.openBrace(this.positionInMessage) : type = ST.openBrace, value = '{';
   Node.closeBrace(this.positionInMessage) : type = ST.closeBrace, value = '}';
   Node.brace(this.positionInMessage, String this.value)
@@ -129,6 +130,31 @@ class Node {
   Node.empty(this.positionInMessage) : type = ST.empty, value = '';
   Node.dateKeyword(this.positionInMessage) : type = ST.date, value = 'date';
   Node.timeKeyword(this.positionInMessage) : type = ST.time, value = 'time';
+=======
+  Node.openBrace(this.positionInMessage): type = ST.openBrace, value = '{';
+  Node.closeBrace(this.positionInMessage): type = ST.closeBrace, value = '}';
+  Node.brace(this.positionInMessage, String this.value) {
+    if (value == '{') {
+      type = ST.openBrace;
+    } else if (value == '}') {
+      type = ST.closeBrace;
+    } else {
+      // We should never arrive here.
+      throw L10nException('Provided value $value is not a brace.');
+    }
+  }
+  Node.equalSign(this.positionInMessage): type = ST.equalSign, value = '=';
+  Node.comma(this.positionInMessage): type = ST.comma, value = ',';
+  Node.string(this.positionInMessage, String this.value): type = ST.string;
+  Node.number(this.positionInMessage, String this.value): type = ST.number;
+  Node.identifier(this.positionInMessage, String this.value): type = ST.identifier;
+  Node.pluralKeyword(this.positionInMessage): type = ST.plural, value = 'plural';
+  Node.selectKeyword(this.positionInMessage): type = ST.select, value = 'select';
+  Node.otherKeyword(this.positionInMessage): type = ST.other, value = 'other';
+  Node.empty(this.positionInMessage): type = ST.empty, value = '';
+  Node.dateKeyword(this.positionInMessage): type = ST.date, value = 'date';
+  Node.timeKeyword(this.positionInMessage): type = ST.time, value = 'time';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   String? value;
   late ST type;

@@ -32,7 +32,7 @@ import '../src/test_build_system.dart';
 void main() {
   late FakeFlutterDevice mockFlutterDevice;
   late FakeWebDevFS mockWebDevFS;
-  late MemoryFileSystem fileSystem;
+  late FileSystem fileSystem;
 
   // TODO(matanlurey): Remove after `explicit-package-dependencies` is enabled by default.
   // See https://github.com/flutter/flutter/issues/160257 for details.

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/material.dart';
 ///
 /// @docImport 'slider.dart';
@@ -9,11 +10,17 @@
 library;
 
 import 'package:flutter/foundation.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'package:flutter/widgets.dart';
 
 import 'colors.dart';
 import 'constants.dart';
+<<<<<<< HEAD
 import 'theme.dart';
+=======
+import 'toggleable.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 // Examples can assume:
 // bool _throwShotAway = false;

@@ -71,9 +71,19 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       Theme(data: theme, child: Material(child: Checkbox(value: true, onChanged: (bool? b) {}))),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus)), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(
       tester.getSemantics(find.byType(Focus).last),
@@ -88,9 +98,20 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       Theme(data: theme, child: const Material(child: Checkbox(value: false, onChanged: null))),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus)), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isChecked: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(
       tester.getSemantics(find.byType(Checkbox)),
@@ -101,7 +122,18 @@ void main() {
         isFocusable: true,
         hasFocusAction: true,
       ),
+<<<<<<< HEAD
     );
+=======
+    ));
+
+    expect(tester.getSemantics(find.byType(Checkbox)), matchesSemantics(
+      hasCheckedState: true,
+      hasEnabledState: true,
+      // isFocusable is delayed by 1 frame.
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pump();
     // isFocusable should be false now after the 1 frame delay.
@@ -168,6 +200,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -182,6 +215,18 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus)), matchesSemantics(
+      label: 'checkbox',
+      textDirection: TextDirection.ltr,
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isChecked: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   });
 
@@ -201,6 +246,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(Focus).last),
       matchesSemantics(
@@ -214,6 +260,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(Focus).last), matchesSemantics(
+      label: 'foo',
+      textDirection: TextDirection.ltr,
+      hasCheckedState: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   });
 
@@ -275,6 +332,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -288,6 +346,18 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isFocusable,
+        SemanticsFlag.isCheckStateMixed,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       Theme(
@@ -298,6 +368,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -311,6 +382,18 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isChecked,
+        SemanticsFlag.isFocusable,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       Theme(
@@ -321,6 +404,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics.nodesWith(
         flags: <SemanticsFlag>[
@@ -333,6 +417,17 @@ void main() {
       ),
       hasLength(1),
     );
+=======
+    expect(semantics.nodesWith(
+      flags: <SemanticsFlag>[
+        SemanticsFlag.hasCheckedState,
+        SemanticsFlag.hasEnabledState,
+        SemanticsFlag.isEnabled,
+        SemanticsFlag.isFocusable,
+      ],
+      actions: <SemanticsAction>[SemanticsAction.tap],
+    ), hasLength(1));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });
@@ -919,7 +1014,6 @@ void main() {
 
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byType(Checkbox)));
 
     await tester.pumpWidget(buildApp());
@@ -927,7 +1021,6 @@ void main() {
     expect(
       Material.of(tester.element(find.byType(Checkbox))),
       paints
-        ..circle(color: Colors.orange[500])
         ..path(color: const Color(0xff2196f3))
         ..path(color: const Color(0xffffffff), style: PaintingStyle.stroke, strokeWidth: 2.0),
     );
@@ -986,7 +1079,6 @@ void main() {
 
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byType(Checkbox)));
 
     await tester.pumpWidget(buildApp());
@@ -994,7 +1086,6 @@ void main() {
     expect(
       Material.of(tester.element(find.byType(Checkbox))),
       paints
-        ..circle(color: Colors.orange[500])
         ..path(color: const Color(0xff6750a4))
         ..path(color: theme.colorScheme.onPrimary, style: PaintingStyle.stroke, strokeWidth: 2.0),
     );
@@ -1044,7 +1135,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.sendKeyEvent(LogicalKeyboardKey.enter);
     await tester.pumpAndSettle();
-    // On web, checkboxes don't respond to the enter key.
+    // On web, switches don't respond to the enter key.
     expect(value, kIsWeb ? isTrue : isFalse);
     await tester.sendKeyEvent(LogicalKeyboardKey.enter);
     await tester.pumpAndSettle();
@@ -1180,7 +1271,6 @@ void main() {
       pointer: 1,
     );
     await gesture.addPointer(location: tester.getCenter(find.byType(Checkbox)));
-    addTearDown(gesture.removePointer);
 
     await tester.pump();
 
@@ -1364,7 +1454,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byType(Checkbox)));
     await tester.pumpAndSettle();
 
@@ -1480,11 +1569,20 @@ void main() {
       await gesture3.moveTo(tester.getCenter(find.byType(Checkbox)));
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       expect(
         Material.of(tester.element(find.byType(Checkbox))),
         paints..circle(color: theme.hoverColor),
         reason: 'Hovered Checkbox should use default hovered overlay color',
       );
+=======
+    await tester.pumpWidget(Container()); // reset test
+    await tester.pumpWidget(buildCheckbox());
+    final TestGesture gesture3 = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await gesture3.addPointer();
+    await gesture3.moveTo(tester.getCenter(find.byType(Checkbox)));
+    await tester.pumpAndSettle();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Finish gestures to release resources.
       await gesture1.up();
@@ -1560,11 +1658,20 @@ void main() {
       await gesture3.moveTo(tester.getCenter(find.byType(Checkbox)));
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       expect(
         Material.of(tester.element(find.byType(Checkbox))),
         paints..circle(color: colors.onSurface.withOpacity(0.08)),
         reason: 'Hovered Checkbox should use default hovered overlay color',
       );
+=======
+    await tester.pumpWidget(Container()); // reset test
+    await tester.pumpWidget(buildCheckbox());
+    final TestGesture gesture3 = await tester.createGesture(kind: PointerDeviceKind.mouse);
+    await gesture3.addPointer();
+    await gesture3.moveTo(tester.getCenter(find.byType(Checkbox)));
+    await tester.pumpAndSettle();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Finish gestures to release resources.
       await gesture1.up();
@@ -1679,7 +1786,6 @@ void main() {
     // Start hovering
     final TestGesture gesture5 = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture5.addPointer();
-    addTearDown(gesture5.removePointer);
     await gesture5.moveTo(tester.getCenter(find.byType(Checkbox)));
     await tester.pumpAndSettle();
 
@@ -2091,7 +2197,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byType(Checkbox)));
     await tester.pumpAndSettle();
 
@@ -2188,7 +2293,6 @@ void main() {
     // Start hovering
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
     await gesture.addPointer();
-    addTearDown(gesture.removePointer);
     await gesture.moveTo(tester.getCenter(find.byType(Checkbox)));
     await tester.pumpAndSettle();
     expectBorder();

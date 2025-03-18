@@ -16,6 +16,7 @@ class FakeFlutterNativeAssetsBuildRunner implements FlutterNativeAssetsBuildRunn
     this.hasPackageConfigResult = true,
     this.packagesWithNativeAssetsResult = const <Package>[],
     this.onBuild,
+<<<<<<< HEAD
     this.onLink,
     this.buildResult = const FakeFlutterNativeAssetsBuilderResult(),
     this.linkResult = const FakeFlutterNativeAssetsBuilderResult(),
@@ -27,13 +28,30 @@ class FakeFlutterNativeAssetsBuildRunner implements FlutterNativeAssetsBuildRunn
   final LinkResult? Function(LinkConfig)? onLink;
   final BuildResult? buildResult;
   final LinkResult? linkResult;
+=======
+    this.dryRunResult = const FakeNativeAssetsBuilderResult(),
+    this.buildResult = const FakeNativeAssetsBuilderResult(),
+    CCompilerConfigImpl? cCompilerConfigResult,
+    CCompilerConfigImpl? ndkCCompilerConfigImplResult,
+  })  : cCompilerConfigResult = cCompilerConfigResult ?? CCompilerConfigImpl(),
+        ndkCCompilerConfigImplResult =
+            ndkCCompilerConfigImplResult ?? CCompilerConfigImpl();
+
+  final native_assets_builder.BuildResult Function(Target)? onBuild;
+  final native_assets_builder.BuildResult buildResult;
+  final native_assets_builder.DryRunResult dryRunResult;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final bool hasPackageConfigResult;
   final List<Package> packagesWithNativeAssetsResult;
   final CCompilerConfig? cCompilerConfigResult;
   final CCompilerConfig? ndkCCompilerConfigResult;
 
   int buildInvocations = 0;
+<<<<<<< HEAD
   int linkInvocations = 0;
+=======
+  int dryRunInvocations = 0;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   int hasPackageConfigInvocations = 0;
   int packagesWithNativeAssetsInvocations = 0;
 
@@ -72,6 +90,7 @@ class FakeFlutterNativeAssetsBuildRunner implements FlutterNativeAssetsBuildRunn
   }
 
   @override
+<<<<<<< HEAD
   Future<LinkResult?> link({
     required List<String> buildAssetTypes,
     required LinkConfigCreator configCreator,
@@ -103,6 +122,16 @@ class FakeFlutterNativeAssetsBuildRunner implements FlutterNativeAssetsBuildRunn
       linkInvocations++;
     }
     return result;
+=======
+  Future<native_assets_builder.DryRunResult> dryRun({
+    required bool includeParentEnvironment,
+    required LinkModePreferenceImpl linkModePreference,
+    required OSImpl targetOS,
+    required Uri workingDirectory,
+  }) async {
+    dryRunInvocations++;
+    return dryRunResult;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -124,10 +153,17 @@ class FakeFlutterNativeAssetsBuildRunner implements FlutterNativeAssetsBuildRunn
   Future<CCompilerConfig?> get ndkCCompilerConfig async => cCompilerConfigResult;
 }
 
+<<<<<<< HEAD
 final class FakeFlutterNativeAssetsBuilderResult implements BuildResult, LinkResult {
   const FakeFlutterNativeAssetsBuilderResult({
     this.encodedAssets = const <EncodedAsset>[],
     this.encodedAssetsForLinking = const <String, List<EncodedAsset>>{},
+=======
+final class FakeNativeAssetsBuilderResult
+    implements native_assets_builder.BuildResult {
+  const FakeNativeAssetsBuilderResult({
+    this.assets = const <AssetImpl>[],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     this.dependencies = const <Uri>[],
   });
 
@@ -151,11 +187,14 @@ final class FakeFlutterNativeAssetsBuilderResult implements BuildResult, LinkRes
   }
 
   @override
+<<<<<<< HEAD
   final List<EncodedAsset> encodedAssets;
 
   @override
   final Map<String, List<EncodedAsset>> encodedAssetsForLinking;
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final List<Uri> dependencies;
 }

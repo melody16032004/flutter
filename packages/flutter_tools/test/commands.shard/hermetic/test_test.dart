@@ -196,6 +196,29 @@ dev_dependencies:
     },
   );
 
+  testUsingContext('Pipes test-randomize-ordering-seed to package:test',
+      () async {
+    final FakePackageTest fakePackageTest = FakePackageTest();
+
+    final TestCommand testCommand = TestCommand(testWrapper: fakePackageTest);
+    final CommandRunner<void> commandRunner =
+        createTestCommandRunner(testCommand);
+
+    await commandRunner.run(const <String>[
+      'test',
+      '--test-randomize-ordering-seed=random',
+      '--no-pub',
+    ]);
+    expect(
+      fakePackageTest.lastArgs,
+      contains('--test-randomize-ordering-seed=random'),
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fs,
+    ProcessManager: () => FakeProcessManager.any(),
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+  });
+
   testUsingContext(
     'Confirmation that the reporter, timeout, and concurrency args are not set by default',
     () async {
@@ -266,6 +289,7 @@ dev_dependencies:
     );
   });
 
+<<<<<<< HEAD
   group('--reporter/-r', () {
     String? passedReporter(List<String> args) {
       final int i = args.indexOf('-r');
@@ -388,6 +412,10 @@ dev_dependencies:
         ],
       );
       final FakeFlutterTestRunner testRunner = FakeFlutterTestRunner(0, null, fakeVmServiceHost);
+=======
+  testUsingContext('Supports coverage and machine', () async {
+    final FakePackageTest fakePackageTest = FakePackageTest();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       final TestCommand testCommand = TestCommand(testRunner: testRunner);
       final CommandRunner<void> commandRunner = createTestCommandRunner(testCommand);
@@ -490,16 +518,15 @@ dev_dependencies:
     },
   );
 
-  group('Pipes to package:test', () {
-    Future<void> expectPassesArgument(String value, [String? passValue]) async {
-      final FakePackageTest fakePackageTest = FakePackageTest();
-      final TestCommand testCommand = TestCommand(testWrapper: fakePackageTest);
-      final CommandRunner<void> commandRunner = createTestCommandRunner(testCommand);
+  testUsingContext('Pipes start-paused to package:test',
+      () async {
+    final FakePackageTest fakePackageTest = FakePackageTest();
 
-      await commandRunner.run(<String>['test', '--no-pub', value]);
-      expect(fakePackageTest.lastArgs, contains(passValue ?? value));
-    }
+    final TestCommand testCommand = TestCommand(testWrapper: fakePackageTest);
+    final CommandRunner<void> commandRunner =
+        createTestCommandRunner(testCommand);
 
+<<<<<<< HEAD
     testUsingContext(
       'passes various CLI options through to package:test',
       () async {
@@ -552,6 +579,49 @@ dev_dependencies:
       Cache: () => Cache.test(processManager: FakeProcessManager.any()),
     },
   );
+=======
+    await commandRunner.run(const <String>[
+      'test',
+      '--no-pub',
+      '--start-paused',
+      '--',
+      'test/fake_test.dart',
+    ]);
+    expect(
+      fakePackageTest.lastArgs,
+      contains('--pause-after-load'),
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fs,
+    ProcessManager: () => FakeProcessManager.any(),
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+  });
+
+  testUsingContext('Pipes run-skipped to package:test',
+      () async {
+    final FakePackageTest fakePackageTest = FakePackageTest();
+
+    final TestCommand testCommand = TestCommand(testWrapper: fakePackageTest);
+    final CommandRunner<void> commandRunner =
+        createTestCommandRunner(testCommand);
+
+    await commandRunner.run(const <String>[
+      'test',
+      '--no-pub',
+      '--run-skipped',
+      '--',
+      'test/fake_test.dart',
+    ]);
+    expect(
+      fakePackageTest.lastArgs,
+      contains('--run-skipped'),
+    );
+  }, overrides: <Type, Generator>{
+    FileSystem: () => fs,
+    ProcessManager: () => FakeProcessManager.any(),
+    Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Generates a satisfactory test runner package_config.json when --experimental-faster-testing is set',
@@ -656,12 +726,123 @@ dev_dependencies:
           expect((error as ToolExit).message, contains('the Dart compiler exited unexpectedly.'));
           caughtToolExit = true;
 
+<<<<<<< HEAD
           final File childTestIsolateSpawnerSourceFile = fs
               .directory(fs.path.join('build', 'isolate_spawning_tester'))
               .childFile('child_test_isolate_spawner.dart');
           expect(childTestIsolateSpawnerSourceFile.existsSync(), true);
           expect(
             childTestIsolateSpawnerSourceFile.readAsStringSync().contains('''
+=======
+  testUsingContext('Generates a satisfactory test runner package_config.json when --experimental-faster-testing is set',
+      () async {
+    final TestCommand testCommand = TestCommand();
+    final CommandRunner<void> commandRunner = createTestCommandRunner(testCommand);
+
+    bool caughtToolExit = false;
+    await asyncGuard<void>(
+      () => commandRunner.run(const <String>[
+        'test',
+        '--no-pub',
+        '--experimental-faster-testing',
+        '--',
+        'test/fake_test.dart',
+        'test/fake_test_2.dart',
+      ]),
+      onError: (Object error) async {
+        expect(error, isA<ToolExit>());
+        // We expect this message because we are using a fake ProcessManager.
+        expect(
+          (error as ToolExit).message,
+          contains('the Dart compiler exited unexpectedly.'),
+        );
+        caughtToolExit = true;
+
+        final File isolateSpawningTesterPackageConfigFile = fs.directory(
+          fs.path.join(
+            'build',
+            'isolate_spawning_tester',
+          ),
+        ).childDirectory('.dart_tool').childFile('package_config.json');
+        expect(isolateSpawningTesterPackageConfigFile.existsSync(), true);
+        // We expect [isolateSpawningTesterPackageConfigFile] to contain the
+        // union of the packages in [_packageConfigContents] and
+        // [_flutterToolsPackageConfigContents].
+        expect(
+          isolateSpawningTesterPackageConfigFile.readAsStringSync().contains('"name": "integration_test"'),
+          true,
+        );
+        expect(
+          isolateSpawningTesterPackageConfigFile.readAsStringSync().contains('"name": "ffi"'),
+          true,
+        );
+        expect(
+          isolateSpawningTesterPackageConfigFile.readAsStringSync().contains('"name": "test"'),
+          true,
+        );
+        expect(
+          isolateSpawningTesterPackageConfigFile.readAsStringSync().contains('"name": "test_api"'),
+          true,
+        );
+        expect(
+          isolateSpawningTesterPackageConfigFile.readAsStringSync().contains('"name": "test_core"'),
+          true,
+        );
+      }
+    );
+    expect(caughtToolExit, true);
+  }, overrides: <Type, Generator>{
+    AnsiTerminal: () => _FakeTerminal(),
+    FileSystem: () => fs,
+    ProcessManager: () => FakeProcessManager.any(),
+    DeviceManager: () => _FakeDeviceManager(<Device>[]),
+  });
+
+  testUsingContext('Pipes specified arguments to package:test when --experimental-faster-testing is set',
+      () async {
+    final TestCommand testCommand = TestCommand();
+    final CommandRunner<void> commandRunner = createTestCommandRunner(testCommand);
+
+    bool caughtToolExit = false;
+    await asyncGuard<void>(
+      () => commandRunner.run(const <String>[
+        'test',
+        '--no-pub',
+        '--experimental-faster-testing',
+        '--reporter=compact',
+        '--file-reporter=json:reports/tests.json',
+        '--timeout=100',
+        '--concurrency=3',
+        '--name=name1',
+        '--plain-name=name2',
+        '--test-randomize-ordering-seed=random',
+        '--tags=tag1',
+        '--exclude-tags=tag2',
+        '--run-skipped',
+        '--total-shards=1',
+        '--shard-index=1',
+        '--',
+        'test/fake_test.dart',
+        'test/fake_test_2.dart',
+      ]),
+      onError: (Object error) async {
+        expect(error, isA<ToolExit>());
+        // We expect this message because we are using a fake ProcessManager.
+        expect(
+          (error as ToolExit).message,
+          contains('the Dart compiler exited unexpectedly.'),
+        );
+        caughtToolExit = true;
+
+        final File childTestIsolateSpawnerSourceFile = fs.directory(
+          fs.path.join(
+            'build',
+            'isolate_spawning_tester',
+          ),
+        ).childFile('child_test_isolate_spawner.dart');
+        expect(childTestIsolateSpawnerSourceFile.existsSync(), true);
+        expect(childTestIsolateSpawnerSourceFile.readAsStringSync().contains('''
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 const List<String> packageTestArgs = <String>[
   '--no-color',
   '-r',
@@ -679,7 +860,6 @@ const List<String> packageTestArgs = <String>[
   'tag1',
   '--exclude-tags',
   'tag2',
-  '--fail-fast',
   '--run-skipped',
   '--total-shards=1',
   '--shard-index=1',
@@ -1493,6 +1673,7 @@ dev_dependencies:
         final TestCommand testCommand = TestCommand(testRunner: testRunner);
         final CommandRunner<void> commandRunner = createTestCommandRunner(testCommand);
 
+<<<<<<< HEAD
         await commandRunner.run(<String>[
           'test',
           '--no-pub',
@@ -1523,6 +1704,19 @@ dev_dependencies:
         ProcessManager: () => FakeProcessManager.any(),
       },
     );
+=======
+      await commandRunner.run(const <String>[
+        'test',
+        '--no-pub',
+        '--platform=chrome',
+        '--web-renderer=canvaskit',
+      ]);
+      expect(testRunner.lastDebuggingOptionsValue.webRenderer, WebRendererMode.canvaskit);
+    }, overrides: <Type, Generator>{
+      FileSystem: () => fs,
+      ProcessManager: () => FakeProcessManager.any(),
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   // Tests whether using a deprecated webRenderer toggles a warningText.
@@ -1651,7 +1845,6 @@ class FakeFlutterTestRunner implements FlutterTestRunner {
     String? reporter,
     String? fileReporter,
     String? timeout,
-    bool failFast = false,
     bool runSkipped = false,
     int? shardIndex,
     int? totalShards,
@@ -1700,7 +1893,6 @@ class FakeFlutterTestRunner implements FlutterTestRunner {
     String? reporter,
     String? fileReporter,
     String? timeout,
-    bool failFast = false,
     bool runSkipped = false,
     int? shardIndex,
     int? totalShards,

@@ -185,6 +185,7 @@ void main() {
       final MacOSProject project = FlutterProject.fromDirectory(globals.fs.currentDirectory).macos;
       final BuildableMacOSApp macosApp = MacOSApp.fromMacOSProject(project) as BuildableMacOSApp;
 
+<<<<<<< HEAD
       const BuildInfo vanillaApp = BuildInfo(
         BuildMode.debug,
         null,
@@ -200,6 +201,13 @@ void main() {
         treeShakeIcons: false,
         packageConfigPath: '.dart_tool/package_config.json',
       );
+=======
+      const BuildInfo vanillaApp = BuildInfo(BuildMode.debug, null, treeShakeIcons: false);
+      String? applicationBundle = macosApp.bundleDirectory(vanillaApp);
+      expect(applicationBundle, 'Debug');
+
+      const BuildInfo flavoredApp = BuildInfo(BuildMode.release, 'flavor', treeShakeIcons: false);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       applicationBundle = macosApp.bundleDirectory(flavoredApp);
       expect(applicationBundle, 'Release-flavor');
     }, overrides: overrides);

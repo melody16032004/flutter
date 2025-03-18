@@ -335,6 +335,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -350,6 +351,17 @@ void main() {
         ignoreId: true,
         ignoreRect: true,
         ignoreTransform: true,
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics.rootChild(
+            actions: SemanticsAction.tap.index,
+            label: 'ABC',
+            flags: SemanticsFlag.isButton.index,
+          ),
+        ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -624,6 +636,7 @@ void main() {
       kIsWeb ? SystemMouseCursors.click : SystemMouseCursors.basic,
     );
   });
+<<<<<<< HEAD
 
   testWidgets('Button can be focused and has default colors', (WidgetTester tester) async {
     final FocusNode focusNode = FocusNode(debugLabel: 'Button');
@@ -847,6 +860,8 @@ void main() {
     await tester.pump();
     expect(value, isTrue);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Widget boilerplate({required Widget child}) {

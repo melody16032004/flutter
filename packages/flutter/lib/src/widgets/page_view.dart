@@ -679,7 +679,6 @@ class PageView extends StatefulWidget {
     this.allowImplicitScrolling = false,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.scrollBehavior,
     this.padEnds = true,
   }) : childrenDelegate = SliverChildListDelegate(children);
@@ -724,7 +723,6 @@ class PageView extends StatefulWidget {
     this.allowImplicitScrolling = false,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.scrollBehavior,
     this.padEnds = true,
   }) : childrenDelegate = SliverChildBuilderDelegate(
@@ -757,7 +755,6 @@ class PageView extends StatefulWidget {
     this.allowImplicitScrolling = false,
     this.restorationId,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.scrollBehavior,
     this.padEnds = true,
   });
@@ -845,12 +842,21 @@ class PageView extends StatefulWidget {
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
 
+<<<<<<< HEAD
   /// {@macro flutter.widgets.scrollable.hitTestBehavior}
   ///
   /// Defaults to [HitTestBehavior.opaque].
   final HitTestBehavior hitTestBehavior;
 
   /// {@macro flutter.widgets.scrollable.scrollBehavior}
+=======
+  /// {@macro flutter.widgets.shadow.scrollBehavior}
+  ///
+  /// [ScrollBehavior]s also provide [ScrollPhysics]. If an explicit
+  /// [ScrollPhysics] is provided in [physics], it will take precedence,
+  /// followed by [scrollBehavior], and then the inherited ancestor
+  /// [ScrollBehavior].
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ///
   /// The [ScrollBehavior] of the inherited [ScrollConfiguration] will be
   /// modified by default to not apply a [Scrollbar].
@@ -951,9 +957,13 @@ class _PageViewState extends State<PageView> {
         controller: _controller,
         physics: physics,
         restorationId: widget.restorationId,
+<<<<<<< HEAD
         hitTestBehavior: widget.hitTestBehavior,
         scrollBehavior:
             widget.scrollBehavior ?? ScrollConfiguration.of(context).copyWith(scrollbars: false),
+=======
+        scrollBehavior: widget.scrollBehavior ?? ScrollConfiguration.of(context).copyWith(scrollbars: false),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         viewportBuilder: (BuildContext context, ViewportOffset position) {
           return Viewport(
             // TODO(dnfield): we should provide a way to set cacheExtent

@@ -9,15 +9,14 @@ library;
 
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../widgets/semantics_tester.dart';
 
 void main() {
+<<<<<<< HEAD
   RenderObject getOverlayColor(WidgetTester tester) {
     return tester.allRenderObjects.firstWhere(
       (RenderObject object) => object.runtimeType.toString() == '_RenderInkFeatures',
@@ -35,6 +34,8 @@ void main() {
     return iconRichText.text.style!;
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('SegmentsButton when compositing does not crash', (WidgetTester tester) async {
     // Regression test for https://github.com/flutter/flutter/issues/135747
     // If the render object holds on to a stale canvas reference, this will
@@ -444,7 +445,13 @@ void main() {
                 SemanticsFlag.isInMutuallyExclusiveGroup,
               ],
               label: '1',
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
 
             // Second is a selected, enabled button.
@@ -459,7 +466,13 @@ void main() {
                 SemanticsFlag.isInMutuallyExclusiveGroup,
               ],
               label: '2',
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
 
             // Third is an unselected, disabled button.
@@ -519,7 +532,13 @@ void main() {
                 SemanticsFlag.isFocusable,
               ],
               label: '1',
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
 
             // Second is an unselected, enabled button.
@@ -532,7 +551,13 @@ void main() {
                 SemanticsFlag.isFocusable,
               ],
               label: '2',
+<<<<<<< HEAD
               actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus],
+=======
+              actions: <SemanticsAction>[
+                SemanticsAction.tap,
+              ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
 
             // Third is a selected, disabled button.
@@ -579,9 +604,20 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     final Material material = tester.widget<Material>(
       find.descendant(of: find.byType(TextButton), matching: find.byType(Material)),
     );
+=======
+    RenderObject overlayColor() {
+      return tester.allRenderObjects.firstWhere((RenderObject object) => object.runtimeType.toString() == '_RenderInkFeatures');
+    }
+
+    final Material material = tester.widget<Material>(find.descendant(
+      of: find.byType(TextButton),
+      matching: find.byType(Material),
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Hovered.
     final Offset center = tester.getCenter(find.text('2'));
@@ -589,21 +625,29 @@ void main() {
     await gesture.addPointer();
     await gesture.moveTo(center);
     await tester.pumpAndSettle();
+<<<<<<< HEAD
     expect(
       getOverlayColor(tester),
       paints..rect(color: theme.colorScheme.onSurface.withOpacity(0.08)),
     );
+=======
+    expect(overlayColor(), paints..rect(color: theme.colorScheme.onSurface.withOpacity(0.08)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(material.textStyle?.color, theme.colorScheme.onSurface);
 
     // Highlighted (pressed).
     await gesture.down(center);
     await tester.pumpAndSettle();
+<<<<<<< HEAD
     expect(
       getOverlayColor(tester),
       paints
         ..rect()
         ..rect(color: theme.colorScheme.onSurface.withOpacity(0.1)),
     );
+=======
+    expect(overlayColor(), paints..rect()..rect(color: theme.colorScheme.onSurface.withOpacity(0.1)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(material.textStyle?.color, theme.colorScheme.onSurface);
   });
 
@@ -757,11 +801,20 @@ void main() {
     );
 
     // Test foreground color is applied to the overlay color.
+<<<<<<< HEAD
     final TestGesture gesture = await tester.createGesture(kind: PointerDeviceKind.mouse);
+=======
+    RenderObject overlayColor() {
+      return tester.allRenderObjects.firstWhere((RenderObject object) => object.runtimeType.toString() == '_RenderInkFeatures');
+    }
+    final TestGesture gesture = await tester.createGesture(
+      kind: PointerDeviceKind.mouse,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await gesture.addPointer();
     await gesture.down(tester.getCenter(find.text('1')));
     await tester.pumpAndSettle();
-    expect(getOverlayColor(tester), paints..rect(color: foregroundColor.withOpacity(0.08)));
+    expect(overlayColor(), paints..rect(color: foregroundColor.withOpacity(0.08)));
   });
 
   testWidgets('Disabled SegmentedButton has correct states when rebuilding', (
@@ -868,6 +921,7 @@ void main() {
       ),
     );
   });
+<<<<<<< HEAD
 
   testWidgets(
     'SegmentedButton expands to fill the available width when expandedInsets is not null',
@@ -1219,6 +1273,8 @@ void main() {
     await tester.pumpWidget(buildButton(enabled: false));
     expect(iconStyle(tester, Icons.add).color, disabledIconColor);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Set<MaterialState> enabled = const <MaterialState>{};

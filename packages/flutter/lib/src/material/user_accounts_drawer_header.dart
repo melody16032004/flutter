@@ -87,8 +87,8 @@ class _AccountDetails extends StatefulWidget {
 }
 
 class _AccountDetailsState extends State<_AccountDetails> with SingleTickerProviderStateMixin {
-  late final CurvedAnimation _animation;
-  late final AnimationController _controller;
+  late Animation<double> _animation;
+  late AnimationController _controller;
   @override
   void initState() {
     super.initState();
@@ -111,7 +111,6 @@ class _AccountDetailsState extends State<_AccountDetails> with SingleTickerProvi
   @override
   void dispose() {
     _controller.dispose();
-    _animation.dispose();
     super.dispose();
   }
 

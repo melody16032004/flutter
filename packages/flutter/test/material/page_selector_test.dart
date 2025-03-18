@@ -334,6 +334,7 @@ void main() {
       expect(indicator.borderStyle, BorderStyle.solid);
     }
   });
+<<<<<<< HEAD
 
   testWidgets(
     'PageSelector responds correctly to TabController.animateTo() from the default tab controller',
@@ -433,4 +434,6 @@ void main() {
       ]);
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

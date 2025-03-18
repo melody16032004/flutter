@@ -449,11 +449,16 @@ void main() {
             (bool _) => performedActions.add(SemanticsAction.moveCursorBackwardByCharacter),
         onSetSelection: (TextSelection _) => performedActions.add(SemanticsAction.setSelection),
         onSetText: (String _) => performedActions.add(SemanticsAction.setText),
+<<<<<<< HEAD
         onDidGainAccessibilityFocus:
             () => performedActions.add(SemanticsAction.didGainAccessibilityFocus),
         onDidLoseAccessibilityFocus:
             () => performedActions.add(SemanticsAction.didLoseAccessibilityFocus),
         onFocus: () => performedActions.add(SemanticsAction.focus),
+=======
+        onDidGainAccessibilityFocus: () => performedActions.add(SemanticsAction.didGainAccessibilityFocus),
+        onDidLoseAccessibilityFocus: () => performedActions.add(SemanticsAction.didLoseAccessibilityFocus),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -514,7 +519,6 @@ void main() {
         case SemanticsAction.scrollToOffset:
         case SemanticsAction.showOnScreen:
         case SemanticsAction.tap:
-        case SemanticsAction.focus:
           semanticsOwner.performAction(expectedId, action);
       }
       expect(performedActions.length, expectedLength);
@@ -639,9 +643,11 @@ void main() {
   ) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     int semanticsUpdateCount = 0;
-    tester.binding.pipelineOwner.semanticsOwner!.addListener(() {
-      semanticsUpdateCount += 1;
-    });
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(
+      listener: () {
+        semanticsUpdateCount += 1;
+      },
+    );
 
     final List<String> performedActions = <String>[];
 
@@ -716,6 +722,7 @@ void main() {
     expect(semantics, hasSemantics(expectedSemantics));
     expect(semanticsUpdateCount, 1);
 
+    handle.dispose();
     semantics.dispose();
   });
 
@@ -808,9 +815,11 @@ void main() {
   ) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     int semanticsUpdateCount = 0;
-    tester.binding.pipelineOwner.semanticsOwner!.addListener(() {
-      semanticsUpdateCount += 1;
-    });
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(
+      listener: () {
+        semanticsUpdateCount += 1;
+      },
+    );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -865,6 +874,7 @@ void main() {
       ),
     );
 
+    handle.dispose();
     semantics.dispose();
   });
 
@@ -873,9 +883,11 @@ void main() {
   ) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     int semanticsUpdateCount = 0;
-    tester.binding.pipelineOwner.semanticsOwner!.addListener(() {
-      semanticsUpdateCount += 1;
-    });
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(
+      listener: () {
+        semanticsUpdateCount += 1;
+      },
+    );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -904,6 +916,7 @@ void main() {
       ),
     );
 
+    handle.dispose();
     semantics.dispose();
   });
 
@@ -912,9 +925,11 @@ void main() {
   ) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     int semanticsUpdateCount = 0;
-    tester.binding.pipelineOwner.semanticsOwner!.addListener(() {
-      semanticsUpdateCount += 1;
-    });
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(
+      listener: () {
+        semanticsUpdateCount += 1;
+      },
+    );
     await tester.pumpWidget(
       const Directionality(
         textDirection: TextDirection.ltr,
@@ -946,6 +961,7 @@ void main() {
       ),
     );
 
+    handle.dispose();
     semantics.dispose();
   });
 
@@ -954,9 +970,11 @@ void main() {
   ) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     int semanticsUpdateCount = 0;
-    tester.binding.pipelineOwner.semanticsOwner!.addListener(() {
-      semanticsUpdateCount += 1;
-    });
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(
+      listener: () {
+        semanticsUpdateCount += 1;
+      },
+    );
     await tester.pumpWidget(
       Directionality(
         textDirection: TextDirection.ltr,
@@ -975,6 +993,109 @@ void main() {
       ),
     );
     expect(semanticsUpdateCount, 1);
+<<<<<<< HEAD
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics(
+        children: <TestSemantics>[
+          TestSemantics(
+            label: r'Label 1',
+            textDirection: TextDirection.ltr,
+          ),
+          TestSemantics(
+            label: r'Label 2',
+            textDirection: TextDirection.ltr,
+          ),
+          TestSemantics(
+            label: r'Label 3',
+            textDirection: TextDirection.ltr,
+          ),
+          TestSemantics(
+            label: r'Label 4',
+            textDirection: TextDirection.ltr,
+          ),
+          TestSemantics(
+            label: r'Label 5',
+            textDirection: TextDirection.ltr,
+          ),
+        ],
+      ),
+      ignoreTransform: true,
+      ignoreRect: true,
+      ignoreId: true,
+    ));
+
+    handle.dispose();
+    semantics.dispose();
+  });
+
+  testWidgets('Semantics widgets without sort orders are sorted properly when no Directionality is present', (WidgetTester tester) async {
+    final SemanticsTester semantics = SemanticsTester(tester);
+    int semanticsUpdateCount = 0;
+    final SemanticsHandle handle = tester.binding.pipelineOwner.ensureSemantics(listener: () {
+      semanticsUpdateCount += 1;
+    });
+    await tester.pumpWidget(
+      Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          // Set this up so that the placeholder takes up the whole screen,
+          // and place the positioned boxes so that if we traverse in the
+          // geometric order, we would go from box [4, 3, 2, 1, 0], but if we
+          // go in child order, then we go from box [4, 1, 2, 3, 0]. We're verifying
+          // that we go in child order here, not geometric order, since there
+          // is no directionality, so we don't have a geometric opinion about
+          // horizontal order. We do still want to sort vertically, however,
+          // which is why the order isn't [0, 1, 2, 3, 4].
+          Semantics(
+            button: true,
+            child: const Placeholder(),
+          ),
+          Positioned(
+            top: 200.0,
+            left: 100.0,
+            child: Semantics( // Box 0
+              button: true,
+              child: const SizedBox(width: 30.0, height: 30.0),
+            ),
+          ),
+          Positioned(
+            top: 100.0,
+            left: 200.0,
+            child: Semantics( // Box 1
+              button: true,
+              child: const SizedBox(width: 30.0, height: 30.0),
+            ),
+          ),
+          Positioned(
+            top: 100.0,
+            left: 100.0,
+            child: Semantics( // Box 2
+              button: true,
+              child: const SizedBox(width: 30.0, height: 30.0),
+            ),
+          ),
+          Positioned(
+            top: 100.0,
+            left: 0.0,
+            child: Semantics( // Box 3
+              button: true,
+              child: const SizedBox(width: 30.0, height: 30.0),
+            ),
+          ),
+          Positioned(
+            top: 10.0,
+            left: 100.0,
+            child: Semantics( // Box 4
+              button: true,
+              child: const SizedBox(width: 30.0, height: 30.0),
+            ),
+          ),
+        ],
+      ),
+    );
+    expect(semanticsUpdateCount, 1);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(
       semantics,
       hasSemantics(
@@ -993,6 +1114,7 @@ void main() {
       ),
     );
 
+    handle.dispose();
     semantics.dispose();
   });
 

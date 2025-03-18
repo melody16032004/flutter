@@ -21,11 +21,6 @@ import '../runner/flutter_command.dart';
 import '../update_packages_pins.dart';
 import '../version.dart';
 
-// Pub packages are rolled automatically by the flutter-pub-roller-bot
-// by using the `flutter update-packages --force-upgrade`.
-// For the latest status, see:
-//   https://github.com/pulls?q=author%3Aflutter-pub-roller-bot
-
 class UpdatePackagesCommand extends FlutterCommand {
   UpdatePackagesCommand() {
     argParser
@@ -38,8 +33,12 @@ class UpdatePackagesCommand extends FlutterCommand {
       )
       ..addOption(
         'cherry-pick-package',
+<<<<<<< HEAD
         help:
             'Attempt to update only the specified package. The "--cherry-pick-version" version must be specified also.',
+=======
+        help: 'Attempt to update only the specified package. The "-cherry-pick-version" version must be specified also.',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       )
       ..addOption(
         'cherry-pick-version',
@@ -74,10 +73,16 @@ class UpdatePackagesCommand extends FlutterCommand {
       )
       ..addFlag(
         'consumer-only',
+<<<<<<< HEAD
         help:
             'Only prints the dependency graph that is the transitive closure '
             'that a consumer of the Flutter SDK will observe (when combined '
             'with "--transitive-closure").',
+=======
+        help: 'Only prints the dependency graph that is the transitive closure '
+              'that a consumer of the Flutter SDK will observe (when combined '
+              'with transitive-closure).',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         negatable: false,
       )
       ..addFlag(
@@ -1090,7 +1095,6 @@ class PubspecYaml {
       ...directDependencies,
       ...specialDependencies,
       ...devDependencies,
-      ...kExplicitlyExcludedPackages,
     };
 
     // Create a new set to hold the list of packages we've already processed, so
@@ -1223,7 +1227,7 @@ class PubspecHeader extends PubspecLine {
   ///
   /// The value of this field extracted from the following line is "version".
   ///
-  /// ```none
+  /// ```
   /// version: 0.16.5
   /// ```
   final String? name;
@@ -1235,7 +1239,7 @@ class PubspecHeader extends PubspecLine {
   ///
   /// The value of this field extracted from the following line is "0.16.5".
   ///
-  /// ```none
+  /// ```
   /// version: 0.16.5
   /// ```
   final String? value;
@@ -1257,6 +1261,7 @@ class PubspecHeader extends PubspecLine {
     final List<String> parts = strippedLine.split(':');
     final String sectionName = parts.first;
     final String value = parts.last.trim();
+<<<<<<< HEAD
     return switch (sectionName) {
       'dependencies' => PubspecHeader(line, Section.dependencies),
       'dev_dependencies' => PubspecHeader(line, Section.devDependencies),
@@ -1265,6 +1270,23 @@ class PubspecHeader extends PubspecLine {
       'name' || 'version' => PubspecHeader(line, Section.header, name: sectionName, value: value),
       _ => PubspecHeader(line, Section.other),
     };
+=======
+    switch (sectionName) {
+      case 'dependencies':
+        return PubspecHeader(line, Section.dependencies);
+      case 'dev_dependencies':
+        return PubspecHeader(line, Section.devDependencies);
+      case 'dependency_overrides':
+        return PubspecHeader(line, Section.dependencyOverrides);
+      case 'builders':
+        return PubspecHeader(line, Section.builders);
+      case 'name':
+      case 'version':
+        return PubspecHeader(line, Section.header, name: sectionName, value: value);
+      default:
+        return PubspecHeader(line, Section.other);
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Returns the input after removing trailing spaces and anything after the
@@ -1579,6 +1601,7 @@ String generateFakePubspec(Iterable<PubspecDependency> dependencies, {bool doUpg
       }
     });
   }
+<<<<<<< HEAD
   if (verbose && kExplicitlyExcludedPackages.isNotEmpty) {
     globals.printStatus(
       'WARNING: the following packages are explicitly excluded from version pinning',
@@ -1587,6 +1610,8 @@ String generateFakePubspec(Iterable<PubspecDependency> dependencies, {bool doUpg
       globals.printStatus('  - $package');
     }
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   for (final PubspecDependency dependency in dependencies) {
     if (!dependency.pointsToSdk) {
       dependency.describeForFakePubspec(result, overrides, allowUpgrade: doUpgrade);
@@ -1608,7 +1633,7 @@ class PubDependencyTree {
   ///
   /// That output is of this form:
   ///
-  /// ```none
+  /// ```
   /// package_name 0.0.0
   ///
   /// dependencies:

@@ -308,6 +308,7 @@ void main() {
     expect(inner.offset, 0.0);
   });
 
+<<<<<<< HEAD
   testWidgets('NestedScrollView allows taps on children while over-scrolled to the top', (
     WidgetTester tester,
   ) async {
@@ -624,6 +625,30 @@ void main() {
       TargetPlatform.macOS,
     }),
   );
+=======
+  testWidgets('NestedScrollView overscroll and release and hold', (WidgetTester tester) async {
+    await tester.pumpWidget(buildTest());
+    expect(find.text('aaa2'), findsOneWidget);
+    await tester.pump(const Duration(milliseconds: 250));
+    final Offset point1 = tester.getCenter(find.text('aaa1'));
+    if (debugDefaultTargetPlatformOverride == TargetPlatform.macOS) {
+      await tester.dragFrom(point1, const Offset(0.0, 400.0));
+    }
+    else {
+      await tester.dragFrom(point1, const Offset(0.0, 200.0));
+    }
+    await tester.pump();
+    expect(
+      tester.renderObject<RenderBox>(find.byType(AppBar)).size.height,
+      200.0,
+    );
+    await tester.flingFrom(point1, const Offset(0.0, -80.0), 50000.0);
+    await tester.pump(const Duration(milliseconds: 20));
+    final Offset point2 = tester.getCenter(find.text('aaa1'));
+    expect(point2.dy, greaterThan(point1.dy));
+    expect(tester.renderObject<RenderBox>(find.byType(AppBar)).size.height, 200.0);
+  }, variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.iOS,  TargetPlatform.macOS }));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testWidgets(
     'NestedScrollView overscroll and release and hold',
@@ -2450,10 +2475,17 @@ void main() {
         await tester.fling(find.text('Item 48'), const Offset(0.0, -50.0), 10000.0);
         await tester.pump();
 
+<<<<<<< HEAD
         // Tap after releasing the overscroll to trigger secondary inner ballistic
         // scroll activity with 0 velocity.
         await tester.tap(find.text('Item 49'));
         await tester.pumpAndSettle();
+=======
+      // Tap after releasing the overscroll to trigger secondary inner ballistic
+      // scroll activity with 0 velocity.
+      await tester.tap(find.text('Item 49'), warnIfMissed: false);
+      await tester.pumpAndSettle();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         // If handled correctly, the ballistic scroll activity should finish
         // closing out the overscrolled area, with the last item visible at the

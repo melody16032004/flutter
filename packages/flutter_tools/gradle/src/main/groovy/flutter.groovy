@@ -81,7 +81,11 @@ class FlutterExtension {
     public String flutterVersionName = null
 
     /** Returns flutterVersionCode as an integer with error handling. */
+<<<<<<< HEAD
     Integer getVersionCode() {
+=======
+    public Integer versionCode() {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (flutterVersionCode == null) {
             throw new GradleException("flutterVersionCode must not be null.")
         }
@@ -94,13 +98,18 @@ class FlutterExtension {
     }
 
     /** Returns flutterVersionName with error handling. */
+<<<<<<< HEAD
     String getVersionName() {
+=======
+    public String versionName() {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (flutterVersionName == null) {
             throw new GradleException("flutterVersionName must not be null.")
         }
 
         return flutterVersionName
     }
+
 }
 
 class FlutterPlugin implements Plugin<Project> {
@@ -175,7 +184,7 @@ class FlutterPlugin implements Plugin<Project> {
     /**
      * Flutter Docs Website URLs for help messages.
      */
-    private final String kWebsiteDeploymentAndroidBuildConfig = "https://flutter.dev/to/review-gradle-config"
+    private final String kWebsiteDeploymentAndroidBuildConfig = "https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration"
 
     @Override
     void apply(Project project) {
@@ -303,6 +312,7 @@ class FlutterPlugin implements Plugin<Project> {
                         "packages", "flutter_tools", "gradle", "src", "main", "kotlin_scripts",
                         "dependency_version_checker.gradle.kts")
                 project.apply from: dependencyCheckerPluginPath
+<<<<<<< HEAD
             } catch (Exception e) {
                 if (!project.hasProperty("usesUnsupportedDependencyVersions") || !project.usesUnsupportedDependencyVersions) {
                     // Possible bug in dependency checking code - warn and do not block build.
@@ -315,6 +325,12 @@ class FlutterPlugin implements Plugin<Project> {
                     // in the dependency version checker plugin so re-throw it here.
                     throw e
                 }
+=======
+            } catch (Exception ignored) {
+                project.logger.error("Warning: Flutter was unable to detect project Gradle, Java, " +
+                        "AGP, and KGP versions. Skipping dependency version checking. Error was: "
+                        + ignored)
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             }
         }
 
@@ -542,12 +558,11 @@ class FlutterPlugin implements Plugin<Project> {
                                         }
                                     }
                                 }
-                                if(!hosts.isEmpty() || !paths.isEmpty()){
-                                    if(schemes.isEmpty()){schemes.add(null)}
-                                    if(hosts.isEmpty()){hosts.add(null)}
-                                    if(paths.isEmpty()){paths.add('.*')}
-                                    schemes.each { scheme ->
-                                        hosts.each { host ->
+                                schemes.each { scheme ->
+                                    hosts.each { host ->
+                                        if (!paths) {
+                                            appLinkSettings.deeplinks.add(new Deeplink(scheme: scheme, host: host, path: ".*", intentFilterCheck: intentFilterCheck))
+                                        } else {
                                             paths.each { path ->
                                                 appLinkSettings.deeplinks.add(new Deeplink(scheme: scheme, host: host, path: path, intentFilterCheck: intentFilterCheck))
                                             }
@@ -669,7 +684,7 @@ class FlutterPlugin implements Plugin<Project> {
             if (pluginProject == null) {
                 // Plugin was not included in `settings.gradle`, but is listed in `.flutter-plugins`.
                 project.logger.error("Plugin project :${it.name} listed, but not found. Please fix your settings.gradle/settings.gradle.kts.")
-            } else if (pluginSupportsAndroidPlatform(pluginProject)) {
+            } else if (doesSupportAndroidPlatform(pluginProject.projectDir.parentFile.path as String)) {
                 // Plugin has a functioning `android` folder and is included successfully, although it's not supported.
                 // It must be configured nonetheless, to not throw an "Unresolved reference" exception.
                 configurePluginProject(it)
@@ -682,9 +697,10 @@ class FlutterPlugin implements Plugin<Project> {
 
     // TODO(54566): Can remove this function and its call sites once resolved.
     /**
-     * Returns `true` if the given project is a plugin project having an `android` directory
+     * Returns `true` if the given path contains an `android` directory
      * containing a `build.gradle` or `build.gradle.kts` file.
      */
+<<<<<<< HEAD
     private static Boolean pluginSupportsAndroidPlatform(Project project) {
         File buildGradle = new File(project.projectDir.parentFile, "android" + File.separator + "build.gradle")
         File buildGradleKts = new File(project.projectDir.parentFile, "android" + File.separator + "build.gradle.kts")
@@ -699,6 +715,11 @@ class FlutterPlugin implements Plugin<Project> {
     private static File buildGradleFile(Project project) {
         File buildGradle = new File(project.projectDir.parentFile, "app" + File.separator + "build.gradle")
         File buildGradleKts = new File(project.projectDir.parentFile, "app" + File.separator + "build.gradle.kts")
+=======
+    private Boolean doesSupportAndroidPlatform(String path) {
+        File buildGradle = new File(path, 'android' + File.separator + 'build.gradle')
+        File buildGradleKts = new File(path, 'android' + File.separator + 'build.gradle.kts')
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         if (buildGradle.exists() && buildGradleKts.exists()) {
             project.logger.error(
                 "Both build.gradle and build.gradle.kts exist, so " +
@@ -706,7 +727,7 @@ class FlutterPlugin implements Plugin<Project> {
             )
         }
 
-        return buildGradle.exists() ? buildGradle : buildGradleKts
+        return buildGradle.exists() || buildGradleKts.exists()
     }
 
     /**
@@ -864,8 +885,6 @@ class FlutterPlugin implements Plugin<Project> {
             String projectNdkVersion = project.android.ndkVersion ?: ndkVersionIfUnspecified
             String maxPluginNdkVersion = projectNdkVersion
             int numProcessedPlugins = getPluginList(project).size()
-            List<Tuple2<String, String>> pluginsWithHigherSdkVersion = []
-            List<Tuple2<String, String>> pluginsWithDifferentNdkVersion = []
 
             getPluginList(project).each { pluginObject ->
                 assert(pluginObject.name instanceof String)
@@ -880,21 +899,14 @@ class FlutterPlugin implements Plugin<Project> {
                     if (getCompileSdkFromProject(pluginProject).isInteger()) {
                         pluginCompileSdkVersion = getCompileSdkFromProject(pluginProject) as int
                     }
-
                     maxPluginCompileSdkVersion = Math.max(pluginCompileSdkVersion, maxPluginCompileSdkVersion)
-                    if (pluginCompileSdkVersion > projectCompileSdkVersion) {
-                        pluginsWithHigherSdkVersion.add(new Tuple(pluginProject.name, pluginCompileSdkVersion))
-                    }
-
                     String pluginNdkVersion = pluginProject.android.ndkVersion ?: ndkVersionIfUnspecified
                     maxPluginNdkVersion = mostRecentSemanticVersion(pluginNdkVersion, maxPluginNdkVersion)
-                    if (pluginNdkVersion != projectNdkVersion) {
-                        pluginsWithDifferentNdkVersion.add(new Tuple(pluginProject.name, pluginNdkVersion))
-                    }
 
                     numProcessedPlugins--
                     if (numProcessedPlugins == 0) {
                         if (maxPluginCompileSdkVersion > projectCompileSdkVersion) {
+<<<<<<< HEAD
                             project.logger.error("Your project is configured to compile against Android SDK $projectCompileSdkVersion, but the following plugin(s) require to be compiled against a higher Android SDK version:")
                             for (Tuple2<String, String> pluginToCompileSdkVersion : pluginsWithHigherSdkVersion) {
                                 project.logger.error("- ${pluginToCompileSdkVersion.v1} compiles against Android SDK ${pluginToCompileSdkVersion.v2}")
@@ -923,6 +935,12 @@ class FlutterPlugin implements Plugin<Project> {
                                         ...
                                     }
                                 """.stripIndent())
+=======
+                            project.logger.error("One or more plugins require a higher Android SDK version.\nFix this issue by adding the following to ${project.projectDir}${File.separator}build.gradle:\nandroid {\n  compileSdkVersion ${maxPluginCompileSdkVersion}\n  ...\n}\n")
+                        }
+                        if (maxPluginNdkVersion != projectNdkVersion) {
+                            project.logger.error("One or more plugins require a higher Android NDK version.\nFix this issue by adding the following to ${project.projectDir}${File.separator}build.gradle:\nandroid {\n  ndkVersion \"${maxPluginNdkVersion}\"\n  ...\n}\n")
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                         }
                     }
                 }
@@ -1207,9 +1225,9 @@ class FlutterPlugin implements Plugin<Project> {
             bundleSkSLPathValue = project.property(propBundleSkslPath)
         }
         String performanceMeasurementFileValue
-        final String propPerformanceMeasurementFile = "performance-measurement-file"
-        if (project.hasProperty(propPerformanceMeasurementFile)) {
-            performanceMeasurementFileValue = project.property(propPerformanceMeasurementFile)
+        final String propPerformanceMesaurementFile = "performance-measurement-file"
+        if (project.hasProperty(propPerformanceMesaurementFile)) {
+            performanceMeasurementFileValue = project.property(propPerformanceMesaurementFile)
         }
         String codeSizeDirectoryValue
         final String propCodeSizeDirectory = "code-size-directory"
@@ -1239,7 +1257,7 @@ class FlutterPlugin implements Plugin<Project> {
                     // for only the output APK, not for the variant itself. Skipping this step simply
                     // causes Gradle to use the value of variant.versionCode for the APK.
                     // For more, see https://developer.android.com/studio/build/configure-apk-splits
-                    Integer abiVersionCode = ABI_VERSION.get(output.getFilter(OutputFile.ABI))
+                    int abiVersionCode = ABI_VERSION.get(output.getFilter(OutputFile.ABI))
                     if (abiVersionCode != null) {
                         output.versionCodeOverride =
                             abiVersionCode * 1000 + variant.versionCode
@@ -1393,6 +1411,15 @@ class FlutterPlugin implements Plugin<Project> {
                 } catch (UnknownTaskException ignored) {
                 }
             }
+<<<<<<< HEAD
+=======
+
+            def bundleAarTask = project.tasks.findByName("bundle${variant.name.capitalize()}Aar")
+            if (bundleAarTask) {
+                bundleAarTask.dependsOn(copyFlutterAssetsTask)
+            }
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             return copyFlutterAssetsTask
         } // end def addFlutterDeps
         if (isFlutterAppProject()) {

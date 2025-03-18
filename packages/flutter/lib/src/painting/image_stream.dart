@@ -2,14 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'dart:ui';
-///
-/// @docImport 'package:flutter/widgets.dart';
-///
-/// @docImport 'image_cache.dart';
-/// @docImport 'image_provider.dart';
-library;
-
 import 'dart:async';
 import 'dart:ui' as ui show Codec, FrameInfo, Image;
 
@@ -67,16 +59,16 @@ class ImageInfo {
   ///
   /// See also:
   ///
-  ///  * [ui.Image.clone], which describes how and why to clone images.
+  ///  * [Image.clone], which describes how and why to clone images.
   ImageInfo clone() {
     return ImageInfo(image: image.clone(), scale: scale, debugLabel: debugLabel);
   }
 
   /// Whether this [ImageInfo] is a [clone] of the `other`.
   ///
-  /// This method is a convenience wrapper for [ui.Image.isCloneOf], and is
-  /// useful for clients that are trying to determine whether new layout or
-  /// painting logic is required when receiving a new image reference.
+  /// This method is a convenience wrapper for [Image.isCloneOf], and is useful
+  /// for clients that are trying to determine whether new layout or painting
+  /// logic is required when receiving a new image reference.
   ///
   /// {@tool snippet}
   ///

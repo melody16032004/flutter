@@ -337,13 +337,20 @@ class IconTreeShaker {
       final Object? package = iconDataMap['fontPackage'];
       final Object? fontFamily = iconDataMap['fontFamily'];
       final Object? codePoint = iconDataMap['codePoint'];
+<<<<<<< HEAD
       if ((package ?? '') is! String || (fontFamily ?? '') is! String || codePoint is! num) {
+=======
+      if ((package ?? '') is! String || // Null is ok here.
+          fontFamily is! String ||
+          codePoint is! num) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         throw IconTreeShakerException._(
           'Invalid ConstFinder result. Expected "fontPackage" to be a String, '
           '"fontFamily" to be a String, and "codePoint" to be an int, '
           'got: $iconDataMap.',
         );
       }
+<<<<<<< HEAD
       if (fontFamily == null) {
         _logger.printTrace(
           'Expected to find fontFamily for constant IconData with codepoint: '
@@ -356,6 +363,12 @@ class IconTreeShaker {
       }
       final String family = fontFamily as String;
       final String key = package == null ? family : 'packages/$package/$family';
+=======
+      final String family = fontFamily;
+      final String key = package == null
+        ? family
+        : 'packages/$package/$family';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       result[key] ??= <int>[];
       result[key]!.add(codePoint.round());
     }

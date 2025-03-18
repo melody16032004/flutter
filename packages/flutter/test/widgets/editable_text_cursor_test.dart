@@ -1290,6 +1290,7 @@ void main() {
       );
       addTearDown(controller.dispose);
 
+<<<<<<< HEAD
       final Widget widget = EditableText(
         autofocus: true,
         backgroundCursorColor: Colors.grey,
@@ -1304,6 +1305,22 @@ void main() {
         maxLines: null,
       );
       await tester.pumpWidget(MaterialApp(home: widget));
+=======
+    final Widget widget = EditableText(
+      autofocus: true,
+      backgroundCursorColor: Colors.grey,
+      controller: controller,
+      focusNode: focusNode,
+      style: const TextStyle(),
+      textAlign: TextAlign.center,
+      keyboardType: TextInputType.text,
+      cursorColor: cursorColor,
+      cursorWidth: 13.0,
+      cursorHeight: 17.0,
+      maxLines: null,
+    );
+    await tester.pumpWidget(MaterialApp(home: widget));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       final EditableTextState editableTextState = tester.firstState(find.byWidget(widget));
       final Rect editableTextRect = tester.getRect(find.byWidget(widget));
@@ -1311,6 +1328,7 @@ void main() {
       // The trailing whitespaces are not line break opportunities.
       expect(renderEditable.getLineAtOffset(TextPosition(offset: text.length)).start, 0);
 
+<<<<<<< HEAD
       // The caretRect shouldn't be outside of the RenderEditable.
       final Rect caretRect = Rect.fromLTWH(
         editableTextRect.right - 13.0 - 1.0,
@@ -1409,6 +1427,21 @@ void main() {
       excluding: <TargetPlatform>{TargetPlatform.macOS, TargetPlatform.iOS},
     ),
     skip: isBrowser && !isCanvasKit, // https://github.com/flutter/flutter/issues/56308
+=======
+    // The caretRect shouldn't be outside of the RenderEditable.
+    final Rect caretRect = Rect.fromLTWH(
+      editableTextRect.right - 13.0 - 1.0,
+      editableTextRect.top,
+      13.0,
+      17.0,
+    );
+    expect(
+      renderEditable,
+      paints..rect(color: cursorColor, rect: caretRect),
+    );
+  },
+  skip: isBrowser && !isCanvasKit, // https://github.com/flutter/flutter/issues/56308
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 
   testWidgets('getLocalRectForCaret reports the real caret Rect', (WidgetTester tester) async {

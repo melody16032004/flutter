@@ -27,15 +27,6 @@ class AppLifecycleStateObserver with WidgetsBindingObserver {
   }
 }
 
-class ViewFocusObserver with WidgetsBindingObserver {
-  List<ViewFocusEvent> accumulatedEvents = <ViewFocusEvent>[];
-
-  @override
-  void didChangeViewFocus(ViewFocusEvent state) {
-    accumulatedEvents.add(state);
-  }
-}
-
 class PushRouteObserver with WidgetsBindingObserver {
   late String pushedRoute;
 
@@ -81,12 +72,6 @@ class RentrantObserver implements WidgetsBindingObserver {
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    assert(active);
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeViewFocus(ViewFocusEvent event) {
     assert(active);
     WidgetsBinding.instance.addObserver(this);
   }
@@ -202,6 +187,7 @@ void main() {
     WidgetsBinding.instance.handlePopRoute();
     WidgetsBinding.instance.handlePushRoute('/');
     WidgetsBinding.instance.handleRequestAppExit();
+<<<<<<< HEAD
     WidgetsBinding.instance.handleViewFocusChanged(
       const ViewFocusEvent(
         viewId: 0,
@@ -209,6 +195,8 @@ void main() {
         direction: ViewFocusDirection.forward,
       ),
     );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.idle();
     expect(observer.removeSelf(), greaterThan(1));
     expect(observer.removeSelf(), 0);
@@ -285,6 +273,7 @@ void main() {
     WidgetsBinding.instance.removeObserver(observer);
   });
 
+<<<<<<< HEAD
   testWidgets('handleViewFocusChanged callback', (WidgetTester tester) async {
     final ViewFocusObserver observer = ViewFocusObserver();
     WidgetsBinding.instance.addObserver(observer);
@@ -301,11 +290,14 @@ void main() {
     WidgetsBinding.instance.removeObserver(observer);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('didPushRoute callback', (WidgetTester tester) async {
     final PushRouteObserver observer = PushRouteObserver();
     WidgetsBinding.instance.addObserver(observer);
 
     const String testRouteName = 'testRouteName';
+<<<<<<< HEAD
     final ByteData message = const JSONMethodCodec().encodeMethodCall(
       const MethodCall('pushRoute', testRouteName),
     );
@@ -318,6 +310,10 @@ void main() {
     final bool decodedResult = const JSONMethodCodec().decodeEnvelope(result) as bool;
 
     expect(decodedResult, true);
+=======
+    final ByteData message = const JSONMethodCodec().encodeMethodCall(const MethodCall('pushRoute', testRouteName));
+    await tester.binding.defaultBinaryMessenger.handlePlatformMessage('flutter/navigation', message, (_) {});
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(observer.pushedRoute, testRouteName);
 
     WidgetsBinding.instance.removeObserver(observer);
@@ -335,6 +331,7 @@ void main() {
     final ByteData message = const JSONMethodCodec().encodeMethodCall(
       const MethodCall('pushRouteInformation', testRouteInformation),
     );
+<<<<<<< HEAD
     final ByteData result =
         (await tester.binding.defaultBinaryMessenger.handlePlatformMessage(
           'flutter/navigation',
@@ -344,6 +341,10 @@ void main() {
     final bool decodedResult = const JSONMethodCodec().decodeEnvelope(result) as bool;
 
     expect(decodedResult, true);
+=======
+    await tester.binding.defaultBinaryMessenger
+        .handlePlatformMessage('flutter/navigation', message, (_) {});
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(observer.pushedRoute, 'testRouteName');
     WidgetsBinding.instance.removeObserver(observer);
   });
@@ -456,6 +457,7 @@ void main() {
     WidgetsBinding.instance.removeObserver(observer);
   });
 
+<<<<<<< HEAD
   testWidgets('pushRouteInformation not handled by observer returns false', (
     WidgetTester tester,
   ) async {
@@ -508,6 +510,8 @@ void main() {
 
     expect(decodedResult, false);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Application lifecycle affects frame scheduling', (WidgetTester tester) async {
     expect(tester.binding.hasScheduledFrame, isFalse);
 

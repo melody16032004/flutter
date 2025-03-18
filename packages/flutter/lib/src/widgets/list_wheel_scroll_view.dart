@@ -426,7 +426,6 @@ class _FixedExtentScrollable extends Scrollable {
     required super.dragStartBehavior,
     super.restorationId,
     super.scrollBehavior,
-    super.hitTestBehavior,
   });
 
   final double itemExtent;
@@ -571,7 +570,6 @@ class ListWheelScrollView extends StatefulWidget {
     this.onSelectedItemChanged,
     this.renderChildrenOutsideViewport = false,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.restorationId,
     this.scrollBehavior,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -606,7 +604,6 @@ class ListWheelScrollView extends StatefulWidget {
     this.onSelectedItemChanged,
     this.renderChildrenOutsideViewport = false,
     this.clipBehavior = Clip.hardEdge,
-    this.hitTestBehavior = HitTestBehavior.opaque,
     this.restorationId,
     this.scrollBehavior,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -694,11 +691,6 @@ class ListWheelScrollView extends StatefulWidget {
   /// Defaults to [Clip.hardEdge].
   final Clip clipBehavior;
 
-  /// {@macro flutter.widgets.scrollable.hitTestBehavior}
-  ///
-  /// Defaults to [HitTestBehavior.opaque].
-  final HitTestBehavior hitTestBehavior;
-
   /// {@macro flutter.widgets.scrollable.restorationId}
   final String? restorationId;
 
@@ -763,10 +755,14 @@ class _ListWheelScrollViewState extends State<ListWheelScrollView> {
         physics: widget.physics,
         itemExtent: widget.itemExtent,
         restorationId: widget.restorationId,
+<<<<<<< HEAD
         hitTestBehavior: widget.hitTestBehavior,
         scrollBehavior:
             widget.scrollBehavior ?? ScrollConfiguration.of(context).copyWith(scrollbars: false),
         dragStartBehavior: widget.dragStartBehavior,
+=======
+        scrollBehavior: widget.scrollBehavior ?? ScrollConfiguration.of(context).copyWith(scrollbars: false),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         viewportBuilder: (BuildContext context, ViewportOffset offset) {
           return ListWheelViewport(
             diameterRatio: widget.diameterRatio,

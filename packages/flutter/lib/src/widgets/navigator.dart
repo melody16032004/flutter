@@ -98,14 +98,6 @@ typedef WillPopCallback = Future<bool> Function();
 /// [Navigator.pages] list is next updated.)
 typedef PopPageCallback = bool Function(Route<dynamic> route, dynamic result);
 
-/// Signature for the [Navigator.onDidRemovePage] callback.
-///
-/// This must properly update the pages list the next time it is passed into
-/// [Navigator.pages] so that it no longer includes the input `page`.
-/// (Otherwise, the page will be interpreted as a new page to show when the
-/// [Navigator.pages] list is next updated.)
-typedef DidRemovePageCallback = void Function(Page<Object?> page);
-
 /// Indicates whether the current route should be popped.
 ///
 /// Used as the return value for [Route.willPop].
@@ -203,8 +195,6 @@ abstract class Route<T> extends _RoutePlaceholder {
   /// remains with its last value).
   RouteSettings get settings => _settings;
   RouteSettings _settings;
-
-  bool get _isPageBased => settings is Page<Object?>;
 
   /// The restoration scope ID to be used for the [RestorationScope] surrounding
   /// this route.
@@ -379,35 +369,18 @@ abstract class Route<T> extends _RoutePlaceholder {
   ///
   ///  * [Form], which provides a [Form.canPop] boolean that is similar.
   ///  * [PopScope], a widget that provides a way to intercept the back button.
-  ///  * [Page.canPop], a way for [Page] to affect this property.
   RoutePopDisposition get popDisposition {
-    if (_isPageBased) {
-      final Page<Object?> page = settings as Page<Object?>;
-      if (!page.canPop) {
-        return RoutePopDisposition.doNotPop;
-      }
-    }
     return isFirst ? RoutePopDisposition.bubble : RoutePopDisposition.pop;
   }
 
-  /// Called after a route pop was handled.
-  ///
-  /// Even when the pop is canceled, for example by a [PopScope] widget, this
-  /// will still be called. The `didPop` parameter indicates whether or not the
-  /// back navigation actually happened successfully.
-  @Deprecated(
-    'Override onPopInvokedWithResult instead. '
-    'This feature was deprecated after v3.22.0-12.0.pre.',
-  )
-  void onPopInvoked(bool didPop) {}
-
-  /// {@template flutter.widgets.navigator.onPopInvokedWithResult}
+  /// {@template flutter.widgets.navigator.onPopInvoked}
   /// Called after a route pop was handled.
   ///
   /// Even when the pop is canceled, for example by a [PopScope] widget, this
   /// will still be called. The `didPop` parameter indicates whether or not the
   /// back navigation actually happened successfully.
   /// {@endtemplate}
+<<<<<<< HEAD
   @mustCallSuper
   void onPopInvokedWithResult(bool didPop, T? result) {
     if (_isPageBased) {
@@ -415,6 +388,9 @@ abstract class Route<T> extends _RoutePlaceholder {
       page.onPopInvoked(didPop, result);
     }
   }
+=======
+  void onPopInvoked(bool didPop) {}
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Whether calling [didPop] would return false.
   bool get willHandlePopInternally => false;
@@ -672,15 +648,6 @@ class RouteSettings {
 /// The type argument `T` is the corresponding [Route]'s return type, as
 /// used by [Route.currentResult], [Route.popped], and [Route.didPop].
 ///
-/// The [canPop] and [onPopInvoked] are used for intercepting pops.
-///
-/// {@tool dartpad}
-/// This sample demonstrates how to use this [canPop] and [onPopInvoked] to
-/// intercept pops.
-///
-/// ** See code in examples/api/lib/widgets/page/page_can_pop.0.dart **
-/// {@end-tool}
-///
 /// See also:
 ///
 ///  * [Navigator.pages], which accepts a list of [Page]s and updates its routes
@@ -692,12 +659,13 @@ abstract class Page<T> extends RouteSettings {
     super.name,
     super.arguments,
     this.restorationId,
-    this.canPop = true,
-    this.onPopInvoked = _defaultPopInvokedHandler,
   });
 
+<<<<<<< HEAD
   static void _defaultPopInvokedHandler(bool didPop, Object? result) {}
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// The key associated with this page.
   ///
   /// This key will be used for comparing pages in [canUpdate].
@@ -713,28 +681,6 @@ abstract class Page<T> extends RouteSettings {
   ///  * [RestorationManager], which explains how state restoration works in
   ///    Flutter.
   final String? restorationId;
-
-  /// Called after a pop on the associated route was handled.
-  ///
-  /// It's not possible to prevent the pop from happening at the time that this
-  /// method is called; the pop has already happened. Use [canPop] to
-  /// disable pops in advance.
-  ///
-  /// This will still be called even when the pop is canceled. A pop is canceled
-  /// when the associated [Route.popDisposition] returns false, or when
-  /// [canPop] is set to false. The `didPop` parameter indicates whether or not
-  /// the back navigation actually happened successfully.
-  final PopInvokedWithResultCallback<T> onPopInvoked;
-
-  /// When false, blocks the associated route from being popped.
-  ///
-  /// If this is set to false for first page in the Navigator. It prevents
-  /// Flutter app from exiting.
-  ///
-  /// If there are any [PopScope] widgets in a route's widget subtree,
-  /// each of their `canPop` must be `true`, in addition to this canPop, in
-  /// order for the route to be able to pop.
-  final bool canPop;
 
   /// Whether this page can be updated with the [other] page.
   ///
@@ -810,8 +756,13 @@ class NavigatorObserver {
   /// The [Navigator]'s routes are being moved by a user gesture.
   ///
   /// For example, this is called when an iOS back gesture starts, and is used
+<<<<<<< HEAD
   /// to disable hero animations during such interactions.
   void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) {}
+=======
+  /// to disabled hero animations during such interactions.
+  void didStartUserGesture(Route<dynamic> route, Route<dynamic>? previousRoute) { }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// User gesture is no longer controlling the [Navigator].
   ///
@@ -1560,10 +1511,6 @@ class Navigator extends StatefulWidget {
   const Navigator({
     super.key,
     this.pages = const <Page<dynamic>>[],
-    @Deprecated(
-      'Use onDidRemovePage instead. '
-      'This feature was deprecated after v3.16.0-17.0.pre.',
-    )
     this.onPopPage,
     this.initialRoute,
     this.onGenerateInitialRoutes = Navigator.defaultGenerateInitialRoutes,
@@ -1576,7 +1523,6 @@ class Navigator extends StatefulWidget {
     this.requestFocus = true,
     this.restorationScopeId,
     this.routeTraversalEdgeBehavior = kDefaultRouteTraversalEdgeBehavior,
-    this.onDidRemovePage,
   });
 
   /// The list of pages with which to populate the history.
@@ -1609,8 +1555,6 @@ class Navigator extends StatefulWidget {
   /// corresponding to [pages] in the initial history.
   final List<Page<dynamic>> pages;
 
-  /// This is deprecated and replaced by [onDidRemovePage].
-  ///
   /// Called when [pop] is invoked but the current [Route] corresponds to a
   /// [Page] found in the [pages] list.
   ///
@@ -1624,26 +1568,7 @@ class Navigator extends StatefulWidget {
   /// contain the [Page] for the given [Route]. The next time the [pages] list
   /// is updated, if the [Page] corresponding to this [Route] is still present,
   /// it will be interpreted as a new route to display.
-  @Deprecated(
-    'Use onDidRemovePage instead. '
-    'This feature was deprecated after v3.16.0-17.0.pre.',
-  )
   final PopPageCallback? onPopPage;
-
-  /// Called when the [Route] associated with the given [Page] has been removed
-  /// from the Navigator.
-  ///
-  /// This can happen when the route is removed or completed through
-  /// [Navigator.pop], [Navigator.pushReplacement], or its friends.
-  ///
-  /// This callback is responsible for removing the given page from the list of
-  /// [pages].
-  ///
-  /// The [Navigator] widget should be rebuilt with a [pages] list that does not
-  /// contain the given page [Page]. The next time the [pages] list
-  /// is updated, if the given [Page] is still present, it will be interpreted
-  /// as a new page to display.
-  final DidRemovePageCallback? onDidRemovePage;
 
   /// The delegate used for deciding how routes transition in or off the screen
   /// during the [pages] updates.
@@ -1705,7 +1630,7 @@ class Navigator extends StatefulWidget {
   ///  * [Navigator], which explains under the heading "state restoration"
   ///    how and under what conditions the navigator restores its state.
   ///  * [Navigator.restorablePush], which includes an example showcasing how
-  ///    to push a restorable route onto the navigator.
+  ///    to push a restorable route unto the navigator.
   /// {@endtemplate}
   final String? restorationScopeId;
 
@@ -1741,7 +1666,7 @@ class Navigator extends StatefulWidget {
   /// The callback must return a list of [Route] objects with which the history
   /// will be primed.
   ///
-  /// When parsing the initialRoute, if there's any chance that it may
+  /// When parsing the initialRoute, if there's any chance that the it may
   /// contain complex characters, it's best to use the
   /// [characters](https://pub.dev/packages/characters) API. This will ensure
   /// that extended grapheme clusters and surrogate pairs are treated as single
@@ -1972,7 +1897,7 @@ class Navigator extends StatefulWidget {
   /// [NavigatorObserver.didReplace]). The removed route is notified once the
   /// new route has finished animating (see [Route.didComplete]). The removed
   /// route's exit animation is not run (see [popAndPushNamed] for a variant
-  /// that animates the removed route).
+  /// that does animated the removed route).
   ///
   /// Ongoing gestures within the current route are canceled when a new route is
   /// pushed.
@@ -2866,7 +2791,7 @@ class Navigator extends StatefulWidget {
   /// this class is given instead. Useful for pushing contents above all
   /// subsequent instances of [Navigator].
   ///
-  /// If there is no [Navigator] in the given `context`, this function will throw
+  /// If there is no [Navigator] in the give `context`, this function will throw
   /// a [FlutterError] in debug mode, and an exception in release mode.
   ///
   /// This method can be expensive (it walks the element tree).
@@ -3001,7 +2926,7 @@ class Navigator extends StatefulWidget {
     // Null route might be a result of gap in initialRouteName
     //
     // For example, routes = ['A', 'A/B/C'], and initialRouteName = 'A/B/C'
-    // This should result in result = ['A', null, 'A/B/C'] where 'A/B' produces
+    // This should result in result = ['A', null,'A/B/C'] where 'A/B' produces
     // the null. In this case, we want to filter out the null and return
     // result = ['A', 'A/B/C'].
     result.removeWhere((Route<dynamic>? route) => route == null);
@@ -3285,11 +3210,6 @@ class _RouteEntry extends RouteTransitionRecord {
       currentState = _RouteLifecycle.idle;
       return false;
     }
-    route.onPopInvokedWithResult(true, pendingResult);
-    if (pageBased) {
-      final Page<Object?> page = route.settings as Page<Object?>;
-      navigator.widget.onDidRemovePage?.call(page);
-    }
     pendingResult = null;
     return true;
   }
@@ -3331,6 +3251,7 @@ class _RouteEntry extends RouteTransitionRecord {
     assert(isPresent);
     pendingResult = result;
     currentState = _RouteLifecycle.pop;
+    route.onPopInvoked(true);
   }
 
   bool _reportRemovalToObserver = true;
@@ -3744,6 +3665,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
     }
   }
 
+<<<<<<< HEAD
   bool _debugCheckPageApiParameters() {
     if (!_usingPagesAPI) {
       return true;
@@ -3775,10 +3697,39 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
   }
 
   @protected
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   void initState() {
     super.initState();
-    assert(_debugCheckPageApiParameters());
+    assert(() {
+      if (_usingPagesAPI) {
+        if (widget.pages.isEmpty) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: FlutterError(
+                'The Navigator.pages must not be empty to use the '
+                'Navigator.pages API',
+              ),
+              library: 'widget library',
+              stack: StackTrace.current,
+            ),
+          );
+        } else if (widget.onPopPage == null) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: FlutterError(
+                'The Navigator.onPopPage must be provided to use the '
+                'Navigator.pages API',
+              ),
+              library: 'widget library',
+              stack: StackTrace.current,
+            ),
+          );
+        }
+      }
+      return true;
+    }());
     for (final NavigatorObserver observer in widget.observers) {
       assert(observer.navigator == null);
       NavigatorObserver._navigators[observer] = this;
@@ -4000,7 +3951,35 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
   @override
   void didUpdateWidget(Navigator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    assert(_debugCheckPageApiParameters());
+    assert(() {
+      if (_usingPagesAPI) {
+        // This navigator uses page API.
+        if (widget.pages.isEmpty) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: FlutterError(
+                'The Navigator.pages must not be empty to use the '
+                'Navigator.pages API',
+              ),
+              library: 'widget library',
+              stack: StackTrace.current,
+            ),
+          );
+        } else if (widget.onPopPage == null) {
+          FlutterError.reportError(
+            FlutterErrorDetails(
+              exception: FlutterError(
+                'The Navigator.onPopPage must be provided to use the '
+                'Navigator.pages API',
+              ),
+              library: 'widget library',
+              stack: StackTrace.current,
+            ),
+          );
+        }
+      }
+      return true;
+    }());
     if (oldWidget.observers != widget.observers) {
       for (final NavigatorObserver observer in oldWidget.observers) {
         NavigatorObserver._navigators[observer] = null;
@@ -4515,9 +4494,6 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
           if (!canRemoveOrAdd && next != null) {
             // We aren't allowed to remove this route yet.
             break;
-          }
-          if (entry.pageBased) {
-            widget.onDidRemovePage?.call(entry.route.settings as Page<Object?>);
           }
           entry.currentState = _RouteLifecycle.dispose;
           continue;
@@ -5532,14 +5508,14 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
 
     // TODO(justinmc): When the deprecated willPop method is removed, delete
     // this code and use only popDisposition, below.
-    if (await lastEntry.route.willPop() == RoutePopDisposition.doNotPop) {
-      return true;
-    }
+    final RoutePopDisposition willPopDisposition = await lastEntry.route.willPop();
     if (!mounted) {
       // Forget about this pop, we were disposed in the meantime.
       return true;
     }
-
+    if (willPopDisposition == RoutePopDisposition.doNotPop) {
+      return true;
+    }
     final _RouteEntry? newLastEntry = _lastRouteEntryWhereOrNull(_RouteEntry.isPresentPredicate);
     if (lastEntry != newLastEntry) {
       // Forget about this pop, something happened to our history in the meantime.
@@ -5553,7 +5529,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
         pop(result);
         return true;
       case RoutePopDisposition.doNotPop:
-        lastEntry.route.onPopInvokedWithResult(false, result);
+        lastEntry.route.onPopInvoked(false);
         return true;
     }
   }
@@ -5590,14 +5566,19 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
       return true;
     }());
     final _RouteEntry entry = _history.lastWhere(_RouteEntry.isPresentPredicate);
+<<<<<<< HEAD
     if (entry.pageBased && widget.onPopPage != null) {
       if (widget.onPopPage!(entry.route, result) &&
           entry.currentState.index <= _RouteLifecycle.idle.index) {
+=======
+    if (entry.pageBased) {
+      if (widget.onPopPage!(entry.route, result) && entry.currentState == _RouteLifecycle.idle) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         // The entry may have been disposed if the pop finishes synchronously.
         assert(entry.route._popCompleter.isCompleted);
         entry.currentState = _RouteLifecycle.pop;
       }
-      entry.route.onPopInvokedWithResult(true, result);
+      entry.route.onPopInvoked(true);
     } else {
       entry.pop<T>(result);
       assert(entry.currentState == _RouteLifecycle.pop);

@@ -17,7 +17,7 @@ class HostAppInfoPlistMigration extends ProjectMigrator {
   final File _infoPlist;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_infoPlist.existsSync()) {
       logger.printTrace('Info.plist not found, skipping host app Info.plist migration.');
       return;

@@ -3343,6 +3343,7 @@ void main() {
     variant: TargetPlatformVariant.all(),
   );
 
+<<<<<<< HEAD
   testWidgets('textSelectionControls is passed to EditableText', (WidgetTester tester) async {
     await tester.pumpWidget(
       MaterialApp(
@@ -3379,11 +3380,24 @@ void main() {
                 Center(child: SelectableText(testValue)),
                 SizedBox(height: 200.0, child: Center(child: Text('Page 2'))),
               ],
+=======
+  testWidgets(
+    'textSelectionControls is passed to EditableText',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Material(
+            child: Scaffold(
+              body: SelectableText('Atwater Peel Sherbrooke Bonaventure',
+                selectionControls: materialTextSelectionControls,
+              ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ),
         ),
       );
 
+<<<<<<< HEAD
       await skipPastScrollingAnimation(tester);
 
       final Offset gPos = textOffsetToPosition(tester, testValue.indexOf('g'));
@@ -3421,6 +3435,11 @@ void main() {
       expect(pageController.page, 1.0);
     },
     variant: const TargetPlatformVariant(<TargetPlatform>{TargetPlatform.iOS}),
+=======
+      final EditableText widget = tester.widget(find.byType(EditableText));
+      expect(widget.selectionControls, equals(materialTextSelectionControls));
+    },
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 
   testWidgets(

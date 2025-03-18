@@ -138,6 +138,7 @@ class _PickerDemoState extends State<PickerDemo> with RestorationMixin {
 
   String get _title {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
+<<<<<<< HEAD
     return switch (widget.type) {
       PickerDemoType.date => localizations.demoDatePickerTitle,
       PickerDemoType.time => localizations.demoTimePickerTitle,
@@ -152,6 +153,27 @@ class _PickerDemoState extends State<PickerDemo> with RestorationMixin {
       PickerDemoType.time => _fromTime.value.format(context),
       PickerDemoType.range => '${yMMMd.format(_startDate.value)} - ${yMMMd.format(_endDate.value)}',
     };
+=======
+    switch (widget.type) {
+      case PickerDemoType.date:
+        return localizations.demoDatePickerTitle;
+      case PickerDemoType.time:
+        return localizations.demoTimePickerTitle;
+      case PickerDemoType.range:
+        return localizations.demoDateRangePickerTitle;
+    }
+  }
+
+  String get _labelText {
+    switch (widget.type) {
+      case PickerDemoType.date:
+        return DateFormat.yMMMd().format(_fromDate.value);
+      case PickerDemoType.time:
+        return _fromTime.value.format(context);
+      case PickerDemoType.range:
+        return '${DateFormat.yMMMd().format(_startDate.value)} - ${DateFormat.yMMMd().format(_endDate.value)}';
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -159,6 +181,7 @@ class _PickerDemoState extends State<PickerDemo> with RestorationMixin {
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute<void>(
+<<<<<<< HEAD
           builder:
               (BuildContext context) => Scaffold(
                 appBar: AppBar(automaticallyImplyLeading: false, title: Text(_title)),
@@ -181,6 +204,35 @@ class _PickerDemoState extends State<PickerDemo> with RestorationMixin {
                     ],
                   ),
                 ),
+=======
+          builder: (BuildContext context) => Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text(_title),
+            ),
+            body: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(_labelText),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      switch (widget.type) {
+                        case PickerDemoType.date:
+                          _restorableDatePickerRouteFuture.present();
+                        case PickerDemoType.time:
+                          _restorableTimePickerRouteFuture.present();
+                        case PickerDemoType.range:
+                          _restorableDateRangePickerRouteFuture.present();
+                      }
+                    },
+                    child: Text(
+                      GalleryLocalizations.of(context)!.demoPickersShowPicker,
+                    ),
+                  )
+                ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               ),
         );
       },

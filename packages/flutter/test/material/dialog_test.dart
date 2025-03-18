@@ -116,6 +116,7 @@ void main() {
     expect(materialWidget.color, customColor);
   });
 
+<<<<<<< HEAD
   testWidgets('Dialog background defaults to ColorScheme.surfaceContainerHigh', (
     WidgetTester tester,
   ) async {
@@ -136,6 +137,8 @@ void main() {
     expect(materialWidget.color, theme.colorScheme.surfaceContainerHigh);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Material2 - Dialog Defaults', (WidgetTester tester) async {
     const AlertDialog dialog = AlertDialog(
       title: Text('Title'),

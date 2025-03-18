@@ -359,8 +359,7 @@ class SliverGridDelegateWithFixedCrossAxisCount extends SliverGridDelegate {
   }) : assert(crossAxisCount > 0),
        assert(mainAxisSpacing >= 0),
        assert(crossAxisSpacing >= 0),
-       assert(childAspectRatio > 0),
-       assert(mainAxisExtent == null || mainAxisExtent >= 0);
+       assert(childAspectRatio > 0);
 
   /// The number of children in the cross axis.
   final int crossAxisCount;
@@ -458,8 +457,12 @@ class SliverGridDelegateWithMaxCrossAxisExtent extends SliverGridDelegate {
   }) : assert(maxCrossAxisExtent > 0),
        assert(mainAxisSpacing >= 0),
        assert(crossAxisSpacing >= 0),
+<<<<<<< HEAD
        assert(childAspectRatio > 0),
        assert(mainAxisExtent == null || mainAxisExtent >= 0);
+=======
+       assert(childAspectRatio > 0);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// The maximum extent of tiles in the cross axis.
   ///

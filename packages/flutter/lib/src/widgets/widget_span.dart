@@ -389,6 +389,7 @@ class _RenderScaledInlineWidget extends RenderBox with RenderObjectWithChildMixi
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(BoxConstraints constraints, TextBaseline baseline) {
     final double? distance = child?.getDryBaseline(
       BoxConstraints(maxWidth: constraints.maxWidth / scale),
@@ -398,6 +399,8 @@ class _RenderScaledInlineWidget extends RenderBox with RenderObjectWithChildMixi
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Size computeDryLayout(BoxConstraints constraints) {
     assert(!constraints.hasBoundedHeight);
     final Size unscaledSize =

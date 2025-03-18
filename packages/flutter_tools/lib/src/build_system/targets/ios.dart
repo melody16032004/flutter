@@ -533,7 +533,6 @@ abstract class IosAssetBundle extends Target {
       environment,
       assetDirectory,
       targetPlatform: TargetPlatform.ios,
-      buildMode: buildMode,
       additionalInputs: <File>[
         flutterProject.ios.infoPlist,
         flutterProject.ios.appFrameworkInfoPlist,

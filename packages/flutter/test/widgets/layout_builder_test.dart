@@ -292,6 +292,7 @@ void main() {
     expect(built, 2);
   });
 
+<<<<<<< HEAD
   testWidgets('LayoutBuilder rebuilds once in the same frame', (WidgetTester tester) async {
     // Regression test for https://github.com/flutter/flutter/issues/146379.
     int built = 0;
@@ -391,6 +392,9 @@ void main() {
   testWidgets('SliverLayoutBuilder and Inherited -- do not rebuild when not using inherited', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('SliverLayoutBuilder and Inherited -- do not rebuild when not using inherited', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     int built = 0;
     final Widget target = Directionality(
       textDirection: TextDirection.ltr,

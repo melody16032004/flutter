@@ -91,7 +91,6 @@ abstract final class FlutterTestDriver {
     List<String> arguments, {
     String? script,
     bool withDebugger = false,
-    bool verbose = false,
   }) async {
     if (_process != null && !_hasExited) {
       throw StateError('Cannot start another process while the previous runs');
@@ -100,7 +99,7 @@ abstract final class FlutterTestDriver {
     if (withDebugger) {
       arguments.add('--start-paused');
     }
-    if (verbose || _printDebugOutputToStdOut) {
+    if (_printDebugOutputToStdOut) {
       arguments.add('--verbose');
     }
     if (script != null) {
@@ -531,8 +530,11 @@ final class FlutterRunTestDriver extends FlutterTestDriver {
     bool expressionEvaluation = true,
     bool structuredErrors = false,
     bool serveObservatory = false,
+<<<<<<< HEAD
     bool noDevtools = false,
     bool verbose = false,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     String? script,
     List<String>? additionalCommandArgs,
   }) async {
@@ -559,7 +561,6 @@ final class FlutterRunTestDriver extends FlutterTestDriver {
       startPaused: startPaused,
       pauseOnExceptions: pauseOnExceptions,
       script: script,
-      verbose: verbose,
     );
   }
 
@@ -599,11 +600,18 @@ final class FlutterRunTestDriver extends FlutterTestDriver {
     bool withDebugger = false,
     bool startPaused = false,
     bool pauseOnExceptions = false,
-    bool verbose = false,
     int? attachPort,
   }) async {
     assert(!startPaused || withDebugger);
+<<<<<<< HEAD
     await super._setupProcess(args, script: script, withDebugger: withDebugger, verbose: verbose);
+=======
+    await super._setupProcess(
+      args,
+      script: script,
+      withDebugger: withDebugger,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     final Completer<void> prematureExitGuard = Completer<void>();
 
@@ -844,10 +852,17 @@ final class FlutterTestTestDriver extends FlutterTestDriver {
     String? script,
     bool withDebugger = false,
     bool pauseOnExceptions = false,
-    bool verbose = false,
     Future<void> Function()? beforeStart,
   }) async {
+<<<<<<< HEAD
     await super._setupProcess(args, script: script, withDebugger: withDebugger, verbose: verbose);
+=======
+    await super._setupProcess(
+      args,
+      script: script,
+      withDebugger: withDebugger,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Stash the PID so that we can terminate the VM more reliably than using
     // _proc.kill() (because _proc is a shell, because `flutter` is a shell

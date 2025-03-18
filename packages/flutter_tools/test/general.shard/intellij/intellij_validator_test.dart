@@ -49,10 +49,15 @@ void main() {
         'Flutter plugin version 0.1.3 - the recommended minimum version is 16.0.0',
       ),
       ValidationMessage('Dart plugin version 162.2485'),
+<<<<<<< HEAD
       ValidationMessage(
         'For information about installing plugins, see\n'
         'https://flutter.dev/to/intellij-setup',
       ),
+=======
+      ValidationMessage('For information about installing plugins, see\n'
+          'https://flutter.dev/intellij-setup/#installing-the-plugins'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
   });
 

@@ -135,6 +135,7 @@ void main() {
     },
   );
 
+<<<<<<< HEAD
   testUsingContext(
     'Handles build system failure',
     () {
@@ -156,6 +157,19 @@ void main() {
       ProcessManager: () => FakeProcessManager.any(),
     },
   );
+=======
+    await writeBundle(
+      bundleDir,
+      bundle.entries,
+      targetPlatform: TargetPlatform.tester,
+      impellerStatus: ImpellerStatus.platformDefault,
+      processManager: processManager,
+      fileSystem: fileSystem,
+      artifacts: artifacts,
+      logger: BufferLogger.test(),
+      projectDir: fileSystem.currentDirectory,
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Passes correct defines to build system',
@@ -176,6 +190,7 @@ void main() {
         environment.outputDir.childFile('LICENSE').createSync(recursive: true);
       });
 
+<<<<<<< HEAD
       await BundleBuilder().build(
         platform: TargetPlatform.ios,
         buildInfo: const BuildInfo(
@@ -197,6 +212,28 @@ void main() {
         depfilePath: depfilePath,
         buildSystem: buildSystem,
       );
+=======
+    await BundleBuilder().build(
+      platform: TargetPlatform.ios,
+      buildInfo: const BuildInfo(
+        BuildMode.debug,
+        null,
+        trackWidgetCreation: true,
+        frontendServerStarterPath: 'path/to/frontend_server_starter.dart',
+        extraFrontEndOptions: <String>['test1', 'test2'],
+        extraGenSnapshotOptions: <String>['test3', 'test4'],
+        fileSystemRoots: <String>['test5', 'test6'],
+        fileSystemScheme: 'test7',
+        dartDefines: <String>['test8', 'test9'],
+        treeShakeIcons: true,
+      ),
+      project: project,
+      mainPath: mainPath,
+      assetDirPath: assetDirPath,
+      depfilePath: depfilePath,
+      buildSystem: buildSystem
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       expect(env, isNotNull);
       expect(env!.defines[kBuildMode], 'debug');

@@ -10,7 +10,6 @@ import '../base/io.dart';
 import '../base/process.dart';
 import '../build_info.dart';
 import '../cache.dart';
-import '../dart/package_map.dart';
 import '../globals.dart' as globals;
 import '../project.dart';
 import '../runner/flutter_command.dart' show FlutterCommandResult;
@@ -46,6 +45,13 @@ class BuildPreviewCommand extends BuildSubCommand {
   final ProcessUtils processUtils;
   final Artifacts artifacts;
 
+  static const BuildInfo buildInfo = BuildInfo(
+    BuildMode.debug,
+    null, // no flavor
+    // users may add icons later
+    treeShakeIcons: false,
+  );
+
   @override
   void requiresPubspecYaml() {}
 
@@ -59,6 +65,7 @@ class BuildPreviewCommand extends BuildSubCommand {
     final Directory targetDir = fs.systemTempDirectory.createTempSync('flutter-build-preview');
     try {
       final FlutterProject flutterProject = await _createProject(targetDir);
+<<<<<<< HEAD
 
       final File packageConfigFile = findPackageConfigFileOrDefault(flutterProject.directory);
 
@@ -71,6 +78,8 @@ class BuildPreviewCommand extends BuildSubCommand {
         treeShakeIcons: false,
       );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       // TODO(loic-sharma): Support windows-arm64 preview device, https://github.com/flutter/flutter/issues/139949.
       await buildWindows(flutterProject.windows, buildInfo, TargetPlatform.windows_x64);
 

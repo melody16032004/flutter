@@ -12,9 +12,12 @@ class SliverDecorationExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+<<<<<<< HEAD
       theme: ThemeData(
         textTheme: const TextTheme(titleLarge: TextStyle(fontSize: 24, color: Colors.white30)),
       ),
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       home: Scaffold(
         appBar: AppBar(title: const Text('SliverDecoration Sample')),
         body: const SliverDecorationExample(),
@@ -31,17 +34,25 @@ class SliverDecorationExample extends StatelessWidget {
     return CustomScrollView(
       slivers: <Widget>[
         DecoratedSliver(
-          key: const ValueKey<String>('radial-gradient'),
           decoration: const BoxDecoration(
             gradient: RadialGradient(
               center: Alignment(-0.5, -0.6),
               radius: 0.15,
+<<<<<<< HEAD
               colors: <Color>[Color(0xFFEEEEEE), Color(0xFF111133)],
               stops: <double>[0.4, 0.8],
+=======
+              colors: <Color>[
+                Color(0xFFEEEEEE),
+                Color(0xFF111133),
+              ],
+              stops: <double>[0.9, 1.0],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ),
           sliver: SliverList(
             delegate: SliverChildListDelegate(<Widget>[
+<<<<<<< HEAD
               SizedBox(
                 height: 200.0,
                 child: Center(
@@ -83,7 +94,18 @@ class SliverDecorationExample extends StatelessWidget {
                 ),
               ),
             ]),
+=======
+               const Text('Goodnight Moon'),
+            ]),
           ),
+        ),
+        const DecoratedSliver(
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            borderRadius: BorderRadius.all(Radius.circular(50))
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
+          ),
+          sliver: SliverToBoxAdapter(child: SizedBox(height: 300)),
         ),
       ],
     );

@@ -465,20 +465,45 @@ class _StepperState extends State<Stepper> with TickerProviderStateMixin {
 
   Widget _buildCircleChild(int index, bool oldState) {
     final StepState state = oldState ? _oldStates[index]! : widget.steps[index].state;
-    if (widget.stepIconBuilder?.call(index, state) case final Widget icon) {
+    final bool isDarkActive = _isDark() && widget.steps[index].isActive;
+    final Widget? icon = widget.stepIconBuilder?.call(index, state);
+    if (icon != null) {
       return icon;
     }
     TextStyle? textStyle = _stepStyle(index)?.indexStyle;
-    final bool isDarkActive = _isDark() && widget.steps[index].isActive;
-    final Color iconColor = isDarkActive ? _kCircleActiveDark : _kCircleActiveLight;
     textStyle ??= isDarkActive ? _kStepStyle.copyWith(color: Colors.black87) : _kStepStyle;
 
+<<<<<<< HEAD
     return switch (state) {
       StepState.indexed || StepState.disabled => Text('${index + 1}', style: textStyle),
       StepState.editing => Icon(Icons.edit, color: iconColor, size: 18.0),
       StepState.complete => Icon(Icons.check, color: iconColor, size: 18.0),
       StepState.error => const Center(child: Text('!', style: _kStepStyle)),
     };
+=======
+    switch (state) {
+      case StepState.indexed:
+      case StepState.disabled:
+        return Text(
+          '${index + 1}',
+          style: textStyle,
+        );
+      case StepState.editing:
+        return Icon(
+          Icons.edit,
+          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
+          size: 18.0,
+        );
+      case StepState.complete:
+        return Icon(
+          Icons.check,
+          color: isDarkActive ? _kCircleActiveDark : _kCircleActiveLight,
+          size: 18.0,
+        );
+      case StepState.error:
+        return const Center(child: Text('!', style: _kStepStyle));
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   Color _circleColor(int index) {

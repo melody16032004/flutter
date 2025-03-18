@@ -2,19 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-///
-/// @docImport 'checkbox.dart';
-/// @docImport 'slider.dart';
-/// @docImport 'switch.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
 import 'colors.dart';
+<<<<<<< HEAD
 import 'constants.dart';
 import 'theme.dart';
+=======
+import 'toggleable.dart';
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 // Examples can assume:
 // late BuildContext context;
@@ -105,7 +102,6 @@ class CupertinoRadio<T> extends StatefulWidget {
     required this.value,
     required this.groupValue,
     required this.onChanged,
-    this.mouseCursor,
     this.toggleable = false,
     this.activeColor,
     this.inactiveColor,
@@ -155,28 +151,6 @@ class CupertinoRadio<T> extends StatefulWidget {
   /// )
   /// ```
   final ValueChanged<T?>? onChanged;
-
-  /// The cursor for a mouse pointer when it enters or is hovering over the
-  /// widget.
-  ///
-  /// If [mouseCursor] is a [WidgetStateMouseCursor],
-  /// [WidgetStateMouseCursor.resolve] is used for the following [WidgetState]s:
-  ///
-  ///  * [WidgetState.selected].
-  ///  * [WidgetState.hovered].
-  ///  * [WidgetState.focused].
-  ///  * [WidgetState.disabled].
-  ///
-  /// If null, then [SystemMouseCursors.basic] is used when this radio button is disabled.
-  /// When this radio button is enabled, [SystemMouseCursors.click] is used on Web, and
-  /// [SystemMouseCursors.basic] is used on other platforms.
-  ///
-  /// See also:
-  ///
-  ///  * [WidgetStateMouseCursor], a [MouseCursor] that implements
-  ///    `WidgetStateProperty` which is used in APIs that need to accept
-  ///    either a [MouseCursor] or a [WidgetStateProperty<MouseCursor>].
-  final MouseCursor? mouseCursor;
 
   /// Set to true if this radio button is allowed to be returned to an
   /// indeterminate state by selecting it again when selected.
@@ -340,6 +314,7 @@ class _CupertinoRadioState<T> extends State<CupertinoRadio<T>>
 
     final Color effectiveBorderColor = _defaultBorderColor.resolve(currentStates);
 
+<<<<<<< HEAD
     final WidgetStateProperty<MouseCursor> effectiveMouseCursor =
         WidgetStateProperty.resolveWith<MouseCursor>((Set<WidgetState> states) {
           return WidgetStateProperty.resolveAs<MouseCursor?>(widget.mouseCursor, states) ??
@@ -350,6 +325,8 @@ class _CupertinoRadioState<T> extends State<CupertinoRadio<T>>
                   : SystemMouseCursors.basic);
         });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final bool? accessibilitySelected;
     // Apple devices also use `selected` to annotate radio button's semantics
     // state.
@@ -369,7 +346,6 @@ class _CupertinoRadioState<T> extends State<CupertinoRadio<T>>
       checked: widget._selected,
       selected: accessibilitySelected,
       child: buildToggleable(
-        mouseCursor: effectiveMouseCursor,
         focusNode: widget.focusNode,
         autofocus: widget.autofocus,
         onFocusChange: onFocusChange,
@@ -483,6 +459,7 @@ class _RadioPainter extends ToggleablePainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+
     final Offset center = (Offset.zero & size).center;
 
     if (checkmarkStyle) {

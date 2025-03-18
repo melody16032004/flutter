@@ -166,9 +166,9 @@ Hello!
         ),
       );
 
-      final LaunchResult result = await device.startApp(
-        app,
+      final LaunchResult result = await device.startApp(app,
         mainPath: mainPath,
+<<<<<<< HEAD
         debuggingOptions: DebuggingOptions.enabled(
           const BuildInfo(
             BuildMode.debug,
@@ -177,7 +177,11 @@ Hello!
             packageConfigPath: '.dart_tool/package_config.json',
           ),
         ),
+=======
+        debuggingOptions: DebuggingOptions.enabled(const BuildInfo(BuildMode.debug, null, treeShakeIcons: false)),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
+
       expect(result.started, isTrue);
       expect(result.vmServiceUri, vmServiceUri);
       expect(logLines.last, 'Hello!');

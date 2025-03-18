@@ -35,14 +35,21 @@ void main() {
 
       final Directory tempDir = createResolvedTempDirectorySync('macos_content_validation.');
 
+<<<<<<< HEAD
       // Pre-cache macOS engine FlutterMacOS.xcframework artifacts.
       final ProcessResult result = processManager.runSync(<String>[
+=======
+    // Pre-cache iOS engine Flutter.xcframework artifacts.
+    final ProcessResult result = processManager.runSync(
+      <String>[
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         flutterBin,
         ...getLocalEngineArguments(),
         'precache',
         '--macos',
       ], workingDirectory: tempDir.path);
 
+<<<<<<< HEAD
       expect(result, const ProcessResultMatcher());
       expect(xcframeworkArtifact.existsSync(), isTrue);
 
@@ -75,6 +82,11 @@ void main() {
       }
     });
   }
+=======
+    expect(result, const ProcessResultMatcher());
+    expect(xcframeworkArtifact.existsSync(), isTrue);
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   for (final String buildMode in <String>['Debug', 'Release']) {
     final String buildModeLower = buildMode.toLowerCase();
@@ -184,6 +196,7 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       expect(vmSnapshot.existsSync(), buildMode == 'Debug');
 
       final Directory outputFlutterFramework = fileSystem.directory(
@@ -193,6 +206,12 @@ void main() {
       // Check read/write permissions are being correctly set.
       final String outputFrameworkStat = outputFlutterFramework.statSync().mode.toRadixString(8);
       expect(outputFrameworkStat, '40755');
+=======
+      // Check read/write permissions are being correctly set
+      final String rawStatString = outputFlutterFramework.statSync().modeString();
+      final String statString = rawStatString.substring(rawStatString.length - 9);
+      expect(statString, 'rwxr-xr-x');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Check complicated macOS framework symlink structure.
       final Link current = outputFlutterFramework.childDirectory('Versions').childLink('Current');

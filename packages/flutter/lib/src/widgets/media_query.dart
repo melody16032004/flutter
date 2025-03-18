@@ -105,9 +105,12 @@ enum _MediaQueryAspect {
 
   /// Specifies the aspect corresponding to [MediaQueryData.displayFeatures].
   displayFeatures,
+<<<<<<< HEAD
 
   /// Specifies the aspect corresponding to [MediaQueryData.supportsShowingSystemContextMenu].
   supportsShowingSystemContextMenu,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Information about a piece of media (e.g., a window).
@@ -207,7 +210,6 @@ class MediaQueryData {
     this.navigationMode = NavigationMode.traditional,
     this.gestureSettings = const DeviceGestureSettings(touchSlop: kTouchSlop),
     this.displayFeatures = const <ui.DisplayFeature>[],
-    this.supportsShowingSystemContextMenu = false,
   }) : _textScaleFactor = textScaleFactor,
        _textScaler = textScaler,
        assert(
@@ -298,10 +300,14 @@ class MediaQueryData {
           platformData?.alwaysUse24HourFormat ?? view.platformDispatcher.alwaysUse24HourFormat,
       navigationMode = platformData?.navigationMode ?? NavigationMode.traditional,
       gestureSettings = DeviceGestureSettings.fromView(view),
+<<<<<<< HEAD
       displayFeatures = view.displayFeatures,
       supportsShowingSystemContextMenu =
           platformData?.supportsShowingSystemContextMenu ??
           view.platformDispatcher.supportsShowingSystemContextMenu;
+=======
+      displayFeatures = view.displayFeatures;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   static TextScaler _textScalerFromView(ui.FlutterView view, MediaQueryData? platformData) {
     final double scaleFactor =
@@ -337,7 +343,7 @@ class MediaQueryData {
   /// are automatically rebuilt.
   ///
   /// See the article on [Creating responsive and adaptive
-  /// apps](https://docs.flutter.dev/ui/adaptive-responsive)
+  /// apps](https://docs.flutter.dev/development/ui/layout/adaptive-responsive)
   /// for an introduction.
   ///
   /// See also:
@@ -615,19 +621,6 @@ class MediaQueryData {
   ///  [dart:ui.DisplayFeatureType.hinge]).
   final List<ui.DisplayFeature> displayFeatures;
 
-  /// Whether showing the system context menu is supported.
-  ///
-  /// For example, on iOS 16.0 and above, the system text selection context menu
-  /// may be shown instead of the Flutter-drawn context menu in order to avoid
-  /// the iOS clipboard access notification when the "Paste" button is pressed.
-  ///
-  /// See also:
-  ///
-  ///  * [SystemContextMenuController] and [SystemContextMenu], which may be
-  ///    used to show the system context menu when this flag indicates it's
-  ///    supported.
-  final bool supportsShowingSystemContextMenu;
-
   /// The orientation of the media (e.g., whether the device is in landscape or
   /// portrait mode).
   Orientation get orientation {
@@ -664,7 +657,6 @@ class MediaQueryData {
     NavigationMode? navigationMode,
     DeviceGestureSettings? gestureSettings,
     List<ui.DisplayFeature>? displayFeatures,
-    bool? supportsShowingSystemContextMenu,
   }) {
     assert(textScaleFactor == null || textScaler == null);
     if (textScaleFactor != null) {
@@ -689,8 +681,11 @@ class MediaQueryData {
       navigationMode: navigationMode ?? this.navigationMode,
       gestureSettings: gestureSettings ?? this.gestureSettings,
       displayFeatures: displayFeatures ?? this.displayFeatures,
+<<<<<<< HEAD
       supportsShowingSystemContextMenu:
           supportsShowingSystemContextMenu ?? this.supportsShowingSystemContextMenu,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 
@@ -872,6 +867,7 @@ class MediaQueryData {
     if (other.runtimeType != runtimeType) {
       return false;
     }
+<<<<<<< HEAD
     return other is MediaQueryData &&
         other.size == size &&
         other.devicePixelRatio == devicePixelRatio &&
@@ -892,6 +888,27 @@ class MediaQueryData {
         other.gestureSettings == gestureSettings &&
         listEquals(other.displayFeatures, displayFeatures) &&
         other.supportsShowingSystemContextMenu == supportsShowingSystemContextMenu;
+=======
+    return other is MediaQueryData
+        && other.size == size
+        && other.devicePixelRatio == devicePixelRatio
+        && other.textScaleFactor == textScaleFactor
+        && other.platformBrightness == platformBrightness
+        && other.padding == padding
+        && other.viewPadding == viewPadding
+        && other.viewInsets == viewInsets
+        && other.systemGestureInsets == systemGestureInsets
+        && other.alwaysUse24HourFormat == alwaysUse24HourFormat
+        && other.highContrast == highContrast
+        && other.onOffSwitchLabels == onOffSwitchLabels
+        && other.disableAnimations == disableAnimations
+        && other.invertColors == invertColors
+        && other.accessibleNavigation == accessibleNavigation
+        && other.boldText == boldText
+        && other.navigationMode == navigationMode
+        && other.gestureSettings == gestureSettings
+        && listEquals(other.displayFeatures, displayFeatures);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -913,7 +930,6 @@ class MediaQueryData {
     navigationMode,
     gestureSettings,
     Object.hashAll(displayFeatures),
-    supportsShowingSystemContextMenu,
   );
 
   @override
@@ -937,7 +953,6 @@ class MediaQueryData {
       'navigationMode: ${navigationMode.name}',
       'gestureSettings: $gestureSettings',
       'displayFeatures: $displayFeatures',
-      'supportsShowingSystemContextMenu: $supportsShowingSystemContextMenu',
     ];
     return '${objectRuntimeType(this, 'MediaQueryData')}(${properties.join(', ')})';
   }
@@ -1732,6 +1747,7 @@ class MediaQuery extends InheritedModel<_MediaQueryAspect> {
   static List<ui.DisplayFeature>? maybeDisplayFeaturesOf(BuildContext context) =>
       _maybeOf(context, _MediaQueryAspect.displayFeatures)?.displayFeatures;
 
+<<<<<<< HEAD
   /// Returns [MediaQueryData.supportsShowingSystemContextMenu] for the nearest
   /// [MediaQuery] ancestor or throws an exception, if no such ancestor exists.
   ///
@@ -1760,6 +1776,8 @@ class MediaQuery extends InheritedModel<_MediaQueryAspect> {
         _MediaQueryAspect.supportsShowingSystemContextMenu,
       )?.supportsShowingSystemContextMenu;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   bool updateShouldNotify(MediaQuery oldWidget) => data != oldWidget.data;
 
@@ -1771,6 +1789,7 @@ class MediaQuery extends InheritedModel<_MediaQueryAspect> {
 
   @override
   bool updateShouldNotifyDependent(MediaQuery oldWidget, Set<Object> dependencies) {
+<<<<<<< HEAD
     return dependencies.any(
       (Object dependency) =>
           dependency is _MediaQueryAspect &&
@@ -1811,6 +1830,30 @@ class MediaQuery extends InheritedModel<_MediaQueryAspect> {
                   oldWidget.data.supportsShowingSystemContextMenu,
           },
     );
+=======
+    return dependencies.any((Object dependency) => dependency is _MediaQueryAspect && switch (dependency) {
+      _MediaQueryAspect.size               => data.size != oldWidget.data.size,
+      _MediaQueryAspect.orientation        => data.orientation != oldWidget.data.orientation,
+      _MediaQueryAspect.devicePixelRatio   => data.devicePixelRatio != oldWidget.data.devicePixelRatio,
+      _MediaQueryAspect.textScaleFactor    => data.textScaleFactor != oldWidget.data.textScaleFactor,
+      _MediaQueryAspect.textScaler         => data.textScaler != oldWidget.data.textScaler,
+      _MediaQueryAspect.platformBrightness => data.platformBrightness != oldWidget.data.platformBrightness,
+      _MediaQueryAspect.padding            => data.padding != oldWidget.data.padding,
+      _MediaQueryAspect.viewInsets         => data.viewInsets != oldWidget.data.viewInsets,
+      _MediaQueryAspect.viewPadding        => data.viewPadding != oldWidget.data.viewPadding,
+      _MediaQueryAspect.invertColors       => data.invertColors != oldWidget.data.invertColors,
+      _MediaQueryAspect.highContrast       => data.highContrast != oldWidget.data.highContrast,
+      _MediaQueryAspect.onOffSwitchLabels  => data.onOffSwitchLabels != oldWidget.data.onOffSwitchLabels,
+      _MediaQueryAspect.disableAnimations  => data.disableAnimations != oldWidget.data.disableAnimations,
+      _MediaQueryAspect.boldText           => data.boldText != oldWidget.data.boldText,
+      _MediaQueryAspect.navigationMode     => data.navigationMode != oldWidget.data.navigationMode,
+      _MediaQueryAspect.gestureSettings    => data.gestureSettings != oldWidget.data.gestureSettings,
+      _MediaQueryAspect.displayFeatures    => data.displayFeatures != oldWidget.data.displayFeatures,
+      _MediaQueryAspect.systemGestureInsets => data.systemGestureInsets != oldWidget.data.systemGestureInsets,
+      _MediaQueryAspect.accessibleNavigation => data.accessibleNavigation != oldWidget.data.accessibleNavigation,
+      _MediaQueryAspect.alwaysUse24HourFormat => data.alwaysUse24HourFormat != oldWidget.data.alwaysUse24HourFormat,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 

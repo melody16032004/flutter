@@ -156,6 +156,7 @@ void main() {
       case TargetPlatform.windows:
         expectedLabel = null;
     }
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(DrawerButton)),
       matchesSemantics(
@@ -169,6 +170,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(DrawerButton)), matchesSemantics(
+      tooltip: 'Open navigation menu',
+      label: expectedLabel,
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   }, variant: TargetPlatformVariant.all());
 
@@ -206,6 +218,7 @@ void main() {
       case TargetPlatform.windows:
         expectedLabel = null;
     }
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(EndDrawerButton)),
       matchesSemantics(
@@ -219,6 +232,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(EndDrawerButton)), matchesSemantics(
+      tooltip: 'Open navigation menu',
+      label: expectedLabel,
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   }, variant: TargetPlatformVariant.all());
 

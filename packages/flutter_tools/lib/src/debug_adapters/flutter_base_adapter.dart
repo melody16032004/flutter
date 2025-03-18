@@ -110,6 +110,7 @@ abstract class FlutterBaseDebugAdapter
     );
     orgDartlangSdkMappings[flutterRoot] = Uri.parse('org-dartlang-sdk:///flutter/lib/ui');
 
+<<<<<<< HEAD
     // The rest of the Dart SDK maps to /flutter/third_party/dart/sdk
     final String dartRoot = fileSystem.path.join(
       flutterSdkRoot,
@@ -121,6 +122,11 @@ abstract class FlutterBaseDebugAdapter
     orgDartlangSdkMappings[dartRoot] = Uri.parse(
       'org-dartlang-sdk:///flutter/third_party/dart/sdk',
     );
+=======
+    // The rest of the Dart SDK maps to /third_party/dart/sdk
+    final String dartRoot = fileSystem.path.join(flutterSdkRoot, 'bin', 'cache', 'pkg', 'sky_engine');
+    orgDartlangSdkMappings[dartRoot] = Uri.parse('org-dartlang-sdk:///third_party/dart/sdk');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

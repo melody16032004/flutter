@@ -78,6 +78,7 @@ void main() {
     ], workingDirectory: pluginExampleAppDir.path);
 
     // Check that an error message is thrown.
+<<<<<<< HEAD
     expect(
       result.stderr,
       contains('''
@@ -92,5 +93,16 @@ Add the following to ${projectGradleFile.path}:
     }
 '''),
     );
+=======
+    expect(result.stderr, contains('''
+One or more plugins require a higher Android NDK version.
+Fix this issue by adding the following to ${projectGradleFile.path}:
+android {
+  ndkVersion "21.4.7075529"
+  ...
+}
+
+'''));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

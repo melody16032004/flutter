@@ -74,7 +74,7 @@ void main() {
       await expectLater(() async => emulatorManager.getAllAvailableEmulators(), returnsNormally);
     });
 
-    testUsingContext('printEmulators prints the emulators information with header', () {
+    testUsingContext('printEmulators prints the emualtors information with header', () {
       Emulator.printEmulators(emulators, testLogger);
 
       expect(testLogger.statusText, '''

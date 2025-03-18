@@ -26,11 +26,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../widgets/clipboard_utils.dart';
 import '../widgets/editable_text_utils.dart';
-import '../widgets/feedback_tester.dart';
 import '../widgets/live_text_utils.dart';
 import '../widgets/process_text_utils.dart';
 import '../widgets/semantics_tester.dart';
 import '../widgets/text_selection_toolbar_utils.dart';
+import 'feedback_tester.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -769,6 +769,7 @@ void main() {
     expect(editableTextWidget.onEditingComplete, onEditingComplete);
   });
 
+<<<<<<< HEAD
   // Regression test for https://github.com/flutter/flutter/issues/127597.
   testWidgets(
     'The second TextField is clicked, triggers the onTapOutside callback of the previous TextField',
@@ -855,6 +856,8 @@ void main() {
     },
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('TextField has consistent size', (WidgetTester tester) async {
     final Key textFieldKey = UniqueKey();
     String? textFieldValue;
@@ -1813,6 +1816,7 @@ void main() {
     skip: isContextMenuProvidedByPlatform,
   );
 
+<<<<<<< HEAD
   testWidgets('infinite multi-line text hint text is not ellipsized by default', (
     WidgetTester tester,
   ) async {
@@ -1857,6 +1861,8 @@ void main() {
     expect(paragraph.size.height < defaultLineHeight * 2 + precisionErrorTolerance, isTrue);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('Entering text hides selection handle caret', (WidgetTester tester) async {
     final TextEditingController controller = _textEditingController();
 
@@ -1893,6 +1899,7 @@ void main() {
     expect(handle.opacity.value, equals(0.0));
   });
 
+<<<<<<< HEAD
   testWidgets('multiple text fields with prefix and suffix have correct semantics order.', (
     WidgetTester tester,
   ) async {
@@ -1927,6 +1934,8 @@ void main() {
     expect(orders, <String>['prefix1', 'abc', 'suffix1', 'prefix2', 'def', 'suffix2']);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('selection handles are excluded from the semantics', (WidgetTester tester) async {
     final SemanticsTester semantics = SemanticsTester(tester);
     final TextEditingController controller = _textEditingController();
@@ -2557,6 +2566,7 @@ void main() {
     variant: const TargetPlatformVariant(<TargetPlatform>{TargetPlatform.iOS}),
   );
 
+<<<<<<< HEAD
   testWidgets(
     'Can move cursor when dragging, when tap is on collapsed selection (iOS) - PageView',
     (WidgetTester tester) async {
@@ -2996,6 +3006,248 @@ void main() {
       TargetPlatform.android,
       TargetPlatform.fuchsia,
     }),
+=======
+  testWidgets('Can move cursor when dragging, when tap is on collapsed selection (iOS) - ListView', (WidgetTester tester) async {
+    // This is a regression test for
+    // https://github.com/flutter/flutter/issues/122519
+    final TextEditingController controller = _textEditingController();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Material(
+          child: ListView(
+            children: <Widget>[
+              TextField(
+                dragStartBehavior: DragStartBehavior.down,
+                controller: controller,
+                maxLines: null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    const String testValue = 'abc\ndef\nghi';
+    await tester.enterText(find.byType(TextField), testValue);
+    await skipPastScrollingAnimation(tester);
+
+    final Offset aPos = textOffsetToPosition(tester, testValue.indexOf('a'));
+    final Offset gPos = textOffsetToPosition(tester, testValue.indexOf('g'));
+    final Offset iPos = textOffsetToPosition(tester, testValue.indexOf('i'));
+
+    // Tap on text field to gain focus, and set selection to '|a'. On iOS
+    // the selection is set to the word edge closest to the tap position.
+    // We await for kDoubleTapTimeout after the up event, so our next down event
+    // does not register as a double tap.
+    final TestGesture gesture = await tester.startGesture(aPos);
+    await tester.pump();
+    await gesture.up();
+    await tester.pumpAndSettle(kDoubleTapTimeout);
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, 0);
+
+    // If the position we tap during a drag start is on the collapsed selection, then
+    // we can move the cursor with a drag.
+    // Here we tap on '|a', where our selection was previously, and attempt move
+    // to '|g'. The cursor will not move because the `VerticalDragGestureRecognizer`
+    // in the scrollable will beat the `TapAndHorizontalDragGestureRecognizer`
+    // in the TextField. This is because moving from `|a` to `|g` is a completely
+    // vertical movement.
+    await gesture.down(aPos);
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, 0);
+
+    // Release the pointer.
+    await gesture.up();
+    await tester.pumpAndSettle();
+
+    // If the position we tap during a drag start is on the collapsed selection, then
+    // we can move the cursor with a drag.
+    // Here we tap on '|a', where our selection was previously, and move to '|i'.
+    // Unlike our previous attempt to drag to `|g`, this works because moving
+    // to `|i` includes a horizontal movement so the `TapAndHorizontalDragGestureRecognizer`
+    // in TextField can beat the `VerticalDragGestureRecognizer` in the scrollable.
+    await gesture.down(aPos);
+    await tester.pump();
+    await gesture.moveTo(iPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('i'));
+
+    // End gesture and skip the magnifier hide animation, so it can release
+    // resources.
+    await gesture.up();
+    await tester.pumpAndSettle();
+  },
+    variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.iOS }),
+  );
+
+  testWidgets('Can move cursor when dragging (Android)', (WidgetTester tester) async {
+    final TextEditingController controller = _textEditingController();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Material(
+          child: TextField(
+            dragStartBehavior: DragStartBehavior.down,
+            controller: controller,
+          ),
+        ),
+      ),
+    );
+
+    const String testValue = 'abc def ghi';
+    await tester.enterText(find.byType(TextField), testValue);
+    await skipPastScrollingAnimation(tester);
+
+    final Offset ePos = textOffsetToPosition(tester, testValue.indexOf('e'));
+    final Offset gPos = textOffsetToPosition(tester, testValue.indexOf('g'));
+
+    // Tap on text field to gain focus, and set selection to '|e'.
+    // We await for kDoubleTapTimeout after the up event, so our next down event
+    // does not register as a double tap.
+    final TestGesture gesture = await tester.startGesture(ePos);
+    await tester.pump();
+    await gesture.up();
+    await tester.pumpAndSettle(kDoubleTapTimeout);
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('e'));
+
+    // Here we tap on '|d', and move to '|g'.
+    await gesture.down(textOffsetToPosition(tester, testValue.indexOf('d')));
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('g'));
+  },
+    variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.android, TargetPlatform.fuchsia }),
+  );
+
+  testWidgets('Can move cursor when dragging (Android) - multiline', (WidgetTester tester) async {
+    final TextEditingController controller = _textEditingController();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Material(
+          child: TextField(
+            dragStartBehavior: DragStartBehavior.down,
+            controller: controller,
+            maxLines: null,
+          ),
+        ),
+      ),
+    );
+
+    const String testValue = 'abc\ndef\nghi';
+    await tester.enterText(find.byType(TextField), testValue);
+    await skipPastScrollingAnimation(tester);
+
+    final Offset aPos = textOffsetToPosition(tester, testValue.indexOf('a'));
+    final Offset gPos = textOffsetToPosition(tester, testValue.indexOf('g'));
+
+    // Tap on text field to gain focus, and set selection to '|a'.
+    // We await for kDoubleTapTimeout after the up event, so our next down event
+    // does not register as a double tap.
+    final TestGesture gesture = await tester.startGesture(aPos);
+    await tester.pump();
+    await gesture.up();
+    await tester.pumpAndSettle(kDoubleTapTimeout);
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('a'));
+
+    // Here we tap on '|c', and move down to '|g'.
+    await gesture.down(textOffsetToPosition(tester, testValue.indexOf('c')));
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('g'));
+  },
+    variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.android, TargetPlatform.fuchsia }),
+  );
+
+  testWidgets('Can move cursor when dragging (Android) - ListView', (WidgetTester tester) async {
+    // This is a regression test for
+    // https://github.com/flutter/flutter/issues/122519
+    final TextEditingController controller = _textEditingController();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Material(
+          child: ListView(
+            children: <Widget>[
+              TextField(
+                dragStartBehavior: DragStartBehavior.down,
+                controller: controller,
+                maxLines: null,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    const String testValue = 'abc\ndef\nghi';
+    await tester.enterText(find.byType(TextField), testValue);
+    await skipPastScrollingAnimation(tester);
+
+    final Offset aPos = textOffsetToPosition(tester, testValue.indexOf('a'));
+    final Offset cPos = textOffsetToPosition(tester, testValue.indexOf('c'));
+    final Offset gPos = textOffsetToPosition(tester, testValue.indexOf('g'));
+
+    // Tap on text field to gain focus, and set selection to '|c'.
+    // We await for kDoubleTapTimeout after the up event, so our next down event
+    // does not register as a double tap.
+    final TestGesture gesture = await tester.startGesture(cPos);
+    await tester.pump();
+    await gesture.up();
+    await tester.pumpAndSettle(kDoubleTapTimeout);
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('c'));
+
+    // Here we tap on '|a', and attempt move to '|g'. The cursor will not move
+    // because the `VerticalDragGestureRecognizer` in the scrollable will beat
+    // the `TapAndHorizontalDragGestureRecognizer` in the TextField. This is
+    // because moving from `|a` to `|g` is a completely vertical movement.
+    await gesture.down(aPos);
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('c'));
+
+    // Release the pointer.
+    await gesture.up();
+    await tester.pumpAndSettle();
+
+    // Here we tap on '|c', and move to '|g'. Unlike our previous attempt to
+    // drag to `|g`, this works because moving from `|c` to `|g` includes a
+    // horizontal movement so the `TapAndHorizontalDragGestureRecognizer`
+    // in TextField can beat the `VerticalDragGestureRecognizer` in the scrollable.
+    await gesture.down(cPos);
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, testValue.indexOf('g'));
+  },
+    variant: const TargetPlatformVariant(<TargetPlatform>{ TargetPlatform.android, TargetPlatform.fuchsia }),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   );
 
   testWidgets('Continuous dragging does not cause flickering', (WidgetTester tester) async {
@@ -5216,6 +5468,7 @@ void main() {
   });
 
   testWidgets('TextField with default hintStyle', (WidgetTester tester) async {
+<<<<<<< HEAD
     final TextStyle style = TextStyle(color: Colors.pink[500], fontSize: 10.0);
     final ThemeData themeData = ThemeData();
 
@@ -5239,6 +5492,15 @@ void main() {
   testWidgets('Material2 - TextField with default hintStyle', (WidgetTester tester) async {
     final TextStyle style = TextStyle(color: Colors.pink[500], fontSize: 10.0);
     final ThemeData themeData = ThemeData(useMaterial3: false, hintColor: Colors.blue[500]);
+=======
+    final TextStyle style = TextStyle(
+      color: Colors.pink[500],
+      fontSize: 10.0,
+    );
+    final ThemeData themeData = ThemeData(
+      hintColor: Colors.blue[500],
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     await tester.pumpWidget(
       overlay(
@@ -6655,12 +6917,16 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       isNot(
         includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus]),
       ),
     );
+=======
+    expect(semantics, isNot(includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap])));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     semantics.dispose();
   });
 
@@ -6696,12 +6962,16 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       isNot(
         includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus]),
       ),
     );
+=======
+    expect(semantics, isNot(includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap])));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });
@@ -17321,6 +17591,7 @@ void main() {
     },
     variant: TargetPlatformVariant.only(TargetPlatform.iOS),
   );
+<<<<<<< HEAD
 
   testWidgets('when enabled listens to onFocus events and gains focus', (
     WidgetTester tester,
@@ -17506,6 +17777,8 @@ void main() {
     },
     variant: TargetPlatformVariant.all(),
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// A Simple widget for testing the obscure text.

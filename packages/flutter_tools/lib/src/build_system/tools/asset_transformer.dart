@@ -11,7 +11,6 @@ import '../../base/error_handling_io.dart';
 import '../../base/file_system.dart';
 import '../../base/io.dart';
 import '../../base/logger.dart';
-import '../../build_info.dart';
 import '../../devfs.dart';
 import '../../flutter_manifest.dart';
 import '../build_system.dart';
@@ -22,6 +21,7 @@ final class AssetTransformer {
     required ProcessManager processManager,
     required FileSystem fileSystem,
     required String dartBinaryPath,
+<<<<<<< HEAD
     required BuildMode buildMode,
   }) : _processManager = processManager,
        _fileSystem = fileSystem,
@@ -29,11 +29,15 @@ final class AssetTransformer {
        _buildMode = buildMode;
 
   static const String buildModeEnvVar = 'FLUTTER_BUILD_MODE';
+=======
+  })  : _processManager = processManager,
+        _fileSystem = fileSystem,
+        _dartBinaryPath = dartBinaryPath;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final ProcessManager _processManager;
   final FileSystem _fileSystem;
   final String _dartBinaryPath;
-  final BuildMode _buildMode;
 
   /// The [Source] inputs that targets using this should depend on.
   ///
@@ -51,7 +55,6 @@ final class AssetTransformer {
     required String outputPath,
     required String workingDirectory,
     required List<AssetTransformerEntry> transformerEntries,
-    required Logger logger,
   }) async {
     final Directory tempDirectory = _fileSystem.systemTempDirectory.createTempSync();
 
@@ -69,7 +72,6 @@ final class AssetTransformer {
     await asset.copy(tempInputFile.path);
     File tempOutputFile = nextTempFile();
 
-    final Stopwatch stopwatch = Stopwatch()..start();
     try {
       for (final (int i, AssetTransformerEntry transformer) in transformerEntries.indexed) {
         final AssetTransformationFailure? transformerFailure = await _applyTransformer(
@@ -77,7 +79,6 @@ final class AssetTransformer {
           output: tempOutputFile,
           transformer: transformer,
           workingDirectory: workingDirectory,
-          logger: logger,
         );
 
         if (transformerFailure != null) {
@@ -93,10 +94,13 @@ final class AssetTransformer {
           tempOutputFile = nextTempFile();
         }
       }
+<<<<<<< HEAD
 
       logger.printTrace(
         "Finished transforming asset at path '${asset.path}' (${stopwatch.elapsedMilliseconds}ms)",
       );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     } finally {
       ErrorHandlingFileSystem.deleteIfExists(tempDirectory, recursive: true);
     }
@@ -109,7 +113,6 @@ final class AssetTransformer {
     required File output,
     required AssetTransformerEntry transformer,
     required String workingDirectory,
-    required Logger logger,
   }) async {
     final List<String> transformerArguments = <String>[
       '--input=${asset.absolute.path}',
@@ -124,6 +127,7 @@ final class AssetTransformer {
       ...transformerArguments,
     ];
 
+<<<<<<< HEAD
     // Delete the output file if it already exists for whatever reason.
     // With this, we can check for the existence of the file after transformation
     // to make sure the transformer produced an output file.
@@ -134,6 +138,11 @@ final class AssetTransformer {
       command,
       workingDirectory: workingDirectory,
       environment: <String, String>{AssetTransformer.buildModeEnvVar: _buildMode.cliName},
+=======
+    final ProcessResult result = await _processManager.run(
+      command,
+      workingDirectory: workingDirectory,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     final String stdout = result.stdout as String;
     final String stderr = result.stderr as String;
@@ -210,7 +219,6 @@ final class DevelopmentAssetTransformer {
         outputPath: output.path,
         transformerEntries: transformerEntries,
         workingDirectory: workingDirectory,
-        logger: _logger,
       );
       if (failure != null) {
         _logger.printError(failure.message);

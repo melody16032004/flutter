@@ -222,6 +222,7 @@ void main() {
         // android:name="flutterEmbedding" android:value="2" />.
 
         project.checkForDeprecation(deprecationBehavior: DeprecationBehavior.ignore);
+<<<<<<< HEAD
         expect(
           testLogger.statusText,
           isNot(
@@ -230,12 +231,16 @@ void main() {
             ),
           ),
         );
+=======
+        expect(testLogger.statusText, isNot(contains('https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       });
       _testInMemory(
         'Android plugin project does not throw v1 embedding deprecation warning',
         () async {
           final FlutterProject project = await aPluginProject();
 
+<<<<<<< HEAD
           project.checkForDeprecation(deprecationBehavior: DeprecationBehavior.exit);
           expect(
             testLogger.statusText,
@@ -253,11 +258,18 @@ void main() {
           );
         },
       );
+=======
+        project.checkForDeprecation(deprecationBehavior: DeprecationBehavior.exit);
+        expect(testLogger.statusText, isNot(contains('https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects')));
+        expect(testLogger.statusText, isNot(contains('No `<meta-data android:name="flutterEmbedding" android:value="2"/>` in ')));
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       _testInMemory('Android plugin without example app does not show a warning', () async {
         final FlutterProject project = await aPluginProject();
         project.example.directory.deleteSync();
 
         await project.regeneratePlatformSpecificTooling();
+<<<<<<< HEAD
         expect(
           testLogger.statusText,
           isNot(
@@ -266,6 +278,9 @@ void main() {
             ),
           ),
         );
+=======
+        expect(testLogger.statusText, isNot(contains('https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects')));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       });
       _testInMemory('updates local properties for Android', () async {
         final FlutterProject project = await someProject();
@@ -775,6 +790,7 @@ plugins {
         },
       );
 
+<<<<<<< HEAD
       testUsingContext(
         'kotlin host app language with Gradle Kotlin DSL and typesafe plugin id',
         () async {
@@ -807,6 +823,10 @@ plugins {
         'Gradle Groovy files are preferred to Gradle Kotlin files',
         () async {
           final FlutterProject project = await someProject();
+=======
+    testUsingContext('Gradle Groovy files are preferred to Gradle Kotlin files', () async {
+      final FlutterProject project = await someProject();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
           addAndroidGradleFile(
             project.directory,
@@ -1133,6 +1153,7 @@ plugins {
           xcodeProjectInterpreter.buildSettingsByBuildContext[buildContext] = <String, String>{
             IosProject.kProductBundleIdKey: 'io.flutter.someProject',
           };
+<<<<<<< HEAD
           xcodeProjectInterpreter.xcodeProjectInfo = XcodeProjectInfo(
             <String>[],
             <String>[],
@@ -1145,6 +1166,10 @@ plugins {
             treeShakeIcons: false,
             packageConfigPath: '.dart_tool/package_config.json',
           );
+=======
+          xcodeProjectInterpreter.xcodeProjectInfo = XcodeProjectInfo(<String>[], <String>[], <String>['Free'], logger);
+          const BuildInfo buildInfo = BuildInfo(BuildMode.debug, 'free', treeShakeIcons: false);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
           expect(await project.ios.productBundleIdentifier(buildInfo), 'io.flutter.someProject');
         });
@@ -1152,6 +1177,7 @@ plugins {
         testWithMocks('fails with flavor and default schemes', () async {
           final FlutterProject project = await someProject();
           project.ios.xcodeProject.createSync();
+<<<<<<< HEAD
           xcodeProjectInterpreter.xcodeProjectInfo = XcodeProjectInfo(
             <String>[],
             <String>[],
@@ -1164,6 +1190,10 @@ plugins {
             treeShakeIcons: false,
             packageConfigPath: '.dart_tool/package_config.json',
           );
+=======
+          xcodeProjectInterpreter.xcodeProjectInfo = XcodeProjectInfo(<String>[], <String>[], <String>['Runner'], logger);
+          const BuildInfo buildInfo = BuildInfo(BuildMode.debug, 'free', treeShakeIcons: false);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
           await expectToolExitLater(
             project.ios.productBundleIdentifier(buildInfo),
@@ -1224,6 +1254,7 @@ plugins {
           expect(await project.ios.productBundleIdentifier(null), 'io.flutter.someProject');
         });
       });
+<<<<<<< HEAD
 
       group('flutterSwiftPackageInProjectSettings', () {
         testWithMocks('is false if pbxproj missing', () async {
@@ -1255,6 +1286,8 @@ plugins {
           },
         );
       });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     group('application bundle name', () {
@@ -2048,10 +2081,14 @@ File androidPluginRegistrant(Directory parent) {
 }
 
 class FakeXcodeProjectInterpreter extends Fake implements XcodeProjectInterpreter {
+<<<<<<< HEAD
   FakeXcodeProjectInterpreter({this.version});
 
   final Map<XcodeProjectBuildContext, Map<String, String>> buildSettingsByBuildContext =
       <XcodeProjectBuildContext, Map<String, String>>{};
+=======
+  final Map<XcodeProjectBuildContext, Map<String, String>> buildSettingsByBuildContext = <XcodeProjectBuildContext, Map<String, String>>{};
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   late XcodeProjectInfo xcodeProjectInfo;
 
   @override
@@ -2073,9 +2110,6 @@ class FakeXcodeProjectInterpreter extends Fake implements XcodeProjectInterprete
 
   @override
   bool get isInstalled => true;
-
-  @override
-  Version? version;
 }
 
 class FakeAndroidSdkWithDir extends Fake implements AndroidSdk {

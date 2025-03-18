@@ -326,7 +326,6 @@ mixin CreateBase on FlutterCommand {
     String? kotlinVersion,
     String? gradleVersion,
     bool withPlatformChannelPluginHook = false,
-    bool withSwiftPackageManager = false,
     bool withFfiPluginHook = false,
     bool withFfiPackage = false,
     bool withEmptyMain = false,
@@ -375,7 +374,6 @@ mixin CreateBase on FlutterCommand {
       'withFfiPackage': withFfiPackage,
       'withFfiPluginHook': withFfiPluginHook,
       'withPlatformChannelPluginHook': withPlatformChannelPluginHook,
-      'withSwiftPackageManager': withSwiftPackageManager,
       'withPluginHook': withFfiPluginHook || withFfiPackage || withPlatformChannelPluginHook,
       'withEmptyMain': withEmptyMain,
       'androidLanguage': androidLanguage,
@@ -641,6 +639,7 @@ mixin CreateBase on FlutterCommand {
       'templates',
       'template_manifest.json',
     );
+<<<<<<< HEAD
     final String manifestFileContents;
     try {
       manifestFileContents = globals.fs.file(manifestPath).readAsStringSync();
@@ -652,6 +651,11 @@ mixin CreateBase on FlutterCommand {
       );
     }
     final Map<String, Object?> manifest = json.decode(manifestFileContents) as Map<String, Object?>;
+=======
+    final Map<String, Object?> manifest = json.decode(
+      globals.fs.file(manifestPath).readAsStringSync(),
+    ) as Map<String, Object?>;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return Set<Uri>.from(
       (manifest['files']! as List<Object?>).cast<String>().map<Uri>(
         (String path) => Uri.file(globals.fs.path.join(flutterToolsAbsolutePath, path)),
@@ -678,11 +682,11 @@ mixin CreateBase on FlutterCommand {
 
 // A valid Dart identifier that can be used for a package, i.e. no
 // capital letters.
-// https://dart.dev/language#important-concepts
+// https://dart.dev/guides/language/language-tour#important-concepts
 final RegExp _identifierRegExp = RegExp('[a-z_][a-z0-9_]*');
 
 // non-contextual dart keywords.
-// https://dart.dev/language/keywords
+//' https://dart.dev/guides/language/language-tour#keywords
 const Set<String> _keywords = <String>{
   'abstract',
   'as',

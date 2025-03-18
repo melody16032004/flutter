@@ -2666,6 +2666,7 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
     expect(scrollController.offset, 0.0);
   });
 
+<<<<<<< HEAD
   testWidgets(
     'The thumb should follow the pointer when the scroll metrics changed during dragging',
     (WidgetTester tester) async {
@@ -2678,6 +2679,21 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
           child: MediaQuery(
             data: const MediaQueryData(),
             child: PrimaryScrollController(
+=======
+  testWidgets('The thumb should follow the pointer when the scroll metrics changed during dragging', (WidgetTester tester) async {
+    // Regressing test for https://github.com/flutter/flutter/issues/112072
+    final ScrollController scrollController = ScrollController();
+    addTearDown(scrollController.dispose);
+    await tester.pumpWidget(
+      Directionality(
+        textDirection: TextDirection.ltr,
+        child: MediaQuery(
+          data: const MediaQueryData(),
+          child: PrimaryScrollController(
+            controller: scrollController,
+            child: RawScrollbar(
+              thumbVisibility: true,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               controller: scrollController,
               child: RawScrollbar(
                 thumbVisibility: true,
@@ -2734,10 +2750,15 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
     },
   );
 
+<<<<<<< HEAD
   testWidgets('The scrollable should not stutter when the scroll metrics shrink during dragging', (
     WidgetTester tester,
   ) async {
     // Regression test for https://github.com/flutter/flutter/issues/121574
+=======
+  testWidgets('The scrollable should not stutter when the scroll metrics shrink during dragging', (WidgetTester tester) async {
+    // Regressing test for https://github.com/flutter/flutter/issues/121574
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final ScrollController scrollController = ScrollController();
     addTearDown(scrollController.dispose);
     await tester.pumpWidget(
@@ -2838,6 +2859,7 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
 
     expect(scrollController.offset, 100.0);
   }, variant: TargetPlatformVariant.all());
+<<<<<<< HEAD
 
   testWidgets(
     'Flinging a vertical scrollbar thumb does not cause a ballistic scroll - non-mobile platforms',
@@ -3484,4 +3506,6 @@ The provided ScrollController cannot be shared by multiple ScrollView widgets.''
     expect(verticalScrollController.offset, greaterThan(0.0));
     expect(horizontalScrollController.offset, greaterThan(0.0));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

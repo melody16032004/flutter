@@ -634,6 +634,7 @@ void main() {
     // Verify that the left/right padding is not applied.
     expect(innerMediaQueryPadding, const EdgeInsets.symmetric(horizontal: 30.0));
   });
+<<<<<<< HEAD
 
   testWidgets('AnimatedList.separated', (WidgetTester tester) async {
     tester.view.physicalSize = const Size(600, 1800);
@@ -1091,6 +1092,8 @@ void main() {
     expect(itemsSeparatorsTexts[1].data, 'separator after item 0');
     expect(itemsSeparatorsTexts[2].data, 'item 1');
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _StatefulListItem extends StatefulWidget {

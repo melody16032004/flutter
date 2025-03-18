@@ -47,7 +47,6 @@ void main() {
     expect(themeData.checkboxHorizontalMargin, null);
     expect(themeData.headingCellCursor, null);
     expect(themeData.dataRowCursor, null);
-    expect(themeData.headingRowAlignment, null);
 
     const DataTableTheme theme = DataTableTheme(data: DataTableThemeData(), child: SizedBox());
     expect(theme.data.decoration, null);
@@ -65,7 +64,6 @@ void main() {
     expect(theme.data.checkboxHorizontalMargin, null);
     expect(theme.data.headingCellCursor, null);
     expect(theme.data.dataRowCursor, null);
-    expect(theme.data.headingRowAlignment, null);
   });
 
   testWidgets('Default DataTableThemeData debugFillProperties', (WidgetTester tester) async {
@@ -102,7 +100,6 @@ void main() {
       checkboxHorizontalMargin: 6.0,
       headingCellCursor: const MaterialStatePropertyAll<MouseCursor>(SystemMouseCursors.grab),
       dataRowCursor: const MaterialStatePropertyAll<MouseCursor>(SystemMouseCursors.forbidden),
-      headingRowAlignment: MainAxisAlignment.center,
     ).debugFillProperties(builder);
 
     final List<String> description =
@@ -125,7 +122,6 @@ void main() {
     expect(description[11], 'checkboxHorizontalMargin: 6.0');
     expect(description[12], 'headingCellCursor: WidgetStatePropertyAll(SystemMouseCursor(grab))');
     expect(description[13], 'dataRowCursor: WidgetStatePropertyAll(SystemMouseCursor(forbidden))');
-    expect(description[14], 'headingRowAlignment: center');
   });
 
   testWidgets('DataTable is themeable', (WidgetTester tester) async {
@@ -595,6 +591,7 @@ void main() {
       localDataRowCursor.resolve(<MaterialState>{}),
     );
   });
+<<<<<<< HEAD
 
   testWidgets(
     'Local DataTableTheme can override global DataTableTheme - separate test for deprecated dataRowHeight',
@@ -685,6 +682,8 @@ void main() {
     headerCenter = tester.getCenter(find.text('Header'));
     expect(headerCenter.dx, equals(400));
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 BoxDecoration _tableRowBoxDecoration({required WidgetTester tester, required int index}) {

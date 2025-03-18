@@ -12,6 +12,7 @@ import 'dart:ui' as ui show Image;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
 import '../image_data.dart';
 
@@ -20,13 +21,7 @@ class TestImageProvider extends ImageProvider<TestImageProvider> {
 
   final Future<void> future;
 
-  static final List<ui.Image> _images = <ui.Image>[];
-
-  static Future<void> prepareImages(int count) async {
-    for (int i = 0; i < count; i++) {
-      _images.add(await decodeImageFromList(Uint8List.fromList(kTransparentImage)));
-    }
-  }
+  static late ui.Image image;
 
   @override
   Future<TestImageProvider> obtainKey(ImageConfiguration configuration) {
@@ -35,25 +30,20 @@ class TestImageProvider extends ImageProvider<TestImageProvider> {
 
   @override
   ImageStreamCompleter loadImage(TestImageProvider key, ImageDecoderCallback decode) {
-    assert(_images.isNotEmpty, 'ask for more images in `prepareImages`');
-    final ui.Image image = _images.last;
-    _images.removeLast();
-
     return OneFrameImageStreamCompleter(
-      future.then<ImageInfo>((void value) {
-        final ImageInfo result = ImageInfo(image: image);
-        return result;
-      }),
+      future.then<ImageInfo>((void value) => ImageInfo(image: image)),
     );
   }
 }
 
 Future<void> main() async {
   AutomatedTestWidgetsFlutterBinding();
-  await TestImageProvider.prepareImages(2);
+  TestImageProvider.image = await decodeImageFromList(Uint8List.fromList(kTransparentImage));
 
-  testWidgets('DecoratedBox handles loading images', (WidgetTester tester) async {
-    addTearDown(imageCache.clear);
+  testWidgets('DecoratedBox handles loading images',
+  // TODO(polina-c): dispose ImageStreamCompleterHandle, https://github.com/flutter/flutter/issues/145599 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
     final GlobalKey key = GlobalKey();
     final Completer<void> completer = Completer<void>();
     await tester.pumpWidget(
@@ -74,8 +64,10 @@ Future<void> main() async {
     expect(tester.binding.hasScheduledFrame, isFalse);
   });
 
-  testWidgets('Moving a DecoratedBox', (WidgetTester tester) async {
-    addTearDown(imageCache.clear);
+  testWidgets('Moving a DecoratedBox',
+  // TODO(polina-c): dispose ImageStreamCompleterHandle, https://github.com/flutter/flutter/issues/145599 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
     final Completer<void> completer = Completer<void>();
     final Widget subtree = KeyedSubtree(
       key: GlobalKey(),

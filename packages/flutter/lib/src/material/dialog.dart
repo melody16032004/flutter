@@ -63,7 +63,7 @@ class Dialog extends StatelessWidget {
     this.insetAnimationDuration = const Duration(milliseconds: 100),
     this.insetAnimationCurve = Curves.decelerate,
     this.insetPadding,
-    this.clipBehavior,
+    this.clipBehavior = Clip.none,
     this.shape,
     this.alignment,
     this.child,
@@ -199,10 +199,14 @@ class Dialog extends StatelessWidget {
   /// See the enum [Clip] for details of all possible options and their common
   /// use cases.
   ///
+<<<<<<< HEAD
   /// If null, then [DialogThemeData.clipBehavior] is used. If that is also null,
   /// defaults to [Clip.none].
+=======
+  /// Defaults to [Clip.none].
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// {@endtemplate}
-  final Clip? clipBehavior;
+  final Clip clipBehavior;
 
   /// {@template flutter.material.dialog.shape}
   /// The shape of this dialog's border.
@@ -261,7 +265,7 @@ class Dialog extends StatelessWidget {
                 surfaceTintColor ?? dialogTheme.surfaceTintColor ?? defaults.surfaceTintColor,
             shape: shape ?? dialogTheme.shape ?? defaults.shape!,
             type: MaterialType.card,
-            clipBehavior: clipBehavior ?? dialogTheme.clipBehavior ?? defaults.clipBehavior!,
+            clipBehavior: clipBehavior,
             child: child,
           ),
         ),
@@ -410,7 +414,7 @@ class AlertDialog extends StatelessWidget {
     this.surfaceTintColor,
     this.semanticLabel,
     this.insetPadding,
-    this.clipBehavior,
+    this.clipBehavior = Clip.none,
     this.shape,
     this.alignment,
     this.scrollable = false,
@@ -703,7 +707,7 @@ class AlertDialog extends StatelessWidget {
   final EdgeInsets? insetPadding;
 
   /// {@macro flutter.material.dialog.clipBehavior}
-  final Clip? clipBehavior;
+  final Clip clipBehavior;
 
   /// {@macro flutter.material.dialog.shape}
   final ShapeBorder? shape;
@@ -948,7 +952,7 @@ class _AdaptiveAlertDialog extends AlertDialog {
     super.surfaceTintColor,
     super.semanticLabel,
     super.insetPadding,
-    super.clipBehavior,
+    super.clipBehavior = Clip.none,
     super.shape,
     super.alignment,
     super.scrollable = false,
@@ -1141,7 +1145,7 @@ class SimpleDialog extends StatelessWidget {
     this.surfaceTintColor,
     this.semanticLabel,
     this.insetPadding,
-    this.clipBehavior,
+    this.clipBehavior = Clip.none,
     this.shape,
     this.alignment,
   });
@@ -1218,7 +1222,7 @@ class SimpleDialog extends StatelessWidget {
   final EdgeInsets? insetPadding;
 
   /// {@macro flutter.material.dialog.clipBehavior}
-  final Clip? clipBehavior;
+  final Clip clipBehavior;
 
   /// {@macro flutter.material.dialog.shape}
   final ShapeBorder? shape;
@@ -1334,6 +1338,7 @@ class SimpleDialog extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
 Widget _buildMaterialDialogTransitions(
   BuildContext context,
   Animation<double> animation,
@@ -1341,6 +1346,16 @@ Widget _buildMaterialDialogTransitions(
   Widget child,
 ) {
   return child;
+=======
+Widget _buildMaterialDialogTransitions(BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+  return FadeTransition(
+    opacity: CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOut,
+    ),
+    child: child,
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Displays a Material dialog above the current contents of the app, with
@@ -1623,6 +1638,7 @@ class DialogRoute<T> extends RawDialogRoute<T> {
          transitionDuration: const Duration(milliseconds: 150),
          transitionBuilder: _buildMaterialDialogTransitions,
        );
+<<<<<<< HEAD
 
   CurvedAnimation? _curvedAnimation;
 
@@ -1652,6 +1668,8 @@ class DialogRoute<T> extends RawDialogRoute<T> {
     _curvedAnimation?.dispose();
     super.dispose();
   }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 double _scalePadding(double textScaleFactor) {
@@ -1668,7 +1686,6 @@ class _DialogDefaultsM2 extends DialogThemeData {
         alignment: Alignment.center,
         elevation: 24.0,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4.0))),
-        clipBehavior: Clip.none,
       );
 
   final BuildContext context;
@@ -1710,7 +1727,6 @@ class _DialogDefaultsM3 extends DialogThemeData {
         alignment: Alignment.center,
         elevation: 6.0,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28.0))),
-        clipBehavior: Clip.none,
       );
 
   final BuildContext context;
@@ -1749,9 +1765,14 @@ class _DialogDefaultsM3 extends DialogThemeData {
 // Design token database by the script:
 //   dev/tools/gen_defaults/bin/gen_defaults.dart.
 
+<<<<<<< HEAD
 // dart format off
 class _DialogFullscreenDefaultsM3 extends DialogThemeData {
   const _DialogFullscreenDefaultsM3(this.context): super(clipBehavior: Clip.none);
+=======
+class _DialogFullscreenDefaultsM3 extends DialogTheme {
+  const _DialogFullscreenDefaultsM3(this.context);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final BuildContext context;
 

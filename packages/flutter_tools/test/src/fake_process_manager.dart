@@ -161,6 +161,7 @@ class FakeProcess implements io.Process {
          }
          return exitCode;
        }),
+<<<<<<< HEAD
        _stderr = stderr,
        stdin =
            stdin ??
@@ -171,6 +172,13 @@ class FakeProcess implements io.Process {
            ),
        _stdout = stdout,
        _completer = completer {
+=======
+      _stderr = stderr,
+      stdin = stdin ?? IOSink(StreamController<List<int>>().sink),
+      _stdout = stdout,
+      _completer = completer
+  {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     if (_stderr.isEmpty) {
       this.stderr = const Stream<List<int>>.empty();
     } else if (outputFollowsExit) {

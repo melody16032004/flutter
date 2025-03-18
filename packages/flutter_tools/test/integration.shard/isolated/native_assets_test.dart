@@ -186,6 +186,7 @@ void main() {
               );
             }
 
+<<<<<<< HEAD
             switch (buildSubcommand) {
               case 'macos':
                 expectDylibIsBundledMacOS(exampleDirectory, buildMode);
@@ -204,6 +205,23 @@ void main() {
         },
         tags: <String>['flutter-build-apk'],
       );
+=======
+          switch (buildSubcommand) {
+            case 'macos':
+              expectDylibIsBundledMacOS(exampleDirectory, buildMode);
+            case 'ios':
+              expectDylibIsBundledIos(exampleDirectory, buildMode);
+            case 'linux':
+              expectDylibIsBundledLinux(exampleDirectory, buildMode);
+            case 'windows':
+              expectDylibIsBundledWindows(exampleDirectory, buildMode);
+            case 'apk':
+              expectDylibIsBundledAndroid(exampleDirectory, buildMode);
+          }
+          expectCCompilerIsConfigured(exampleDirectory);
+        });
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
   }
 
@@ -237,6 +255,7 @@ void main() {
   }
 }
 
+<<<<<<< HEAD
 void expectDylibIsCodeSignedMacOS(Directory appDirectory, String buildMode) {
   final Directory appBundle = appDirectory.childDirectory(
     'build/$hostOs/Build/Products/${buildMode.upperCaseFirst()}/$exampleAppName.app',
@@ -260,6 +279,8 @@ void expectDylibIsCodeSignedMacOS(Directory appDirectory, String buildMode) {
   expect(isLinkerSigned, isFalse);
 }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 /// For `flutter build` we can't easily test whether running the app works.
 /// Check that we have the dylibs in the app.
 void expectDylibIsBundledMacOS(Directory appDirectory, String buildMode) {
@@ -296,32 +317,6 @@ void expectDylibIsBundledMacOS(Directory appDirectory, String buildMode) {
   final Link dylibLink = frameworkDir.childLink(frameworkName);
   expect(dylibLink, exists);
   expect(dylibLink.resolveSymbolicLinksSync(), dylibFile.path);
-  final String infoPlist = resourcesDir.childFile('Info.plist').readAsStringSync();
-  expect(infoPlist, '''
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
-	<key>CFBundleExecutable</key>
-	<string>package_with_native_assets</string>
-	<key>CFBundleIdentifier</key>
-	<string>io.flutter.flutter.native-assets.package-with-native-assets</string>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-	<key>CFBundleName</key>
-	<string>package_with_native_assets</string>
-	<key>CFBundlePackageType</key>
-	<string>FMWK</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
-	<key>CFBundleSignature</key>
-	<string>????</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
-</dict>
-</plist>''');
 }
 
 void expectDylibIsBundledIos(Directory appDirectory, String buildMode) {
@@ -336,6 +331,7 @@ void expectDylibIsBundledIos(Directory appDirectory, String buildMode) {
       .childDirectory('$frameworkName.framework')
       .childFile(frameworkName);
   expect(dylib, exists);
+<<<<<<< HEAD
   final String infoPlist =
       frameworksFolder
           .childDirectory('$frameworkName.framework')
@@ -368,6 +364,8 @@ void expectDylibIsBundledIos(Directory appDirectory, String buildMode) {
 	<string>12.0</string>
 </dict>
 </plist>''');
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Checks that dylibs are bundled.
@@ -482,3 +480,66 @@ extension on String {
     return replaceFirst(this[0], this[0].toUpperCase());
   }
 }
+<<<<<<< HEAD
+=======
+
+Future<Directory> createTestProject(String packageName, Directory tempDirectory) async {
+  final ProcessResult result = processManager.runSync(
+    <String>[
+      flutterBin,
+      'create',
+      '--no-pub',
+      '--template=package_ffi',
+      packageName,
+    ],
+    workingDirectory: tempDirectory.path,
+  );
+  if (result.exitCode != 0) {
+    throw Exception(
+      'flutter create failed: ${result.exitCode}\n${result.stderr}\n${result.stdout}',
+    );
+  }
+
+  final Directory packageDirectory = tempDirectory.childDirectory(packageName);
+
+  // No platform-specific boilerplate files.
+  expect(packageDirectory.childDirectory('android/'), isNot(exists));
+  expect(packageDirectory.childDirectory('ios/'), isNot(exists));
+  expect(packageDirectory.childDirectory('linux/'), isNot(exists));
+  expect(packageDirectory.childDirectory('macos/'), isNot(exists));
+  expect(packageDirectory.childDirectory('windows/'), isNot(exists));
+
+  await pinDependencies(packageDirectory.childFile('pubspec.yaml'));
+  await pinDependencies(
+      packageDirectory.childDirectory('example').childFile('pubspec.yaml'));
+
+  final ProcessResult result2 = await processManager.run(
+    <String>[
+      flutterBin,
+      'pub',
+      'get',
+    ],
+    workingDirectory: packageDirectory.path,
+  );
+  expect(result2, const ProcessResultMatcher());
+
+  return packageDirectory;
+}
+
+Future<void> pinDependencies(File pubspecFile) async {
+  expect(pubspecFile, exists);
+  final String oldPubspec = await pubspecFile.readAsString();
+  final String newPubspec = oldPubspec.replaceAll(RegExp(r':\s*\^'), ': ');
+  expect(newPubspec, isNot(oldPubspec));
+  await pubspecFile.writeAsString(newPubspec);
+}
+
+Future<void> inTempDir(Future<void> Function(Directory tempDirectory) fun) async {
+  final Directory tempDirectory = fileSystem.directory(fileSystem.systemTempDirectory.createTempSync().resolveSymbolicLinksSync());
+  try {
+    await fun(tempDirectory);
+  } finally {
+    tryToDelete(tempDirectory);
+  }
+}
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

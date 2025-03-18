@@ -16,7 +16,7 @@ class CmakeCustomCommandMigration extends ProjectMigrator {
   final File _cmakeFile;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_cmakeFile.existsSync()) {
       logger.printTrace(
         'CMake project not found, skipping add_custom_command() VERBATIM migration',

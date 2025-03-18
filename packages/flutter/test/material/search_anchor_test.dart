@@ -2,7 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -3526,6 +3525,7 @@ void main() {
 
     expect(suggestionsBuilderCalledCount, 2);
   });
+<<<<<<< HEAD
 
   testWidgets('Suggestions gets refreshed after long API call', (WidgetTester tester) async {
     Timer? debounceTimer;
@@ -3802,6 +3802,8 @@ void main() {
     await tester.pump();
     expect(tester.takeException(), isNull);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Future<void> checkSearchBarDefaults(

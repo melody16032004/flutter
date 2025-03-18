@@ -244,11 +244,22 @@ class AndroidDeviceDiscovery implements DeviceDiscovery {
   }
 
   Future<bool> _matchesCPURequirement(AndroidDevice device) async {
+<<<<<<< HEAD
     return switch (cpu) {
       null => Future<bool>.value(true),
       AndroidCPU.arm64 => device.isArm64(),
       AndroidCPU.arm => device.isArm(),
     };
+=======
+    switch (cpu) {
+      case null:
+        return true;
+      case AndroidCPU.arm64:
+        return device.isArm64();
+      case AndroidCPU.arm:
+        return device.isArm();
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Picks a random Android device out of connected devices and sets it as
@@ -645,7 +656,7 @@ class AndroidDevice extends Device {
 
   /// Retrieves device's wakefulness state.
   ///
-  /// See: https://android.googlesource.com/platform/frameworks/base/+/main/core/java/android/os/PowerManagerInternal.java
+  /// See: https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/PowerManagerInternal.java
   Future<String> _getWakefulness() async {
     final String powerInfo = await shellEval('dumpsys', <String>['power']);
     // A motoG4 phone returns `mWakefulness=Awake`.
@@ -712,18 +723,24 @@ class AndroidDevice extends Device {
 
   /// Runs `adb` with the given [arguments], selecting this device.
   Future<String> adb(
+<<<<<<< HEAD
     List<String> arguments, {
     Map<String, String>? environment,
     bool silent = false,
     bool canFail = false, // as in, whether failures are ok. False means that they are fatal.
   }) {
+=======
+      List<String> arguments, {
+      Map<String, String>? environment,
+      bool silent = false,
+    }) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return eval(
       adbPath,
       <String>['-s', deviceId, ...arguments],
       environment: environment,
       printStdout: !silent,
       printStderr: !silent,
-      canFail: canFail,
     );
   }
 
@@ -744,7 +761,7 @@ class AndroidDevice extends Device {
   @override
   Future<void> startLoggingToSink(IOSink sink, {bool clear = true}) async {
     if (clear) {
-      await adb(<String>['logcat', '--clear'], silent: true, canFail: true);
+      await adb(<String>['logcat', '--clear'], silent: true);
     }
     _loggingProcess = await startProcess(
       adbPath,
@@ -781,7 +798,7 @@ class AndroidDevice extends Device {
 
   @override
   Future<void> clearLogs() {
-    return adb(<String>['logcat', '-c'], canFail: true);
+    return adb(<String>['logcat', '-c']);
   }
 
   @override

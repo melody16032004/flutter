@@ -108,6 +108,7 @@ List<TimelineEvent>? _parseEvents(Map<String, dynamic> json) {
   }
 
   final List<TimelineEvent> timelineEvents =
+<<<<<<< HEAD
       jsonEvents
           .cast<Map<String, dynamic>>()
           .map<TimelineEvent>((Map<String, dynamic> eventJson) => TimelineEvent(eventJson))
@@ -120,6 +121,27 @@ List<TimelineEvent>? _parseEvents(Map<String, dynamic> json) {
       (null, _) => -1,
       (final int ts1, final int ts2) => ts1.compareTo(ts2),
     };
+=======
+      Iterable.castFrom<dynamic, Map<String, dynamic>>(jsonEvents)
+          .map<TimelineEvent>(
+              (Map<String, dynamic> eventJson) => TimelineEvent(eventJson))
+          .toList();
+
+  timelineEvents.sort((TimelineEvent e1, TimelineEvent e2) {
+    final int? ts1 = e1.timestampMicros;
+    final int? ts2 = e2.timestampMicros;
+    if (ts1 == null) {
+      if (ts2 == null) {
+        return 0;
+      } else {
+        return -1;
+      }
+    } else if (ts2 == null) {
+      return 1;
+    } else {
+      return ts1.compareTo(ts2);
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   return timelineEvents;

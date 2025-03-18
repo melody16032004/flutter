@@ -11,8 +11,18 @@ void main() {
     TextButton findButton(String text) {
       return tester.widget<TextButton>(find.widgetWithText(TextButton, text));
     }
+<<<<<<< HEAD
 
     await tester.pumpWidget(const example.ToggleButtonsExampleApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ToggleButtonsExampleApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     TextButton firstButton = findButton('Apple');
     TextButton secondButton = findButton('Banana');
@@ -44,8 +54,18 @@ void main() {
     TextButton findButton(String text) {
       return tester.widget<TextButton>(find.widgetWithText(TextButton, text));
     }
+<<<<<<< HEAD
 
     await tester.pumpWidget(const example.ToggleButtonsExampleApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ToggleButtonsExampleApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     TextButton firstButton = findButton('Tomatoes');
     TextButton secondButton = findButton('Potatoes');
@@ -78,8 +98,18 @@ void main() {
     TextButton findButton(IconData iconData) {
       return tester.widget<TextButton>(find.widgetWithIcon(TextButton, iconData));
     }
+<<<<<<< HEAD
 
     await tester.pumpWidget(const example.ToggleButtonsExampleApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ToggleButtonsExampleApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     TextButton firstButton = findButton(Icons.sunny);
     TextButton secondButton = findButton(Icons.cloud);

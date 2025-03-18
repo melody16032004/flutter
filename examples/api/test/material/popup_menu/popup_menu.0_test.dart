@@ -10,7 +10,17 @@ void main() {
   testWidgets('Can open popup menu', (WidgetTester tester) async {
     const String menuItem = 'Item 1';
 
+<<<<<<< HEAD
     await tester.pumpWidget(const example.PopupMenuApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.PopupMenuApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(find.text(menuItem), findsNothing);
 

@@ -928,6 +928,7 @@ class _UnimplementedStdio extends Fake implements Stdio {
 }
 
 class _TestRepository extends Repository {
+<<<<<<< HEAD
   _TestRepository.fromCheckouts(Checkouts checkouts, [String name = 'test-repo'])
     : super(
         fileSystem: checkouts.fileSystem,
@@ -939,6 +940,18 @@ class _TestRepository extends Repository {
         stdio: checkouts.stdio,
         upstreamRemote: const Remote.upstream('git@github.com:upstream/repo.git'),
       );
+=======
+  _TestRepository.fromCheckouts(Checkouts checkouts, [String name = 'test-repo']) : super(
+    fileSystem: checkouts.fileSystem,
+    parentDirectory: checkouts.directory.childDirectory(name),
+    platform: checkouts.platform,
+    processManager: checkouts.processManager,
+    name: name,
+    requiredLocalBranches: <String>[],
+    stdio: checkouts.stdio,
+    upstreamRemote: const Remote(name: RemoteName.upstream, url: 'git@github.com:upstream/repo.git'),
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Future<_TestRepository> cloneRepository(String? cloneName) async {

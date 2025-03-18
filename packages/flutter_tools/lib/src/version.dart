@@ -1144,11 +1144,22 @@ class VersionFreshnessValidator {
   /// beta releases happen approximately every month.
   @visibleForTesting
   static Duration versionAgeConsideredUpToDate(String channel) {
+<<<<<<< HEAD
     return switch (channel) {
       'stable' => const Duration(days: 365 ~/ 2), // Six months
       'beta' => const Duration(days: 7 * 8), // Eight weeks
       _ => const Duration(days: 7 * 3), // Three weeks
     };
+=======
+    switch (channel) {
+      case 'stable':
+        return const Duration(days: 365 ~/ 2); // Six months
+      case 'beta':
+        return const Duration(days: 7 * 8); // Eight weeks
+      default:
+        return const Duration(days: 7 * 3); // Three weeks
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Execute validations and print warning to [logger] if necessary.

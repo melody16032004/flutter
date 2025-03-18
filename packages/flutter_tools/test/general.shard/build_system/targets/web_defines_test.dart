@@ -34,13 +34,13 @@ void main() {
       expect(dartDefines, <String>['FLUTTER_WEB_AUTO_DETECT=true']);
     });
 
-    test('canvaskit web-renderer with existing dart-defines', () {
+    test('canvaskit web-renderer with no dart-defines', () {
       dartDefines = <String>['FLUTTER_WEB_USE_SKIA=false'];
       dartDefines = WebRendererMode.canvaskit.updateDartDefines(dartDefines);
       expect(dartDefines, <String>['FLUTTER_WEB_USE_SKIA=true', 'FLUTTER_WEB_USE_SKWASM=false']);
     });
 
-    test('html web-renderer with existing dart-defines', () {
+    test('html web-renderer with no dart-defines', () {
       dartDefines = <String>['FLUTTER_WEB_USE_SKIA=true'];
       dartDefines = WebRendererMode.html.updateDartDefines(dartDefines);
       expect(dartDefines, <String>['FLUTTER_WEB_USE_SKIA=false', 'FLUTTER_WEB_USE_SKWASM=false']);

@@ -257,6 +257,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   test('LinearGradient lerp test with transforms', () {
     const LinearGradient testGradient1 = LinearGradient(
       transform: GradientRotation(math.pi / 4),
@@ -277,6 +278,8 @@ void main() {
     expect(testGradient2, equals(actual2));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('LinearGradient toString', () {
     expect(
       const LinearGradient(
@@ -514,6 +517,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   test('RadialGradient lerp test with transforms', () {
     const RadialGradient testGradient1 = RadialGradient(
       transform: GradientRotation(math.pi / 4),
@@ -534,6 +538,8 @@ void main() {
     expect(testGradient2, equals(actual2));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('RadialGradient lerp test with focal', () {
     const RadialGradient testGradient1 = RadialGradient(
       center: Alignment.topLeft,
@@ -745,6 +751,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   test('SweepGradient lerp test with transforms', () {
     const SweepGradient testGradient1 = SweepGradient(
       transform: GradientRotation(math.pi / 4),
@@ -765,6 +772,8 @@ void main() {
     expect(testGradient2, equals(actual2));
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('SweepGradient scale test)', () {
     const SweepGradient testGradient = SweepGradient(
       center: Alignment.topLeft,

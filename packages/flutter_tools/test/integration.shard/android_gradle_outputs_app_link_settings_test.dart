@@ -145,6 +145,7 @@ final XmlElement nonBrowsableCategoryIntentFilter = XmlElement(
     ]),
   ],
 );
+<<<<<<< HEAD
 final XmlElement nonSchemeCategoryIntentFilter = XmlElement(
   XmlName('intent-filter'),
   <XmlAttribute>[XmlAttribute(XmlName('autoVerify', 'android'), 'true')],
@@ -182,6 +183,8 @@ final XmlElement nonHostCategoryIntentFilter = XmlElement(
     ]),
   ],
 );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 void main() {
   late Directory tempDir;
@@ -196,8 +199,8 @@ void main() {
 
   void testDeeplink(
     dynamic deeplink,
-    String? scheme,
-    String? host,
+    String scheme,
+    String host,
     String path, {
     required bool hasAutoVerify,
     required bool hasActionView,
@@ -385,6 +388,7 @@ void main() {
   );
 
   testWithoutContext(
+<<<<<<< HEAD
     'gradle task outputs<mode>AppLinkSettings works when a project does not have app link and the flutter_deeplinking_enabled flag',
     () async {
       // Create a new flutter project.
@@ -395,6 +399,33 @@ void main() {
         '--project-name=testapp',
       ], workingDirectory: tempDir.path);
       expect(result, const ProcessResultMatcher());
+=======
+      'gradle task outputs<mode>AppLinkSettings works when a project has app links', () async {
+    // Create a new flutter project.
+    final String flutterBin =
+    fileSystem.path.join(getFlutterRoot(), 'bin', 'flutter');
+    ProcessResult result = await processManager.run(<String>[
+      flutterBin,
+      'create',
+      tempDir.path,
+      '--project-name=testapp',
+    ], workingDirectory: tempDir.path);
+    expect(result, const ProcessResultMatcher());
+    // Adds intent filters for app links
+    final String androidManifestPath =  fileSystem.path.join(tempDir.path, 'android', 'app', 'src', 'main', 'AndroidManifest.xml');
+    final io.File androidManifestFile = io.File(androidManifestPath);
+    final XmlDocument androidManifest = XmlDocument.parse(androidManifestFile.readAsStringSync());
+    final XmlElement activity = androidManifest.findAllElements('activity').first;
+    activity.children.add(deeplinkFlagMetaData);
+    activity.children.add(pureHttpIntentFilter);
+    activity.children.add(nonHttpIntentFilter);
+    activity.children.add(hybridIntentFilter);
+    activity.children.add(nonAutoVerifyIntentFilter);
+    activity.children.add(nonActionIntentFilter);
+    activity.children.add(nonDefaultCategoryIntentFilter);
+    activity.children.add(nonBrowsableCategoryIntentFilter);
+    androidManifestFile.writeAsStringSync(androidManifest.toString(), flush: true);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Ensure that gradle files exists from templates.
       result = await processManager.run(<String>[
@@ -418,6 +449,7 @@ void main() {
         'outputDebugAppLinkSettings',
       ], workingDirectory: androidApp.path);
 
+<<<<<<< HEAD
       expect(result, const ProcessResultMatcher());
       expect(fileDump.existsSync(), true);
       final Map<String, dynamic> json =
@@ -428,4 +460,63 @@ void main() {
       expect(deeplinks.length, 0);
     },
   );
+=======
+    expect(result, const ProcessResultMatcher());
+    expect(fileDump.existsSync(), true);
+    final Map<String, dynamic> json = jsonDecode(fileDump.readAsStringSync()) as Map<String, dynamic>;
+    expect(json['applicationId'], 'com.example.testapp');
+    expect(json['deeplinkingFlagEnabled'], true);
+    final List<dynamic> deeplinks = json['deeplinks']! as List<dynamic>;
+    expect(deeplinks.length, 8);
+    testDeeplink(deeplinks[0], 'http', 'pure-http.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[1], 'custom', 'custom.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[2], 'custom', 'hybrid.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[3], 'http', 'hybrid.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[4], 'http', 'non-auto-verify.com', '.*', hasAutoVerify:false, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[5], 'http', 'non-action.com', '.*', hasAutoVerify:true, hasActionView: false, hasDefaultCategory:true, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[6], 'http', 'non-default-category.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:false, hasBrowsableCategory: true);
+    testDeeplink(deeplinks[7], 'http', 'non-browsable-category.com', '.*', hasAutoVerify:true, hasActionView: true, hasDefaultCategory:true, hasBrowsableCategory: false);
+  });
+
+  testWithoutContext(
+      'gradle task outputs<mode>AppLinkSettings works when a project does not have app link and the flutter_deeplinking_enabled flag', () async {
+    // Create a new flutter project.
+    final String flutterBin =
+    fileSystem.path.join(getFlutterRoot(), 'bin', 'flutter');
+    ProcessResult result = await processManager.run(<String>[
+      flutterBin,
+      'create',
+      tempDir.path,
+      '--project-name=testapp',
+    ], workingDirectory: tempDir.path);
+    expect(result, const ProcessResultMatcher());
+
+    // Ensure that gradle files exists from templates.
+    result = await processManager.run(<String>[
+      flutterBin,
+      'build',
+      'apk',
+      '--config-only',
+    ], workingDirectory: tempDir.path);
+    expect(result, const ProcessResultMatcher());
+
+    final Directory androidApp = tempDir.childDirectory('android');
+    final io.File fileDump = tempDir.childDirectory('build').childDirectory('app').childFile('app-link-settings-debug.json');
+    result = await processManager.run(<String>[
+      '.${platform.pathSeparator}${getGradlewFileName(platform)}',
+      ...getLocalEngineArguments(),
+      '-q', // quiet output.
+      '-PoutputPath=${fileDump.path}',
+      'outputDebugAppLinkSettings',
+    ], workingDirectory: androidApp.path);
+
+    expect(result, const ProcessResultMatcher());
+    expect(fileDump.existsSync(), true);
+    final Map<String, dynamic> json = jsonDecode(fileDump.readAsStringSync()) as Map<String, dynamic>;
+    expect(json['applicationId'], 'com.example.testapp');
+    expect(json['deeplinkingFlagEnabled'], false);
+    final List<dynamic> deeplinks = json['deeplinks']! as List<dynamic>;
+    expect(deeplinks.length, 0);
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

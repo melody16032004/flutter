@@ -45,11 +45,17 @@ Future<void> buildLinux(
 }) async {
   target ??= 'lib/main.dart';
   if (!linuxProject.cmakeFile.existsSync()) {
+<<<<<<< HEAD
     throwToolExit(
       'No Linux desktop project configured. See '
       'https://flutter.dev/to/add-desktop-support '
       'to learn about adding Linux support to a project.',
     );
+=======
+    throwToolExit('No Linux desktop project configured. See '
+      'https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding Linux support to a project.');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   final List<ProjectMigrator> migrators = <ProjectMigrator>[
@@ -58,7 +64,7 @@ Future<void> buildLinux(
   ];
 
   final ProjectMigration migration = ProjectMigration(migrators);
-  await migration.run();
+  migration.run();
 
   // Build the environment that needs to be set for the re-entrant flutter build
   // step.

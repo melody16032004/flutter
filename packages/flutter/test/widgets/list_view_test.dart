@@ -544,6 +544,7 @@ void main() {
     expect(find.byType(Viewport), paints..clipRect());
   });
 
+<<<<<<< HEAD
   testWidgets(
     'ListView allows touch on children when reaching an edge and over-scrolling / settling',
     (WidgetTester tester) async {
@@ -760,6 +761,8 @@ void main() {
     expect(tapped, isTrue);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('ListView does not clips if no overflow', (WidgetTester tester) async {
     await tester.pumpWidget(
       Directionality(

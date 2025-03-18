@@ -770,6 +770,7 @@ void main() {
     expect(tapOutsideCount, 0);
   });
 
+<<<<<<< HEAD
   // Regression test for https://github.com/flutter/flutter/issues/127597.
   testWidgets(
     'The second TextFormField is clicked, triggers the onTapOutside callback of the previous TextFormField',
@@ -856,6 +857,8 @@ void main() {
     },
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   // Regression test for https://github.com/flutter/flutter/issues/54472.
   testWidgets('reset resets the text fields value to the initialValue', (
     WidgetTester tester,
@@ -1583,6 +1586,7 @@ void main() {
     expect(stateKey.currentState!.value, 'initialValue');
     expect(value, 'initialValue');
   });
+<<<<<<< HEAD
 
   testWidgets('isValid returns false when forceErrorText is set and will change error display', (
     WidgetTester tester,
@@ -1663,4 +1667,6 @@ void main() {
     expect(find.text(forceErrorText), findsOne);
     expect(find.text(decorationErrorText), findsNothing);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

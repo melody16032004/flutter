@@ -33,7 +33,7 @@ import 'input_border.dart';
 /// See also:
 ///
 ///  * [WidgetState], a general non-Material version that can be used
-///    interchangeably with `MaterialState`. They functionally work the same,
+///    interchangebly with `MaterialState`. They functionally work the same,
 ///    except [WidgetState] can be used outside of Material.
 ///  * [MaterialStateProperty], an interface for objects that "resolve" to
 ///    different values depending on a widget's material state.
@@ -73,7 +73,7 @@ typedef MaterialState = WidgetState;
 /// See also:
 ///
 ///  * [WidgetPropertyResolver], the non-Material form of `MaterialPropertyResolver`
-///    that can be used interchangeably with `MaterialPropertyResolver.
+///    that can be used interchangably with `MaterialPropertyResolver.
 @Deprecated(
   'Use WidgetPropertyResolver instead. '
   'Moved to the Widgets layer to make code available outside of Material. '
@@ -132,7 +132,7 @@ typedef MaterialPropertyResolver<T> = WidgetPropertyResolver<T>;
 /// See also
 ///
 ///  * [WidgetStateColor], the non-Material version that can be used
-///    interchangeably with `MaterialStateColor`.
+///    interchangably with `MaterialStateColor`.
 @Deprecated(
   'Use WidgetStateColor instead. '
   'Moved to the Widgets layer to make code available outside of Material. '

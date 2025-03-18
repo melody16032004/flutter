@@ -4,6 +4,7 @@
 
 import 'dart:ui_web' as ui_web;
 
+import '../web.dart' as web;
 import 'platform.dart' as platform;
 
 export 'platform.dart' show TargetPlatform;
@@ -16,13 +17,11 @@ platform.TargetPlatform get defaultTargetPlatform {
   return platform.debugDefaultTargetPlatformOverride ?? _testPlatform ?? _browserPlatform;
 }
 
-// The TargetPlatform used on Web tests, unless overridden.
-//
-// Respects the `ui_web.browser.debugOperatingSystemOverride` value (when set).
-platform.TargetPlatform? get _testPlatform {
-  platform.TargetPlatform? testPlatform;
+final platform.TargetPlatform? _testPlatform = () {
+  platform.TargetPlatform? result;
   assert(() {
     if (ui_web.debugEmulateFlutterTesterEnvironment) {
+<<<<<<< HEAD
       // Return the overridden operatingSystem in tests, if any...
       if (ui_web.browser.debugOperatingSystemOverride != null) {
         testPlatform = _operatingSystemToTargetPlatform(ui_web.browser.operatingSystem);
@@ -30,14 +29,18 @@ platform.TargetPlatform? get _testPlatform {
         // Fall back to `android` for tests.
         testPlatform = platform.TargetPlatform.android;
       }
+=======
+      result = platform.TargetPlatform.android;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
     return true;
   }());
-  return testPlatform;
-}
+  return result;
+}();
 
-// Current browser platform.
+// Lazy-initialized and forever cached current browser platform.
 //
+<<<<<<< HEAD
 // The computation of `operatingSystem` is cached in the ui_web package;
 // this getter may be called dozens of times per frame.
 //
@@ -58,3 +61,35 @@ platform.TargetPlatform _operatingSystemToTargetPlatform(ui_web.OperatingSystem 
     ui_web.OperatingSystem.unknown => platform.TargetPlatform.android,
   };
 }
+=======
+// Computing the platform is expensive as it uses `window.matchMedia`, which
+// needs to parse and evaluate a CSS selector. On some devices this takes up to
+// 0.20ms. As `defaultTargetPlatform` is routinely called dozens of times per
+// frame this value should be cached.
+final platform.TargetPlatform _browserPlatform = () {
+  final String navigatorPlatform = web.window.navigator.platform.toLowerCase();
+  if (navigatorPlatform.startsWith('mac')) {
+    return platform.TargetPlatform.macOS;
+  }
+  if (navigatorPlatform.startsWith('win')) {
+    return platform.TargetPlatform.windows;
+  }
+  if (navigatorPlatform.contains('iphone') ||
+      navigatorPlatform.contains('ipad') ||
+      navigatorPlatform.contains('ipod')) {
+    return platform.TargetPlatform.iOS;
+  }
+  if (navigatorPlatform.contains('android')) {
+    return platform.TargetPlatform.android;
+  }
+  // Since some phones can report a window.navigator.platform as Linux, fall
+  // back to use CSS to disambiguate Android vs Linux desktop. If the CSS
+  // indicates that a device has a "fine pointer" (mouse) as the primary
+  // pointing device, then we'll assume desktop linux, and otherwise we'll
+  // assume Android.
+  if (web.window.matchMedia('only screen and (pointer: fine)').matches) {
+    return platform.TargetPlatform.linux;
+  }
+  return platform.TargetPlatform.android;
+}();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

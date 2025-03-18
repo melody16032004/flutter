@@ -16,7 +16,13 @@ class TweenAnimationBuilderExampleApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('TweenAnimationBuilder Sample')),
+<<<<<<< HEAD
         body: const Center(child: TweenAnimationBuilderExample()),
+=======
+        body: const Center(
+          child: TweenAnimationBuilderExample(),
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
   }
@@ -30,12 +36,16 @@ class TweenAnimationBuilderExample extends StatefulWidget {
 }
 
 class _TweenAnimationBuilderExampleState extends State<TweenAnimationBuilderExample> {
+<<<<<<< HEAD
   double _targetValue = 24.0;
+=======
+  double targetValue = 24.0;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
-      tween: Tween<double>(begin: 0, end: _targetValue),
+      tween: Tween<double>(begin: 0, end: targetValue),
       duration: const Duration(seconds: 1),
       builder: (BuildContext context, double size, Widget? child) {
         return IconButton(
@@ -44,7 +54,7 @@ class _TweenAnimationBuilderExampleState extends State<TweenAnimationBuilderExam
           icon: child!,
           onPressed: () {
             setState(() {
-              _targetValue = _targetValue == 24.0 ? 48.0 : 24.0;
+              targetValue = targetValue == 24.0 ? 48.0 : 24.0;
             });
           },
         );

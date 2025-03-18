@@ -8,10 +8,17 @@ import 'package:flutter_api_samples/widgets/basic/mouse_region.0.dart' as exampl
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+<<<<<<< HEAD
   testWidgets('MouseRegion detects mouse entries, exists, and location', (
     WidgetTester tester,
   ) async {
     await tester.pumpWidget(const example.MouseRegionApp());
+=======
+  testWidgets('MouseRegion detects mouse entries, exists, and location', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(home: example.MouseRegionApp()),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(find.text('0 Entries\n0 Exits'), findsOneWidget);
     expect(find.text('The cursor is here: (0.00, 0.00)'), findsOneWidget);

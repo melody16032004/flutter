@@ -2,13 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-///
-/// @docImport 'app.dart';
-/// @docImport 'button.dart';
-/// @docImport 'switch.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
@@ -66,8 +59,12 @@ class CupertinoTheme extends StatelessWidget {
   /// Resolves all the colors defined in that [CupertinoThemeData] against the
   /// given [BuildContext] on a best-effort basis.
   static CupertinoThemeData of(BuildContext context) {
+<<<<<<< HEAD
     final InheritedCupertinoTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<InheritedCupertinoTheme>();
+=======
+    final _InheritedCupertinoTheme? inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedCupertinoTheme>();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return (inheritedTheme?.theme.data ?? const CupertinoThemeData()).resolveFrom(context);
   }
 
@@ -87,8 +84,12 @@ class CupertinoTheme extends StatelessWidget {
   /// * [CupertinoThemeData.brightness], the property takes precedence over
   ///   [MediaQueryData.platformBrightness] for descendant Cupertino widgets.
   static Brightness brightnessOf(BuildContext context) {
+<<<<<<< HEAD
     final InheritedCupertinoTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<InheritedCupertinoTheme>();
+=======
+    final _InheritedCupertinoTheme? inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedCupertinoTheme>();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return inheritedTheme?.theme.data.brightness ?? MediaQuery.platformBrightnessOf(context);
   }
 
@@ -108,8 +109,12 @@ class CupertinoTheme extends StatelessWidget {
   /// * [brightnessOf], which throws if no valid [CupertinoTheme] or
   ///   [MediaQuery] exists, instead of returning null.
   static Brightness? maybeBrightnessOf(BuildContext context) {
+<<<<<<< HEAD
     final InheritedCupertinoTheme? inheritedTheme =
         context.dependOnInheritedWidgetOfExactType<InheritedCupertinoTheme>();
+=======
+    final _InheritedCupertinoTheme? inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedCupertinoTheme>();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return inheritedTheme?.theme.data.brightness ?? MediaQuery.maybePlatformBrightnessOf(context);
   }
 
@@ -120,7 +125,7 @@ class CupertinoTheme extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InheritedCupertinoTheme(
+    return _InheritedCupertinoTheme(
       theme: this,
       child: IconTheme(data: CupertinoIconThemeData(color: data.primaryColor), child: child),
     );
@@ -133,13 +138,20 @@ class CupertinoTheme extends StatelessWidget {
   }
 }
 
+<<<<<<< HEAD
 /// Provides a [CupertinoTheme] to all descendents.
 class InheritedCupertinoTheme extends InheritedTheme {
   /// Creates an [InheritedTheme] that provides a [CupertinoTheme] to all
   /// descendents.
   const InheritedCupertinoTheme({super.key, required this.theme, required super.child});
+=======
+class _InheritedCupertinoTheme extends InheritedTheme {
+  const _InheritedCupertinoTheme({
+    required this.theme,
+    required super.child,
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
-  /// The [CupertinoTheme] that is provided to widgets lower in the tree.
   final CupertinoTheme theme;
 
   @override
@@ -148,7 +160,7 @@ class InheritedCupertinoTheme extends InheritedTheme {
   }
 
   @override
-  bool updateShouldNotify(InheritedCupertinoTheme oldWidget) => theme.data != oldWidget.theme.data;
+  bool updateShouldNotify(_InheritedCupertinoTheme old) => theme.data != old.theme.data;
 }
 
 /// Styling specifications for a [CupertinoTheme].

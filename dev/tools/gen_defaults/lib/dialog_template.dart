@@ -21,7 +21,6 @@ class _${blockName}DefaultsM3 extends DialogThemeData {
         alignment: Alignment.center,
         elevation: ${elevation("md.comp.dialog.container")},
         shape: ${shape("md.comp.dialog.container")},
-        clipBehavior: Clip.none,
       );
 
   final BuildContext context;
@@ -57,8 +56,13 @@ class DialogFullscreenTemplate extends TokenTemplate {
 
   @override
   String generate() => '''
+<<<<<<< HEAD
 class _${blockName}DefaultsM3 extends DialogThemeData {
   const _${blockName}DefaultsM3(this.context): super(clipBehavior: Clip.none);
+=======
+class _${blockName}DefaultsM3 extends DialogTheme {
+  const _${blockName}DefaultsM3(this.context);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final BuildContext context;
 

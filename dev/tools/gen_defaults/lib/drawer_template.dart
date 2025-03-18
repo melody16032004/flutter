@@ -11,10 +11,7 @@ class DrawerTemplate extends TokenTemplate {
   String generate() => '''
 class _${blockName}DefaultsM3 extends DrawerThemeData {
   _${blockName}DefaultsM3(this.context)
-      : super(
-          elevation: ${elevation("md.comp.navigation-drawer.modal.container")},
-          clipBehavior: Clip.hardEdge,
-        );
+      : super(elevation: ${elevation("md.comp.navigation-drawer.modal.container")});
 
   final BuildContext context;
   late final TextDirection direction = Directionality.of(context);

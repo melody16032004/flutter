@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:args/command_runner.dart';
-import 'package:file/memory.dart';
 import 'package:flutter_tools/src/android/android_builder.dart';
 import 'package:flutter_tools/src/android/android_sdk.dart';
 import 'package:flutter_tools/src/android/android_studio.dart';
@@ -18,7 +17,6 @@ import 'package:flutter_tools/src/globals.dart' as globals;
 import 'package:flutter_tools/src/project.dart';
 import 'package:flutter_tools/src/reporting/reporting.dart';
 import 'package:test/fake.dart';
-import 'package:unified_analytics/unified_analytics.dart';
 
 import '../../src/android_common.dart';
 import '../../src/common.dart';
@@ -204,14 +202,9 @@ void main() {
     late String gradlew;
     late FakeProcessManager processManager;
     late String flutterRoot;
-    late FakeAnalytics fakeAnalytics;
 
     setUp(() {
       tempDir = globals.fs.systemTempDirectory.createTempSync('flutter_tools_packages_test.');
-      fakeAnalytics = getInitializedFakeAnalyticsInstance(
-        fs: MemoryFileSystem.test(),
-        fakeFlutterVersion: FakeFlutterVersion(),
-      );
       mockAndroidSdk = FakeAndroidSdk();
       gradlew = globals.fs.path.join(
         tempDir.path,
@@ -300,6 +293,7 @@ void main() {
           ),
         );
 
+<<<<<<< HEAD
         await expectLater(
           () => runBuildAarCommand(
             projectPath,
@@ -447,6 +441,22 @@ void main() {
           FlutterProjectFactory: () => FakeFlutterProjectFactory(tempDir),
         },
       );
+=======
+      await expectLater(() => runBuildAarCommand(projectPath, mockAndroidSdk, arguments: <String>[
+        '--no-debug',
+        '--no-profile',
+        '--extra-front-end-options=foo',
+        '--extra-front-end-options=bar',
+      ]), throwsToolExit(message: 'Gradle task assembleAarRelease failed with exit code 1'));
+      expect(processManager, hasNoRemainingExpectations);
+    },
+    overrides: <Type, Generator>{
+      FlutterProjectFactory: () => FakeFlutterProjectFactory(tempDir),
+      Java: () => null,
+      ProcessManager: () => processManager,
+      FeatureFlags: () => TestFeatureFlags(isIOSEnabled: false),
+      AndroidStudio: () => FakeAndroidStudio(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 }

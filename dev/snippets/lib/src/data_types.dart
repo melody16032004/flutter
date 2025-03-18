@@ -292,8 +292,9 @@ enum SourceElementType {
   unknownType,
 }
 
-/// Converts the enum type [SourceElementType] to a human readable string.
+/// Converts the enun type [SourceElementType] to a human readable string.
 String sourceElementTypeAsString(SourceElementType type) {
+<<<<<<< HEAD
   return switch (type) {
     SourceElementType.classType => 'class',
     SourceElementType.fieldType => 'field',
@@ -304,6 +305,26 @@ String sourceElementTypeAsString(SourceElementType type) {
     SourceElementType.functionType => 'function',
     SourceElementType.unknownType => 'unknown',
   };
+=======
+  switch (type) {
+    case SourceElementType.classType:
+      return 'class';
+    case SourceElementType.fieldType:
+      return 'field';
+    case SourceElementType.methodType:
+      return 'method';
+    case SourceElementType.constructorType:
+      return 'constructor';
+    case SourceElementType.typedefType:
+      return 'typedef';
+    case SourceElementType.topLevelVariableType:
+      return 'variable';
+    case SourceElementType.functionType:
+      return 'function';
+    case SourceElementType.unknownType:
+      return 'unknown';
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// A class that represents a Dart element in a source file.

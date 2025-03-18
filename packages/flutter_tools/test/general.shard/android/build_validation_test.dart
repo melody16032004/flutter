@@ -34,6 +34,7 @@ void main() {
   });
 
   testWithoutContext('validateBuild throws if an invalid build number is specified', () {
+<<<<<<< HEAD
     expect(
       () => validateBuild(
         const AndroidBuildInfo(
@@ -47,10 +48,18 @@ void main() {
           ),
           targetArchs: <AndroidArch>[AndroidArch.x86],
         ),
+=======
+    expect(() => validateBuild(
+      const AndroidBuildInfo(
+        // Invalid number
+        BuildInfo(BuildMode.debug, '', treeShakeIcons: false, buildNumber: 'a'),
+        targetArchs: <AndroidArch>[AndroidArch.x86],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
       throwsToolExit(message: 'buildNumber: a was not a valid integer value.'),
     );
 
+<<<<<<< HEAD
     expect(
       () => validateBuild(
         const AndroidBuildInfo(
@@ -64,10 +73,18 @@ void main() {
           ),
           targetArchs: <AndroidArch>[AndroidArch.x86],
         ),
+=======
+    expect(() => validateBuild(
+      const AndroidBuildInfo(
+        // Negative number
+        BuildInfo(BuildMode.debug, '', treeShakeIcons: false, buildNumber: '-1'),
+        targetArchs: <AndroidArch>[AndroidArch.x86],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
       throwsToolExit(message: 'buildNumber: -1 must be a positive integer value.'),
     );
 
+<<<<<<< HEAD
     expect(
       () => validateBuild(
         const AndroidBuildInfo(
@@ -81,6 +98,13 @@ void main() {
           ),
           targetArchs: <AndroidArch>[AndroidArch.x86],
         ),
+=======
+    expect(() => validateBuild(
+      const AndroidBuildInfo(
+        // bigger than maximum supported play store value
+        BuildInfo(BuildMode.debug, '', treeShakeIcons: false, buildNumber: '2100000001'),
+        targetArchs: <AndroidArch>[AndroidArch.x86],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
       throwsToolExit(
         message:
@@ -91,6 +115,7 @@ void main() {
   });
 
   testWithoutContext('validateBuild does not throw on positive number', () {
+<<<<<<< HEAD
     expect(
       () => validateBuild(
         const AndroidBuildInfo(
@@ -103,6 +128,12 @@ void main() {
           ),
           targetArchs: <AndroidArch>[AndroidArch.x86],
         ),
+=======
+    expect(() => validateBuild(
+      const AndroidBuildInfo(
+        BuildInfo(BuildMode.debug, '', treeShakeIcons: false, buildNumber: '2'),
+        targetArchs: <AndroidArch>[AndroidArch.x86],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
       returnsNormally,
     );

@@ -14,6 +14,7 @@ class BottomSheetDemo extends StatelessWidget {
 
   String _title(BuildContext context) {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
+<<<<<<< HEAD
     return switch (type) {
       BottomSheetDemoType.persistent => localizations.demoBottomSheetPersistentTitle,
       BottomSheetDemoType.modal => localizations.demoBottomSheetModalTitle,
@@ -25,6 +26,23 @@ class BottomSheetDemo extends StatelessWidget {
       BottomSheetDemoType.persistent => _PersistentBottomSheetDemo(),
       BottomSheetDemoType.modal => _ModalBottomSheetDemo(),
     };
+=======
+    switch (type) {
+      case BottomSheetDemoType.persistent:
+        return localizations.demoBottomSheetPersistentTitle;
+      case BottomSheetDemoType.modal:
+        return localizations.demoBottomSheetModalTitle;
+    }
+  }
+
+  Widget _bottomSheetDemo(BuildContext context) {
+    switch (type) {
+      case BottomSheetDemoType.persistent:
+        return _PersistentBottomSheetDemo();
+      case BottomSheetDemoType.modal:
+        return _ModalBottomSheetDemo();
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

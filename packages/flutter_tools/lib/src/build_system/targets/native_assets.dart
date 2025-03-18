@@ -78,7 +78,16 @@ abstract class DartBuild extends Target {
   }
 
   @override
+<<<<<<< HEAD
   List<String> get depfiles => const <String>[depFilename];
+=======
+  List<String> get depfiles => <String>[
+    'native_assets.d',
+  ];
+
+  @override
+  List<Target> get dependencies => <Target>[];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   List<Source> get inputs => const <Source>[
@@ -86,8 +95,12 @@ abstract class DartBuild extends Target {
       '{FLUTTER_ROOT}/packages/flutter_tools/lib/src/build_system/targets/native_assets.dart',
     ),
     // If different packages are resolved, different native assets might need to be built.
+<<<<<<< HEAD
     Source.pattern('{WORKSPACE_DIR}/.dart_tool/package_config_subset'),
     // TODO(mosuem): Should consume resources.json. https://github.com/flutter/flutter/issues/146263
+=======
+    Source.pattern('{PROJECT_DIR}/.dart_tool/package_config_subset'),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ];
 
   @override

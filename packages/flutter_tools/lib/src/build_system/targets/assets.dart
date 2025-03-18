@@ -16,7 +16,6 @@ import '../../devfs.dart';
 import '../../flutter_manifest.dart';
 import '../build_system.dart';
 import '../depfile.dart';
-import '../exceptions.dart';
 import '../tools/asset_transformer.dart';
 import '../tools/scene_importer.dart';
 import '../tools/shader_compiler.dart';
@@ -38,7 +37,7 @@ Future<Depfile> copyAssets(
   Directory outputDirectory, {
   Map<String, DevFSContent> additionalContent = const <String, DevFSContent>{},
   required TargetPlatform targetPlatform,
-  required BuildMode buildMode,
+  BuildMode? buildMode,
   List<File> additionalInputs = const <File>[],
   String? flavor,
 }) async {
@@ -106,7 +105,6 @@ Future<Depfile> copyAssets(
     processManager: environment.processManager,
     fileSystem: environment.fileSystem,
     dartBinaryPath: environment.artifacts.getArtifactPath(Artifact.engineDartBinary),
-    buildMode: buildMode,
   );
 
   final Map<String, AssetBundleEntry> assetEntries = <String, AssetBundleEntry>{
@@ -155,7 +153,6 @@ Future<Depfile> copyAssets(
                   outputPath: file.path,
                   workingDirectory: environment.projectDir.path,
                   transformerEntries: entry.value.transformers,
-                  logger: environment.logger,
                 );
                 doCopy = false;
                 if (failure != null) {
@@ -201,6 +198,7 @@ Future<Depfile> copyAssets(
   // Copy deferred components assets only for release or profile builds.
   // The assets are included in assetBundle.entries as a normal asset when
   // building as debug.
+<<<<<<< HEAD
   if (environment.defines[kDeferredComponents] == 'true') {
     await Future.wait<void>(
       assetBundle.deferredComponentsEntries.entries.map<Future<void>>((
@@ -211,6 +209,17 @@ Future<Depfile> copyAssets(
             .childDirectory(componentEntries.key)
             .childDirectory('intermediates')
             .childDirectory('flutter');
+=======
+  if (environment.defines[kDeferredComponents] == 'true' && buildMode != null) {
+    await Future.wait<void>(assetBundle.deferredComponentsEntries.entries.map<Future<void>>(
+      (MapEntry<String, Map<String, AssetBundleEntry>> componentEntries) async {
+        final Directory componentOutputDir =
+            environment.projectDir
+                .childDirectory('build')
+                .childDirectory(componentEntries.key)
+                .childDirectory('intermediates')
+                .childDirectory('flutter');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         await Future.wait<void>(
           componentEntries.value.entries.map<Future<void>>((
             MapEntry<String, AssetBundleEntry> entry,
@@ -368,18 +377,23 @@ class CopyAssets extends Target {
 
   @override
   Future<void> build(Environment environment) async {
+<<<<<<< HEAD
     final String? buildModeEnvironment = environment.defines[kBuildMode];
     if (buildModeEnvironment == null) {
       throw MissingDefineException(kBuildMode, name);
     }
     final BuildMode buildMode = BuildMode.fromCliName(buildModeEnvironment);
     final Directory output = environment.buildDir.childDirectory('flutter_assets');
+=======
+    final Directory output = environment
+      .buildDir
+      .childDirectory('flutter_assets');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     output.createSync(recursive: true);
     final Depfile depfile = await copyAssets(
       environment,
       output,
       targetPlatform: TargetPlatform.android,
-      buildMode: buildMode,
       flavor: environment.defines[kFlavor],
       additionalContent: <String, DevFSContent>{
         'NativeAssetsManifest.json': DevFSFileContent(

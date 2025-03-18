@@ -150,13 +150,13 @@ class BuildApkCommand extends BuildSubCommand {
     validateBuild(androidBuildInfo);
     displayNullSafetyMode(androidBuildInfo.buildInfo);
     globals.terminal.usesTerminalUi = true;
-    final FlutterProject project = FlutterProject.current();
     await androidBuilder?.buildApk(
-      project: project,
+      project: FlutterProject.current(),
       target: targetFile,
       androidBuildInfo: androidBuildInfo,
       configOnly: configOnly,
     );
+<<<<<<< HEAD
 
     // When an app is successfully built, record to analytics whether Impeller
     // is enabled or disabled. Note that 'computeImpellerEnabled' will default
@@ -166,6 +166,8 @@ class BuildApkCommand extends BuildSubCommand {
         impellerEnabled ? 'manifest-impeller-enabled' : 'manifest-impeller-disabled';
     globals.analytics.send(Event.flutterBuildInfo(label: buildLabel, buildType: 'android'));
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return FlutterCommandResult.success();
   }
 }

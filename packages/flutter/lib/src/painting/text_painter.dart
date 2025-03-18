@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/widgets.dart';
-library;
-
 import 'dart:math' show max;
 import 'dart:ui'
     as ui
@@ -293,14 +290,10 @@ class _UntilTextBoundary extends TextBoundary {
 }
 
 class _TextLayout {
-  _TextLayout._(this._paragraph, this.writingDirection, this._painter);
+  _TextLayout._(this._paragraph, this.writingDirection, this.rawString);
 
   final TextDirection writingDirection;
-
-  // Computing plainText is a bit expensive and is currently not needed for
-  // simple static text. Pass in the entire text painter so `TextPainter.plainText`
-  // is only called when needed.
-  final TextPainter _painter;
+  final String rawString;
 
   // This field is not final because the owner TextPainter could create a new
   // ui.Paragraph with the exact same text layout (for example, when only the
@@ -363,15 +356,16 @@ class _TextLayout {
   /// line ended with a line feed.
   late final _LineCaretMetrics _endOfTextCaretMetrics = _computeEndOfTextCaretAnchorOffset();
   _LineCaretMetrics _computeEndOfTextCaretAnchorOffset() {
-    final String rawString = _painter.plainText;
     final int lastLineIndex = _paragraph.numberOfLines - 1;
     assert(lastLineIndex >= 0);
     final ui.LineMetrics lineMetrics = _paragraph.getLineMetricsAt(lastLineIndex)!;
-    // Trailing white spaces don't contribute to the line width and thus require special handling
+    // SkParagraph currently treats " " and "\t" as white spaces. Trailing white
+    // spaces don't contribute to the line width and thus require special handling
     // when they're present.
     // Luckily they have the same bidi embedding level as the paragraph as per
     // https://unicode.org/reports/tr9/#L1, so we can anchor the caret to the
     // last logical trailing space.
+<<<<<<< HEAD
     // Whitespace character definitions refer to Java/ICU, not Unicode-Zs.
     // https://github.com/unicode-org/icu/blob/23d9628f88a2d0127c564ad98297061c36d3ce77/icu4c/source/common/unicode/uchar.h#L3388-L3425
     final String lastCodeUnit = rawString[rawString.length - 1];
@@ -381,6 +375,12 @@ class _TextLayout {
       0x2007 || // figure space
       0x202F => false, // narrow no-break space
       _ => _regExpSpaceSeparators.hasMatch(lastCodeUnit),
+=======
+    final bool hasTrailingSpaces = switch (rawString.codeUnitAt(rawString.length - 1)) {
+      0x9 ||        // horizontal tab
+      0x20 => true, // space
+      _ => false,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     };
 
     final double baseline = lineMetrics.baseline;
@@ -1267,10 +1267,16 @@ class TextPainter {
     //    the paragraph rebuilds is unnecessary)
     // 2. the user could be measuring the text layout so `paint` will never be
     //    called.
+<<<<<<< HEAD
     final ui.Paragraph paragraph =
         (cachedLayout?.paragraph ?? _createParagraph(text))
           ..layout(ui.ParagraphConstraints(width: layoutMaxWidth));
     final _TextLayout layout = _TextLayout._(paragraph, textDirection, this);
+=======
+    final ui.Paragraph paragraph = (cachedLayout?.paragraph ?? _createParagraph(text))
+      ..layout(ui.ParagraphConstraints(width: layoutMaxWidth));
+    final _TextLayout layout = _TextLayout._(paragraph, textDirection, plainText);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final double contentWidth = layout._contentWidthFor(minWidth, maxWidth, textWidthBasis);
 
     final _TextPainterLayoutCacheWithOffset newLayoutCache;
@@ -1589,19 +1595,19 @@ class TextPainter {
     );
 
     if (boxes.isNotEmpty) {
-      final bool anchorToLeft = switch (glyphInfo.writingDirection) {
+      final bool ahchorToLeft = switch (glyphInfo.writingDirection) {
         TextDirection.ltr => anchorToLeadingEdge,
         TextDirection.rtl => !anchorToLeadingEdge,
       };
-      final TextBox box = anchorToLeft ? boxes.first : boxes.last;
+      final TextBox box = ahchorToLeft ? boxes.first : boxes.last;
       metrics = _LineCaretMetrics(
-        offset: Offset(anchorToLeft ? box.left : box.right, box.top),
+        offset: Offset(ahchorToLeft ? box.left : box.right, box.top),
         writingDirection: box.direction,
         height: box.bottom - box.top,
       );
     } else {
       // Fall back to glyphInfo. This should only happen when using the HTML renderer.
-      assert(kIsWeb && !isSkiaWeb);
+      assert(kIsWeb && !isCanvasKit);
       final Rect graphemeBounds = glyphInfo.graphemeClusterLayoutBounds;
       final double dx = switch (glyphInfo.writingDirection) {
         TextDirection.ltr => anchorToLeadingEdge ? graphemeBounds.left : graphemeBounds.right,

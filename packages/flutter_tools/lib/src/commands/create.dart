@@ -21,8 +21,6 @@ import '../flutter_manifest.dart';
 import '../flutter_project_metadata.dart';
 import '../globals.dart' as globals;
 import '../ios/code_signing.dart';
-import '../macos/swift_package_manager.dart';
-import '../macos/swift_packages.dart';
 import '../project.dart';
 import '../reporting/reporting.dart';
 import '../runner/flutter_command.dart';
@@ -423,7 +421,6 @@ class CreateCommand extends FlutterCommand with CreateBase {
       projectDescription: stringArg('description'),
       flutterRoot: flutterRoot,
       withPlatformChannelPluginHook: generateMethodChannelsPlugin,
-      withSwiftPackageManager: featureFlags.isSwiftPackageManagerEnabled,
       withFfiPluginHook: generateFfiPlugin,
       withFfiPackage: generateFfiPackage,
       withEmptyMain: emptyArgument,
@@ -436,7 +433,7 @@ class CreateCommand extends FlutterCommand with CreateBase {
       linux: includeLinux,
       macos: includeMacos,
       windows: includeWindows,
-      dartSdkVersionBounds: '^$dartSdk',
+      dartSdkVersionBounds: "'>=$dartSdk <4.0.0'",
       implementationTests: boolArg('implementation-tests'),
       agpVersion: gradle.templateAndroidGradlePluginVersion,
       kotlinVersion: gradle.templateKotlinGradlePluginVersion,
@@ -461,11 +458,15 @@ class CreateCommand extends FlutterCommand with CreateBase {
     int generatedFileCount = 0;
     final PubContext pubContext;
     switch (template) {
+<<<<<<< HEAD
       case FlutterTemplateType.app:
         final bool skipWidgetTestsGeneration = sampleCode != null || emptyArgument;
 
+=======
+      case FlutterProjectType.app:
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         generatedFileCount += await generateApp(
-          <String>['app', if (!skipWidgetTestsGeneration) 'app_test_widget'],
+          <String>['app', 'app_test_widget'],
           relativeDir,
           templateContext,
           overwrite: overwrite,
@@ -544,6 +545,9 @@ class CreateCommand extends FlutterCommand with CreateBase {
     }
     if (sampleCode != null) {
       _applySample(relativeDir, sampleCode);
+    }
+    if (sampleCode != null || emptyArgument) {
+      generatedFileCount += _removeTestDir(relativeDir);
     }
     globals.printStatus('Wrote $generatedFileCount files.');
     globals.printStatus('\nAll done!');
@@ -699,6 +703,7 @@ Your $application code is in $relativeAppMain.
             ? stringArg('description')
             : 'A new Flutter plugin project.';
     templateContext['description'] = description;
+<<<<<<< HEAD
 
     final String? projectName = templateContext['projectName'] as String?;
     final List<String> templates = <String>['plugin', 'plugin_shared'];
@@ -715,8 +720,10 @@ Your $application code is in $relativeAppMain.
       templates.add('plugin_cocoapods');
     }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     generatedCount += await renderMerged(
-      templates,
+      <String>['plugin', 'plugin_shared'],
       directory,
       templateContext,
       overwrite: overwrite,
@@ -729,8 +736,13 @@ Your $application code is in $relativeAppMain.
       gradle.updateLocalProperties(project: project, requireAndroidSdk: false);
     }
 
+<<<<<<< HEAD
     final String organization =
         templateContext['organization']! as String; // Required to make the context.
+=======
+    final String? projectName = templateContext['projectName'] as String?;
+    final String organization = templateContext['organization']! as String; // Required to make the context.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final String? androidPluginIdentifier = templateContext['androidIdentifier'] as String?;
     final String exampleProjectName = '${projectName}_example';
     templateContext['projectName'] = exampleProjectName;
@@ -898,6 +910,20 @@ Your $application code is in $relativeAppMain.
     mainDartFile.writeAsStringSync(sampleCode);
   }
 
+  int _removeTestDir(Directory directory) {
+    final Directory testDir = directory.childDirectory('test');
+    if (!testDir.existsSync()) {
+      return 0;
+    }
+    final List<FileSystemEntity> files = testDir.listSync(recursive: true);
+    try {
+      testDir.deleteSync(recursive: true);
+    } on FileSystemException catch (exception) {
+      throwToolExit('Failed to delete test directory: $exception');
+    }
+    return -files.length;
+  }
+
   List<String> _getSupportedPlatformsFromTemplateContext(Map<String, Object?> templateContext) {
     return <String>[
       for (final String platform in kAllCreatePlatforms)
@@ -950,7 +976,7 @@ Your example app code is in $relativeExampleMain.
   if (platformsString.isNotEmpty) {
     globals.printStatus('''
 Host platform code is in the $platformsString directories under $pluginPath.
-To edit platform code in an IDE see https://flutter.dev/to/edit-plugins.
+To edit platform code in an IDE see https://flutter.dev/developing-packages/#edit-plugin-package.
 
     ''');
   }
@@ -975,7 +1001,7 @@ You've created a plugin project that doesn't yet support any platforms.
 void _printPluginAddPlatformMessage(String pluginPath, String template) {
   globals.printStatus('''
 To add platforms, run `flutter create -t $template --platforms <platforms> .` under $pluginPath.
-For more information, see https://flutter.dev/to/pubspec-plugin-platforms.
+For more information, see https://flutter.dev/go/plugin-platforms.
 
 ''');
 }
@@ -1011,13 +1037,13 @@ void _printWarningDisabledPlatform(List<String> platforms) {
 
     globals.printStatus('''
 The desktop $platforms: ${desktop.join(', ')} $verb currently not supported on your local environment.
-For more details, see: https://flutter.dev/to/add-desktop-support
+For more details, see: https://flutter.dev/desktop
 ''');
   }
   if (web.isNotEmpty) {
     globals.printStatus('''
 The web is currently not supported on your local environment.
-For more details, see: https://flutter.dev/to/add-web-support
+For more details, see: https://flutter.dev/docs/get-started/web
 ''');
   }
 }

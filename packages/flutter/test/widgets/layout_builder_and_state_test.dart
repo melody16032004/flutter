@@ -44,6 +44,7 @@ class Wrapper extends StatelessWidget {
 }
 
 void main() {
+<<<<<<< HEAD
   testWidgets('Calling setState on a widget that moves into a LayoutBuilder in the same frame', (
     WidgetTester tester,
   ) async {
@@ -59,6 +60,23 @@ void main() {
       ),
     );
     final StatefulWrapperState statefulWrapper = tester.state(find.byType(StatefulWrapper));
+=======
+  testWidgets('Calling setState on a widget that moves into a LayoutBuilder in the same frame', (WidgetTester tester) async {
+    StatefulWrapperState statefulWrapper;
+    final Widget inner = Wrapper(
+      child: StatefulWrapper(
+        key: GlobalKey(),
+        child: Container(),
+      ),
+    );
+    await tester.pumpWidget(FlipWidget(
+      left: LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
+        return inner;
+      }),
+      right: inner,
+    ));
+    statefulWrapper = tester.state(find.byType(StatefulWrapper));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     expect(statefulWrapper.built, true);
     statefulWrapper.built = false;
 

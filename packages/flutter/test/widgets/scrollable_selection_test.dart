@@ -240,6 +240,7 @@ void main() {
     await gesture.up();
   }, skip: kIsWeb); // https://github.com/flutter/flutter/issues/125582.
 
+<<<<<<< HEAD
   testWidgets('mouse can select multiple widgets on triple-click drag', (
     WidgetTester tester,
   ) async {
@@ -374,6 +375,8 @@ void main() {
     await gesture.up();
   }, skip: kIsWeb); // https://github.com/flutter/flutter/issues/125582.
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWidgets('select to scroll forward', (WidgetTester tester) async {
     final ScrollController controller = ScrollController();
     addTearDown(controller.dispose);

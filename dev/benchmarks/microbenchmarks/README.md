@@ -3,8 +3,17 @@
 To run these benchmarks on a device, first run `flutter logs` in one
 window to see the device logs, then, in a different window, run:
 
+<<<<<<< HEAD
 ```sh
 flutter run -d $DEVICE_ID --profile lib/benchmark_collection.dart
+=======
+```
+flutter run --release lib/gestures/velocity_tracker_bench.dart
+flutter run --release lib/gestures/gesture_detector_bench.dart
+flutter run --release lib/stocks/animation_bench.dart
+flutter run --release lib/stocks/build_bench.dart
+flutter run --release lib/stocks/layout_bench.dart
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 ```
 
 To run a subset of tests:

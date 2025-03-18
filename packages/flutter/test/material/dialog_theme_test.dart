@@ -45,6 +45,7 @@ MaterialApp _appWithDialog(
 
 final Key _painterKey = UniqueKey();
 
+<<<<<<< HEAD
 Material _getMaterialAlertDialog(WidgetTester tester) {
   return tester.widget<Material>(
     find.descendant(of: find.byType(AlertDialog), matching: find.byType(Material)),
@@ -57,6 +58,12 @@ Material _getMaterialDialog(WidgetTester tester) {
   );
 }
 
+=======
+Material _getMaterialFromDialog(WidgetTester tester) {
+  return tester.widget<Material>(find.descendant(of: find.byType(AlertDialog), matching: find.byType(Material)));
+}
+
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 RenderParagraph _getTextRenderObject(WidgetTester tester, String text) {
   return tester.element<StatelessElement>(find.text(text)).renderObject! as RenderParagraph;
 }
@@ -140,7 +147,6 @@ void main() {
       actionsPadding: EdgeInsets.all(8.0),
       barrierColor: Color(0xff000005),
       insetPadding: EdgeInsets.all(20.0),
-      clipBehavior: Clip.antiAlias,
     ).debugFillProperties(builder);
     final List<String> description =
         builder.properties
@@ -160,7 +166,10 @@ void main() {
       'actionsPadding: EdgeInsets.all(8.0)',
       'barrierColor: ${const Color(0xff000005)}',
       'insetPadding: EdgeInsets.all(20.0)',
+<<<<<<< HEAD
       'clipBehavior: Clip.antiAlias',
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ]);
   });
 
@@ -348,7 +357,7 @@ void main() {
     await tester.tap(find.text('X'));
     await tester.pumpAndSettle();
 
-    final Material materialWidget = _getMaterialAlertDialog(tester);
+    final Material materialWidget = _getMaterialFromDialog(tester);
     expect(materialWidget.color, customColor);
   });
 
@@ -369,7 +378,7 @@ void main() {
     await tester.tap(find.text('X'));
     await tester.pumpAndSettle();
 
-    final Material materialWidget = _getMaterialAlertDialog(tester);
+    final Material materialWidget = _getMaterialFromDialog(tester);
     expect(materialWidget.elevation, customElevation);
     expect(materialWidget.shadowColor, shadowColor);
     expect(materialWidget.surfaceTintColor, surfaceTintColor);
@@ -386,7 +395,7 @@ void main() {
     await tester.tap(find.text('X'));
     await tester.pumpAndSettle();
 
-    final Material materialWidget = _getMaterialAlertDialog(tester);
+    final Material materialWidget = _getMaterialFromDialog(tester);
     expect(materialWidget.shape, customBorder);
   });
 
@@ -428,8 +437,12 @@ void main() {
       find.descendant(of: find.byType(Dialog), matching: find.byType(Material)),
     );
     expect(bottomLeft.dx, 480.0);
+<<<<<<< HEAD
     if (!kIsWeb || isSkiaWeb) {
       // https://github.com/flutter/flutter/issues/99933
+=======
+    if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(bottomLeft.dy, 124.0);
     }
   });
@@ -799,6 +812,7 @@ void main() {
       ),
     );
   });
+<<<<<<< HEAD
 
   testWidgets('DialogTheme.clipBehavior updates the dialogs clip behavior', (
     WidgetTester tester,
@@ -846,4 +860,6 @@ void main() {
     final Material materialWidget = _getMaterialDialog(tester);
     expect(materialWidget.clipBehavior, Clip.antiAlias);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

@@ -192,6 +192,7 @@ class _InternalCombinedCondition implements WaitCondition {
 /// Parses a [WaitCondition] or its subclass from the given serializable [waitCondition].
 WaitCondition deserializeCondition(SerializableWaitCondition waitCondition) {
   final String conditionName = waitCondition.conditionName;
+<<<<<<< HEAD
   return switch (conditionName) {
     'NoTransientCallbacksCondition' => _InternalNoTransientCallbacksCondition.deserialize(
       waitCondition,
@@ -209,4 +210,20 @@ WaitCondition deserializeCondition(SerializableWaitCondition waitCondition) {
         'Unsupported wait condition $conditionName in ${waitCondition.serialize()}',
       ),
   };
+=======
+  switch (conditionName) {
+    case 'NoTransientCallbacksCondition':
+      return _InternalNoTransientCallbacksCondition.deserialize(waitCondition);
+    case 'NoPendingFrameCondition':
+      return _InternalNoPendingFrameCondition.deserialize(waitCondition);
+    case 'FirstFrameRasterizedCondition':
+      return _InternalFirstFrameRasterizedCondition.deserialize(waitCondition);
+    case 'NoPendingPlatformMessagesCondition':
+      return _InternalNoPendingPlatformMessagesCondition.deserialize(waitCondition);
+    case 'CombinedCondition':
+      return _InternalCombinedCondition.deserialize(waitCondition);
+  }
+  throw SerializationException(
+      'Unsupported wait condition $conditionName in ${waitCondition.serialize()}');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

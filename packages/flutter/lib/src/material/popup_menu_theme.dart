@@ -51,7 +51,6 @@ class PopupMenuThemeData with Diagnosticable {
   const PopupMenuThemeData({
     this.color,
     this.shape,
-    this.menuPadding,
     this.elevation,
     this.shadowColor,
     this.surfaceTintColor,
@@ -69,11 +68,6 @@ class PopupMenuThemeData with Diagnosticable {
 
   /// The shape of the popup menu.
   final ShapeBorder? shape;
-
-  /// If specified, the padding of the popup menu.
-  ///
-  /// If [PopupMenuButton.menuPadding] is provided, [menuPadding] is ignored.
-  final EdgeInsetsGeometry? menuPadding;
 
   /// The elevation of the popup menu.
   final double? elevation;
@@ -118,7 +112,6 @@ class PopupMenuThemeData with Diagnosticable {
   PopupMenuThemeData copyWith({
     Color? color,
     ShapeBorder? shape,
-    EdgeInsetsGeometry? menuPadding,
     double? elevation,
     Color? shadowColor,
     Color? surfaceTintColor,
@@ -133,7 +126,6 @@ class PopupMenuThemeData with Diagnosticable {
     return PopupMenuThemeData(
       color: color ?? this.color,
       shape: shape ?? this.shape,
-      menuPadding: menuPadding ?? this.menuPadding,
       elevation: elevation ?? this.elevation,
       shadowColor: shadowColor ?? this.shadowColor,
       surfaceTintColor: surfaceTintColor ?? this.surfaceTintColor,
@@ -159,7 +151,6 @@ class PopupMenuThemeData with Diagnosticable {
     return PopupMenuThemeData(
       color: Color.lerp(a?.color, b?.color, t),
       shape: ShapeBorder.lerp(a?.shape, b?.shape, t),
-      menuPadding: EdgeInsetsGeometry.lerp(a?.menuPadding, b?.menuPadding, t),
       elevation: lerpDouble(a?.elevation, b?.elevation, t),
       shadowColor: Color.lerp(a?.shadowColor, b?.shadowColor, t),
       surfaceTintColor: Color.lerp(a?.surfaceTintColor, b?.surfaceTintColor, t),
@@ -182,7 +173,6 @@ class PopupMenuThemeData with Diagnosticable {
   int get hashCode => Object.hash(
     color,
     shape,
-    menuPadding,
     elevation,
     shadowColor,
     surfaceTintColor,
@@ -203,6 +193,7 @@ class PopupMenuThemeData with Diagnosticable {
     if (other.runtimeType != runtimeType) {
       return false;
     }
+<<<<<<< HEAD
     return other is PopupMenuThemeData &&
         other.color == color &&
         other.shape == shape &&
@@ -217,6 +208,21 @@ class PopupMenuThemeData with Diagnosticable {
         other.position == position &&
         other.iconColor == iconColor &&
         other.iconSize == iconSize;
+=======
+    return other is PopupMenuThemeData
+        && other.color == color
+        && other.shape == shape
+        && other.elevation == elevation
+        && other.shadowColor == shadowColor
+        && other.surfaceTintColor == surfaceTintColor
+        && other.textStyle == textStyle
+        && other.labelTextStyle == labelTextStyle
+        && other.enableFeedback == enableFeedback
+        && other.mouseCursor == mouseCursor
+        && other.position == position
+        && other.iconColor == iconColor
+        && other.iconSize == iconSize;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -224,9 +230,12 @@ class PopupMenuThemeData with Diagnosticable {
     super.debugFillProperties(properties);
     properties.add(ColorProperty('color', color, defaultValue: null));
     properties.add(DiagnosticsProperty<ShapeBorder>('shape', shape, defaultValue: null));
+<<<<<<< HEAD
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry>('menuPadding', menuPadding, defaultValue: null),
     );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     properties.add(DoubleProperty('elevation', elevation, defaultValue: null));
     properties.add(ColorProperty('shadowColor', shadowColor, defaultValue: null));
     properties.add(ColorProperty('surfaceTintColor', surfaceTintColor, defaultValue: null));

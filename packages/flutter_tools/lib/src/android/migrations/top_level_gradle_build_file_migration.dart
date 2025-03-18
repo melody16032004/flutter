@@ -26,7 +26,7 @@ class TopLevelGradleBuildFileMigration extends ProjectMigrator {
   final File _topLevelGradleBuildFile;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_topLevelGradleBuildFile.existsSync()) {
       logger.printTrace(
         'Top-level Gradle build file not found, skipping migration of task "clean".',

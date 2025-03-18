@@ -9,7 +9,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class Leaf extends StatefulWidget {
+<<<<<<< HEAD
   const Leaf({required Key super.key, required this.child});
+=======
+  const Leaf({ required Key key, required this.child }) : super(key: key);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final Widget child;
   @override
   State<Leaf> createState() => _LeafState();
@@ -597,7 +601,11 @@ void main() {
 }
 
 class _AlwaysKeepAlive extends StatefulWidget {
+<<<<<<< HEAD
   const _AlwaysKeepAlive({required Key super.key});
+=======
+  const _AlwaysKeepAlive({ required Key key }) : super(key: key);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   State<StatefulWidget> createState() => _AlwaysKeepAliveState();

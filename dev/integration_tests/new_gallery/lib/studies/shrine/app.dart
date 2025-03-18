@@ -67,7 +67,8 @@ class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin, Re
     // Save state restoration animation values only when the cart page
     // fully opens or closes.
     _controller.addStatusListener((AnimationStatus status) {
-      if (!status.isAnimating) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
         _tabIndex.value = _controller.value;
       }
     });
@@ -78,7 +79,8 @@ class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin, Re
     // Save state restoration animation values only when the menu page
     // fully opens or closes.
     _expandingController.addStatusListener((AnimationStatus status) {
-      if (!status.isAnimating) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
         _expandingTabIndex.value = _expandingController.value;
       }
     });
@@ -109,7 +111,9 @@ class _ShrineAppState extends State<ShrineApp> with TickerProviderStateMixin, Re
 
   // Closes the bottom sheet if it is open.
   Future<bool> _onWillPop() async {
-    if (_expandingController.isForwardOrCompleted) {
+    final AnimationStatus status = _expandingController.status;
+    if (status == AnimationStatus.completed ||
+        status == AnimationStatus.forward) {
       await _expandingController.reverse();
       return false;
     }

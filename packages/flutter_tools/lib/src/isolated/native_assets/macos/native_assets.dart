@@ -12,6 +12,7 @@ import 'native_assets_host.dart';
 // TODO(dcharkes): Fetch minimum MacOS version from somewhere. https://github.com/flutter/flutter/issues/145104
 const int targetMacOSVersion = 13;
 
+<<<<<<< HEAD
 /// Extract the [Architecture] from a [DarwinArch].
 Architecture getNativeMacOSArchitecture(DarwinArch darwinArch) {
   return switch (darwinArch) {
@@ -19,6 +20,145 @@ Architecture getNativeMacOSArchitecture(DarwinArch darwinArch) {
     DarwinArch.x86_64 => Architecture.x64,
     DarwinArch.armv7 => throw Exception('Unknown DarwinArch: $darwinArch.'),
   };
+=======
+  final Uri buildUri = nativeAssetsBuildUri(projectUri, OSImpl.macOS);
+  final Iterable<KernelAsset> nativeAssetPaths = await dryRunNativeAssetsMacOSInternal(
+    fileSystem,
+    projectUri,
+    flutterTester,
+    buildRunner,
+  );
+  final Uri nativeAssetsUri = await writeNativeAssetsYaml(
+    KernelAssets(nativeAssetPaths),
+    buildUri,
+    fileSystem,
+  );
+  return nativeAssetsUri;
+}
+
+Future<Iterable<KernelAsset>> dryRunNativeAssetsMacOSInternal(
+  FileSystem fileSystem,
+  Uri projectUri,
+  bool flutterTester,
+  NativeAssetsBuildRunner buildRunner,
+) async {
+  const OSImpl targetOS = OSImpl.macOS;
+  final Uri buildUri = nativeAssetsBuildUri(projectUri, targetOS);
+
+  globals.logger.printTrace('Dry running native assets for $targetOS.');
+  final DryRunResult dryRunResult = await buildRunner.dryRun(
+    linkModePreference: LinkModePreferenceImpl.dynamic,
+    targetOS: targetOS,
+    workingDirectory: projectUri,
+    includeParentEnvironment: true,
+  );
+  ensureNativeAssetsBuildSucceed(dryRunResult);
+  final List<AssetImpl> nativeAssets = dryRunResult.assets;
+  ensureNoLinkModeStatic(nativeAssets);
+  globals.logger.printTrace('Dry running native assets for $targetOS done.');
+  final Uri? absolutePath = flutterTester ? buildUri : null;
+  final Map<AssetImpl, KernelAsset> assetTargetLocations =
+      _assetTargetLocations(
+    nativeAssets,
+    absolutePath,
+  );
+  return assetTargetLocations.values;
+}
+
+/// Builds native assets.
+///
+/// If [darwinArchs] is omitted, the current target architecture is used.
+///
+/// If [flutterTester] is true, absolute paths are emitted in the native
+/// assets mapping. This can be used for JIT mode without sandbox on the host.
+/// This is used in `flutter test` and `flutter run -d flutter-tester`.
+Future<(Uri? nativeAssetsYaml, List<Uri> dependencies)> buildNativeAssetsMacOS({
+  required NativeAssetsBuildRunner buildRunner,
+  List<DarwinArch>? darwinArchs,
+  required Uri projectUri,
+  required BuildMode buildMode,
+  bool flutterTester = false,
+  String? codesignIdentity,
+  Uri? yamlParentDirectory,
+  required FileSystem fileSystem,
+}) async {
+  const OSImpl targetOS = OSImpl.macOS;
+  final Uri buildUri = nativeAssetsBuildUri(projectUri, targetOS);
+  if (!await nativeBuildRequired(buildRunner)) {
+    final Uri nativeAssetsYaml = await writeNativeAssetsYaml(
+      KernelAssets(),
+      yamlParentDirectory ?? buildUri,
+      fileSystem,
+    );
+    return (nativeAssetsYaml, <Uri>[]);
+  }
+
+  final List<Target> targets = darwinArchs != null
+      ? darwinArchs.map(_getNativeTarget).toList()
+      : <Target>[Target.current];
+  final BuildModeImpl buildModeCli =
+      nativeAssetsBuildMode(buildMode);
+
+  globals.logger
+      .printTrace('Building native assets for $targets $buildModeCli.');
+  final List<AssetImpl> nativeAssets = <AssetImpl>[];
+  final Set<Uri> dependencies = <Uri>{};
+  for (final Target target in targets) {
+    final BuildResult result = await buildRunner.build(
+      linkModePreference: LinkModePreferenceImpl.dynamic,
+      target: target,
+      buildMode: buildModeCli,
+      workingDirectory: projectUri,
+      includeParentEnvironment: true,
+      cCompilerConfig: await buildRunner.cCompilerConfig,
+    );
+    ensureNativeAssetsBuildSucceed(result);
+    nativeAssets.addAll(result.assets);
+    dependencies.addAll(result.dependencies);
+  }
+  ensureNoLinkModeStatic(nativeAssets);
+  globals.logger.printTrace('Building native assets for $targets done.');
+  final Uri? absolutePath = flutterTester ? buildUri : null;
+  final Map<AssetImpl, KernelAsset> assetTargetLocations =
+      _assetTargetLocations(nativeAssets, absolutePath);
+  final Map<KernelAssetPath, List<AssetImpl>> fatAssetTargetLocations =
+      _fatAssetTargetLocations(nativeAssets, absolutePath);
+  if (flutterTester) {
+    await _copyNativeAssetsMacOSFlutterTester(
+      buildUri,
+      fatAssetTargetLocations,
+      codesignIdentity,
+      buildMode,
+      fileSystem,
+    );
+  } else {
+    await _copyNativeAssetsMacOS(
+      buildUri,
+      fatAssetTargetLocations,
+      codesignIdentity,
+      buildMode,
+      fileSystem,
+    );
+  }
+  final Uri nativeAssetsUri = await writeNativeAssetsYaml(
+    KernelAssets(assetTargetLocations.values),
+    yamlParentDirectory ?? buildUri,
+    fileSystem,
+  );
+  return (nativeAssetsUri, dependencies.toList());
+}
+
+/// Extract the [Target] from a [DarwinArch].
+Target _getNativeTarget(DarwinArch darwinArch) {
+  switch (darwinArch) {
+    case DarwinArch.arm64:
+      return Target.macOSArm64;
+    case DarwinArch.x86_64:
+      return Target.macOSX64;
+    case DarwinArch.armv7:
+      throw Exception('Unknown DarwinArch: $darwinArch.');
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Map<KernelAssetPath, List<CodeAsset>> fatAssetTargetLocationsMacOS(
@@ -44,6 +184,7 @@ Map<CodeAsset, KernelAsset> assetTargetLocationsMacOS(
   Uri? absolutePath,
 ) {
   final Set<String> alreadyTakenNames = <String>{};
+<<<<<<< HEAD
   final Map<String, KernelAssetPath> idToPath = <String, KernelAssetPath>{};
   final Map<CodeAsset, KernelAsset> result = <CodeAsset, KernelAsset>{};
   for (final CodeAsset asset in nativeAssets) {
@@ -57,6 +198,12 @@ Map<CodeAsset, KernelAsset> assetTargetLocationsMacOS(
     );
   }
   return result;
+=======
+  return <AssetImpl, KernelAsset>{
+    for (final AssetImpl asset in nativeAssets)
+      asset: _targetLocationMacOS(asset, absolutePath, alreadyTakenNames),
+  };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 KernelAsset _targetLocationMacOS(
@@ -163,6 +310,7 @@ Future<void> copyNativeCodeAssetsMacOS(
       fileSystem.path.relative(
         versionsDir.childDirectory('Current').childFile(name).path,
         from: dylibLink.parent.path,
+<<<<<<< HEAD
       ),
     );
 
@@ -183,6 +331,11 @@ Future<void> copyNativeCodeAssetsMacOS(
     // for bundled dylibs is done in `macos_assemble.sh embed` because the
     // "Flutter Assemble" target does not have access to the signing identity.
     if (codesignIdentity != null) {
+=======
+      ));
+      await setInstallNameDylib(dylibFile);
+      await createInfoPlist(name, resourcesDir);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       await codesignDylib(codesignIdentity, buildMode, frameworkDir);
     }
   }

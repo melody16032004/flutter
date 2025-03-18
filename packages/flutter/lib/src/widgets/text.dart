@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/gestures.dart';
 /// @docImport 'package:flutter/material.dart';
 ///
@@ -13,9 +14,10 @@
 library;
 
 import 'dart:math';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:ui' as ui show TextHeightBehavior;
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 
 import 'basic.dart';
@@ -23,7 +25,6 @@ import 'default_selection_style.dart';
 import 'framework.dart';
 import 'inherited_theme.dart';
 import 'media_query.dart';
-import 'selectable_region.dart';
 import 'selection_container.dart';
 
 // Examples can assume:
@@ -698,10 +699,30 @@ class Text extends StatelessWidget {
       (null, final double textScaleFactor) => TextScaler.linear(textScaleFactor),
       (null, null) => MediaQuery.textScalerOf(context),
     };
-    late Widget result;
+
+    Widget result = RichText(
+      textAlign: textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
+      textDirection: textDirection, // RichText uses Directionality.of to obtain a default if this is null.
+      locale: locale, // RichText uses Localizations.localeOf to obtain a default if this is null
+      softWrap: softWrap ?? defaultTextStyle.softWrap,
+      overflow: overflow ?? effectiveTextStyle?.overflow ?? defaultTextStyle.overflow,
+      textScaler: textScaler,
+      maxLines: maxLines ?? defaultTextStyle.maxLines,
+      strutStyle: strutStyle,
+      textWidthBasis: textWidthBasis ?? defaultTextStyle.textWidthBasis,
+      textHeightBehavior: textHeightBehavior ?? defaultTextStyle.textHeightBehavior ?? DefaultTextHeightBehavior.maybeOf(context),
+      selectionRegistrar: registrar,
+      selectionColor: selectionColor ?? DefaultSelectionStyle.of(context).selectionColor ?? DefaultSelectionStyle.defaultColor,
+      text: TextSpan(
+        style: effectiveTextStyle,
+        text: data,
+        children: textSpan != null ? <InlineSpan>[textSpan!] : null,
+      ),
+    );
     if (registrar != null) {
       result = MouseRegion(
         cursor: DefaultSelectionStyle.of(context).mouseCursor ?? SystemMouseCursors.text,
+<<<<<<< HEAD
         child: _SelectableTextContainer(
           textAlign: textAlign ?? defaultTextStyle.textAlign ?? TextAlign.start,
           textDirection:
@@ -754,6 +775,9 @@ class Text extends StatelessWidget {
           text: data,
           children: textSpan != null ? <InlineSpan>[textSpan!] : null,
         ),
+=======
+        child: result,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
     }
     if (semanticsLabel != null) {
@@ -806,6 +830,7 @@ class Text extends StatelessWidget {
     }
   }
 }
+<<<<<<< HEAD
 
 class _SelectableTextContainer extends StatefulWidget {
   const _SelectableTextContainer({
@@ -1443,3 +1468,5 @@ class _SelectableTextContainerDelegate extends StaticSelectionContainerDelegate 
 /// The length of the content that can be selected, and the range that is
 /// selected.
 typedef _SelectionInfo = ({int contentLength, SelectedContentRange? range});
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

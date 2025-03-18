@@ -24,6 +24,7 @@ Rect boundsFor(WidgetController controller, Finder item) {
 
 Future<void> main() async {
   final Completer<void> ready = Completer<void>();
+<<<<<<< HEAD
   runApp(
     GestureDetector(
       onTap: () {
@@ -32,16 +33,24 @@ Future<void> main() async {
       },
       behavior: HitTestBehavior.opaque,
       child: const IgnorePointer(child: GalleryApp(testMode: true)),
+=======
+  runApp(GestureDetector(
+    onTap: () {
+      debugPrint('Received tap.');
+      ready.complete();
+    },
+    behavior: HitTestBehavior.opaque,
+    child: const IgnorePointer(
+      child: GalleryApp(testMode: true),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ),
   );
   await SchedulerBinding.instance.endOfFrame;
+  await Future<void>.delayed(const Duration(milliseconds: 50));
   debugPrint('==== MEMORY BENCHMARK ==== READY ====');
 
   await ready.future;
   debugPrint('Continuing...');
-
-  // Wait out any errant taps due to synchronization
-  await Future<void>.delayed(const Duration(milliseconds: 200));
 
   // remove onTap handler, enable pointer events for app
   runApp(

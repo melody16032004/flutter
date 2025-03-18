@@ -768,7 +768,7 @@ class Cache {
           _logger.printError(
             'Failed to retrieve Flutter tool dependencies: ${e.message}.\n'
             "If you're in China, please see this page: "
-            'https://flutter.dev/to/china-setup',
+            'https://flutter.dev/community/china',
             emphasis: true,
           );
         }
@@ -1160,7 +1160,7 @@ class ArtifactUpdater {
           _logger.printError(error.toString());
           throwToolExit(
             'The value of $kFlutterStorageBaseUrl ($overrideUrl) could not be '
-            'parsed as a valid url. Please see https://flutter.dev/to/use-mirror-site '
+            'parsed as a valid url. Please see https://flutter.dev/community/china '
             'for an example of how to use it.\n'
             'Full URL: $url',
             exitCode: kNetworkProblemExitCode,
@@ -1203,7 +1203,11 @@ class ArtifactUpdater {
           throwToolExit(
             'Flutter could not download and/or extract $url. Ensure you have '
             'network connectivity and all of the required dependencies listed at '
+<<<<<<< HEAD
             'https://flutter.dev/setup.\nThe original exception was: $err.',
+=======
+            'flutter.dev/setup.\nThe original exception was: $err.'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           );
         }
         _deleteIgnoringErrors(tempFile);

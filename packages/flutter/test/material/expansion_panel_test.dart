@@ -202,6 +202,7 @@ void main() {
       of: find.ancestor(of: find.byKey(headerKey), matching: find.byType(Row)),
       matching: find.byType(ExpandIcon),
     );
+<<<<<<< HEAD
     expect(
       tester.getSemantics(expansionIcon),
       matchesSemantics(
@@ -214,6 +215,16 @@ void main() {
         hasFocusAction: true,
       ),
     );
+=======
+    expect(tester.getSemantics(expansionIcon), matchesSemantics(
+      label: 'Expand',
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      isFocusable: true,
+      hasTapAction: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check custom header widget semantics is preserved.
     final Finder headerWidget = find.descendant(
@@ -249,6 +260,7 @@ void main() {
       matching: find.byType(ExpandIcon),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(expansionIcon),
       matchesSemantics(
@@ -265,6 +277,20 @@ void main() {
         ],
       ),
     );
+=======
+    expect(tester.getSemantics(expansionIcon), matchesSemantics(
+      label: 'Expand',
+      children: <Matcher>[
+        matchesSemantics(
+          isButton: true,
+          hasEnabledState: true,
+          isEnabled: true,
+          isFocusable: true,
+          hasTapAction: true,
+        ),
+      ],
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check custom header widget semantics is preserved.
     final Finder headerWidget = find.descendant(
@@ -1101,6 +1127,7 @@ void main() {
       of: find.ancestor(of: find.byKey(expandedKey), matching: find.byType(Row)),
       matching: find.byType(ExpandIcon),
     );
+<<<<<<< HEAD
     expect(
       tester.getSemantics(expandedIcon),
       matchesSemantics(
@@ -1114,6 +1141,17 @@ void main() {
         onTapHint: localizations.expandedIconTapHint,
       ),
     );
+=======
+    expect(tester.getSemantics(expandedIcon), matchesSemantics(
+      label: 'Collapse',
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      isFocusable: true,
+      hasTapAction: true,
+      onTapHint: localizations.expandedIconTapHint,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check the semantics of the header widget for expanded panel.
     final Finder expandedHeader = find.byKey(expandedKey);
@@ -1124,6 +1162,7 @@ void main() {
       of: find.ancestor(of: find.byKey(collapsedKey), matching: find.byType(Row)),
       matching: find.byType(ExpandIcon),
     );
+<<<<<<< HEAD
     expect(
       tester.getSemantics(collapsedIcon),
       matchesSemantics(
@@ -1137,6 +1176,17 @@ void main() {
         onTapHint: localizations.collapsedIconTapHint,
       ),
     );
+=======
+    expect(tester.getSemantics(collapsedIcon), matchesSemantics(
+      label: 'Expand',
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      isFocusable: true,
+      hasTapAction: true,
+      onTapHint: localizations.collapsedIconTapHint,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check the semantics of the header widget for expanded panel.
     final Finder collapsedHeader = find.byKey(collapsedKey);
@@ -1178,6 +1228,7 @@ void main() {
       matching: find.byType(ExpandIcon),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(expandedIcon),
       matchesSemantics(
@@ -1195,6 +1246,21 @@ void main() {
         ],
       ),
     );
+=======
+    expect(tester.getSemantics(expandedIcon), matchesSemantics(
+      label: 'Collapse',
+      onTapHint: localizations.expandedIconTapHint,
+      children: <Matcher>[
+        matchesSemantics(
+          isButton: true,
+          hasEnabledState: true,
+          isEnabled: true,
+          isFocusable: true,
+          hasTapAction: true,
+        ),
+      ],
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check the semantics of the header widget for expanded panel.
     final Finder expandedHeader = find.byKey(expandedKey);
@@ -1205,6 +1271,7 @@ void main() {
       of: find.ancestor(of: find.byKey(collapsedKey), matching: find.byType(Row)),
       matching: find.byType(ExpandIcon),
     );
+<<<<<<< HEAD
     expect(
       tester.getSemantics(collapsedIcon),
       matchesSemantics(
@@ -1222,6 +1289,21 @@ void main() {
         ],
       ),
     );
+=======
+    expect(tester.getSemantics(collapsedIcon), matchesSemantics(
+      label: 'Expand',
+      onTapHint: localizations.collapsedIconTapHint,
+      children: <Matcher>[
+        matchesSemantics(
+          isButton: true,
+          hasEnabledState: true,
+          isEnabled: true,
+          isFocusable: true,
+          hasTapAction: true,
+        ),
+      ],
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Check the semantics of the header widget for expanded panel.
     final Finder collapsedHeader = find.byKey(collapsedKey);
@@ -1269,6 +1351,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byKey(collapsedKey)),
       matchesSemantics(
@@ -1281,6 +1364,23 @@ void main() {
         hasFocusAction: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byKey(expandedKey)), matchesSemantics(
+      label: 'Expanded',
+      isButton: true,
+      isFocusable: true,
+      hasEnabledState: true,
+      hasTapAction: true,
+    ));
+
+    expect(tester.getSemantics(find.byKey(collapsedKey)), matchesSemantics(
+      label: 'Collapsed',
+      isButton: true,
+      isFocusable: true,
+      hasEnabledState: true,
+      hasTapAction: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     handle.dispose();
   });
@@ -1983,6 +2083,7 @@ void main() {
       }
     }
   });
+<<<<<<< HEAD
 
   testWidgets(
     'Ensure IconButton splashColor and highlightColor are correctly set when canTapOnHeader is false',
@@ -2100,4 +2201,6 @@ void main() {
     final IgnorePointer ignorePointerTrue = tester.widget(ignorePointerFinder);
     expect(ignorePointerTrue.ignoring, isTrue);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

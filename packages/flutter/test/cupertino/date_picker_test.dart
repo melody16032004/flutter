@@ -2155,6 +2155,7 @@ void main() {
     expect(find.textContaining('15').last, findsOneWidget);
     expect(find.text('2018'), findsOneWidget);
   });
+<<<<<<< HEAD
 
   testWidgets('CupertinoDatePicker selectionOverlayBuilder with monthYear mode', (
     WidgetTester tester,
@@ -2487,6 +2488,8 @@ void main() {
     expect(testWidth, equals(largestWidth));
     expect(widths.indexOf(largestWidth), equals(1));
   }, skip: isBrowser); // https://github.com/flutter/flutter/issues/39998
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 Widget _buildPicker({

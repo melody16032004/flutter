@@ -18,6 +18,7 @@ class ColumnOfTextState extends State<ColumnOfText> with SingleTickerProviderSta
   @override
   void initState() {
     super.initState();
+<<<<<<< HEAD
     _controller =
         AnimationController(vsync: this, duration: const Duration(milliseconds: 300))
           ..addStatusListener((AnimationStatus status) {
@@ -31,6 +32,23 @@ class ColumnOfTextState extends State<ColumnOfText> with SingleTickerProviderSta
             }
           })
           ..forward();
+=======
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    )
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          setState(() {
+            _showText = !_showText;
+          });
+          _controller
+            ..reset()
+            ..forward();
+        }
+      })
+      ..forward();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

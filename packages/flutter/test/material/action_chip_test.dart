@@ -440,6 +440,7 @@ void main() {
     labelTopLeft = tester.getTopLeft(find.byType(Container));
     expect(labelTopLeft.dx, avatarCenter.dx + (iconSize / 2) + labelPadding);
   });
+<<<<<<< HEAD
 
   testWidgets('ActionChip.chipAnimationStyle is passed to RawChip', (WidgetTester tester) async {
     final ChipAnimationStyle chipAnimationStyle = ChipAnimationStyle(
@@ -564,4 +565,6 @@ void main() {
       SystemMouseCursors.forbidden,
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

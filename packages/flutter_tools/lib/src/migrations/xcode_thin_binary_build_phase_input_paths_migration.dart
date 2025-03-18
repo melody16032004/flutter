@@ -16,7 +16,7 @@ class XcodeThinBinaryBuildPhaseInputPathsMigration extends ProjectMigrator {
   final File _xcodeProjectInfoFile;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_xcodeProjectInfoFile.existsSync()) {
       logger.printTrace(
         'Xcode project not found, skipping script build phase dependency analysis removal.',

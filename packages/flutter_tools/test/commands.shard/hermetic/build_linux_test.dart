@@ -126,6 +126,7 @@ void main() {
       );
       setUpMockCoreProjectFiles();
 
+<<<<<<< HEAD
       expect(
         createTestCommandRunner(command).run(const <String>['build', 'linux', '--no-pub']),
         throwsToolExit(
@@ -143,6 +144,19 @@ void main() {
       FeatureFlags: () => TestFeatureFlags(isLinuxEnabled: true),
     },
   );
+=======
+    expect(createTestCommandRunner(command).run(
+      const <String>['build', 'linux', '--no-pub']
+    ), throwsToolExit(message: 'No Linux desktop project configured. See '
+      'https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding Linux support to a project.'));
+  }, overrides: <Type, Generator>{
+    Platform: () => linuxPlatform,
+    FileSystem: () => fileSystem,
+    ProcessManager: () => processManager,
+    FeatureFlags: () => TestFeatureFlags(isLinuxEnabled: true),
+  });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   testUsingContext(
     'Linux build fails on non-linux platform',

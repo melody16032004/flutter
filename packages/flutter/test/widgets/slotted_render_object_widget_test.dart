@@ -206,19 +206,19 @@ void main() {
       tester.renderObject(find.byType(_Diagonal)).toStringDeep(),
       equalsIgnoringHashCodes(
         '_RenderDiagonal#00000 relayoutBoundary=up1\n'
-        ' │ creator: _Diagonal ← Align ← Directionality ←\n'
-        ' │   _FocusInheritedScope ← _FocusScopeWithExternalFocusNode ←\n'
-        ' │   _FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery\n'
-        ' │   ← _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ← ⋯\n'
+        ' │ creator: _Diagonal ← Align ← Directionality ← MediaQuery ←\n'
+        ' │   _MediaQueryFromView ← _PipelineOwnerScope ← _ViewScope ←\n'
+        ' │   _RawView-[_DeprecatedRawViewKey TestFlutterView#00000] ← View ←\n'
+        ' │   [root]\n'
         ' │ parentData: offset=Offset(0.0, 0.0) (can use size)\n'
         ' │ constraints: BoxConstraints(0.0<=w<=800.0, 0.0<=h<=600.0)\n'
         ' │ size: Size(190.0, 220.0)\n'
         ' │\n'
         ' ├─topLeft: RenderConstrainedBox#00000 relayoutBoundary=up2\n'
         ' │   creator: SizedBox ← _Diagonal ← Align ← Directionality ←\n'
-        ' │     _FocusInheritedScope ← _FocusScopeWithExternalFocusNode ←\n'
-        ' │     _FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery\n'
-        ' │     ← _MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+        ' │     MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope ←\n'
+        ' │     _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+        ' │     TestFlutterView#00000] ← View ← [root]\n'
         ' │   parentData: offset=Offset(0.0, 0.0) (can use size)\n'
         ' │   constraints: BoxConstraints(unconstrained)\n'
         ' │   size: Size(80.0, 100.0)\n'
@@ -226,14 +226,18 @@ void main() {
         ' │\n'
         ' └─bottomRight: RenderConstrainedBox#00000 relayoutBoundary=up2\n'
         '     creator: SizedBox ← _Diagonal ← Align ← Directionality ←\n'
-        '       _FocusInheritedScope ← _FocusScopeWithExternalFocusNode ←\n'
-        '       _FocusInheritedScope ← Focus ← FocusTraversalGroup ← MediaQuery\n'
-        '       ← _MediaQueryFromView ← _PipelineOwnerScope ← ⋯\n'
+        '       MediaQuery ← _MediaQueryFromView ← _PipelineOwnerScope ←\n'
+        '       _ViewScope ← _RawView-[_DeprecatedRawViewKey\n'
+        '       TestFlutterView#00000] ← View ← [root]\n'
         '     parentData: offset=Offset(80.0, 100.0) (can use size)\n'
         '     constraints: BoxConstraints(unconstrained)\n'
         '     size: Size(110.0, 120.0)\n'
         '     additionalConstraints: BoxConstraints(w=110.0, h=120.0)\n',
+<<<<<<< HEAD
       ),
+=======
+      )
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   });
 }

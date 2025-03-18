@@ -14,7 +14,6 @@ import '../base/platform.dart';
 import '../build_info.dart';
 import '../desktop_device.dart';
 import '../device.dart';
-import '../device_vm_service_discovery_for_attach.dart';
 import '../ios/ios_workflow.dart';
 import '../project.dart';
 
@@ -62,6 +61,7 @@ class MacOSDesignedForIPadDevice extends DesktopDevice {
   String? executablePathForDevice(ApplicationPackage package, BuildInfo buildInfo) => null;
 
   @override
+<<<<<<< HEAD
   VMServiceDiscoveryForAttach getVMServiceDiscoveryForAttach({
     String? appId,
     String? fuchsiaModule,
@@ -94,6 +94,8 @@ class MacOSDesignedForIPadDevice extends DesktopDevice {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Future<LaunchResult> startApp(
     ApplicationPackage? package, {
     String? mainPath,
@@ -114,7 +116,6 @@ class MacOSDesignedForIPadDevice extends DesktopDevice {
   Future<void> buildForDevice({
     String? mainPath,
     required BuildInfo buildInfo,
-    bool usingCISystem = false,
   }) async {
     // Only attaching to a running app launched from Xcode is supported.
     throw UnimplementedError('Building for "$name" is not supported.');

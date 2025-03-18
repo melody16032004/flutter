@@ -6,7 +6,7 @@ import 'isolates.dart' as isolates;
 
 export 'isolates.dart' show ComputeCallback;
 
-/// The web implementation of [isolates.compute].
+/// The web implementation of [isolate.compute].
 @pragma('dart2js:tryInline')
 Future<R> compute<M, R>(
   isolates.ComputeCallback<M, R> callback,

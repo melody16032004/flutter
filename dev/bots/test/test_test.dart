@@ -10,8 +10,7 @@ import 'package:file/memory.dart';
 import 'package:path/path.dart' as path;
 import 'package:process/process.dart';
 
-import '../suite_runners/run_flutter_packages_tests.dart';
-import '../utils.dart';
+import '../test.dart';
 import 'common.dart';
 
 /// Fails a test if the exit code of `result` is not the expected value. This
@@ -96,21 +95,29 @@ void main() {
 
     test('commit hash', () async {
       packagesVersionFile.writeAsStringSync(kSampleHash);
+<<<<<<< HEAD
       final String actualHash = await getFlutterPackagesVersion(
         flutterRoot: flutterRoot,
         fileSystem: memoryFileSystem,
         packagesVersionFile: packagesVersionFile.path,
       );
+=======
+      final String actualHash = await getFlutterPackagesVersion(fileSystem: memoryFileSystem, packagesVersionFile: packagesVersionFile.path);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(actualHash, kSampleHash);
     });
 
     test('commit hash with newlines', () async {
       packagesVersionFile.writeAsStringSync('\n$kSampleHash\n');
+<<<<<<< HEAD
       final String actualHash = await getFlutterPackagesVersion(
         flutterRoot: flutterRoot,
         fileSystem: memoryFileSystem,
         packagesVersionFile: packagesVersionFile.path,
       );
+=======
+      final String actualHash = await getFlutterPackagesVersion(fileSystem: memoryFileSystem, packagesVersionFile: packagesVersionFile.path);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       expect(actualHash, kSampleHash);
     });
   });

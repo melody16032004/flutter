@@ -1770,6 +1770,7 @@ void main() {
     expect(item1Height, 30.0);
     expect(item2Height, 30.0);
   });
+<<<<<<< HEAD
 
   testWidgets('ListView dismiss keyboard onDrag and keep dismissed on drawer opened test', (
     WidgetTester tester,
@@ -1814,4 +1815,6 @@ void main() {
 
     expect(tester.testTextInput.isVisible, isFalse);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

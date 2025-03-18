@@ -684,6 +684,7 @@ void main() {
       },
     );
 
+<<<<<<< HEAD
     testUsingContext(
       'use packagesPath to generate BuildInfo',
       () async {
@@ -698,6 +699,16 @@ void main() {
         ProcessManager: () => processManager,
       },
     );
+=======
+    testUsingContext('use packagesPath to generate BuildInfo', () async {
+      final DummyFlutterCommand flutterCommand = DummyFlutterCommand(packagesPath: 'foo');
+      final BuildInfo buildInfo = await flutterCommand.getBuildInfo(forcedBuildMode: BuildMode.debug);
+      expect(buildInfo.packagesPath, 'foo');
+    }, overrides: <Type, Generator>{
+      FileSystem: () => fileSystem,
+      ProcessManager: () => processManager,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext(
       'use fileSystemScheme to generate BuildInfo',
@@ -1426,6 +1437,7 @@ void main() {
         },
       );
 
+<<<<<<< HEAD
       testUsingContext(
         'CLI option overrides default flavor from manifest',
         () async {
@@ -1478,6 +1490,17 @@ flutter:
           ProcessManager: () => FakeProcessManager.empty(),
         },
       );
+=======
+        expect(runner.run(<String>['run', '--dart-define-from-file=config.json', '--no-pub', '--no-hot', '--flavor=strawberry']),
+          throwsToolExit(message: 'FLUTTER_APP_FLAVOR is used by the framework and cannot be set using --dart-define or --dart-define-from-file'));
+      }, overrides: <Type, Generator>{
+        DeviceManager: () => testDeviceManager,
+        Platform: () => FakePlatform(),
+        Cache: () => Cache.test(processManager: FakeProcessManager.any()),
+        FileSystem: () => fileSystem,
+        ProcessManager: () => FakeProcessManager.any(),
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
   });
 }

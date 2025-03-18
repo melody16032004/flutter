@@ -273,6 +273,7 @@ class _FeatureDiscoveryState extends State<FeatureDiscovery> with TickerProvider
   }
 
   void initAnimationControllers() {
+<<<<<<< HEAD
     openController =
         AnimationController(duration: const Duration(milliseconds: 500), vsync: this)
           ..addListener(() {
@@ -342,6 +343,69 @@ class _FeatureDiscoveryState extends State<FeatureDiscovery> with TickerProvider
                 break;
             }
           });
+=======
+    openController = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.forward) {
+          setState(() => status = FeatureDiscoveryStatus.open);
+        } else if (animationStatus == AnimationStatus.completed) {
+          rippleController.forward(from: 0.0);
+        }
+      });
+
+    rippleController = AnimationController(
+      duration: const Duration(milliseconds: 1000),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.forward) {
+          setState(() => status = FeatureDiscoveryStatus.ripple);
+        } else if (animationStatus == AnimationStatus.completed) {
+          rippleController.forward(from: 0.0);
+        }
+      });
+
+    tapController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.forward) {
+          setState(() => status = FeatureDiscoveryStatus.tap);
+        } else if (animationStatus == AnimationStatus.completed) {
+          widget.onTap?.call();
+          cleanUponOverlayClose();
+        }
+      });
+
+    dismissController = AnimationController(
+      duration: const Duration(milliseconds: 250),
+      vsync: this,
+    )
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((AnimationStatus animationStatus) {
+        if (animationStatus == AnimationStatus.forward) {
+          setState(() => status = FeatureDiscoveryStatus.dismiss);
+        } else if (animationStatus == AnimationStatus.completed) {
+          widget.onDismiss?.call();
+          cleanUponOverlayClose();
+        }
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   void initAnimations() {

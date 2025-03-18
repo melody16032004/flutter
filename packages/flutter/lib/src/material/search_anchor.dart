@@ -594,9 +594,12 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
   final CapturedThemes capturedThemes;
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
+<<<<<<< HEAD
   CurvedAnimation? curvedAnimation;
   CurvedAnimation? viewFadeOnIntervalCurve;
   bool willDisposeSearchController = false;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   Color? get barrierColor => Colors.transparent;
@@ -643,6 +646,7 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
     return super.didPop(result);
   }
 
+<<<<<<< HEAD
   void _dismiss({required bool disposeController}) {
     willDisposeSearchController = disposeController;
     if (isActive) {
@@ -660,6 +664,8 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
     super.dispose();
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void updateViewConfig(BuildContext context) {
     viewDefaults = _SearchViewDefaultsM3(context, isFullScreen: showFullScreenView);
     viewTheme = SearchViewTheme.of(context);
@@ -731,26 +737,31 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
       child: AnimatedBuilder(
         animation: animation,
         builder: (BuildContext context, Widget? child) {
-          curvedAnimation ??= CurvedAnimation(
+          final Animation<double> curvedAnimation = CurvedAnimation(
             parent: animation,
             curve: Curves.easeInOutCubicEmphasized,
             reverseCurve: Curves.easeInOutCubicEmphasized.flipped,
           );
 
+<<<<<<< HEAD
           final Rect viewRect = _rectTween.evaluate(curvedAnimation!)!;
           final double topPadding =
               showFullScreenView
                   ? lerpDouble(0.0, MediaQuery.paddingOf(context).top, curvedAnimation!.value)!
                   : 0.0;
-
-          viewFadeOnIntervalCurve ??= CurvedAnimation(
-            parent: animation,
-            curve: _kViewFadeOnInterval,
-            reverseCurve: _kViewFadeOnInterval.flipped,
-          );
+=======
+          final Rect viewRect = _rectTween.evaluate(curvedAnimation)!;
+          final double topPadding = showFullScreenView
+            ? lerpDouble(0.0, MediaQuery.paddingOf(context).top, curvedAnimation.value)!
+            : 0.0;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
           return FadeTransition(
-            opacity: viewFadeOnIntervalCurve!,
+            opacity: CurvedAnimation(
+              parent: animation,
+              curve: _kViewFadeOnInterval,
+              reverseCurve: _kViewFadeOnInterval.flipped,
+            ),
             child: capturedThemes.wrap(
               _ViewContent(
                 viewOnChanged: viewOnChanged,
@@ -772,7 +783,7 @@ class _SearchViewRoute extends PopupRoute<_SearchViewRoute> {
                 viewPadding: viewPadding,
                 shrinkWrap: shrinkWrap,
                 showFullScreenView: showFullScreenView,
-                animation: curvedAnimation!,
+                animation: curvedAnimation,
                 topPadding: topPadding,
                 viewMaxWidth: _rectTween.end!.width,
                 viewRect: viewRect,
@@ -864,9 +875,6 @@ class _ViewContent extends StatefulWidget {
 class _ViewContentState extends State<_ViewContent> {
   Size? _screenSize;
   late Rect _viewRect;
-  late CurvedAnimation viewIconsFadeCurve;
-  late CurvedAnimation viewDividerFadeCurve;
-  late CurvedAnimation viewListFadeOnIntervalCurve;
   late final SearchController _controller;
   Iterable<Widget> result = <Widget>[];
   String? searchValue;
@@ -878,7 +886,6 @@ class _ViewContentState extends State<_ViewContent> {
     _viewRect = widget.viewRect;
     _controller = widget.searchController;
     _controller.addListener(updateSuggestions);
-    _setupAnimations();
   }
 
   @override
@@ -907,14 +914,13 @@ class _ViewContentState extends State<_ViewContent> {
       _timer?.cancel();
       _timer = Timer(Duration.zero, () async {
         searchValue = _controller.text;
+<<<<<<< HEAD
         final Iterable<Widget> suggestions = await widget.suggestionsBuilder(context, _controller);
+=======
+        result = await widget.suggestionsBuilder(context, _controller);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         _timer?.cancel();
         _timer = null;
-        if (mounted) {
-          setState(() {
-            result = suggestions;
-          });
-        }
       });
     }
   }
@@ -922,12 +928,12 @@ class _ViewContentState extends State<_ViewContent> {
   @override
   void dispose() {
     _controller.removeListener(updateSuggestions);
-    _disposeAnimations();
     _timer?.cancel();
     _timer = null;
     super.dispose();
   }
 
+<<<<<<< HEAD
   void _setupAnimations() {
     viewIconsFadeCurve = CurvedAnimation(
       parent: widget.animation,
@@ -950,6 +956,19 @@ class _ViewContentState extends State<_ViewContent> {
     viewIconsFadeCurve.dispose();
     viewDividerFadeCurve.dispose();
     viewListFadeOnIntervalCurve.dispose();
+=======
+  Widget viewBuilder(Iterable<Widget> suggestions) {
+    if (widget.viewBuilder == null) {
+      return MediaQuery.removePadding(
+        context: context,
+        removeTop: true,
+        child: ListView(
+          children: suggestions.toList()
+        ),
+      );
+    }
+    return widget.viewBuilder!(suggestions);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   Future<void> updateSuggestions() async {
@@ -1064,7 +1083,11 @@ class _ViewContentState extends State<_ViewContent> {
                 minWidth: 0,
                 fit: OverflowBoxFit.deferToChild,
                 child: FadeTransition(
-                  opacity: viewIconsFadeCurve,
+                  opacity: CurvedAnimation(
+                    parent: widget.animation,
+                    curve: _kViewIconsFadeOnInterval,
+                    reverseCurve: _kViewIconsFadeOnInterval.flipped,
+                  ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -1108,6 +1131,7 @@ class _ViewContentState extends State<_ViewContent> {
                           ),
                         ),
                       ),
+<<<<<<< HEAD
                       if (!effectiveShrinkWrap ||
                           minHeight > 0 ||
                           widget.showFullScreenView ||
@@ -1132,6 +1156,23 @@ class _ViewContentState extends State<_ViewContent> {
                                     )
                                     : widget.viewBuilder!(result),
                           ),
+=======
+                      FadeTransition(
+                        opacity: CurvedAnimation(
+                          parent: widget.animation,
+                          curve: _kViewDividerFadeOnInterval,
+                          reverseCurve: _kViewFadeOnInterval.flipped,
+                        ),
+                        child: viewDivider),
+                      Expanded(
+                        child: FadeTransition(
+                          opacity: CurvedAnimation(
+                            parent: widget.animation,
+                            curve: _kViewListFadeOnInterval,
+                            reverseCurve: _kViewListFadeOnInterval.flipped,
+                          ),
+                          child: viewBuilder(result),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                         ),
                       ],
                     ],
@@ -1541,6 +1582,7 @@ class _SearchBarState extends State<SearchBar> {
   Widget build(BuildContext context) {
     final TextDirection textDirection = Directionality.of(context);
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final IconThemeData iconTheme = IconTheme.of(context);
     final SearchBarThemeData searchBarTheme = SearchBarTheme.of(context);
     final SearchBarThemeData defaults = _SearchBarDefaultsM3(context);
 
@@ -1610,6 +1652,7 @@ class _SearchBarState extends State<SearchBar> {
         searchBarTheme.textStyle?.resolve(states) ??
         defaults.hintStyle?.resolve(states);
 
+<<<<<<< HEAD
     final Color defaultColor = switch (colorScheme.brightness) {
       Brightness.light => kDefaultIconDarkColor,
       Brightness.dark => kDefaultIconLightColor,
@@ -1618,15 +1661,27 @@ class _SearchBarState extends State<SearchBar> {
       final IconThemeData iconTheme when iconTheme.color != defaultColor => iconTheme,
       _ => null,
     };
+=======
+    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    bool isIconThemeColorDefault(Color? color) {
+      if (isDark) {
+        return color == kDefaultIconLightColor;
+      }
+      return color == kDefaultIconDarkColor;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     Widget? leading;
     if (widget.leading != null) {
       leading = IconTheme.merge(
-        data: customTheme ?? IconThemeData(color: colorScheme.onSurface),
+        data: isIconThemeColorDefault(iconTheme.color)
+          ? IconThemeData(color: colorScheme.onSurface)
+          : iconTheme,
         child: widget.leading!,
       );
     }
 
+<<<<<<< HEAD
     final List<Widget>? trailing =
         widget.trailing
             ?.map(
@@ -1636,6 +1691,17 @@ class _SearchBarState extends State<SearchBar> {
               ),
             )
             .toList();
+=======
+    List<Widget>? trailing;
+    if (widget.trailing != null) {
+      trailing = widget.trailing?.map((Widget trailing) => IconTheme.merge(
+        data: isIconThemeColorDefault(iconTheme.color)
+          ? IconThemeData(color: colorScheme.onSurfaceVariant)
+          : iconTheme,
+        child: trailing,
+      )).toList();
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     return ConstrainedBox(
       constraints: widget.constraints ?? searchBarTheme.constraints ?? defaults.constraints!,
@@ -1701,7 +1767,7 @@ class _SearchBarState extends State<SearchBar> {
                         ),
                       ),
                     ),
-                    ...?trailing,
+                    if (trailing != null) ...trailing,
                   ],
                 ),
               ),

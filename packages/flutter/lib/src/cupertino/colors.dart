@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/material.dart';
 ///
 /// @docImport 'button.dart';
@@ -9,6 +10,9 @@
 library;
 
 import 'dart:ui' show Brightness, Color, ColorSpace;
+=======
+import 'dart:ui' show Brightness, Color;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import '../../foundation.dart';
 import '../widgets/basic.dart';
@@ -82,6 +86,7 @@ abstract final class CupertinoColors {
   ///  * [white], opaque white in the [CupertinoColors] palette.
   static const Color black = Color(0xFF000000);
 
+<<<<<<< HEAD
   /// A fully-transparent color, completely invisible.
   ///
   /// See also:
@@ -89,6 +94,8 @@ abstract final class CupertinoColors {
   ///  * [Colors.transparent], the same color, in the Material Design palette.
   static const Color transparent = Color(0x00000000);
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Used in iOS 10 for light background fills such as the chat bubble background.
   ///
   /// This is SystemLightGrayColor in the iOS palette.

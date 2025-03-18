@@ -221,9 +221,14 @@ abstract class RenderSliverEdgeInsetsPadding extends RenderSliver
     required double crossAxisPosition,
   }) {
     if (child != null && child!.geometry!.hitTestExtent > 0.0) {
+<<<<<<< HEAD
       final SliverPhysicalParentData childParentData =
           child!.parentData! as SliverPhysicalParentData;
       return result.addWithAxisOffset(
+=======
+      final SliverPhysicalParentData childParentData = child!.parentData! as SliverPhysicalParentData;
+      result.addWithAxisOffset(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         mainAxisPosition: mainAxisPosition,
         crossAxisPosition: crossAxisPosition,
         mainAxisOffset: childMainAxisPosition(child!),

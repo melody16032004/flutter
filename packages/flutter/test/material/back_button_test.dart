@@ -197,6 +197,7 @@ void main() {
       case TargetPlatform.windows:
         expectedLabel = null;
     }
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(BackButton)),
       matchesSemantics(
@@ -210,6 +211,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(BackButton)), matchesSemantics(
+      tooltip: 'Back',
+      label: expectedLabel,
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   }, variant: TargetPlatformVariant.all());
 
@@ -240,6 +252,7 @@ void main() {
       case TargetPlatform.windows:
         expectedLabel = null;
     }
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(CloseButton)),
       matchesSemantics(
@@ -253,6 +266,17 @@ void main() {
         isFocusable: true,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(CloseButton)), matchesSemantics(
+      tooltip: 'Close',
+      label: expectedLabel,
+      isButton: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      hasTapAction: true,
+      isFocusable: true,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   }, variant: TargetPlatformVariant.all());
 

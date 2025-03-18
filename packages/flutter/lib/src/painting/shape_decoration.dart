@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 
 import 'basic_types.dart';
@@ -14,7 +11,6 @@ import 'box_decoration.dart';
 import 'box_shadow.dart';
 import 'circle_border.dart';
 import 'colors.dart';
-import 'debug.dart';
 import 'decoration.dart';
 import 'decoration_image.dart';
 import 'edge_insets.dart';
@@ -182,20 +178,22 @@ class ShapeDecoration extends Decoration {
 
   @override
   ShapeDecoration? lerpFrom(Decoration? a, double t) {
-    return switch (a) {
-      BoxDecoration() => ShapeDecoration.lerp(ShapeDecoration.fromBoxDecoration(a), this, t),
-      ShapeDecoration? _ => ShapeDecoration.lerp(a, this, t),
-      _ => super.lerpFrom(a, t) as ShapeDecoration?,
-    };
+    if (a is BoxDecoration) {
+      return ShapeDecoration.lerp(ShapeDecoration.fromBoxDecoration(a), this, t);
+    } else if (a == null || a is ShapeDecoration) {
+      return ShapeDecoration.lerp(a as ShapeDecoration?, this, t);
+    }
+    return super.lerpFrom(a, t) as ShapeDecoration?;
   }
 
   @override
   ShapeDecoration? lerpTo(Decoration? b, double t) {
-    return switch (b) {
-      BoxDecoration() => ShapeDecoration.lerp(this, ShapeDecoration.fromBoxDecoration(b), t),
-      ShapeDecoration? _ => ShapeDecoration.lerp(this, b, t),
-      _ => super.lerpTo(b, t) as ShapeDecoration?,
-    };
+    if (b is BoxDecoration) {
+      return ShapeDecoration.lerp(this, ShapeDecoration.fromBoxDecoration(b), t);
+    } else if (b == null || b is ShapeDecoration) {
+      return ShapeDecoration.lerp(this, b as ShapeDecoration?, t);
+    }
+    return super.lerpTo(b, t) as ShapeDecoration?;
   }
 
   /// Linearly interpolate between two shapes.
@@ -364,6 +362,7 @@ class _ShapeDecorationPainter extends BoxPainter {
   }
 
   void _paintShadows(Canvas canvas, Rect rect, TextDirection? textDirection) {
+<<<<<<< HEAD
     // The debugHandleDisabledShadowStart and debugHandleDisabledShadowEnd
     // methods are used in debug mode only to support BlurStyle.outer when
     // debugDisableShadows is set. Without these clips, the shadows would extend
@@ -418,8 +417,16 @@ class _ShapeDecorationPainter extends BoxPainter {
               _shadowPaths[index],
             ),
           );
+=======
+    if (_shadowCount != null) {
+      if (_decoration.shape.preferPaintInterior) {
+        for (int index = 0; index < _shadowCount!; index += 1) {
+          _decoration.shape.paintInterior(canvas, _shadowBounds[index], _shadowPaints[index], textDirection: textDirection);
+        }
+      } else {
+        for (int index = 0; index < _shadowCount!; index += 1) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           canvas.drawPath(_shadowPaths[index], _shadowPaints[index]);
-          assert(debugHandleDisabledShadowEnd(canvas, _decoration.shadows![index]));
         }
       }
     }

@@ -790,6 +790,7 @@ class _PackagesViewState extends State<_PackagesView> {
                       child: Material(
                         color: Theme.of(context).cardColor,
                         elevation: 4.0,
+<<<<<<< HEAD
                         child: ConstrainedBox(
                           constraints: const BoxConstraints(maxWidth: 600.0),
                           child: _packagesList(
@@ -798,6 +799,11 @@ class _PackagesViewState extends State<_PackagesView> {
                             snapshot.data!,
                             widget.isLateral,
                           ),
+=======
+                        child: Container(
+                          constraints: BoxConstraints.loose(const Size.fromWidth(600.0)),
+                          child: _packagesList(context, selectedId, snapshot.data!, widget.isLateral),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                         ),
                       ),
                     );
@@ -1096,8 +1102,8 @@ class _PackageLicensePageState extends State<_PackageLicensePage> {
           child: Material(
             color: theme.cardColor,
             elevation: 4.0,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 600.0),
+            child: Container(
+              constraints: BoxConstraints.loose(const Size.fromWidth(600.0)),
               child: Localizations.override(
                 locale: const Locale('en', 'US'),
                 context: context,
@@ -1443,6 +1449,7 @@ class _MasterDetailFlowState extends State<_MasterDetailFlow> implements _PageOp
   }
 
   MaterialPageRoute<void> _detailPageRoute(Object? arguments) {
+<<<<<<< HEAD
     return MaterialPageRoute<void>(
       builder: (BuildContext context) {
         return PopScope<void>(
@@ -1454,6 +1461,17 @@ class _MasterDetailFlowState extends State<_MasterDetailFlow> implements _PageOp
         );
       },
     );
+=======
+    return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
+      return PopScope(
+        onPopInvoked: (bool didPop) {
+          // No need for setState() as rebuild happens on navigation pop.
+          focus = _Focus.master;
+        },
+        child: BlockSemantics(child: widget.detailPageBuilder(context, arguments, null)),
+      );
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   Widget _lateralUI(BuildContext context) {
@@ -1569,19 +1587,17 @@ class _MasterDetailScaffoldState extends State<_MasterDetailScaffold> implements
               preferredSize: const Size.fromHeight(kToolbarHeight),
               child: Row(
                 children: <Widget>[
-                  SizedBox(
-                    width: masterViewWidth,
+                  ConstrainedBox(
+                    constraints: BoxConstraints.tightFor(width: masterViewWidth),
                     child: IconTheme(
                       data: Theme.of(context).primaryIconTheme,
-                      child: Padding(
+                      child: Container(
+                        alignment: AlignmentDirectional.centerEnd,
                         padding: const EdgeInsets.all(8),
-                        child: Align(
-                          alignment: AlignmentDirectional.centerEnd,
-                          child: OverflowBar(
-                            spacing: 8,
-                            overflowAlignment: OverflowBarAlignment.end,
-                            children: widget.actionBuilder!(context, _ActionLevel.view),
-                          ),
+                        child: OverflowBar(
+                          spacing: 8,
+                          overflowAlignment: OverflowBarAlignment.end,
+                          children: widget.actionBuilder!(context, _ActionLevel.view),
                         ),
                       ),
                     ),
@@ -1613,8 +1629,9 @@ class _MasterDetailScaffoldState extends State<_MasterDetailScaffold> implements
                             child,
                           ),
                   duration: const Duration(milliseconds: 500),
-                  child: SizedBox.expand(
+                  child: Container(
                     key: ValueKey<Object?>(value ?? widget.initialArguments),
+                    constraints: const BoxConstraints.expand(),
                     child: _DetailView(
                       builder: widget.detailPageBuilder,
                       arguments: value ?? widget.initialArguments,

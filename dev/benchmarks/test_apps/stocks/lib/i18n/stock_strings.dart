@@ -14,16 +14,14 @@ import 'package:intl/intl.dart' as intl;
 import 'stock_strings_en.dart';
 import 'stock_strings_es.dart';
 
-// ignore_for_file: type=lint
-
-/// Callers can lookup localized strings with an instance of StockStrings
-/// returned by `StockStrings.of(context)`.
+/// Callers can lookup localized strings with an instance of StockStrings returned
+/// by `StockStrings.of(context)`.
 ///
 /// Applications need to include `StockStrings.delegate()` in their app's
-/// `localizationDelegates` list, and the locales they support in the app's
-/// `supportedLocales` list. For example:
+/// localizationDelegates list, and the locales they support in the app's
+/// supportedLocales list. For example:
 ///
-/// ```dart
+/// ```
 /// import 'i18n/stock_strings.dart';
 ///
 /// return MaterialApp(
@@ -38,14 +36,14 @@ import 'stock_strings_es.dart';
 /// Please make sure to update your pubspec.yaml to include the following
 /// packages:
 ///
-/// ```yaml
+/// ```
 /// dependencies:
 ///   # Internationalization support.
 ///   flutter_localizations:
 ///     sdk: flutter
 ///   intl: any # Use the pinned version from flutter_localizations
 ///
-///   # Rest of dependencies
+///   # rest of dependencies
 /// ```
 ///
 /// ## iOS Applications
@@ -68,7 +66,7 @@ import 'stock_strings_es.dart';
 /// be consistent with the languages listed in the StockStrings.supportedLocales
 /// property.
 abstract class StockStrings {
-  StockStrings(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  StockStrings(String locale) : localeName = intl.Intl.canonicalizedLocale(locale);
 
   final String localeName;
 
@@ -127,7 +125,7 @@ class _StockStringsDelegate extends LocalizationsDelegate<StockStrings> {
 
   @override
   Future<StockStrings> load(Locale locale) {
-    return SynchronousFuture<StockStrings>(lookupStockStrings(locale));
+    return SynchronousFuture<StockStrings>(_lookupStockStrings(locale));
   }
 
   @override
@@ -137,6 +135,7 @@ class _StockStringsDelegate extends LocalizationsDelegate<StockStrings> {
   bool shouldReload(_StockStringsDelegate old) => false;
 }
 
+<<<<<<< HEAD
 StockStrings lookupStockStrings(Locale locale) {
   // Lookup logic when language+country codes are specified.
   switch (locale.languageCode) {
@@ -148,6 +147,18 @@ StockStrings lookupStockStrings(Locale locale) {
         }
         break;
       }
+=======
+StockStrings _lookupStockStrings(Locale locale) {
+
+  // Lookup logic when language+country codes are specified.
+  switch (locale.languageCode) {
+    case 'en': {
+      switch (locale.countryCode) {
+        case 'US': return StockStringsEnUs();
+      }
+      break;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   // Lookup logic when only language code is specified.

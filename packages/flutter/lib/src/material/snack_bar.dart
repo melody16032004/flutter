@@ -9,6 +9,7 @@ library;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'button_style.dart';
 import 'color_scheme.dart';
 import 'colors.dart';
 import 'icon_button.dart';
@@ -206,7 +207,11 @@ class _SnackBarActionState extends State<SnackBarAction> {
     }
 
     return TextButton(
+<<<<<<< HEAD
       style: TextButton.styleFrom(overlayColor: resolveForegroundColor()).copyWith(
+=======
+      style: ButtonStyle(
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         foregroundColor: resolveForegroundColor(),
         backgroundColor: resolveBackgroundColor(),
       ),
@@ -390,8 +395,7 @@ class SnackBar extends StatefulWidget {
 
   /// Defines how the snack bar area, including margin, will behave during hit testing.
   ///
-  /// If this property is null, and [margin] is not null or [SnackBarThemeData.insetPadding] of
-  /// [ThemeData.snackBarTheme] is not null, then [HitTestBehavior.deferToChild] is used by default.
+  /// If this property is null and [margin] is not null, then [HitTestBehavior.deferToChild] is used by default.
   ///
   /// Please refer to [HitTestBehavior] for a detailed explanation of every behavior.
   final HitTestBehavior? hitTestBehavior;
@@ -529,17 +533,10 @@ class SnackBar extends StatefulWidget {
 class _SnackBarState extends State<SnackBar> {
   bool _wasVisible = false;
 
-  CurvedAnimation? _heightAnimation;
-  CurvedAnimation? _fadeInAnimation;
-  CurvedAnimation? _fadeInM3Animation;
-  CurvedAnimation? _fadeOutAnimation;
-  CurvedAnimation? _heightM3Animation;
-
   @override
   void initState() {
     super.initState();
     widget.animation!.addStatusListener(_onAnimationStatusChanged);
-    _setAnimations();
   }
 
   @override
@@ -548,11 +545,10 @@ class _SnackBarState extends State<SnackBar> {
     if (widget.animation != oldWidget.animation) {
       oldWidget.animation!.removeStatusListener(_onAnimationStatusChanged);
       widget.animation!.addStatusListener(_onAnimationStatusChanged);
-      _disposeAnimations();
-      _setAnimations();
     }
   }
 
+<<<<<<< HEAD
   void _setAnimations() {
     assert(widget.animation != null);
     _heightAnimation = CurvedAnimation(parent: widget.animation!, curve: _snackBarHeightCurve);
@@ -584,19 +580,25 @@ class _SnackBarState extends State<SnackBar> {
     _heightM3Animation = null;
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @override
   void dispose() {
     widget.animation!.removeStatusListener(_onAnimationStatusChanged);
-    _disposeAnimations();
     super.dispose();
   }
 
   void _onAnimationStatusChanged(AnimationStatus animationStatus) {
-    if (animationStatus.isCompleted) {
-      if (widget.onVisible != null && !_wasVisible) {
-        widget.onVisible!();
-      }
-      _wasVisible = true;
+    switch (animationStatus) {
+      case AnimationStatus.dismissed:
+      case AnimationStatus.forward:
+      case AnimationStatus.reverse:
+        break;
+      case AnimationStatus.completed:
+        if (widget.onVisible != null && !_wasVisible) {
+          widget.onVisible!();
+        }
+        _wasVisible = true;
     }
   }
 
@@ -679,6 +681,7 @@ class _SnackBarState extends State<SnackBar> {
     final double iconHorizontalMargin =
         (widget.padding?.resolve(TextDirection.ltr).right ?? horizontalPadding) / 12.0;
 
+<<<<<<< HEAD
     final IconButton? iconButton =
         showCloseIcon
             ? IconButton(
@@ -694,6 +697,34 @@ class _SnackBarState extends State<SnackBar> {
               tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
             )
             : null;
+=======
+    final CurvedAnimation heightAnimation = CurvedAnimation(parent: widget.animation!, curve: _snackBarHeightCurve);
+    final CurvedAnimation fadeInAnimation = CurvedAnimation(parent: widget.animation!, curve: _snackBarFadeInCurve);
+    final CurvedAnimation fadeInM3Animation = CurvedAnimation(parent: widget.animation!, curve: _snackBarM3FadeInCurve);
+
+    final CurvedAnimation fadeOutAnimation = CurvedAnimation(
+      parent: widget.animation!,
+      curve: _snackBarFadeOutCurve,
+      reverseCurve: const Threshold(0.0),
+    );
+    // Material 3 Animation has a height animation on entry, but a direct fade out on exit.
+    final CurvedAnimation heightM3Animation = CurvedAnimation(
+      parent: widget.animation!,
+      curve: _snackBarM3HeightCurve,
+      reverseCurve: const Threshold(0.0),
+    );
+
+
+    final IconButton? iconButton = showCloseIcon
+        ? IconButton(
+            icon: const Icon(Icons.close),
+            iconSize: 24.0,
+            color: widget.closeIconColor ?? snackBarTheme.closeIconColor ?? defaults.closeIconColor,
+            onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(reason: SnackBarClosedReason.dismiss),
+            tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+          )
+        : null;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     // Calculate combined width of Action, Icon, and their padding, if they are present.
     final TextPainter actionTextPainter = TextPainter(
@@ -789,10 +820,19 @@ class _SnackBarState extends State<SnackBar> {
       clipBehavior: widget.clipBehavior,
       child: Theme(
         data: effectiveTheme,
+<<<<<<< HEAD
         child:
             accessibleNavigation || theme.useMaterial3
                 ? snackBar
                 : FadeTransition(opacity: _fadeOutAnimation!, child: snackBar),
+=======
+        child: accessibleNavigation || theme.useMaterial3
+            ? snackBar
+            : FadeTransition(
+                opacity: fadeOutAnimation,
+                child: snackBar,
+              ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
@@ -819,11 +859,15 @@ class _SnackBarState extends State<SnackBar> {
         key: const Key('dismissible'),
         direction: dismissDirection,
         resizeDuration: null,
+<<<<<<< HEAD
         behavior:
             widget.hitTestBehavior ??
             (widget.margin != null || snackBarTheme.insetPadding != null
                 ? HitTestBehavior.deferToChild
                 : HitTestBehavior.opaque),
+=======
+        behavior: widget.hitTestBehavior ?? (widget.margin != null ? HitTestBehavior.deferToChild : HitTestBehavior.opaque),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         onDismissed: (DismissDirection direction) {
           ScaffoldMessenger.of(context).removeCurrentSnackBar(reason: SnackBarClosedReason.swipe);
         },
@@ -835,6 +879,7 @@ class _SnackBarState extends State<SnackBar> {
     if (accessibleNavigation) {
       snackBarTransition = snackBar;
     } else if (isFloatingSnackBar && !theme.useMaterial3) {
+<<<<<<< HEAD
       snackBarTransition = FadeTransition(opacity: _fadeInAnimation!, child: snackBar);
       // Is Material 3 Floating Snack Bar.
     } else if (isFloatingSnackBar && theme.useMaterial3) {
@@ -844,15 +889,44 @@ class _SnackBarState extends State<SnackBar> {
           valueListenable: _heightM3Animation!,
           builder: (BuildContext context, double value, Widget? child) {
             return Align(alignment: Alignment.bottomLeft, heightFactor: value, child: child);
+=======
+      snackBarTransition = FadeTransition(
+        opacity: fadeInAnimation,
+        child: snackBar,
+      );
+     // Is Material 3 Floating Snack Bar.
+    } else if (isFloatingSnackBar && theme.useMaterial3) {
+      snackBarTransition = FadeTransition(
+        opacity: fadeInM3Animation,
+        child: AnimatedBuilder(
+          animation: heightM3Animation,
+          builder: (BuildContext context, Widget? child) {
+            return Align(
+              alignment: AlignmentDirectional.bottomStart,
+              heightFactor: heightM3Animation.value,
+              child: child,
+            );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           },
           child: snackBar,
         ),
       );
     } else {
+<<<<<<< HEAD
       snackBarTransition = ValueListenableBuilder<double>(
         valueListenable: _heightAnimation!,
         builder: (BuildContext context, double value, Widget? child) {
           return Align(alignment: AlignmentDirectional.topStart, heightFactor: value, child: child);
+=======
+      snackBarTransition = AnimatedBuilder(
+        animation: heightAnimation,
+        builder: (BuildContext context, Widget? child) {
+          return Align(
+            alignment: AlignmentDirectional.topStart,
+            heightFactor: heightAnimation.value,
+            child: child,
+          );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         },
         child: snackBar,
       );

@@ -111,10 +111,20 @@ Future<File> generateTest(Directory apiDir) async {
   });
 
   // Collect the examples, and import them all as separate symbols.
-  final List<ExampleInfo> infoList = <ExampleInfo>[
-    for (final File example in examples) ExampleInfo(example, examplesLibDir),
-  ];
+  final List<String> imports = <String>[];
+  imports.add('''import 'package:flutter/widgets.dart';''');
+  imports.add('''import 'package:flutter/scheduler.dart';''');
+  imports.add('''import 'package:flutter_test/flutter_test.dart';''');
+  imports.add('''import 'package:integration_test/integration_test.dart';''');
+  final List<ExampleInfo> infoList = <ExampleInfo>[];
+  for (final File example in examples) {
+    final ExampleInfo info = ExampleInfo(example, examplesLibDir);
+    infoList.add(info);
+    imports.add('''import 'package:flutter_api_samples/${info.importPath}' as ${info.importName};''');
+  }
+  imports.sort();
   infoList.sort((ExampleInfo a, ExampleInfo b) => a.importPath.compareTo(b.importPath));
+<<<<<<< HEAD
   final List<String> imports = <String>[
     "import 'package:flutter/widgets.dart';",
     "import 'package:flutter/scheduler.dart';",
@@ -123,6 +133,8 @@ Future<File> generateTest(Directory apiDir) async {
     for (final ExampleInfo info in infoList)
       "import 'package:flutter_api_samples/${info.importPath}' as ${info.importName};",
   ]..sort();
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final StringBuffer buffer = StringBuffer();
   buffer.writeln('// Temporary generated file. Do not commit.');

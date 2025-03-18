@@ -160,12 +160,25 @@ class GlowingOverscrollIndicator extends StatefulWidget {
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(EnumProperty<AxisDirection>('axisDirection', axisDirection));
+<<<<<<< HEAD
     final String showDescription = switch ((showLeading, showTrailing)) {
       (true, true) => 'both sides',
       (true, false) => 'leading side only',
       (false, true) => 'trailing side only',
       (false, false) => 'neither side (!)',
     };
+=======
+    final String showDescription;
+    if (showLeading && showTrailing) {
+      showDescription = 'both sides';
+    } else if (showLeading) {
+      showDescription = 'leading side only';
+    } else if (showTrailing) {
+      showDescription = 'trailing side only';
+    } else {
+      showDescription = 'neither side (!)';
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     properties.add(MessageProperty('show', showDescription));
     properties.add(ColorProperty('color', color, showName: false));
   }
@@ -321,7 +334,7 @@ class _GlowingOverscrollIndicatorState extends State<GlowingOverscrollIndicator>
 }
 
 // The Glow logic is a port of the logic in the following file:
-// https://android.googlesource.com/platform/frameworks/base/+/main/core/java/android/widget/EdgeEffect.java
+// https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/widget/EdgeEffect.java
 // as of December 2016.
 
 enum _GlowState { idle, absorb, pull, recede }
@@ -489,7 +502,7 @@ class _GlowController extends ChangeNotifier {
   }
 
   void _changePhase(AnimationStatus status) {
-    if (!status.isCompleted) {
+    if (status != AnimationStatus.completed) {
       return;
     }
     switch (_state) {
@@ -827,7 +840,7 @@ class _StretchingOverscrollIndicatorState extends State<StretchingOverscrollIndi
           final Widget transform = Transform(
             alignment: alignment,
             transform: Matrix4.diagonal3Values(x, y, 1.0),
-            filterQuality: stretch == 0 ? null : FilterQuality.medium,
+            filterQuality: stretch == 0 ? null : FilterQuality.low,
             child: widget.child,
           );
 
@@ -880,22 +893,21 @@ class _StretchController extends ChangeNotifier {
 
   double get value => _stretchSize.value;
 
-  // Constants for absorbImpact.
-  static const double _kMinVelocity = 1;
-  static const double _kMaxVelocity = 10000;
-  static const Duration _kMinStretchDuration = Duration(milliseconds: 50);
-
   /// Handle a fling to the edge of the viewport at a particular velocity.
   ///
   /// The velocity must be positive.
   void absorbImpact(double velocity, double totalOverscroll) {
     assert(velocity >= 0.0);
-    velocity = clampDouble(velocity, _kMinVelocity, _kMaxVelocity);
+    velocity = clampDouble(velocity, 1, 10000);
     _stretchSizeTween.begin = _stretchSize.value;
     _stretchSizeTween.end = math.min(_stretchIntensity + (_flingFriction / velocity), 1.0);
+<<<<<<< HEAD
     _stretchController.duration = Duration(
       milliseconds: math.max(velocity * 0.02, _kMinStretchDuration.inMilliseconds).round(),
     );
+=======
+    _stretchController.duration = Duration(milliseconds: (velocity * 0.02).round());
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     _stretchController.forward(from: 0.0);
     _state = _StretchState.absorb;
     _stretchDirection =
@@ -946,7 +958,7 @@ class _StretchController extends ChangeNotifier {
   }
 
   void _changePhase(AnimationStatus status) {
-    if (!status.isCompleted) {
+    if (status != AnimationStatus.completed) {
       return;
     }
     switch (_state) {

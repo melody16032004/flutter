@@ -25,17 +25,15 @@ pluginManagement {
     }
 }
 
-buildscript {
-    dependencyLocking {
-        lockFile = file("${rootProject.projectDir}/buildscript-gradle.lockfile")
-        lockAllConfigurations()
-    }
-}
-
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
+<<<<<<< HEAD
     id "com.android.application" version "8.7.0" apply false
     id "org.jetbrains.kotlin.android" version "1.8.10" apply false
+=======
+    id "com.android.application" version "7.3.0" apply false
+    id "org.jetbrains.kotlin.android" version "1.7.10" apply false
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 include ":app"

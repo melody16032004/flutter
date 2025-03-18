@@ -15,7 +15,6 @@ import 'package:flutter_tools/src/ios/code_signing.dart';
 
 import '../../src/common.dart';
 import '../../src/fake_process_manager.dart';
-import '../../src/fakes.dart';
 
 const String kCertificates = '''
 1) 86f7e437faa5a7fce15d1ddcb9eaeaea377667b8 "iPhone Developer: Profile 1 (1111AAAA11)"
@@ -568,6 +567,7 @@ void main() {
       expect(developmentTeam, isNull);
       expect(processManager, hasNoRemainingExpectations);
     });
+<<<<<<< HEAD
 
     testWithoutContext('handles stdin pipe breaking on openssl process', () async {
       final StreamSink<List<int>> stdinSink = ClosedStdinController();
@@ -619,6 +619,8 @@ void main() {
         ),
       );
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }
 

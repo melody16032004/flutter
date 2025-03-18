@@ -527,7 +527,7 @@ class _SearchPageState<T> extends State<_SearchPage<T>> {
   }
 
   void _onAnimationStatusChanged(AnimationStatus status) {
-    if (!status.isCompleted) {
+    if (status != AnimationStatus.completed) {
       return;
     }
     widget.animation.removeStatusListener(_onAnimationStatusChanged);

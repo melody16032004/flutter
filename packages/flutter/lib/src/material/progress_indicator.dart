@@ -727,6 +727,7 @@ class CircularProgressIndicator extends ProgressIndicator {
   }) : _indicatorType = _ActivityIndicatorType.material;
 
   /// Creates an adaptive progress indicator that is a
+<<<<<<< HEAD
   /// [CupertinoActivityIndicator] on [TargetPlatform.iOS] &
   /// [TargetPlatform.macOS] and a [CircularProgressIndicator] in material
   /// theme/non-Apple platforms.
@@ -734,6 +735,13 @@ class CircularProgressIndicator extends ProgressIndicator {
   /// The [valueColor], [strokeWidth], [strokeAlign], [strokeCap],
   /// [semanticsLabel], [semanticsValue], [trackGap], [year2023] will be
   /// ignored on iOS & macOS.
+=======
+  /// [CupertinoActivityIndicator] in iOS and [CircularProgressIndicator] in
+  /// material theme/non-iOS.
+  ///
+  /// The [value], [valueColor], [strokeWidth], [semanticsLabel], and
+  /// [semanticsValue] will be ignored in iOS.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ///
   /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
   const CircularProgressIndicator.adaptive({
@@ -1356,6 +1364,7 @@ class _LinearProgressIndicatorDefaultsM3Year2023 extends ProgressIndicatorThemeD
 
   @override
   Color get color => _colors.primary;
+<<<<<<< HEAD
 
   @override
   Color get linearTrackColor => _colors.secondaryContainer;
@@ -1402,6 +1411,8 @@ class _CircularProgressIndicatorDefaultsM3 extends ProgressIndicatorThemeData {
 
   @override
   EdgeInsetsGeometry? get circularTrackPadding => const EdgeInsets.all(4.0);
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class _LinearProgressIndicatorDefaultsM3 extends ProgressIndicatorThemeData {
@@ -1414,7 +1425,7 @@ class _LinearProgressIndicatorDefaultsM3 extends ProgressIndicatorThemeData {
   Color get color => _colors.primary;
 
   @override
-  Color get linearTrackColor => _colors.secondaryContainer;
+  Color get linearTrackColor => _colors.surfaceContainerHighest;
 
   @override
   double get linearMinHeight => 4.0;

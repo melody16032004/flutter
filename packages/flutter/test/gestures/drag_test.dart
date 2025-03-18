@@ -5,6 +5,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:leak_tracker_flutter_testing/leak_tracker_flutter_testing.dart';
 
 import 'gesture_tester.dart';
 
@@ -863,9 +864,16 @@ void main() {
     ]);
   });
 
+<<<<<<< HEAD
   testGesture('Horizontal drag with multiple pointers - averageBoundaryPointers', (
     GestureTester tester,
   ) {
+=======
+  testGesture('Horizontal drag with multiple pointers - averageBoundaryPointers',
+  // TODO(polina-c): dispose gesture recognizers https://github.com/flutter/flutter/issues/145605 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (GestureTester tester) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final HorizontalDragGestureRecognizer drag =
         HorizontalDragGestureRecognizer()
           ..multitouchDragStrategy = MultitouchDragStrategy.averageBoundaryPointers;
@@ -1002,8 +1010,6 @@ void main() {
     // Tear down 'currentSystemFrameTimeStamp'
     SchedulerBinding.instance.handleBeginFrame(Duration.zero);
     SchedulerBinding.instance.handleDrawFrame();
-    // Dispose gesture
-    drag.dispose();
 
     expect(log, <String>[
       '-a',
@@ -1029,9 +1035,16 @@ void main() {
     ]);
   });
 
+<<<<<<< HEAD
   testGesture('Vertical drag with multiple pointers - averageBoundaryPointers', (
     GestureTester tester,
   ) {
+=======
+  testGesture('Vertical drag with multiple pointers - averageBoundaryPointers',
+  // TODO(polina-c): dispose gesture recognizers https://github.com/flutter/flutter/issues/145605 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (GestureTester tester) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final VerticalDragGestureRecognizer drag =
         VerticalDragGestureRecognizer()
           ..multitouchDragStrategy = MultitouchDragStrategy.averageBoundaryPointers;
@@ -1168,8 +1181,11 @@ void main() {
     // Tear down 'currentSystemFrameTimeStamp'
     SchedulerBinding.instance.handleBeginFrame(Duration.zero);
     SchedulerBinding.instance.handleDrawFrame();
+<<<<<<< HEAD
     // Dispose gesture
     drag.dispose();
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(log, <String>[
       '-a',
@@ -1195,7 +1211,14 @@ void main() {
     ]);
   });
 
+<<<<<<< HEAD
   testGesture('Pan drag with multiple pointers - averageBoundaryPointers', (GestureTester tester) {
+=======
+  testGesture('Pan drag with multiple pointers - averageBoundaryPointers',
+  // TODO(polina-c): dispose gesture recognizers https://github.com/flutter/flutter/issues/145605 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (GestureTester tester) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     final PanGestureRecognizer drag =
         PanGestureRecognizer()
           ..multitouchDragStrategy = MultitouchDragStrategy.averageBoundaryPointers;
@@ -1353,9 +1376,6 @@ void main() {
     // Tear down 'currentSystemFrameTimeStamp'
     SchedulerBinding.instance.handleBeginFrame(Duration.zero);
     SchedulerBinding.instance.handleDrawFrame();
-
-    // Dispose gesture
-    drag.dispose();
 
     expect(log, <String>[
       '-a',

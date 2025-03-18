@@ -2,12 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-///
-/// @docImport 'binding.dart';
-/// @docImport 'widget_tester.dart';
-library;
-
 import 'dart:ui' hide window;
 
 import 'package:flutter/foundation.dart';
@@ -155,7 +149,6 @@ class TestPlatformDispatcher implements PlatformDispatcher {
     : _platformDispatcher = platformDispatcher {
     _updateViewsAndDisplays();
     _platformDispatcher.onMetricsChanged = _handleMetricsChanged;
-    _platformDispatcher.onViewFocusChange = _handleViewFocusChanged;
   }
 
   /// The [PlatformDispatcher] that is wrapped by this [TestPlatformDispatcher].
@@ -185,6 +178,7 @@ class TestPlatformDispatcher implements PlatformDispatcher {
   }
 
   @override
+<<<<<<< HEAD
   ViewFocusChangeCallback? get onViewFocusChange => _platformDispatcher.onViewFocusChange;
   ViewFocusChangeCallback? _onViewFocusChange;
   @override
@@ -246,6 +240,8 @@ class TestPlatformDispatcher implements PlatformDispatcher {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Locale get locale => _localeTestValue ?? _platformDispatcher.locale;
   Locale? _localeTestValue;
 
@@ -388,6 +384,7 @@ class TestPlatformDispatcher implements PlatformDispatcher {
   }
 
   @override
+<<<<<<< HEAD
   bool get supportsShowingSystemContextMenu =>
       _supportsShowingSystemContextMenu ?? _platformDispatcher.supportsShowingSystemContextMenu;
   bool? _supportsShowingSystemContextMenu;
@@ -404,6 +401,9 @@ class TestPlatformDispatcher implements PlatformDispatcher {
   @override
   bool get brieflyShowPassword =>
       _brieflyShowPasswordTestValue ?? _platformDispatcher.brieflyShowPassword;
+=======
+  bool get brieflyShowPassword => _brieflyShowPasswordTestValue ?? _platformDispatcher.brieflyShowPassword;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool? _brieflyShowPasswordTestValue;
 
   /// Hides the real [brieflyShowPassword] and reports the given
@@ -560,7 +560,6 @@ class TestPlatformDispatcher implements PlatformDispatcher {
     clearTextScaleFactorTestValue();
     clearNativeSpellCheckServiceDefined();
     resetBrieflyShowPassword();
-    resetSupportsShowingSystemContextMenu();
     resetInitialLifecycleState();
     resetSystemFontFamily();
   }

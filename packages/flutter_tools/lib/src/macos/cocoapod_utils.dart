@@ -16,10 +16,9 @@ import 'swift_package_manager.dart';
 Future<void> processPodsIfNeeded(
   XcodeBasedProject xcodeProject,
   String buildDirectory,
-  BuildMode buildMode, {
-  bool forceCocoaPodsOnly = false,
-}) async {
+  BuildMode buildMode) async {
   final FlutterProject project = xcodeProject.parent;
+<<<<<<< HEAD
 
   // When using Swift Package Manager, the Podfile may not exist so if there
   // isn't a Podfile, skip processing pods.
@@ -75,14 +74,33 @@ Future<void> processPodsIfNeeded(
 
   // If the Xcode project, Podfile, generated plugin Swift Package, or podhelper
   // have changed since last run, pods should be updated.
+=======
+  // Ensure that the plugin list is up to date, since hasPlugins relies on it.
+  await refreshPluginsList(project, macOSPlatform: project.macos.existsSync());
+  if (!(hasPlugins(project) || (project.isModule && xcodeProject.podfile.existsSync()))) {
+    return;
+  }
+  // If the Xcode project, Podfile, or generated xcconfig have changed since
+  // last run, pods should be updated.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   final Fingerprinter fingerprinter = Fingerprinter(
     fingerprintPath: globals.fs.path.join(buildDirectory, 'pod_inputs.fingerprint'),
     paths: <String>[
       xcodeProject.xcodeProjectInfoFile.path,
       xcodeProject.podfile.path,
+<<<<<<< HEAD
       if (xcodeProject.flutterPluginSwiftPackageManifest.existsSync())
         xcodeProject.flutterPluginSwiftPackageManifest.path,
       globals.fs.path.join(Cache.flutterRoot!, 'packages', 'flutter_tools', 'bin', 'podhelper.rb'),
+=======
+      globals.fs.path.join(
+        Cache.flutterRoot!,
+        'packages',
+        'flutter_tools',
+        'bin',
+        'podhelper.rb',
+      ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ],
     fileSystem: globals.fs,
     logger: globals.logger,

@@ -434,7 +434,13 @@ class NavigationDestination extends StatelessWidget {
             _StatusTransitionWidgetBuilder(
               animation: animation,
               builder: (BuildContext context, Widget? child) {
+<<<<<<< HEAD
                 return animation.isForwardOrCompleted ? selectedIconWidget : unselectedIconWidget;
+=======
+                return _isForwardOrCompleted(animation)
+                  ? selectedIconWidget
+                  : unselectedIconWidget;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
               },
             ),
           ],
@@ -456,12 +462,20 @@ class NavigationDestination extends StatelessWidget {
         final EdgeInsetsGeometry labelPadding =
             info.labelPadding ?? navigationBarTheme.labelPadding ?? defaults.labelPadding!;
 
+<<<<<<< HEAD
         final TextStyle? textStyle =
             enabled
                 ? animation.isForwardOrCompleted
                     ? effectiveSelectedLabelTextStyle
                     : effectiveUnselectedLabelTextStyle
                 : effectiveDisabledLabelTextStyle;
+=======
+        final TextStyle? textStyle = enabled
+          ? _isForwardOrCompleted(animation)
+            ? effectiveSelectedLabelTextStyle
+            : effectiveUnselectedLabelTextStyle
+          : effectiveDisabledLabelTextStyle;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         return Padding(
           padding: labelPadding,
@@ -823,7 +837,7 @@ class NavigationIndicator extends StatelessWidget {
         animation: animation,
         builder: (BuildContext context, Widget? child) {
           return _SelectableAnimatedBuilder(
-            isSelected: animation.isForwardOrCompleted,
+            isSelected: _isForwardOrCompleted(animation),
             duration: const Duration(milliseconds: 100),
             alwaysDoFullAnimation: true,
             builder: (BuildContext context, Animation<double> fadeAnimation) {
@@ -940,7 +954,9 @@ class _DestinationLayoutAnimationBuilder extends StatelessWidget {
           animation: info.selectedAnimation,
           curve: Curves.easeInOutCubicEmphasized,
           reverseCurve: Curves.easeInOutCubicEmphasized.flipped,
-          builder: builder,
+          builder: (BuildContext context, Animation<double> curvedAnimation) {
+            return builder(context, curvedAnimation);
+          },
         );
     }
   }
@@ -973,7 +989,7 @@ class _NavigationBarDestinationSemantics extends StatelessWidget {
       animation: destinationInfo.selectedAnimation,
       builder: (BuildContext context, Widget? child) {
         return Semantics(
-          selected: destinationInfo.selectedAnimation.isForwardOrCompleted,
+          selected: _isForwardOrCompleted(destinationInfo.selectedAnimation),
           container: true,
           child: child,
         );
@@ -1332,6 +1348,13 @@ class _CurvedAnimationBuilderState extends State<_CurvedAnimationBuilder> {
 
     return widget.builder(context, curvedAnimation);
   }
+}
+
+/// Returns `true` if this animation is ticking forward, or has completed,
+/// based on [status].
+bool _isForwardOrCompleted(Animation<double> animation) {
+  return animation.status == AnimationStatus.forward
+      || animation.status == AnimationStatus.completed;
 }
 
 NavigationBarThemeData _defaultsFor(BuildContext context) {

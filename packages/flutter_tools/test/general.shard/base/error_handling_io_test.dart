@@ -884,6 +884,7 @@ void main() {
     });
   });
 
+<<<<<<< HEAD
   testWithoutContext(
     "ErrorHandlingFileSystem.systemTempDirectory wraps delegate filesystem's systemTempDirectory",
     () {
@@ -943,6 +944,8 @@ Please ensure that the SDK and/or project is installed in a location that has re
     },
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   group('ProcessManager on windows throws tool exit', () {
     const int kDeviceFull = 112;
     const int kUserMappedSectionOpened = 1224;

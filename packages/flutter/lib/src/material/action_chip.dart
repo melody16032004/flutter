@@ -120,8 +120,11 @@ class ActionChip extends StatelessWidget
     this.surfaceTintColor,
     this.iconTheme,
     this.avatarBoxConstraints,
+<<<<<<< HEAD
     this.chipAnimationStyle,
     this.mouseCursor,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : assert(pressElevation == null || pressElevation >= 0.0),
        assert(elevation == null || elevation >= 0.0),
        _chipVariant = _ChipVariant.flat;
@@ -157,8 +160,11 @@ class ActionChip extends StatelessWidget
     this.surfaceTintColor,
     this.iconTheme,
     this.avatarBoxConstraints,
+<<<<<<< HEAD
     this.chipAnimationStyle,
     this.mouseCursor,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }) : assert(pressElevation == null || pressElevation >= 0.0),
        assert(elevation == null || elevation >= 0.0),
        _chipVariant = _ChipVariant.elevated;
@@ -209,10 +215,13 @@ class ActionChip extends StatelessWidget
   final IconThemeData? iconTheme;
   @override
   final BoxConstraints? avatarBoxConstraints;
+<<<<<<< HEAD
   @override
   final ChipAnimationStyle? chipAnimationStyle;
   @override
   final MouseCursor? mouseCursor;
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   bool get isEnabled => onPressed != null;
@@ -252,8 +261,11 @@ class ActionChip extends StatelessWidget
       surfaceTintColor: surfaceTintColor,
       iconTheme: iconTheme,
       avatarBoxConstraints: avatarBoxConstraints,
+<<<<<<< HEAD
       chipAnimationStyle: chipAnimationStyle,
       mouseCursor: mouseCursor,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }

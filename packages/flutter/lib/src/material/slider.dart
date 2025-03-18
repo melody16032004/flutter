@@ -863,6 +863,7 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
           MaterialStateProperty.resolveAs<Color?>(defaults.overlayColor, states);
     }
 
+<<<<<<< HEAD
     TextStyle valueIndicatorTextStyle =
         sliderTheme.valueIndicatorTextStyle ?? defaults.valueIndicatorTextStyle!;
     if (MediaQuery.boldTextOf(context)) {
@@ -871,6 +872,8 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
       );
     }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     sliderTheme = sliderTheme.copyWith(
       trackHeight: sliderTheme.trackHeight ?? defaults.trackHeight,
       activeTrackColor:
@@ -907,10 +910,14 @@ class _SliderState extends State<Slider> with TickerProviderStateMixin {
       overlayShape: sliderTheme.overlayShape ?? defaults.overlayShape,
       valueIndicatorShape: valueIndicatorShape,
       showValueIndicator: sliderTheme.showValueIndicator ?? defaultShowValueIndicator,
+<<<<<<< HEAD
       valueIndicatorTextStyle: valueIndicatorTextStyle,
       padding: widget.padding ?? sliderTheme.padding,
       thumbSize: sliderTheme.thumbSize ?? defaults.thumbSize,
       trackGap: sliderTheme.trackGap ?? defaults.trackGap,
+=======
+      valueIndicatorTextStyle: sliderTheme.valueIndicatorTextStyle ?? defaults.valueIndicatorTextStyle,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     final MouseCursor effectiveMouseCursor =
         MaterialStateProperty.resolveAs<MouseCursor?>(widget.mouseCursor, states) ??
@@ -1195,7 +1202,7 @@ class _RenderSlider extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
       parent: _state.valueIndicatorController,
       curve: Curves.fastOutSlowIn,
     )..addStatusListener((AnimationStatus status) {
-      if (status.isDismissed) {
+      if (status == AnimationStatus.dismissed) {
         _state.overlayEntry?.remove();
         _state.overlayEntry?.dispose();
         _state.overlayEntry = null;
@@ -1234,9 +1241,9 @@ class _RenderSlider extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
   double get _minPreferredTrackHeight => _sliderTheme.trackHeight!;
 
   final _SliderState _state;
-  late CurvedAnimation _overlayAnimation;
-  late CurvedAnimation _valueIndicatorAnimation;
-  late CurvedAnimation _enableAnimation;
+  late Animation<double> _overlayAnimation;
+  late Animation<double> _valueIndicatorAnimation;
+  late Animation<double> _enableAnimation;
   final TextPainter _labelPainter = TextPainter();
   late HorizontalDragGestureRecognizer _drag;
   late TapGestureRecognizer _tap;
@@ -1539,9 +1546,6 @@ class _RenderSlider extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
     _drag.dispose();
     _tap.dispose();
     _labelPainter.dispose();
-    _enableAnimation.dispose();
-    _valueIndicatorAnimation.dispose();
-    _overlayAnimation.dispose();
     super.dispose();
   }
 
@@ -1598,7 +1602,7 @@ class _RenderSlider extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
           _state.interactionTimer?.cancel();
           _state.interactionTimer = Timer(_minimumInteractionTime * timeDilation, () {
             _state.interactionTimer = null;
-            if (!_active && _state.valueIndicatorController.isCompleted) {
+            if (!_active && _state.valueIndicatorController.status == AnimationStatus.completed) {
               _state.valueIndicatorController.reverse();
             }
           });
@@ -1849,7 +1853,7 @@ class _RenderSlider extends RenderBox with RelayoutWhenSystemFontsChangeMixin {
     if (isInteractive && label != null && !_valueIndicatorAnimation.isDismissed) {
       if (showValueIndicator) {
         _state.paintValueIndicator = (PaintingContext context, Offset offset) {
-          if (attached && _labelPainter.text != null) {
+          if (attached) {
             _sliderTheme.valueIndicatorShape!.paint(
               context,
               offset + thumbCenter,
@@ -2009,7 +2013,7 @@ class _RenderValueIndicator extends RenderBox with RelayoutWhenSystemFontsChange
       curve: Curves.fastOutSlowIn,
     );
   }
-  late CurvedAnimation _valueIndicatorAnimation;
+  late Animation<double> _valueIndicatorAnimation;
   _SliderState _state;
 
   @override
@@ -2037,12 +2041,6 @@ class _RenderValueIndicator extends RenderBox with RelayoutWhenSystemFontsChange
   @override
   Size computeDryLayout(BoxConstraints constraints) {
     return constraints.smallest;
-  }
-
-  @override
-  void dispose() {
-    _valueIndicatorAnimation.dispose();
-    super.dispose();
   }
 }
 
@@ -2121,8 +2119,21 @@ class _SliderDefaultsM2 extends SliderThemeData {
   SliderTickMarkShape? get tickMarkShape => const RoundSliderTickMarkShape();
 }
 
+<<<<<<< HEAD
 class _SliderDefaultsM3Year2023 extends SliderThemeData {
   _SliderDefaultsM3Year2023(this.context) : super(trackHeight: 4.0);
+=======
+// BEGIN GENERATED TOKEN PROPERTIES - Slider
+
+// Do not edit by hand. The code between the "BEGIN GENERATED" and
+// "END GENERATED" comments are generated from data in the Material
+// Design token database by the script:
+//   dev/tools/gen_defaults/bin/gen_defaults.dart.
+
+class _SliderDefaultsM3 extends SliderThemeData {
+  _SliderDefaultsM3(this.context)
+    : super(trackHeight: 4.0);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final BuildContext context;
   late final ColorScheme _colors = Theme.of(context).colorScheme;

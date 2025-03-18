@@ -42,6 +42,7 @@ void main() {
     tester.resolver.resolve(tester.event);
   });
 
+<<<<<<< HEAD
   test('Resolving with no entries should notify engine of no-op', () {
     bool allowedPlatformDefault = false;
     final PointerSignalTester tester = PointerSignalTester();
@@ -58,6 +59,8 @@ void main() {
     );
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   test('First entry should always win', () {
     final PointerSignalTester tester = PointerSignalTester();
     final TestPointerSignalListener first = tester.addListener();

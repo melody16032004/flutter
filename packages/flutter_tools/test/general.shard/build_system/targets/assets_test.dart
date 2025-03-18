@@ -38,7 +38,11 @@ void main() {
       fileSystem: fileSystem,
       logger: BufferLogger.test(),
       platform: FakePlatform(),
+<<<<<<< HEAD
       defines: <String, String>{kBuildMode: BuildMode.debug.cliName},
+=======
+      defines: <String, String>{},
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
     fileSystem.file(environment.buildDir.childFile('app.dill')).createSync(recursive: true);
     fileSystem
@@ -243,6 +247,7 @@ flutter:
         userMessages: UserMessages(),
       );
 
+<<<<<<< HEAD
       final Environment environment = Environment.test(
         fileSystem.currentDirectory,
         processManager: globals.processManager,
@@ -252,6 +257,17 @@ flutter:
         platform: globals.platform,
         defines: <String, String>{kBuildMode: BuildMode.debug.cliName},
       );
+=======
+    final Environment environment = Environment.test(
+      fileSystem.currentDirectory,
+      processManager: globals.processManager,
+      artifacts: Artifacts.test(),
+      fileSystem: fileSystem,
+      logger: logger,
+      platform: globals.platform,
+      defines: <String, String>{},
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       fileSystem
           .directory('.dart_tool')
@@ -333,6 +349,7 @@ flutter:
         userMessages: UserMessages(),
       );
 
+<<<<<<< HEAD
       final Environment environment = Environment.test(
         fileSystem.currentDirectory,
         processManager: globals.processManager,
@@ -342,6 +359,17 @@ flutter:
         platform: globals.platform,
         defines: <String, String>{kBuildMode: BuildMode.debug.cliName},
       );
+=======
+    final Environment environment = Environment.test(
+      fileSystem.currentDirectory,
+      processManager: globals.processManager,
+      artifacts: Artifacts.test(),
+      fileSystem: fileSystem,
+      logger: logger,
+      platform: globals.platform,
+      defines: <String, String>{},
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       fileSystem
           .directory('.dart_tool')

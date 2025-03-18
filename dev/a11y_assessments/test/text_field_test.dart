@@ -30,6 +30,7 @@ void main() {
       expect(textField.enabled, isFalse);
     }
   });
+<<<<<<< HEAD
 
   testWidgets('font size increase does not ellipsize hint text', (WidgetTester tester) async {
     await pumpsUseCase(tester, TextFieldUseCase());
@@ -71,4 +72,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(findHeadingLevelOnes, findsOne);
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

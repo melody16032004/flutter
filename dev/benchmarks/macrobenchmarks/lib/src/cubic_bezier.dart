@@ -299,6 +299,7 @@ class AnimatedBezierState extends State<AnimatedBezier> with SingleTickerProvide
     // This code uses a manual listener for historical reasons and will remain
     // in order to preserve compatibility with the history of measurements for
     // this benchmark.
+<<<<<<< HEAD
     curve =
         CurvedAnimation(parent: controller, curve: Curves.linear)
           ..addListener(() {
@@ -311,6 +312,19 @@ class AnimatedBezierState extends State<AnimatedBezier> with SingleTickerProvide
               playAnimation();
             }
           });
+=======
+    curve = CurvedAnimation(parent: controller, curve: Curves.linear)
+      ..addListener(() {
+        setState(() {});
+      })
+      ..addStatusListener((AnimationStatus state) {
+        if (state == AnimationStatus.completed) {
+          reverseAnimation();
+        } else if (state == AnimationStatus.dismissed) {
+          playAnimation();
+        }
+      });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     playAnimation();
   }

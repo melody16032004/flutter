@@ -67,7 +67,12 @@ final Platform macosPlatform = FakePlatform(
 final Platform notMacosPlatform = FakePlatform(environment: <String, String>{'FLUTTER_ROOT': '/'});
 
 void main() {
+<<<<<<< HEAD
   late MemoryFileSystem fileSystem;
+=======
+  late FileSystem fileSystem;
+  late TestUsage usage;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   late FakeAnalytics fakeAnalytics;
   late BufferLogger logger;
   late FakeProcessManager processManager;
@@ -708,6 +713,7 @@ void main() {
 
         await createTestCommandRunner(command).run(const <String>['build', 'ios', '--no-pub']);
 
+<<<<<<< HEAD
         expect(
           fakeAnalytics.sentEvents,
           contains(Event.flutterBuildInfo(label: 'plist-impeller-enabled', buildType: 'ios')),
@@ -742,6 +748,44 @@ void main() {
         Analytics: () => fakeAnalytics,
       },
     );
+=======
+      expect(usage.events, contains(
+        const TestUsageEvent(
+          'build', 'ios',
+          label:'plist-impeller-enabled',
+          parameters:CustomDimensions(),
+        ),
+      ));
+
+      expect(fakeAnalytics.sentEvents, contains(
+        Event.flutterBuildInfo(
+          label: 'plist-impeller-enabled',
+          buildType: 'ios',
+        ),
+      ));
+    }, overrides: <Type, Generator>{
+      FileSystem: () => fileSystem,
+      ProcessManager: () => FakeProcessManager.list(<FakeCommand>[
+        xattrCommand,
+        setUpFakeXcodeBuildHandler(onRun: (_) {
+          fileSystem.directory('build/ios/Release-iphoneos/Runner.app')
+            .createSync(recursive: true);
+        }),
+        setUpRsyncCommand(onRun: (_) =>
+          fileSystem.file('build/ios/iphoneos/Runner.app/Frameworks/App.framework/App')
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(List<int>.generate(10000, (int index) => 0))),
+      ]),
+      Platform: () => macosPlatform,
+      FileSystemUtils: () => FileSystemUtils(
+        fileSystem: fileSystem,
+        platform: macosPlatform,
+      ),
+      Usage: () => usage,
+      XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+      Analytics: () => fakeAnalytics,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     testUsingContext(
       'Sends an analytics event when Impeller is disabled',
@@ -766,6 +810,7 @@ void main() {
 
         await createTestCommandRunner(command).run(const <String>['build', 'ios', '--no-pub']);
 
+<<<<<<< HEAD
         expect(
           fakeAnalytics.sentEvents,
           contains(Event.flutterBuildInfo(label: 'plist-impeller-disabled', buildType: 'ios')),
@@ -812,6 +857,55 @@ void main() {
         Analytics: () => fakeAnalytics,
       },
     );
+=======
+      expect(usage.events, contains(
+        const TestUsageEvent(
+          'build', 'ios',
+          label:'plist-impeller-disabled',
+          parameters:CustomDimensions(),
+        ),
+      ));
+
+      expect(fakeAnalytics.sentEvents, contains(
+        Event.flutterBuildInfo(
+          label: 'plist-impeller-disabled',
+          buildType: 'ios',
+        ),
+      ));
+    }, overrides: <Type, Generator>{
+      FileSystem: () => fileSystem,
+      ProcessManager: () => FakeProcessManager.list(<FakeCommand>[
+        xattrCommand,
+        setUpFakeXcodeBuildHandler(onRun: (_) {
+          fileSystem.directory('build/ios/Release-iphoneos/Runner.app')
+            .createSync(recursive: true);
+        }),
+        setUpRsyncCommand(onRun: (_) =>
+          fileSystem.file('build/ios/iphoneos/Runner.app/Frameworks/App.framework/App')
+            ..createSync(recursive: true)
+            ..writeAsBytesSync(List<int>.generate(10000, (int index) => 0))),
+      ]),
+      Platform: () => macosPlatform,
+      FileSystemUtils: () => FileSystemUtils(
+        fileSystem: fileSystem,
+        platform: macosPlatform,
+      ),
+      Usage: () => usage,
+      XcodeProjectInterpreter: () => FakeXcodeProjectInterpreterWithBuildSettings(),
+      FlutterProjectFactory: () => FlutterProjectFactory(
+        fileSystem: fileSystem,
+        logger: BufferLogger.test(),
+      ),
+      PlistParser: () => PlistParser(
+        fileSystem: fileSystem,
+        logger: BufferLogger.test(),
+        processManager: FakeProcessManager.list(<FakeCommand>[
+          plutilCommand, plutilCommand, plutilCommand,
+        ]),
+      ),
+      Analytics: () => fakeAnalytics,
+    });
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   group('xcresults device', () {

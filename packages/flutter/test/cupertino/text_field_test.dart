@@ -915,6 +915,7 @@ void main() {
   });
 
   testWidgets(
+<<<<<<< HEAD
     'The second CupertinoTextField is clicked, triggers the onTapOutside callback of the previous CupertinoTextField',
     (WidgetTester tester) async {
       final GlobalKey keyA = GlobalKey();
@@ -958,10 +959,20 @@ void main() {
                   ),
                 ),
               ],
+=======
+    'decoration can be overridden',
+    (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const CupertinoApp(
+          home: Center(
+            child: CupertinoTextField(
+              decoration: null,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             ),
           ),
         ),
       );
+<<<<<<< HEAD
 
       await tester.pump();
 
@@ -1003,6 +1014,8 @@ void main() {
     await tester.pumpWidget(
       const CupertinoApp(home: Center(child: CupertinoTextField(decoration: null))),
     );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(
       find.descendant(of: find.byType(CupertinoTextField), matching: find.byType(DecoratedBox)),
@@ -2285,6 +2298,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     const String testValue = 'abc def ghi';
     await tester.enterText(find.byType(CupertinoTextField), testValue);
     await tester.pumpAndSettle(const Duration(milliseconds: 200));
@@ -2388,6 +2402,9 @@ void main() {
         includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap, SemanticsAction.focus]),
       ),
     );
+=======
+    expect(semantics, isNot(includesNodeWith(actions: <SemanticsAction>[SemanticsAction.tap])));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     semantics.dispose();
   });
@@ -5520,6 +5537,7 @@ void main() {
       expect(controller.selection.isCollapsed, true);
       expect(controller.selection.baseOffset, 0);
 
+<<<<<<< HEAD
       // If the position we tap during a drag start is on the collapsed selection, then
       // we can move the cursor with a drag.
       // Here we tap on '|a', where our selection was previously, and attempt move
@@ -5531,11 +5549,28 @@ void main() {
 
       expect(controller.selection.isCollapsed, true);
       expect(controller.selection.baseOffset, testValue.indexOf('g'));
+=======
+    // If the position we tap during a drag start is on the collapsed selection, then
+    // we can move the cursor with a drag.
+    // Here we tap on '|a', where our selection was previously, and attempt move
+    // to '|g'. The cursor will not move because the `VerticalDragGestureRecognizer`
+    // in the scrollable will beat the `TapAndHorizontalDragGestureRecognizer`
+    // in the TextField. This is because moving from `|a` to `|g` is a completely
+    // vertical movement.
+    await gesture.down(aPos);
+    await tester.pump();
+    await gesture.moveTo(gPos);
+    await tester.pumpAndSettle();
+
+    expect(controller.selection.isCollapsed, true);
+    expect(controller.selection.baseOffset, 0);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       // Release the pointer.
       await gesture.up();
       await tester.pumpAndSettle();
 
+<<<<<<< HEAD
       // If the position we tap during a drag start is on the collapsed selection, then
       // we can move the cursor with a drag.
       // Here we tap on '|g', where our selection was previously, and move to '|i'.
@@ -5543,6 +5578,18 @@ void main() {
       await tester.pump();
       await gesture.moveTo(iPos);
       await tester.pumpAndSettle();
+=======
+    // If the position we tap during a drag start is on the collapsed selection, then
+    // we can move the cursor with a drag.
+    // Here we tap on '|a', where our selection was previously, and move to '|i'.
+    // Unlike our previous attempt to drag to `|g`, this works because moving
+    // to `|i` includes a horizontal movement so the `TapAndHorizontalDragGestureRecognizer`
+    // in TextField can beat the `VerticalDragGestureRecognizer` in the scrollable.
+    await gesture.down(aPos);
+    await tester.pump();
+    await gesture.moveTo(iPos);
+    await tester.pumpAndSettle();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await gesture.up();
       await tester.pumpAndSettle();
@@ -7877,6 +7924,7 @@ void main() {
     expect(decoration.color!.value, 0xFF050505);
   });
 
+<<<<<<< HEAD
   testWidgets('Disabled widget does not override background color', (WidgetTester tester) async {
     const Color backgroundColor = Color(0x0000000A);
     await tester.pumpWidget(
@@ -7904,6 +7952,8 @@ void main() {
     expect(decoration.color!.value, backgroundColor.value);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   // Regression test for https://github.com/flutter/flutter/issues/78097.
   testWidgets('still gets disabled background color when decoration is null', (
     WidgetTester tester,
@@ -9831,6 +9881,7 @@ void main() {
     },
     variant: TargetPlatformVariant.all(),
   );
+<<<<<<< HEAD
 
   testWidgets(
     'when receives SemanticsAction.focus while already focused, shows keyboard',
@@ -9879,4 +9930,6 @@ void main() {
     },
     variant: TargetPlatformVariant.all(),
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

@@ -64,8 +64,13 @@ Future<void> main() async {
 
       content = await pubspec.readAsString();
       content = content.replaceFirst(
+<<<<<<< HEAD
         '${Platform.lineTerminator}dependencies:${Platform.lineTerminator}',
         '${Platform.lineTerminator}dependencies:${Platform.lineTerminator}',
+=======
+        '${platformLineSep}dependencies:$platformLineSep',
+        '${platformLineSep}dependencies:$platformLineSep  device_info: 2.0.3$platformLineSep  package_info: 2.0.2$platformLineSep',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       await pubspec.writeAsString(content, flush: true);
       await inDirectory(projectDir, () async {

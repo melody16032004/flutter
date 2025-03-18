@@ -16,7 +16,7 @@ class XcodeProjectObjectVersionMigration extends ProjectMigrator {
   final File _xcodeProjectSchemeFile;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (_xcodeProjectInfoFile.existsSync()) {
       processFileLines(_xcodeProjectInfoFile);
     } else {

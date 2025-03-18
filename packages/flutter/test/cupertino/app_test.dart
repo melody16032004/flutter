@@ -5,7 +5,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -469,6 +468,7 @@ void main() {
     debugBrightnessOverride = null;
   });
 
+<<<<<<< HEAD
   testWidgets('CupertinoApp creates a Material theme with colors based off of Cupertino theme', (
     WidgetTester tester,
   ) async {
@@ -491,6 +491,9 @@ void main() {
   testWidgets('Cursor color is resolved when CupertinoThemeData.brightness is null', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('Cursor color is resolved when CupertinoThemeData.brightness is null', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     debugBrightnessOverride = Brightness.dark;
 
     RenderEditable findRenderEditable(WidgetTester tester) {

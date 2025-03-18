@@ -33,7 +33,7 @@ void main() {
       mockProject = FakeWindowsProject(cmakeFile);
     });
 
-    testWithoutContext('delete old runner directory', () async {
+    testWithoutContext('delete old runner directory', () {
       buildDirectory.createSync();
       final Directory oldRunnerDirectory = buildDirectory.parent.childDirectory('runner');
       oldRunnerDirectory.createSync();
@@ -46,7 +46,7 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await migration.migrate();
+      migration.migrate();
 
       expect(oldRunnerDirectory.existsSync(), isFalse);
       expect(
@@ -59,13 +59,13 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if CMake file is missing', () async {
+    testWithoutContext('skipped if CMake file is missing', () {
       final BuildArchitectureMigration migration = BuildArchitectureMigration(
         mockProject,
         buildDirectory,
         testLogger,
       );
-      await migration.migrate();
+      migration.migrate();
       expect(cmakeFile.existsSync(), isFalse);
 
       expect(
@@ -77,7 +77,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if nothing to migrate', () async {
+    testWithoutContext('skipped if nothing to migrate', () {
       const String cmakeFileContents = 'Nothing to migrate';
 
       cmakeFile.writeAsStringSync(cmakeFileContents);
@@ -89,14 +89,14 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await buildArchitectureMigration.migrate();
+      buildArchitectureMigration.migrate();
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if already migrated', () async {
+    testWithoutContext('skipped if already migrated', () {
       const String cmakeFileContents =
           '# TODO: Move the rest of this into files in ephemeral. See\n'
           '# https://github.com/flutter/flutter/issues/57146.\n'
@@ -130,7 +130,7 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await buildArchitectureMigration.migrate();
+      buildArchitectureMigration.migrate();
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
@@ -138,7 +138,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('skipped if already migrated (CRLF)', () async {
+    testWithoutContext('skipped if already migrated (CRLF)', () {
       const String cmakeFileContents =
           '# TODO: Move the rest of this into files in ephemeral. See\r\n'
           '# https://github.com/flutter/flutter/issues/57146.\r\n'
@@ -172,7 +172,7 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await buildArchitectureMigration.migrate();
+      buildArchitectureMigration.migrate();
 
       expect(cmakeFile.lastModifiedSync(), cmakeUpdatedAt);
       expect(cmakeFile.readAsStringSync(), cmakeFileContents);
@@ -180,7 +180,7 @@ void main() {
       expect(testLogger.statusText, isEmpty);
     });
 
-    testWithoutContext('migrates project to set the target platform', () async {
+    testWithoutContext('migrates project to set the target platform', () {
       cmakeFile.writeAsStringSync(
         '# TODO: Move the rest of this into files in ephemeral. See\n'
         '# https://github.com/flutter/flutter/issues/57146.\n'
@@ -205,7 +205,7 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await buildArchitectureMigration.migrate();
+      buildArchitectureMigration.migrate();
 
       expect(
         cmakeFile.readAsStringSync(),
@@ -239,7 +239,7 @@ void main() {
       );
     });
 
-    testWithoutContext('migrates project to set the target platform (CRLF)', () async {
+    testWithoutContext('migrates project to set the target platform (CRLF)', () {
       cmakeFile.writeAsStringSync(
         '# TODO: Move the rest of this into files in ephemeral. See\r\n'
         '# https://github.com/flutter/flutter/issues/57146.\r\n'
@@ -265,7 +265,7 @@ void main() {
         buildDirectory,
         testLogger,
       );
-      await buildArchitectureMigration.migrate();
+      buildArchitectureMigration.migrate();
 
       expect(
         cmakeFile.readAsStringSync(),

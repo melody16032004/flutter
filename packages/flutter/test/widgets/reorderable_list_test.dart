@@ -1695,6 +1695,7 @@ void main() {
     await testFor(prototypeItem: const SizedBox(height: 100, width: 100, child: Text('prototype')));
     await testFor(itemExtent: 100);
   });
+<<<<<<< HEAD
 
   testWidgets('The item being dragged will not be affected by layout constraints.', (
     WidgetTester tester,
@@ -1785,6 +1786,8 @@ void main() {
     await drag.up();
     await tester.pumpAndSettle();
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class TestList extends StatelessWidget {

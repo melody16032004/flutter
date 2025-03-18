@@ -9,7 +9,6 @@ library;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/scheduler.dart';
 
 import 'debug.dart';
 import 'framework.dart';
@@ -86,6 +85,7 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
   Element? _child;
 
   @override
+<<<<<<< HEAD
   BuildScope get buildScope => _buildScope;
 
   late final BuildScope _buildScope = BuildScope(scheduleRebuild: _scheduleRebuild);
@@ -124,6 +124,8 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void visitChildren(ElementVisitor visitor) {
     if (_child != null) {
       visitor(_child!);
@@ -140,7 +142,7 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
   @override
   void mount(Element? parent, Object? newSlot) {
     super.mount(parent, newSlot); // Creates the renderObject.
-    renderObject.updateCallback(_rebuildWithConstraints);
+    renderObject.updateCallback(_layout);
   }
 
   @override
@@ -151,14 +153,14 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
     super.update(newWidget);
     assert(widget == newWidget);
 
-    renderObject.updateCallback(_rebuildWithConstraints);
+    renderObject.updateCallback(_layout);
     if (newWidget.updateShouldRebuild(oldWidget)) {
-      _needsBuild = true;
-      renderObject.markNeedsLayout();
+      renderObject.markNeedsBuild();
     }
   }
 
   @override
+<<<<<<< HEAD
   void markNeedsBuild() {
     // Calling super.markNeedsBuild is not needed. This Element does not need
     // to performRebuild since this call already does what performRebuild does,
@@ -169,6 +171,8 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performRebuild() {
     // This gets called if markNeedsBuild() is called on us.
     // That might happen if, e.g., our builder uses Inherited widgets.
@@ -176,8 +180,7 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
     // Force the callback to be called, even if the layout constraints are the
     // same. This is because that callback may depend on the updated widget
     // configuration, or an inherited widget.
-    renderObject.markNeedsLayout();
-    _needsBuild = true;
+    renderObject.markNeedsBuild();
     super.performRebuild(); // Calls widget.updateRenderObject (a no-op in this case).
   }
 
@@ -187,15 +190,9 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
     super.unmount();
   }
 
-  // The constraints that were passed to this class last time it was laid out.
-  // These constraints are compared to the new constraints to determine whether
-  // [ConstrainedLayoutBuilder.builder] needs to be called.
-  ConstraintType? _previousConstraints;
-  bool _needsBuild = true;
-
-  void _rebuildWithConstraints(ConstraintType constraints) {
+  void _layout(ConstraintType constraints) {
     @pragma('vm:notify-debugger-on-exception')
-    void updateChildCallback() {
+    void layoutCallback() {
       Widget built;
       try {
         built = (widget as ConstrainedLayoutBuilder<ConstraintType>).builder(this, constraints);
@@ -229,15 +226,16 @@ class _LayoutBuilderElement<ConstraintType extends Constraints> extends RenderOb
           ),
         );
         _child = updateChild(null, built, slot);
-      } finally {
-        _needsBuild = false;
-        _previousConstraints = constraints;
       }
     }
 
+<<<<<<< HEAD
     final VoidCallback? callback =
         _needsBuild || (constraints != _previousConstraints) ? updateChildCallback : null;
     owner!.buildScope(this, callback);
+=======
+    owner!.buildScope(this, layoutCallback);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -284,13 +282,42 @@ mixin RenderConstrainedLayoutBuilder<
     markNeedsLayout();
   }
 
+  bool _needsBuild = true;
+
+  /// Marks this layout builder as needing to rebuild.
+  ///
+  /// The layout build rebuilds automatically when layout constraints change.
+  /// However, we must also rebuild when the widget updates, e.g. after
+  /// [State.setState], or [State.didChangeDependencies], even when the layout
+  /// constraints remain unchanged.
+  ///
+  /// See also:
+  ///
+  ///  * [ConstrainedLayoutBuilder.builder], which is called during the rebuild.
+  void markNeedsBuild() {
+    // Do not call the callback directly. It must be called during the layout
+    // phase, when parent constraints are available. Calling `markNeedsLayout`
+    // will cause it to be called at the right time.
+    _needsBuild = true;
+    markNeedsLayout();
+  }
+
+  // The constraints that were passed to this class last time it was laid out.
+  // These constraints are compared to the new constraints to determine whether
+  // [ConstrainedLayoutBuilder.builder] needs to be called.
+  Constraints? _previousConstraints;
+
   /// Invoke the callback supplied via [updateCallback].
   ///
   /// Typically this results in [ConstrainedLayoutBuilder.builder] being called
   /// during layout.
   void rebuildIfNecessary() {
     assert(_callback != null);
-    invokeLayoutCallback(_callback!);
+    if (_needsBuild || constraints != _previousConstraints) {
+      _previousConstraints = constraints;
+      _needsBuild = false;
+      invokeLayoutCallback(_callback!);
+    }
   }
 }
 
@@ -373,6 +400,7 @@ class _RenderLayoutBuilder extends RenderBox
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(BoxConstraints constraints, TextBaseline baseline) {
     assert(
       debugCannotComputeDryLayout(
@@ -385,6 +413,8 @@ class _RenderLayoutBuilder extends RenderBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   void performLayout() {
     final BoxConstraints constraints = this.constraints;
     rebuildIfNecessary();
@@ -398,8 +428,15 @@ class _RenderLayoutBuilder extends RenderBox
 
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
+<<<<<<< HEAD
     return child?.getDistanceToActualBaseline(baseline) ??
         super.computeDistanceToActualBaseline(baseline);
+=======
+    if (child != null) {
+      return child!.getDistanceToActualBaseline(baseline);
+    }
+    return super.computeDistanceToActualBaseline(baseline);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

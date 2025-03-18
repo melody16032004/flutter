@@ -971,6 +971,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       semantics,
       hasSemantics(
@@ -991,6 +992,26 @@ void main() {
           ],
         ),
         ignoreId: true,
+=======
+    expect(semantics, hasSemantics(
+      TestSemantics.root(
+        children: <TestSemantics>[
+          TestSemantics.rootChild(
+            actions: <SemanticsAction>[
+              SemanticsAction.tap,
+            ],
+            label: 'ABC',
+            rect: const Rect.fromLTRB(0.0, 0.0, 88.0, 48.0),
+            transform: Matrix4.translationValues(356.0, 276.0, 0.0),
+            flags: <SemanticsFlag>[
+              SemanticsFlag.hasEnabledState,
+              SemanticsFlag.isButton,
+              SemanticsFlag.isEnabled,
+              SemanticsFlag.isFocusable,
+            ],
+          ),
+        ],
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 

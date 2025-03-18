@@ -89,6 +89,7 @@ class _CupertinoAlertDemoState extends State<CupertinoAlertDemo> with Restoratio
 
   String _title(BuildContext context) {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
+<<<<<<< HEAD
     return switch (widget.type) {
       AlertDemoType.alert => localizations.demoCupertinoAlertTitle,
       AlertDemoType.alertTitle => localizations.demoCupertinoAlertWithTitleTitle,
@@ -96,6 +97,20 @@ class _CupertinoAlertDemoState extends State<CupertinoAlertDemo> with Restoratio
       AlertDemoType.alertButtonsOnly => localizations.demoCupertinoAlertButtonsOnlyTitle,
       AlertDemoType.actionSheet => localizations.demoCupertinoActionSheetTitle,
     };
+=======
+    switch (widget.type) {
+      case AlertDemoType.alert:
+        return localizations.demoCupertinoAlertTitle;
+      case AlertDemoType.alertTitle:
+        return localizations.demoCupertinoAlertWithTitleTitle;
+      case AlertDemoType.alertButtons:
+        return localizations.demoCupertinoAlertButtonsTitle;
+      case AlertDemoType.alertButtonsOnly:
+        return localizations.demoCupertinoAlertButtonsOnlyTitle;
+      case AlertDemoType.actionSheet:
+        return localizations.demoCupertinoActionSheetTitle;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   static Route<String> _alertDemoDialog(BuildContext context, Object? arguments) {
@@ -212,6 +227,7 @@ class _CupertinoAlertDemoState extends State<CupertinoAlertDemo> with Restoratio
       ),
       child: Builder(
         builder: (BuildContext context) {
+<<<<<<< HEAD
           final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
           final Widget showAlertButton = CupertinoButton.filled(
             onPressed:
@@ -226,14 +242,39 @@ class _CupertinoAlertDemoState extends State<CupertinoAlertDemo> with Restoratio
             child: Text(localizations.cupertinoShowAlert),
           );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           return Column(
             children: <Widget>[
-              Expanded(child: Center(child: showAlertButton)),
+              Expanded(
+                child: Center(
+                  child: CupertinoButton.filled(
+                    onPressed: () {
+                      switch (widget.type) {
+                        case AlertDemoType.alert:
+                          _alertDialogRoute.present();
+                        case AlertDemoType.alertTitle:
+                          _alertWithTitleDialogRoute.present();
+                        case AlertDemoType.alertButtons:
+                          _alertWithButtonsDialogRoute.present();
+                        case AlertDemoType.alertButtonsOnly:
+                          _alertWithButtonsOnlyDialogRoute.present();
+                        case AlertDemoType.actionSheet:
+                          _modalPopupRoute.present();
+                      }
+                    },
+                    child: Text(
+                      GalleryLocalizations.of(context)!.cupertinoShowAlert,
+                    ),
+                  ),
+                ),
+              ),
               if (lastSelectedValue.value != null)
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    localizations.dialogSelectedOption(lastSelectedValue.value!),
+                    GalleryLocalizations.of(context)!
+                        .dialogSelectedOption(lastSelectedValue.value!),
                     style: CupertinoTheme.of(context).textTheme.textStyle,
                     textAlign: TextAlign.center,
                   ),

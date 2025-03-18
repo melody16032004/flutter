@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/material.dart';
 library;
 
@@ -9,6 +10,14 @@ import 'dart:collection';
 import 'dart:ui'
     as ui
     show ParagraphStyle, Shadow, StrutStyle, TextStyle, kTextHeightNone, lerpDouble;
+=======
+import 'dart:collection';
+import 'dart:ui' as ui show
+  ParagraphStyle,
+  StrutStyle,
+  TextStyle,
+  lerpDouble;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 import 'package:flutter/foundation.dart';
 
@@ -271,7 +280,7 @@ const String _kColorBackgroundWarning =
 ///
 /// {@tool snippet}
 /// The [foreground] property also allows effects such as gradients to be
-/// applied to the text. Here we provide a [Paint] with a [Gradient]
+/// applied to the text. Here we provide a [Paint] with a [ui.Gradient]
 /// shader.
 ///
 /// ![](https://flutter.github.io/assets-for-api-docs/assets/widgets/text_gradient.png)
@@ -460,8 +469,8 @@ const String _kColorBackgroundWarning =
 ///  * [TextSpan], the class that wraps a [TextStyle] for the purposes of
 ///    passing it to a [RichText].
 ///  * [TextStyle](https://api.flutter.dev/flutter/dart-ui/TextStyle-class.html), the class in the [dart:ui] library.
-///  * Cookbook: [Use a custom font](https://docs.flutter.dev/cookbook/design/fonts)
-///  * Cookbook: [Use themes to share colors and font styles](https://docs.flutter.dev/cookbook/design/themes)
+///  * Cookbook: [Use a custom font](https://flutter.dev/docs/cookbook/design/fonts)
+///  * Cookbook: [Use themes to share colors and font styles](https://flutter.dev/docs/cookbook/design/themes)
 @immutable
 class TextStyle with Diagnosticable {
   /// Creates a text style.
@@ -644,13 +653,14 @@ class TextStyle with Diagnosticable {
 
   /// The height of this text span, as a multiple of the font size.
   ///
-  /// When [height] is [kTextHeightNone], the line height will be determined by
-  /// the font's metrics directly, which may differ from the fontSize. Otherwise
-  /// the line height of the span of text will be a multiple of [fontSize],
-  /// and be exactly `fontSize * height` logical pixels tall.
+  /// When [height] is null or omitted, the line height will be determined
+  /// by the font's metrics directly, which may differ from the fontSize.
+  /// When [height] is non-null, the line height of the span of text will be a
+  /// multiple of [fontSize] and be exactly `fontSize * height` logical pixels
+  /// tall.
   ///
-  /// For most fonts, setting [height] to 1.0 is not the same as setting height
-  /// to [kTextHeightNone] because the [fontSize] sets the height of the EM-square,
+  /// For most fonts, setting [height] to 1.0 is not the same as omitting or
+  /// setting height to null because the [fontSize] sets the height of the EM-square,
   /// which is different than the font provided metrics for line height. The
   /// following diagram illustrates the difference between the font-metrics
   /// defined line height and the line height produced with `height: 1.0`
@@ -960,8 +970,7 @@ class TextStyle with Diagnosticable {
   /// [TextStyle] with a [FontWeight.w300].
   ///
   /// If the underlying values are null, then the corresponding factors and/or
-  /// deltas must not be specified. Additionally, if [height] is [kTextHeightNone]
-  /// it will not be modified by this method.
+  /// deltas must not be specified.
   ///
   /// If [foreground] is specified on this object, then applying [color] here
   /// will have no effect and if [background] is specified on this object, then
@@ -1031,10 +1040,14 @@ class TextStyle with Diagnosticable {
           letterSpacing == null ? null : letterSpacing! * letterSpacingFactor + letterSpacingDelta,
       wordSpacing: wordSpacing == null ? null : wordSpacing! * wordSpacingFactor + wordSpacingDelta,
       textBaseline: textBaseline ?? this.textBaseline,
+<<<<<<< HEAD
       height:
           (height == null || height == ui.kTextHeightNone)
               ? height
               : height! * heightFactor + heightDelta,
+=======
+      height: height == null ? null : height! * heightFactor + heightDelta,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       leadingDistribution: leadingDistribution ?? this.leadingDistribution,
       locale: locale ?? this.locale,
       foreground: foreground,
@@ -1305,6 +1318,7 @@ class TextStyle with Diagnosticable {
       height: ui.lerpDouble(a.height ?? b.height, b.height ?? a.height, t),
       leadingDistribution: t < 0.5 ? a.leadingDistribution : b.leadingDistribution,
       locale: t < 0.5 ? a.locale : b.locale,
+<<<<<<< HEAD
       foreground:
           (a.foreground != null || b.foreground != null)
               ? t < 0.5
@@ -1318,6 +1332,19 @@ class TextStyle with Diagnosticable {
                   : b.background ?? (Paint()..color = b.backgroundColor!)
               : null,
       shadows: ui.Shadow.lerpList(a.shadows, b.shadows, t),
+=======
+      foreground: (a.foreground != null || b.foreground != null)
+        ? t < 0.5
+          ? a.foreground ?? (Paint()..color = a.color!)
+          : b.foreground ?? (Paint()..color = b.color!)
+        : null,
+      background: (a.background != null || b.background != null)
+        ? t < 0.5
+          ? a.background ?? (Paint()..color = a.backgroundColor!)
+          : b.background ?? (Paint()..color = b.backgroundColor!)
+        : null,
+      shadows: t < 0.5 ? a.shadows : b.shadows,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       fontFeatures: t < 0.5 ? a.fontFeatures : b.fontFeatures,
       fontVariations: lerpFontVariations(a.fontVariations, b.fontVariations, t),
       decoration: t < 0.5 ? a.decoration : b.decoration,

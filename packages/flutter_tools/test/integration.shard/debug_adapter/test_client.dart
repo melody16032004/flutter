@@ -434,6 +434,7 @@ extension DapTestClientExtension on DapTestClient {
   /// response.
   Future<Response> continue_(int threadId) => sendRequest(ContinueArguments(threadId: threadId));
 
+<<<<<<< HEAD
   /// Sends a stepIn request for the given thread.
   ///
   /// Returns a Future that completes when the server returns a corresponding
@@ -468,6 +469,8 @@ extension DapTestClientExtension on DapTestClient {
     StackTraceArguments(threadId: threadId, startFrame: startFrame, levels: numFrames),
   );
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Clears breakpoints in [file].
   Future<void> clearBreakpoints(String filePath) async {
     await sendRequest(

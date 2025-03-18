@@ -196,6 +196,7 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     expect(
       tester.getSemantics(find.byType(ExpandIcon)),
       matchesSemantics(
@@ -206,9 +207,25 @@ void main() {
         isFocusable: true,
         isButton: true,
         onTapHint: localizations.expandedIconTapHint,
+=======
+    expect(tester.getSemantics(find.byType(ExpandIcon)), matchesSemantics(
+      hasTapAction: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      isFocusable: true,
+      isButton: true,
+      onTapHint: localizations.expandedIconTapHint,
+    ));
+
+    await tester.pumpWidget(wrap(
+      theme: ThemeData(useMaterial3: false),
+      child: ExpandIcon(
+        onPressed: (bool _) { },
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       wrap(theme: ThemeData(useMaterial3: false), child: ExpandIcon(onPressed: (bool _) {})),
     );
@@ -225,6 +242,16 @@ void main() {
         onTapHint: localizations.collapsedIconTapHint,
       ),
     );
+=======
+    expect(tester.getSemantics(find.byType(ExpandIcon)), matchesSemantics(
+      hasTapAction: true,
+      hasEnabledState: true,
+      isEnabled: true,
+      isFocusable: true,
+      isButton: true,
+      onTapHint: localizations.collapsedIconTapHint,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     handle.dispose();
   });
 
@@ -251,7 +278,22 @@ void main() {
       ),
     );
 
+<<<<<<< HEAD
     await tester.pumpWidget(wrap(child: ExpandIcon(onPressed: (bool _) {})));
+=======
+    expect(tester.getSemantics(find.byType(ExpandIcon)), matchesSemantics(
+      onTapHint: localizations.expandedIconTapHint,
+      children: <Matcher>[
+        matchesSemantics(
+          hasTapAction: true,
+          hasEnabledState: true,
+          isEnabled: true,
+          isFocusable: true,
+          isButton: true,
+        ),
+      ],
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(
       tester.getSemantics(find.byType(ExpandIcon)),
@@ -268,7 +310,24 @@ void main() {
           ),
         ],
       ),
+<<<<<<< HEAD
     );
+=======
+    ));
+
+    expect(tester.getSemantics(find.byType(ExpandIcon)), matchesSemantics(
+      onTapHint: localizations.collapsedIconTapHint,
+      children: <Matcher>[
+        matchesSemantics(
+          hasTapAction: true,
+          hasEnabledState: true,
+          isEnabled: true,
+          isFocusable: true,
+          isButton: true,
+        ),
+      ],
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     handle.dispose();
   });

@@ -33,12 +33,26 @@ class _MainWidget extends StatelessWidget {
         children: const <Widget>[
           TextField(
             key: Key('enabled password'),
+<<<<<<< HEAD
             decoration: InputDecoration(labelText: 'Password'),
+=======
+            decoration: InputDecoration(
+              labelText: 'Password',
+              hintText: 'Enter your password',
+            ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             obscureText: true,
           ),
           TextField(
             key: Key('disabled password'),
+<<<<<<< HEAD
             decoration: InputDecoration(labelText: 'Password'),
+=======
+            decoration: InputDecoration(
+              labelText: 'Password',
+              hintText: 'Enter your password',
+            ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             enabled: false,
             obscureText: true,
           ),

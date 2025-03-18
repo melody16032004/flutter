@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-///
-/// @docImport 'box_decoration.dart';
-library;
-
 import 'dart:collection';
 import 'dart:math' as math;
 import 'dart:ui' as ui show Gradient, lerpDouble;
@@ -514,7 +509,6 @@ class LinearGradient extends Gradient {
       colors: interpolated.colors,
       stops: interpolated.stops,
       tileMode: t < 0.5 ? a.tileMode : b.tileMode, // TODO(ianh): interpolate tile mode
-      transform: t < 0.5 ? a.transform : b.transform,
     );
   }
 
@@ -809,7 +803,6 @@ class RadialGradient extends Gradient {
       tileMode: t < 0.5 ? a.tileMode : b.tileMode, // TODO(ianh): interpolate tile mode
       focal: AlignmentGeometry.lerp(a.focal, b.focal, t),
       focalRadius: math.max(0.0, ui.lerpDouble(a.focalRadius, b.focalRadius, t)!),
-      transform: t < 0.5 ? a.transform : b.transform,
     );
   }
 
@@ -1091,7 +1084,6 @@ class SweepGradient extends Gradient {
       colors: interpolated.colors,
       stops: interpolated.stops,
       tileMode: t < 0.5 ? a.tileMode : b.tileMode, // TODO(ianh): interpolate tile mode
-      transform: t < 0.5 ? a.transform : b.transform,
     );
   }
 

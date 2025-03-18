@@ -306,10 +306,12 @@ final class _Float64ListChain {
   /// are read back, they do not affect the timings of the work being
   /// benchmarked.
   List<double> extractElements() {
-    return <double>[
-      for (final Float64List list in _chain) ...list,
-      for (int i = 0; i < _pointer; i++) _slice[i],
-    ];
+    final List<double> result = <double>[];
+    _chain.forEach(result.addAll);
+    for (int i = 0; i < _pointer; i++) {
+      result.add(_slice[i]);
+    }
+    return result;
   }
 }
 
@@ -342,11 +344,16 @@ final class _StringListChain {
   /// are read back, they do not affect the timings of the work being
   /// benchmarked.
   List<String> extractElements() {
-    return <String>[
-      for (final List<String?> slice in _chain)
-        for (final String? value in slice) value!,
-      for (int i = 0; i < _pointer; i++) _slice[i]!,
-    ];
+    final List<String> result = <String>[];
+    for (final List<String?> slice in _chain) {
+      for (final String? element in slice) {
+        result.add(element!);
+      }
+    }
+    for (int i = 0; i < _pointer; i++) {
+      result.add(_slice[i]!);
+    }
+    return result;
   }
 }
 

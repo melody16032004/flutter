@@ -210,6 +210,7 @@ void main() {
       );
     });
   });
+<<<<<<< HEAD
 
   group('prepare', () {
     test('exits with useful error message when build mode not set', () {
@@ -527,6 +528,8 @@ void main() {
       expect(context.stderr, isEmpty);
     });
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class TestContext extends Context {

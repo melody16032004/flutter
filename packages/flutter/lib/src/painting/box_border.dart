@@ -2,11 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-///
-/// @docImport 'box_decoration.dart';
-library;
-
 import 'package:flutter/foundation.dart';
 
 import 'basic_types.dart';
@@ -118,7 +113,9 @@ abstract class BoxBorder extends ShapeBorder {
       return BorderDirectional.lerp(a, b, t);
     }
     if (b is Border && a is BorderDirectional) {
-      (a, b) = (b, a);
+      final BoxBorder c = b;
+      b = a;
+      a = c;
       t = 1.0 - t;
       // fall through to next case
     }
@@ -541,12 +538,20 @@ class Border extends BoxBorder {
   }
 
   Set<Color> _distinctVisibleColors() {
-    return <Color>{
-      if (top.style != BorderStyle.none) top.color,
-      if (right.style != BorderStyle.none) right.color,
-      if (bottom.style != BorderStyle.none) bottom.color,
-      if (left.style != BorderStyle.none) left.color,
-    };
+    final Set<Color> distinctVisibleColors = <Color>{};
+    if (top.style != BorderStyle.none) {
+      distinctVisibleColors.add(top.color);
+    }
+    if (right.style != BorderStyle.none) {
+      distinctVisibleColors.add(right.color);
+    }
+    if (bottom.style != BorderStyle.none) {
+      distinctVisibleColors.add(bottom.color);
+    }
+    if (left.style != BorderStyle.none) {
+      distinctVisibleColors.add(left.color);
+    }
+    return distinctVisibleColors;
   }
 
   // [BoxBorder.paintNonUniformBorder] is about 20% faster than [paintBorder],
@@ -893,12 +898,21 @@ class BorderDirectional extends BoxBorder {
   }
 
   Set<Color> _distinctVisibleColors() {
-    return <Color>{
-      if (top.style != BorderStyle.none) top.color,
-      if (end.style != BorderStyle.none) end.color,
-      if (bottom.style != BorderStyle.none) bottom.color,
-      if (start.style != BorderStyle.none) start.color,
-    };
+    final Set<Color> distinctVisibleColors = <Color>{};
+    if (top.style != BorderStyle.none) {
+      distinctVisibleColors.add(top.color);
+    }
+    if (end.style != BorderStyle.none) {
+      distinctVisibleColors.add(end.color);
+    }
+    if (bottom.style != BorderStyle.none) {
+      distinctVisibleColors.add(bottom.color);
+    }
+    if (start.style != BorderStyle.none) {
+      distinctVisibleColors.add(start.color);
+    }
+
+    return distinctVisibleColors;
   }
 
   bool get _hasHairlineBorder =>

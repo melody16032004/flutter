@@ -52,10 +52,20 @@ TaskFunction createMicrobenchmarkTask({
             if (enableImpeller != null && !enableImpeller) '--no-enable-impeller',
             '-d',
             device.deviceId,
+<<<<<<< HEAD
             '--dart-define=seed=$seed',
             benchmarkPath,
           ];
           return startFlutter('run', options: options, environment: environment);
+=======
+          ];
+          options.add(benchmarkPath);
+          return startFlutter(
+            'run',
+            options: options,
+            environment: environment,
+          );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         });
         return readJsonResults(flutterProcess);
       }

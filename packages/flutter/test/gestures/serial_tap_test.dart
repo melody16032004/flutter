@@ -151,12 +151,19 @@ void main() {
 
   testGesture('Loses to release gesture below it in the tree', (GestureTester tester) {
     bool recognizedRelease = false;
+<<<<<<< HEAD
     final ReleaseGestureRecognizer release =
         ReleaseGestureRecognizer()
           ..onRelease = () {
             recognizedRelease = true;
           };
     addTearDown(release.dispose);
+=======
+    final ReleaseGestureRecognizer release = ReleaseGestureRecognizer()
+      ..onRelease = () {
+        recognizedRelease = true;
+      };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     release.addPointer(down1);
     serial.addPointer(down1);
@@ -170,12 +177,19 @@ void main() {
 
   testGesture('Wins over release gesture above it in the tree', (GestureTester tester) {
     bool recognizedRelease = false;
+<<<<<<< HEAD
     final ReleaseGestureRecognizer release =
         ReleaseGestureRecognizer()
           ..onRelease = () {
             recognizedRelease = true;
           };
     addTearDown(release.dispose);
+=======
+    final ReleaseGestureRecognizer release = ReleaseGestureRecognizer()
+      ..onRelease = () {
+        recognizedRelease = true;
+      };
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     serial.addPointer(down1);
     release.addPointer(down1);
@@ -189,7 +203,6 @@ void main() {
 
   testGesture('Fires cancel if competing recognizer declares victory', (GestureTester tester) {
     final WinningGestureRecognizer winner = WinningGestureRecognizer();
-    addTearDown(winner.dispose);
     winner.addPointer(down1);
     serial.addPointer(down1);
     tester.closeArena(1);

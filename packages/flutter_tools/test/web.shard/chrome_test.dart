@@ -849,6 +849,7 @@ void main() {
       allOf(contains('incorrect format'), contains('OK'), contains('<html> ...')),
     );
   });
+<<<<<<< HEAD
 
   testWithoutContext('Chromium close sends browser close command', () async {
     final BufferLogger logger = BufferLogger.test();
@@ -935,6 +936,8 @@ void main() {
       await chrome.close();
     },
   );
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Fake chrome connection that fails to get tabs a few times.
@@ -975,6 +978,7 @@ class FakeChromeConnection extends Fake implements ChromeConnection {
   @override
   void close() {}
 }
+<<<<<<< HEAD
 
 typedef OnSendCommand = void Function(String);
 
@@ -1042,3 +1046,5 @@ class FakeWipConnection extends Fake implements WipConnection {
     }
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

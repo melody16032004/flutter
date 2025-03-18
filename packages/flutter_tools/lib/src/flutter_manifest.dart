@@ -202,12 +202,6 @@ class FlutterManifest {
     return _flutterDescriptor['uses-material-design'] as bool? ?? false;
   }
 
-  /// If true, does not use Swift Package Manager as a dependency manager.
-  /// CocoaPods will be used instead.
-  bool get disabledSwiftPackageManager {
-    return _flutterDescriptor['disable-swift-package-manager'] as bool? ?? false;
-  }
-
   /// True if this Flutter module should use AndroidX dependencies.
   ///
   /// If false the deprecated Android Support library will be used.
@@ -442,6 +436,7 @@ class FlutterManifest {
   /// introspection is required to determine whether a synthetic package is
   /// required.
   ///
+<<<<<<< HEAD
   /// See also:
   ///
   ///   * [Deprecate and remove synthethic `package:flutter_gen`](https://github.com/flutter/flutter/issues/102983)
@@ -452,6 +447,20 @@ class FlutterManifest {
 
   YamlMap toYaml() {
     return YamlMap.wrap(_descriptor);
+=======
+  /// This allows generated source code to be imported using a package
+  /// alias.
+  late final bool generateSyntheticPackage = _computeGenerateSyntheticPackage();
+  bool _computeGenerateSyntheticPackage() {
+    if (!_flutterDescriptor.containsKey('generate')) {
+      return false;
+    }
+    final Object? value = _flutterDescriptor['generate'];
+    if (value is! bool) {
+      return false;
+    }
+    return value;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }
 
@@ -631,6 +640,7 @@ void _validateFlutter(YamlMap? yaml, List<String> errors) {
         break;
       case 'deferred-components':
         _validateDeferredComponents(kvp, errors);
+<<<<<<< HEAD
       case 'disable-swift-package-manager':
         if (yamlValue is! bool) {
           errors.add(
@@ -643,6 +653,8 @@ void _validateFlutter(YamlMap? yaml, List<String> errors) {
             'Expected "$yamlKey" to be a string, but got $yamlValue (${yamlValue.runtimeType}).',
           );
         }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       default:
         errors.add('Unexpected child "$yamlKey" found under "flutter".');
     }

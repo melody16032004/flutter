@@ -31,11 +31,21 @@ class BenchBuildMaterialCheckbox extends WidgetBuildRecorder {
   }
 
   Row _buildRow() {
+<<<<<<< HEAD
     _isChecked = switch (_isChecked) {
       null => true,
       true => false,
       false => null,
     };
+=======
+    if (_isChecked == null) {
+      _isChecked = true;
+    } else if (_isChecked!) {
+      _isChecked = false;
+    } else {
+      _isChecked = null;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     return Row(
       children: List<Widget>.generate(10, (int i) {

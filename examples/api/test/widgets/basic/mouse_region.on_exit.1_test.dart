@@ -9,7 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('MouseRegion update mouse hover with a delay', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(const example.MouseRegionApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(home: example.MouseRegionApp()),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     expect(find.text('Not hovering'), findsOneWidget);
 

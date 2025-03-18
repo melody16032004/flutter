@@ -811,6 +811,7 @@ void main() {
             child = node;
             return false;
           });
+<<<<<<< HEAD
           expect(
             child,
             matchesSemantics(
@@ -825,6 +826,17 @@ void main() {
               hasFocusAction: true,
             ),
           );
+=======
+          expect(child, matchesSemantics(
+            hasToggledState: true,
+            isToggled: true,
+            isEnabled: true,
+            isFocusable: true,
+            hasEnabledState: true,
+            label: 'Switch tile',
+            hasTapAction: true,
+          ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           handle.dispose();
         });
       });

@@ -198,11 +198,60 @@ class _BottomNavTabState extends State<_BottomNavTab> {
       },
       child: Navigator(
         key: _navigatorKey,
+<<<<<<< HEAD
         restorationScopeId: 'nested-navigator-${widget.title}',
         onDidRemovePage: (Page<Object?> page) {
           final _TabPage? tabPage = _TabPage.fromName(page.name);
           if (tabPage == null) {
             return;
+=======
+        onPopPage: (Route<void> route, void result) {
+          if (!route.didPop(null)) {
+            return false;
+          }
+          widget.onChangedPages(<_TabPage>[
+            ...widget.pages,
+          ]..removeLast());
+          return true;
+        },
+        pages: widget.pages.map((_TabPage page) {
+          switch (page) {
+            case _TabPage.home:
+              return MaterialPage<void>(
+                child: _LinksPage(
+                  title: 'Bottom nav - tab ${widget.title} - route $page',
+                  backgroundColor: widget.color,
+                  buttons: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        widget.onChangedPages(<_TabPage>[
+                          ...widget.pages,
+                          _TabPage.one,
+                        ]);
+                      },
+                      child: const Text('Go to another route in this nested Navigator'),
+                    ),
+                  ],
+                ),
+              );
+            case _TabPage.one:
+              return MaterialPage<void>(
+                child: _LinksPage(
+                  backgroundColor: widget.color,
+                  title: 'Bottom nav - tab ${widget.title} - route $page',
+                  buttons: <Widget>[
+                    TextButton(
+                      onPressed: () {
+                        widget.onChangedPages(<_TabPage>[
+                          ...widget.pages,
+                        ]..removeLast());
+                      },
+                      child: const Text('Go back'),
+                    ),
+                  ],
+                ),
+              );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           }
           final List<_TabPage> nextPages = <_TabPage>[...widget.pages]..remove(tabPage);
           if (nextPages.length < widget.pages.length) {

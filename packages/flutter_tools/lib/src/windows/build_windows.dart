@@ -56,9 +56,14 @@ Future<void> buildWindows(
   if (!windowsProject.cmakeFile.existsSync()) {
     throwToolExit(
       'No Windows desktop project configured. See '
+<<<<<<< HEAD
       'https://flutter.dev/to/add-desktop-support '
       'to learn about adding Windows support to a project.',
     );
+=======
+      'https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding Windows support to a project.');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   final Directory buildDirectory = globals.fs.directory(
@@ -74,7 +79,7 @@ Future<void> buildWindows(
   ];
 
   final ProjectMigration migration = ProjectMigration(migrators);
-  await migration.run();
+  migration.run();
 
   // Ensure that necessary ephemeral files are generated and up to date.
   _writeGeneratedFlutterConfig(windowsProject, buildInfo, target);

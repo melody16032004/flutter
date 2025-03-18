@@ -150,7 +150,16 @@ class ScrollPositionWithSingleContext extends ScrollPosition implements ScrollAc
     assert(hasPixels);
     final Simulation? simulation = physics.createBallisticSimulation(this, velocity);
     if (simulation != null) {
+<<<<<<< HEAD
       beginActivity(BallisticScrollActivity(this, simulation, context.vsync, shouldIgnorePointer));
+=======
+      beginActivity(BallisticScrollActivity(
+        this,
+        simulation,
+        context.vsync,
+        activity?.shouldIgnorePointer ?? true,
+      ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     } else {
       goIdle();
     }

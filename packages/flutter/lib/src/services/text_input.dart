@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+<<<<<<< HEAD
 /// @docImport 'package:flutter/cupertino.dart';
 /// @docImport 'package:flutter/material.dart';
 /// @docImport 'package:flutter/rendering.dart';
@@ -11,6 +12,8 @@
 /// @docImport 'text_formatter.dart';
 library;
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'dart:ui' show FlutterView, FontWeight, Offset, Rect, Size, TextAlign, TextDirection;
@@ -19,7 +22,6 @@ import 'package:flutter/foundation.dart';
 import 'package:vector_math/vector_math_64.dart' show Matrix4;
 
 import 'autofill.dart';
-import 'binding.dart';
 import 'clipboard.dart' show Clipboard;
 import 'keyboard_inserted_content.dart';
 import 'message_codec.dart';
@@ -1887,7 +1889,7 @@ class TextInput {
 
   Future<dynamic> _handleTextInputInvocation(MethodCall methodCall) async {
     final String method = methodCall.method;
-    switch (method) {
+    switch (methodCall.method) {
       case 'TextInputClient.focusElement':
         final List<dynamic> args = methodCall.arguments as List<dynamic>;
         _scribbleClients[args[0]]?.onScribbleFocus(
@@ -1984,6 +1986,7 @@ class TextInput {
         final TextEditingValue value = TextEditingValue.fromJSON(args[1] as Map<String, dynamic>);
         TextInput._instance._updateEditingValue(value, exclude: _PlatformTextInputControl.instance);
       case 'TextInputClient.updateEditingStateWithDeltas':
+<<<<<<< HEAD
         assert(
           _currentConnection!._client is DeltaTextInputClient,
           'You must be using a DeltaTextInputClient if TextInputConfiguration.enableDeltaModel is set to true',
@@ -1993,6 +1996,17 @@ class TextInput {
           for (final dynamic encodedDelta in encoded['deltas'] as List<dynamic>)
             TextEditingDelta.fromJSON(encodedDelta as Map<String, dynamic>),
         ];
+=======
+        assert(_currentConnection!._client is DeltaTextInputClient, 'You must be using a DeltaTextInputClient if TextInputConfiguration.enableDeltaModel is set to true');
+        final List<TextEditingDelta> deltas = <TextEditingDelta>[];
+
+        final Map<String, dynamic> encoded = args[1] as Map<String, dynamic>;
+
+        for (final dynamic encodedDelta in encoded['deltas'] as List<dynamic>) {
+          final TextEditingDelta delta = TextEditingDelta.fromJSON(encodedDelta as Map<String, dynamic>);
+          deltas.add(delta);
+        }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
         (_currentConnection!._client as DeltaTextInputClient).updateEditingValueWithDeltas(deltas);
       case 'TextInputClient.performAction':
@@ -2473,6 +2487,7 @@ class _PlatformTextInputControl with TextInputControl {
     _channel.invokeMethod<void>('TextInput.finishAutofillContext', shouldSave);
   }
 }
+<<<<<<< HEAD
 
 /// Allows access to the system context menu.
 ///
@@ -2644,3 +2659,5 @@ class SystemContextMenuController with SystemContextMenuClient {
     _isDisposed = true;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

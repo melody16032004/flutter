@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'dart:collection';
-library;
-
 import 'dart:math' as math;
 import 'dart:math';
 
@@ -1148,6 +1145,7 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     final List<double> segmentWidths = _getChildWidths(constraints);
     final double childHeight = _getMaxChildHeight(constraints, constraints.maxWidth);
@@ -1171,6 +1169,8 @@ class _RenderSegmentedControl<T extends Object> extends RenderBox
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   Size computeDryLayout(BoxConstraints constraints) {
     return _computeOverallSize(constraints);
   }

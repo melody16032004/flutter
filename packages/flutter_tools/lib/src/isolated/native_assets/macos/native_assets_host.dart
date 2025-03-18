@@ -16,22 +16,31 @@ import '../../../globals.dart' as globals;
 /// Create an `Info.plist` in [target] for a framework with a single dylib.
 ///
 /// The framework must be named [name].framework and the dylib [name].
+<<<<<<< HEAD
 Future<void> createInfoPlist(String name, Directory target, {String? minimumIOSVersion}) async {
   final File infoPlistFile = target.childFile('Info.plist');
   final String bundleIdentifier = 'io.flutter.flutter.native_assets.$name'.replaceAll('_', '-');
   await infoPlistFile.writeAsString(
     <String>[
       '''
+=======
+Future<void> createInfoPlist(
+  String name,
+  Directory target,
+) async {
+  final File infoPlistFile = target.childFile('Info.plist');
+  await infoPlistFile.writeAsString('''
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	 <string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>$name</string>
 	<key>CFBundleIdentifier</key>
-	<string>$bundleIdentifier</string>
+	<string>io.flutter.flutter.native_assets.$name</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -44,6 +53,7 @@ Future<void> createInfoPlist(String name, Directory target, {String? minimumIOSV
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+<<<<<<< HEAD
 ''',
       if (minimumIOSVersion != null)
         '''
@@ -55,6 +65,11 @@ Future<void> createInfoPlist(String name, Directory target, {String? minimumIOSV
 </plist>''',
     ].join(),
   );
+=======
+</dict>
+</plist>
+  ''');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 /// Combines dylibs from [sources] into a fat binary at [targetFullPath].

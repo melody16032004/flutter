@@ -4,9 +4,11 @@
 
 import 'dart:math';
 
+import 'package:dual_screen/dual_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../gallery_localizations.dart';
 import '../layout/adaptive.dart';
 import 'home.dart';
 
@@ -98,7 +100,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
         return true;
       },
       child: SplashPageAnimation(
-        isFinished: _controller.isDismissed,
+        isFinished: _controller.status == AnimationStatus.dismissed,
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final Animation<RelativeRect> animation = _getPanelAnimation(context, constraints);
@@ -108,7 +110,9 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
-                  onTap: _controller.reverse,
+                  onTap: () {
+                    _controller.reverse();
+                  },
                   onVerticalDragEnd: (DragEndDetails details) {
                     if (details.velocity.pixelsPerSecond.dy < -200) {
                       _controller.reverse();
@@ -129,16 +133,44 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
               );
             }
 
-            return Stack(
-              children: <Widget>[
-                _SplashBackLayer(
-                  isSplashCollapsed: !_isSplashVisible,
-                  effect: _effect,
-                  onTap: _controller.forward,
+            if (isDisplayFoldable(context)) {
+              return TwoPane(
+                startPane: frontLayer,
+                endPane: GestureDetector(
+                  onTap: () {
+                    if (_isSplashVisible) {
+                      _controller.reverse();
+                    } else {
+                      _controller.forward();
+                    }
+                  },
+                  child: _SplashBackLayer(
+                      isSplashCollapsed: !_isSplashVisible, effect: _effect),
                 ),
+<<<<<<< HEAD
                 PositionedTransition(rect: animation, child: frontLayer),
               ],
             );
+=======
+              );
+            } else {
+              return Stack(
+                children: <Widget>[
+                  _SplashBackLayer(
+                    isSplashCollapsed: !_isSplashVisible,
+                    effect: _effect,
+                    onTap: () {
+                      _controller.forward();
+                    },
+                  ),
+                  PositionedTransition(
+                    rect: animation,
+                    child: frontLayer,
+                  ),
+                ],
+              );
+            }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           },
         ),
       ),
@@ -175,6 +207,26 @@ class _SplashBackLayer extends StatelessWidget {
           ),
         );
       }
+      if (isDisplayFoldable(context)) {
+        child = ColoredBox(
+          color: Theme.of(context).colorScheme.background,
+          child: Stack(
+            children: <Widget>[
+              Center(
+                child: flutterLogo,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 100.0),
+                child: Center(
+                  child: Text(
+                    GalleryLocalizations.of(context)!.splashSelectDemo,
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+      }
     } else {
       child = Stack(
         children: <Widget>[
@@ -190,7 +242,15 @@ class _SplashBackLayer extends StatelessWidget {
         color: const Color(0xFF030303),
         child: Padding(
           padding: EdgeInsets.only(
+<<<<<<< HEAD
             bottom: isDisplayDesktop(context) ? homePeekDesktop : homePeekMobile,
+=======
+            bottom: isDisplayDesktop(context)
+                ? homePeekDesktop
+                : isDisplayFoldable(context)
+                    ? 0
+                    : homePeekMobile,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
           child: child,
         ),

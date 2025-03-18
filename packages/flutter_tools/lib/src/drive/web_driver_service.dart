@@ -75,6 +75,7 @@ class WebDriverService extends DriverService {
     _residentRunner = webRunnerFactory!.createWebRunner(
       flutterDevice,
       target: mainPath,
+<<<<<<< HEAD
       debuggingOptions:
           buildInfo.isRelease
               ? DebuggingOptions.disabled(
@@ -94,6 +95,23 @@ class WebDriverService extends DriverService {
                 webUseWasm: debuggingOptions.webUseWasm,
                 webHeaders: debuggingOptions.webHeaders,
               ),
+=======
+      ipv6: ipv6,
+      debuggingOptions: buildInfo.isRelease ?
+        DebuggingOptions.disabled(
+          buildInfo,
+          port: debuggingOptions.port,
+          hostname: debuggingOptions.hostname,
+          webRenderer: debuggingOptions.webRenderer,
+        )
+        : DebuggingOptions.enabled(
+          buildInfo,
+          port: debuggingOptions.port,
+          hostname: debuggingOptions.hostname,
+          disablePortPublication: debuggingOptions.disablePortPublication,
+          webRenderer: debuggingOptions.webRenderer,
+        ),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       stayResident: true,
       flutterProject: FlutterProject.current(),
       fileSystem: globals.fs,
@@ -175,7 +193,11 @@ class WebDriverService extends DriverService {
         'Unable to start a WebDriver session for web testing.\n'
         'Make sure you have the correct WebDriver server (e.g. chromedriver) running at $driverPort.\n'
         'For instructions on how to obtain and run a WebDriver server, see:\n'
+<<<<<<< HEAD
         'https://flutter.dev/to/integration-test-on-web\n',
+=======
+        'https://flutter.dev/docs/testing/integration-tests#running-in-a-browser\n'
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
     }
 
@@ -280,7 +302,7 @@ enum Browser implements CliEnum {
   };
 
   @override
-  String get cliName => kebabCase(name);
+  String get cliName => snakeCase(name, '-');
 
   static Browser fromCliName(String? value) => Browser.values.singleWhere(
     (Browser element) => element.cliName == value,

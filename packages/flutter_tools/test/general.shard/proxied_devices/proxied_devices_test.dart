@@ -14,7 +14,6 @@ import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/utils.dart';
 import 'package:flutter_tools/src/daemon.dart';
 import 'package:flutter_tools/src/device.dart';
-import 'package:flutter_tools/src/device_vm_service_discovery_for_attach.dart';
 import 'package:flutter_tools/src/proxied_devices/devices.dart';
 import 'package:flutter_tools/src/proxied_devices/file_transfer.dart';
 import 'package:flutter_tools/src/resident_runner.dart';
@@ -233,6 +232,7 @@ void main() {
         // Wait the event queue and make sure that it doesn't crash.
         await pumpEventQueue();
       });
+<<<<<<< HEAD
 
       testWithoutContext('should not forward new data to socket after disconnection', () async {
         // Data will be forwarded before disconnection
@@ -257,6 +257,8 @@ void main() {
           <int>[1, 2, 3],
         ]);
       });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWithoutContext('disposes multiple sockets correctly', () async {
@@ -861,6 +863,7 @@ void main() {
       },
     );
   });
+<<<<<<< HEAD
 
   group('ProxiedVMServiceDiscoveryForAttach', () {
     testWithoutContext('sends the request and forwards the port', () async {
@@ -1071,6 +1074,8 @@ void main() {
       expect(uriFuture, throwsA(isA<TestException>()));
     });
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 class FakeDaemonStreams implements DaemonStreams {
@@ -1210,7 +1215,6 @@ class FakeProxiedPortForwarder extends Fake implements ProxiedPortForwarder {
   int? originalRemotePortReturnValue;
   int? receivedLocalForwardedPort;
 
-  Exception? forwardThrowException;
   int? forwardReturnValue;
   int? forwardedDevicePort;
   int? forwardedHostPort;
@@ -1227,9 +1231,6 @@ class FakeProxiedPortForwarder extends Fake implements ProxiedPortForwarder {
     forwardedDevicePort = devicePort;
     forwardedHostPort = hostPort;
     forwardedIpv6 = ipv6;
-    if (forwardThrowException != null) {
-      throw forwardThrowException!;
-    }
     return forwardReturnValue!;
   }
 }
@@ -1282,12 +1283,3 @@ class FakeFileTransfer extends Fake implements FileTransfer {
   @override
   Future<Uint8List> binaryForRebuilding(File file, List<FileDeltaBlock> delta) async => binary!;
 }
-
-class FakeVMServiceDiscoveryForAttach extends Fake implements VMServiceDiscoveryForAttach {
-  FakeVMServiceDiscoveryForAttach(this.uris);
-
-  @override
-  Stream<Uri> uris;
-}
-
-class TestException implements Exception {}

@@ -808,6 +808,7 @@ void main() {
     expect(isSync, isTrue);
   });
 
+<<<<<<< HEAD
   testWidgets(
     'Precache removes original listener immediately after future completes, does not crash on successive calls #25143',
     experimentalLeakTesting:
@@ -816,6 +817,14 @@ void main() {
     (WidgetTester tester) async {
       final _TestImageStreamCompleter imageStreamCompleter = _TestImageStreamCompleter();
       final _TestImageProvider provider = _TestImageProvider(streamCompleter: imageStreamCompleter);
+=======
+  testWidgets('Precache removes original listener immediately after future completes, does not crash on successive calls #25143',
+  // TODO(polina-c): clean up leaks, https://github.com/flutter/flutter/issues/134787 [leaks-to-clean]
+  experimentalLeakTesting: LeakTesting.settings.withIgnoredAll(),
+  (WidgetTester tester) async {
+    final _TestImageStreamCompleter imageStreamCompleter = _TestImageStreamCompleter();
+    final _TestImageProvider provider = _TestImageProvider(streamCompleter: imageStreamCompleter);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
       await tester.pumpWidget(
         Builder(

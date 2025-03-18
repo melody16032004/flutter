@@ -90,6 +90,7 @@ class GalleryOptions {
   /// In other words, if the theme is dark, returns light; if the theme is
   /// light, returns dark.
   SystemUiOverlayStyle resolvedSystemUiOverlayStyle() {
+<<<<<<< HEAD
     final Brightness brightness = switch (themeMode) {
       ThemeMode.light => Brightness.light,
       ThemeMode.dark => Brightness.dark,
@@ -99,6 +100,24 @@ class GalleryOptions {
       Brightness.light => SystemUiOverlayStyle.dark,
       Brightness.dark => SystemUiOverlayStyle.light,
     };
+=======
+    Brightness brightness;
+    switch (themeMode) {
+      case ThemeMode.light:
+        brightness = Brightness.light;
+      case ThemeMode.dark:
+        brightness = Brightness.dark;
+      case ThemeMode.system:
+        brightness =
+            WidgetsBinding.instance.platformDispatcher.platformBrightness;
+    }
+
+    final SystemUiOverlayStyle overlayStyle = brightness == Brightness.dark
+        ? SystemUiOverlayStyle.light
+        : SystemUiOverlayStyle.dark;
+
+    return overlayStyle;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   GalleryOptions copyWith({

@@ -571,6 +571,7 @@ void main() {
       '\u2067ملصق\u2069',
     );
   });
+<<<<<<< HEAD
 
   testWidgets('SemanticsDebugger turns on semantics.', (WidgetTester tester) async {
     // Regression test for https://github.com/flutter/flutter/issues/147665.
@@ -583,6 +584,8 @@ void main() {
     );
     expect(tester.binding.semanticsEnabled, isTrue);
   }, semanticsEnabled: false);
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 String _getMessageShownInSemanticsDebugger({

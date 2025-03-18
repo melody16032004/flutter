@@ -17,7 +17,6 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
     required FileSystem fileSystem,
     required Platform platform,
     bool simulateAppStarted = true,
-    bool simulateAppStopError = false,
     bool supportsRestart = true,
     FutureOr<void> Function(MockFlutterDebugAdapter adapter)? preAppStart,
   }) {
@@ -40,7 +39,6 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
       fileSystem: fileSystem,
       platform: platform,
       simulateAppStarted: simulateAppStarted,
-      simulateAppStopError: simulateAppStopError,
       supportsRestart: supportsRestart,
       preAppStart: preAppStart,
     );
@@ -52,7 +50,6 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
     required super.fileSystem,
     required super.platform,
     this.simulateAppStarted = true,
-    this.simulateAppStopError = false,
     this.supportsRestart = true,
     this.preAppStart,
   }) {
@@ -64,7 +61,6 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
   int _seq = 1;
   final ByteStreamServerChannel clientChannel;
   final bool simulateAppStarted;
-  final bool simulateAppStopError;
   final bool supportsRestart;
   final FutureOr<void> Function(MockFlutterDebugAdapter adapter)? preAppStart;
 
@@ -147,12 +143,15 @@ class MockFlutterDebugAdapter extends FlutterDebugAdapter {
       sendLaunchProgress(finished: true);
       simulateStdoutMessage(<String, Object?>{'event': 'app.started'});
     }
+<<<<<<< HEAD
     if (simulateAppStopError) {
       simulateStdoutMessage(<String, Object?>{
         'event': 'app.stop',
         'params': <String, Object?>{'appId': 'TEST', 'error': 'App stopped due to an error'},
       });
     }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Handles messages sent from the debug adapter back to the client.

@@ -51,7 +51,7 @@ It's also possible that a previously installed app with the same Bundle\u0020
 Identifier was signed with a different certificate.
 
 For more information, please visit:
-  https://flutter.dev/to/ios-app-signing
+  https://flutter.dev/docs/get-started/install/macos#deploy-to-ios-devices
 
 Or run on an iOS simulator without code signing
 ════════════════════════════════════════════════════════════════════════════════''';
@@ -66,7 +66,7 @@ Provisioning Profile. Please ensure that a Development Team is selected by:
 $fixWithDevelopmentTeamInstruction
 
 For more information, please visit:
-  https://flutter.dev/to/ios-development-team
+  https://flutter.dev/docs/get-started/install/macos#deploy-to-ios-devices
 
 Or run on an iOS simulator without code signing
 ════════════════════════════════════════════════════════════════════════════════''';
@@ -240,6 +240,7 @@ Future<String?> _getCodeSigningIdentityDevelopmentTeam({
     return null;
   }
 
+<<<<<<< HEAD
   final Process opensslProcess = await processUtils.start(const <String>[
     'openssl',
     'x509',
@@ -254,6 +255,11 @@ Future<String?> _getCodeSigningIdentityDevelopmentTeam({
     },
   );
   await opensslProcess.stdin.close();
+=======
+  final Process opensslProcess = await processUtils.start(
+    const <String>['openssl', 'x509', '-subject']);
+  await (opensslProcess.stdin..write(signingCertificateStdout)).close();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final String opensslOutput = await utf8.decodeStream(opensslProcess.stdout);
   // Fire and forget discard of the stderr stream so we don't hold onto resources.

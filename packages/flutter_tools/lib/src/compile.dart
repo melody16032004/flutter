@@ -30,6 +30,7 @@ class TargetModel {
   /// Throws an exception if passed a value other than 'flutter',
   /// 'flutter_runner', 'vm', or 'dartdevc'.
   factory TargetModel(String rawValue) {
+<<<<<<< HEAD
     return switch (rawValue) {
       'flutter' => flutter,
       'flutter_runner' => flutterRunner,
@@ -37,6 +38,19 @@ class TargetModel {
       'dartdevc' => dartdevc,
       _ => throw Exception('Unexpected target model $rawValue'),
     };
+=======
+    switch (rawValue) {
+      case 'flutter':
+        return flutter;
+      case 'flutter_runner':
+        return flutterRunner;
+      case 'vm':
+        return vm;
+      case 'dartdevc':
+        return dartdevc;
+    }
+    throw Exception('Unexpected target model $rawValue');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   const TargetModel._(this._value);
@@ -262,6 +276,7 @@ class KernelCompiler {
       sdkRoot = '$sdkRoot/';
     }
     String? mainUri;
+<<<<<<< HEAD
     if (mainPath != null) {
       final File mainFile = _fileSystem.file(mainPath);
       final Uri mainFileUri = mainFile.uri;
@@ -274,7 +289,14 @@ class KernelCompiler {
         _fileSystemRoots,
         _fileSystem.path.separator == r'\',
       );
+=======
+    final File mainFile = _fileSystem.file(mainPath);
+    final Uri mainFileUri = mainFile.uri;
+    if (packagesPath != null) {
+      mainUri = packageConfig.toPackageUri(mainFileUri)?.toString();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     }
+    mainUri ??= toMultiRootPath(mainFileUri, _fileSystemScheme, _fileSystemRoots, _fileSystem.path.separator == r'\');
     if (outputFilePath != null && !_fileSystem.isFileSync(outputFilePath)) {
       _fileSystem.file(outputFilePath).createSync(recursive: true);
     }
@@ -324,6 +346,7 @@ class KernelCompiler {
       ];
     }
 
+<<<<<<< HEAD
     final List<String> command =
         commandToStartFrontendServer +
         <String>[
@@ -370,6 +393,73 @@ class KernelCompiler {
           ...?extraFrontEndOptions,
           if (mainUri != null) mainUri else '--native-assets-only',
         ];
+=======
+    final List<String> command = commandToStartFrontendServer + <String>[
+      '--sdk-root',
+      sdkRoot,
+      '--target=$targetModel',
+      '--no-print-incremental-dependencies',
+      for (final Object dartDefine in dartDefines)
+        '-D$dartDefine',
+      ...buildModeOptions(buildMode, dartDefines),
+      if (trackWidgetCreation) '--track-widget-creation',
+      if (!linkPlatformKernelIn) '--no-link-platform',
+      if (aot) ...<String>[
+        '--aot',
+        '--tfa',
+        // The --target-os flag only makes sense for whole program compilation.
+        if (targetOS != null) ...<String>[
+          '--target-os',
+          targetOS,
+        ],
+      ],
+      if (packagesPath != null) ...<String>[
+        '--packages',
+        packagesPath,
+      ],
+      if (outputFilePath != null) ...<String>[
+        '--output-dill',
+        outputFilePath,
+      ],
+      if (depFilePath != null && (fileSystemRoots == null || fileSystemRoots.isEmpty)) ...<String>[
+        '--depfile',
+        depFilePath,
+      ],
+      if (fileSystemRoots != null)
+        for (final String root in fileSystemRoots) ...<String>[
+          '--filesystem-root',
+          root,
+        ],
+      if (fileSystemScheme != null) ...<String>[
+        '--filesystem-scheme',
+        fileSystemScheme,
+      ],
+      if (initializeFromDill != null) ...<String>[
+        '--incremental',
+        '--initialize-from-dill',
+        initializeFromDill,
+      ],
+      if (platformDill != null) ...<String>[
+        '--platform',
+        platformDill,
+      ],
+      if (dartPluginRegistrantUri != null) ...<String>[
+        '--source',
+        dartPluginRegistrantUri,
+        '--source',
+        'package:flutter/src/dart_plugin_registrant.dart',
+        '-Dflutter.dart_plugin_registrant=$dartPluginRegistrantUri',
+      ],
+      if (nativeAssets != null) ...<String>[
+        '--native-assets',
+        nativeAssets,
+      ],
+      // See: https://github.com/flutter/flutter/issues/103994
+      '--verbosity=error',
+      ...?extraFrontEndOptions,
+      mainUri,
+    ];
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     _logger.printTrace(command.join(' '));
     final Process server = await _processManager.start(command);

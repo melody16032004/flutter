@@ -4,7 +4,7 @@
 
 import 'dart:ui' as ui show BoxHeightStyle, BoxWidthStyle, Paragraph, TextBox;
 
-import 'package:flutter/foundation.dart' show isSkiaWeb, kIsWeb;
+import 'package:flutter/foundation.dart' show isCanvasKit, kIsWeb;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -206,7 +206,7 @@ void main() {
     expect(boxes[2], const TextBox.fromLTRBD(0.0, 10.0, 130.0, 20.0, TextDirection.ltr));
     // 'fifth':
     expect(boxes[3], const TextBox.fromLTRBD(0.0, 20.0, 50.0, 30.0, TextDirection.ltr));
-  }, skip: kIsWeb && !isSkiaWeb); // https://github.com/flutter/flutter/issues/61016
+  }, skip: kIsWeb && !isCanvasKit); // https://github.com/flutter/flutter/issues/61016
 
   test('getBoxesForSelection test with boxHeightStyle and boxWidthStyle set to max', () {
     final RenderParagraph paragraph = RenderParagraph(
@@ -1476,10 +1476,11 @@ void main() {
     );
 
     int semanticsUpdateCount = 0;
-    final SemanticsHandle semanticsHandle = TestRenderingFlutterBinding.instance.ensureSemantics();
-    TestRenderingFlutterBinding.instance.pipelineOwner.semanticsOwner!.addListener(() {
-      ++semanticsUpdateCount;
-    });
+    TestRenderingFlutterBinding.instance.pipelineOwner.ensureSemantics(
+      listener: () {
+        ++semanticsUpdateCount;
+      },
+    );
 
     layout(paragraph);
 
@@ -1514,8 +1515,6 @@ void main() {
     data = children.single.getSemanticsData();
     expect(data.hasAction(SemanticsAction.longPress), true);
     expect(data.hasAction(SemanticsAction.tap), false);
-
-    semanticsHandle.dispose();
   });
 }
 

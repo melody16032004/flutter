@@ -146,7 +146,6 @@ Future<void> writeBundle(
   required Artifacts artifacts,
   required Logger logger,
   required Directory projectDir,
-  required BuildMode buildMode,
 }) async {
   if (bundleDir.existsSync()) {
     try {
@@ -178,7 +177,6 @@ Future<void> writeBundle(
     processManager: processManager,
     fileSystem: fileSystem,
     dartBinaryPath: artifacts.getArtifactPath(Artifact.engineDartBinary),
-    buildMode: buildMode,
   );
 
   // Limit number of open files to avoid running out of file descriptors.
@@ -199,6 +197,7 @@ Future<void> writeBundle(
           final File input = devFSContent.file as File;
           bool doCopy = true;
           switch (entry.value.kind) {
+<<<<<<< HEAD
             case AssetKind.regular:
               if (entry.value.transformers.isEmpty) {
                 break;
@@ -217,6 +216,22 @@ Future<void> writeBundle(
                   '${failure.message}',
                 );
               }
+=======
+          case AssetKind.regular:
+            if (entry.value.transformers.isEmpty) {
+              break;
+            }
+            final AssetTransformationFailure? failure = await assetTransformer.transformAsset(
+              asset: input,
+              outputPath: file.path,
+              workingDirectory: projectDir.path,
+              transformerEntries: entry.value.transformers,
+            );
+            doCopy = false;
+            if (failure != null) {
+              throwToolExit(failure.message);
+            }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
             case AssetKind.font:
               break;
             case AssetKind.shader:

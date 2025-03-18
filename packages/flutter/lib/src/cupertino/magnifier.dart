@@ -2,9 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/// @docImport 'package:flutter/material.dart';
-library;
-
 import 'dart:math' as math;
 
 import 'package:flutter/widgets.dart';
@@ -92,9 +89,14 @@ class _CupertinoTextMagnifierState extends State<CupertinoTextMagnifier>
   // set these values.
   Offset _currentAdjustedMagnifierPosition = Offset.zero;
   double _verticalFocalPointAdjustment = 0;
+<<<<<<< HEAD
   late final AnimationController _ioAnimationController;
   late final Animation<double> _ioAnimation;
   late final CurvedAnimation _ioCurvedAnimation;
+=======
+  late AnimationController _ioAnimationController;
+  late Animation<double> _ioAnimation;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   @override
   void initState() {
@@ -106,20 +108,38 @@ class _CupertinoTextMagnifierState extends State<CupertinoTextMagnifier>
     )..addListener(() => setState(() {}));
 
     widget.controller.animationController = _ioAnimationController;
+<<<<<<< HEAD
     widget.magnifierInfo.addListener(_determineMagnifierPositionAndFocalPoint);
     _ioCurvedAnimation = CurvedAnimation(
       parent: _ioAnimationController,
       curve: widget.animationCurve,
     );
     _ioAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_ioCurvedAnimation);
+=======
+    widget.magnifierInfo
+        .addListener(_determineMagnifierPositionAndFocalPoint);
+
+    _ioAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _ioAnimationController,
+      curve: widget.animationCurve,
+    ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
   void dispose() {
     widget.controller.animationController = null;
     _ioAnimationController.dispose();
+<<<<<<< HEAD
     _ioCurvedAnimation.dispose();
     widget.magnifierInfo.removeListener(_determineMagnifierPositionAndFocalPoint);
+=======
+    widget.magnifierInfo
+        .removeListener(_determineMagnifierPositionAndFocalPoint);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     super.dispose();
   }
 
@@ -256,60 +276,35 @@ class CupertinoMagnifier extends StatelessWidget {
         color: Color.fromARGB(25, 0, 0, 0),
         blurRadius: 11,
         spreadRadius: 0.2,
-        blurStyle: BlurStyle.outer,
       ),
     ],
+<<<<<<< HEAD
     this.clipBehavior = Clip.none,
     this.borderSide = const BorderSide(color: Color.fromARGB(255, 0, 124, 255), width: 2.0),
+=======
+    this.borderSide =
+        const BorderSide(color: Color.fromARGB(255, 232, 232, 232)),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     this.inOutAnimation,
     this.magnificationScale = 1.0,
   }) : assert(magnificationScale > 0, 'The magnification scale should be greater than zero.');
 
-  /// A list of shadows cast by the [Magnifier].
-  ///
-  /// If the shadows use a [BlurStyle] that paints inside the shape, or if they
-  /// are offset, then a [clipBehavior] that enables clipping (such as
-  /// [Clip.hardEdge]) is recommended, otherwise the shadow will occlude the
-  /// magnifier (the shadow is drawn above the magnifier so as to not be
-  /// included in the magnified image).
-  ///
-  /// A shadow that uses [BlurStyle.outer] and is not offset does not need
-  /// clipping.
-  ///
-  /// By default, the [shadows] are not offset and use [BlurStyle.outer], and
-  /// correspondingly the default [clipBehavior] is [Clip.none].
+  /// The shadows displayed under the magnifier.
   final List<BoxShadow> shadows;
 
-  /// Whether and how to clip the [shadows] that render inside the loupe.
-  ///
-  /// Defaults to [Clip.none], which is useful if the shadow will not paint
-  /// where the magnified image appears, or if doing so is intentional (e.g. to
-  /// blur the edges of the magnified image).
-  ///
-  /// The default configuration of [CupertinoMagnifier] does not render inside
-  /// the loupe (the shadows are not offset and use [BlurStyle.outer]).
-  ///
-  /// Other values (e.g. [Clip.hardEdge]) are recommended when the [shadows]
-  /// have an offset.
-  ///
-  /// See the discussion at [shadows].
-  final Clip clipBehavior;
-
   /// The border, or "rim", of this magnifier.
-  ///
-  /// This border is drawn on a [RoundedRectangleBorder] with radius
-  /// [borderRadius], and increases the [size] of the magnifier by the
-  /// [BorderSide.width].
   final BorderSide borderSide;
 
   /// The vertical offset that the magnifier is along the Y axis above
   /// the focal point.
+  @visibleForTesting
   static const double kMagnifierAboveFocalPoint = -26;
 
   /// The default size of the magnifier.
   ///
   /// This is public so that positioners can choose to depend on it, although
   /// it is overridable.
+  @visibleForTesting
   static const Size kDefaultSize = Size(80, 47.5);
 
   /// The duration that this magnifier animates in / out for.
@@ -320,13 +315,9 @@ class CupertinoMagnifier extends StatelessWidget {
   static const Duration _kInOutAnimationDuration = Duration(milliseconds: 150);
 
   /// The size of this magnifier.
-  ///
-  /// The size does not include the [borderSide] or [shadows].
   final Size size;
 
   /// The border radius of this magnifier.
-  ///
-  /// The magnifier's shape is a [RoundedRectangleBorder] with this radius.
   final BorderRadius borderRadius;
 
   /// This [RawMagnifier]'s controller.
@@ -365,8 +356,11 @@ class CupertinoMagnifier extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: borderRadius, side: borderSide),
           shadows: shadows,
         ),
+<<<<<<< HEAD
         clipBehavior: clipBehavior,
         magnificationScale: magnificationScale,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       ),
     );
   }

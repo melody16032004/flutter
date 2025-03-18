@@ -24,6 +24,7 @@ docs/releases/Hotfix-Documentation-Best-Practices.md
 
 INTERNAL NOTE
 -->
+<<<<<<< HEAD
 ## Flutter 3.29 Changes
 
 ### [3.29.2](https://github.com/flutter/flutter/releases/tag/3.29.2)
@@ -100,13 +101,30 @@ Initial stable release.
 - [dart 3.5.4 changelog](https://github.com/dart-lang/sdk/blob/stable/CHANGELOG.md#354---2024-10-17)
 - [flutter/154915](https://github.com/flutter/engine/pull/55366) - [macOS] Comply with the new Apple privacy manifest policy for the macOS Flutter engine framework and prevent the "Missing privacy manifest" warning when submitting a macOS app to the App Store.
 - [flutter/153471](https://github.com/flutter/flutter/issues/153471) - [Tool] Fixes RPCError crash when setting up log filtering for Android devices.
+=======
+## Flutter 3.24 Changes
+### [3.24.5](https://github.com/flutter/flutter/releases/tag/3.24.5)
+- [flutter/157359](https://github.com/flutter/flutter/issues/157359) - [iOS] Fixed an issue where dSYM files were being incorrectly bundled with applications
+- [flutter/158120](https://github.com/flutter/flutter/issues/158120) - Fixes a test which was causing Flutter's internal CI to fail.
+- [flutter/155018](https://github.com/flutter/flutter/issues/155018) - [Android] Fixes a crash on Android when a surface becomes unavailable
+- [flutter/158243](https://github.com/flutter/flutter/issues/158423) - [iOS] Fixes an issue where the use of some private symbols causes apps to be rejected from the app store.
+
+### [3.24.4](https://github.com/flutter/flutter/releases/tag/3.24.4)
+- [dart 3.5.4 changelog](https://github.com/dart-lang/sdk/blob/stable/CHANGELOG.md#354---2024-10-17)
+- [flutter/154915](https://github.com/flutter/engine/pull/55366) - [iOS] Comply with the new Apple privacy manifest policy for the macOS Flutter engine framework and prevent the "Missing privacy manifest" warning when submitting a macOS app to the App Store.
+- [flutter/155837](https://github.com/flutter/flutter/pull/15578) - [Tool] Fixes RPCError crash when setting up log filtering for Android devices.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
 ### [3.24.3](https://github.com/flutter/flutter/releases/tag/3.24.3)
 - [dart 3.5.3 changelog](https://github.com/dart-lang/sdk/blob/stable/CHANGELOG.md#353---2024-09-11)
 - [flutter/154275](https://github.com/flutter/flutter/issues/154275) - [Android] Fixes performance issues on Android caused by engine threads not matching the core count.
 - [flutter/154276](https://github.com/flutter/flutter/issues/154276) - [Impeller] Fixes an issue on iOS preventing mesh gradients from rendering correctly.
 - [flutter/154349](https://github.com/flutter/flutter/issues/154349) - [Wasm] Fixes an issue on web causing Platform Views to break when compiled to Wasm.
+<<<<<<< HEAD
 - [flutter/154564](https://github.com/flutter/flutter/issues/154564) - [Impeller][iOS] Fixes an issue when using Impeller on iOS when using backdrop filters on older iPads, causing the GPU to hang.
+=======
+- [flutter/154564](https://github.com/flutter/flutter/issues/154564) - [Impeller][iOS] Fixes an issue when using Impeller on iOS when using backdrop filers on older iPads,causing the GPU to hand.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 - [flutter/154712](https://github.com/flutter/flutter/issues/154712) - [iOS] Fixes an issue on iOS causing video playback to flicker.
 - [flutter/154892](https://github.com/flutter/flutter/issues/154892) - [Impeller][iOS] Fixes an issue when using Impeller on iOS causing a memory leak when using Platform Views.
 - [flutter/154536](https://github.com/flutter/flutter/issues/154536) - [Tool] Fixes a CLI crash that occurs when shutting down after running a Flutter app on a browser.
@@ -161,7 +179,11 @@ Initial stable release.
 - [flutter/149704](https://github.com/flutter/flutter/issues/149704) - [Impeller] Fixes and issue on iOS where flickering may be occur when translating a blurred rounded rectangle.
 - [flutter/149745](https://github.com/flutter/flutter/issues/149745) - [Impeller] Fixes a segfault on iOS when tessellating empty convex polygons.
 - [flutter/149771](https://github.com/flutter/flutter/issues/149771) - [Impeller] Fixes a rendering error on iOS when advanced blend is double scaled.
+<<<<<<< HEAD
 - [flutter/53183](https://github.com/flutter/engine/pull/53183) - Fixes an issue where Linux apps show visual corruption on some frames.
+=======
+- [flutter/53183](https://github.com/flutter/engine/pull/53183) - Fixes an issue where Linux apps show visual corruption on some frames
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 - [flutter/149856](https://github.com/flutter/flutter/issues/149856) - Clarifies Flutter Fix log on how to update Kotlin Gradle Plugin that was introduced in Flutter 3.19.
 - [flutter/150617](https://github.com/flutter/flutter/pull/150617) - Fixes a bug in `flutter test` where `--flavor` wasn't considered when validating cached assets, causing the flavor-conditional asset bundling feature to not work as expected.
 - [flutter/150724](https://github.com/flutter/flutter/issues/150724) - Fixes an issue on Web+Linux that prevents users from inputting data using the numpad.

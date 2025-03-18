@@ -37,7 +37,6 @@ import 'java.dart';
 import 'migrations/android_studio_java_gradle_conflict_migration.dart';
 import 'migrations/cmake_android_16k_pages_migration.dart';
 import 'migrations/min_sdk_version_migration.dart';
-import 'migrations/multidex_removal_migration.dart';
 import 'migrations/top_level_gradle_build_file_migration.dart';
 
 /// The regex to grab variant names from printBuildVariants gradle task
@@ -435,12 +434,15 @@ class AndroidGradleBuilder implements AndroidBuilder {
         java: globals.java,
       ),
       MinSdkVersionMigration(project.android, _logger),
+<<<<<<< HEAD
       MultidexRemovalMigration(project.android, _logger),
       CmakeAndroid16kPagesMigration(project.android, _logger),
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ];
 
     final ProjectMigration migration = ProjectMigration(migrators);
-    await migration.run();
+    migration.run();
 
     // The default Gradle script reads the version name and number
     // from the local.properties file.
@@ -850,8 +852,19 @@ class AndroidGradleBuilder implements AndroidBuilder {
     if (exitCode != 0) {
       return const <String>[];
     }
+<<<<<<< HEAD
 
     return results;
+=======
+    final List<String> options = <String>[];
+    for (final String line in LineSplitter.split(result.stdout)) {
+      final RegExpMatch? match = _kBuildVariantRegex.firstMatch(line);
+      if (match != null) {
+        options.add(match.namedGroup(_kBuildVariantRegexGroupName)!);
+      }
+    }
+    return options;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
@@ -956,7 +969,7 @@ void printHowToConsumeAar({
 ''');
   }
 
-  logger.printStatus('To learn more, visit https://flutter.dev/to/integrate-android-archive');
+  logger.printStatus('To learn more, visit https://flutter.dev/go/build-aar');
 }
 
 String _hex(List<int> bytes) {

@@ -336,6 +336,7 @@ void _defineTests() {
     final SemanticsTester semantics = SemanticsTester(tester);
     final List<SemanticsAction> performedActions = <SemanticsAction>[];
 
+<<<<<<< HEAD
     await tester.pumpWidget(
       CustomPaint(
         painter: _PainterWithSemantics(
@@ -372,6 +373,34 @@ void _defineTests() {
                   () => performedActions.add(SemanticsAction.didLoseAccessibilityFocus),
               onFocus: () => performedActions.add(SemanticsAction.focus),
             ),
+=======
+    await tester.pumpWidget(CustomPaint(
+      painter: _PainterWithSemantics(
+        semantics: CustomPainterSemantics(
+          key: const ValueKey<int>(1),
+          rect: const Rect.fromLTRB(1.0, 2.0, 3.0, 4.0),
+          properties: SemanticsProperties(
+            onDismiss: () => performedActions.add(SemanticsAction.dismiss),
+            onTap: () => performedActions.add(SemanticsAction.tap),
+            onLongPress: () => performedActions.add(SemanticsAction.longPress),
+            onScrollLeft: () => performedActions.add(SemanticsAction.scrollLeft),
+            onScrollRight: () => performedActions.add(SemanticsAction.scrollRight),
+            onScrollUp: () => performedActions.add(SemanticsAction.scrollUp),
+            onScrollDown: () => performedActions.add(SemanticsAction.scrollDown),
+            onIncrease: () => performedActions.add(SemanticsAction.increase),
+            onDecrease: () => performedActions.add(SemanticsAction.decrease),
+            onCopy: () => performedActions.add(SemanticsAction.copy),
+            onCut: () => performedActions.add(SemanticsAction.cut),
+            onPaste: () => performedActions.add(SemanticsAction.paste),
+            onMoveCursorForwardByCharacter: (bool _) => performedActions.add(SemanticsAction.moveCursorForwardByCharacter),
+            onMoveCursorBackwardByCharacter: (bool _) => performedActions.add(SemanticsAction.moveCursorBackwardByCharacter),
+            onMoveCursorForwardByWord: (bool _) => performedActions.add(SemanticsAction.moveCursorForwardByWord),
+            onMoveCursorBackwardByWord: (bool _) => performedActions.add(SemanticsAction.moveCursorBackwardByWord),
+            onSetSelection: (TextSelection _) => performedActions.add(SemanticsAction.setSelection),
+            onSetText: (String text) => performedActions.add(SemanticsAction.setText),
+            onDidGainAccessibilityFocus: () => performedActions.add(SemanticsAction.didGainAccessibilityFocus),
+            onDidLoseAccessibilityFocus: () => performedActions.add(SemanticsAction.didLoseAccessibilityFocus),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
           ),
         ),
       ),
@@ -433,7 +462,6 @@ void _defineTests() {
         case SemanticsAction.scrollToOffset:
         case SemanticsAction.showOnScreen:
         case SemanticsAction.tap:
-        case SemanticsAction.focus:
           semanticsOwner.performAction(expectedId, action);
       }
       expect(performedActions.length, expectedLength);

@@ -57,6 +57,7 @@ class _MyWidgetState extends State<MyWidget> {
   AxisDirection _axisDirection = AxisDirection.down;
 
   Widget _getArrows() {
+<<<<<<< HEAD
     final Widget arrow = switch (_axisDirection) {
       AxisDirection.up => const Icon(Icons.arrow_upward_rounded),
       AxisDirection.down => const Icon(Icons.arrow_downward_rounded),
@@ -68,6 +69,35 @@ class _MyWidgetState extends State<MyWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[arrow, arrow],
     );
+=======
+    final Widget arrow;
+    switch (_axisDirection) {
+      case AxisDirection.up:
+        arrow = const Icon(Icons.arrow_upward_rounded);
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[arrow, arrow],
+        );
+      case AxisDirection.down:
+        arrow = const Icon(Icons.arrow_downward_rounded);
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[arrow, arrow],
+        );
+      case AxisDirection.left:
+        arrow = const Icon(Icons.arrow_back_rounded);
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[arrow, arrow],
+        );
+      case AxisDirection.right:
+        arrow = const Icon(Icons.arrow_forward_rounded);
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[arrow, arrow],
+        );
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   void _onAxisDirectionChanged(AxisDirection? axisDirection) {

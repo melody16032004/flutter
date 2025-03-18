@@ -18,8 +18,6 @@ import 'package:intl/intl.dart' as intl;
 
 @(messageClassImports)
 
-// ignore_for_file: type=lint
-
 /// Callers can lookup localized strings with an instance of @(class)
 /// returned by `@(class).of(context)`.
 ///
@@ -176,8 +174,6 @@ const String classFileTemplate = '''
 @(header)// ignore: unused_import
 import 'package:intl/intl.dart' as intl;
 import '@(fileName)';
-
-// ignore_for_file: type=lint
 
 /// The translations for @(language) (`@(localeName)`).
 class @(class) extends @(baseClass) {

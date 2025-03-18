@@ -290,10 +290,22 @@ class _MergeableMaterialState extends State<MergeableMaterial> with TickerProvid
   }
 
   void _removeEmptyGaps() {
+<<<<<<< HEAD
     for (int j = _children.length - 1; j >= 0; j -= 1) {
       if (_children[j] is MaterialGap &&
           _animationTuples[_children[j].key]!.controller.isDismissed) {
+=======
+    int j = 0;
+
+    while (j < _children.length) {
+      if (
+        _children[j] is MaterialGap &&
+        _animationTuples[_children[j].key]!.controller.status == AnimationStatus.dismissed
+      ) {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         _removeChild(j);
+      } else {
+        j += 1;
       }
     }
   }
@@ -564,10 +576,19 @@ class _MergeableMaterialState extends State<MergeableMaterial> with TickerProvid
         widgets.add(ListBody(mainAxis: widget.mainAxis, children: slices));
         slices = <Widget>[];
 
+<<<<<<< HEAD
         widgets.add(switch (widget.mainAxis) {
           Axis.horizontal => SizedBox(width: _getGapSize(i)),
           Axis.vertical => SizedBox(height: _getGapSize(i)),
         });
+=======
+        widgets.add(
+          SizedBox(
+            width: widget.mainAxis == Axis.horizontal ? _getGapSize(i) : null,
+            height: widget.mainAxis == Axis.vertical ? _getGapSize(i) : null,
+          ),
+        );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       } else {
         final MaterialSlice slice = _children[i] as MaterialSlice;
         Widget child = slice.child;

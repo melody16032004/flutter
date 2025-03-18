@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:meta/meta.dart';
-
 import 'package:package_config/package_config_types.dart';
 
 import 'artifacts.dart';
@@ -39,7 +37,7 @@ class BuildInfo {
     List<String>? dartExperiments,
     required this.treeShakeIcons,
     this.performanceMeasurementFile,
-    required this.packageConfigPath,
+    this.packagesPath = '.dart_tool/package_config.json', // TODO(zanderso): make this required and remove the default.
     this.nullSafetyMode = NullSafetyMode.sound,
     this.codeSizeDirectory,
     this.androidGradleDaemon = true,
@@ -48,7 +46,6 @@ class BuildInfo {
     this.initializeFromDill,
     this.assumeInitializeFromDillUpToDate = false,
     this.buildNativeAssets = true,
-    this.useLocalCanvasKit = false,
   }) : extraFrontEndOptions = extraFrontEndOptions ?? const <String>[],
        extraGenSnapshotOptions = extraGenSnapshotOptions ?? const <String>[],
        fileSystemRoots = fileSystemRoots ?? const <String>[],
@@ -77,7 +74,7 @@ class BuildInfo {
   ///
   /// This is used by package:package_config to locate the actual package_config.json
   /// file. If not provided, defaults to `.dart_tool/package_config.json`.
-  final String packageConfigPath;
+  final String packagesPath;
 
   final List<String> fileSystemRoots;
   final String? fileSystemScheme;
@@ -183,50 +180,10 @@ class BuildInfo {
   /// If set, builds native assets with `build.dart` from all packages.
   final bool buildNativeAssets;
 
-  /// If set, web builds will use the locally built CanvasKit instead of using the CDN
-  final bool useLocalCanvasKit;
-
-  /// Can be used when the actual information is not needed.
-  static const BuildInfo dummy = BuildInfo(
-    BuildMode.debug,
-    null,
-    trackWidgetCreation: true,
-    treeShakeIcons: false,
-    packageConfigPath: '.dart_tool/package_config.json',
-  );
-
-  @visibleForTesting
-  static const BuildInfo debug = BuildInfo(
-    BuildMode.debug,
-    null,
-    trackWidgetCreation: true,
-    treeShakeIcons: false,
-    packageConfigPath: '.dart_tool/package_config.json',
-  );
-
-  @visibleForTesting
-  static const BuildInfo profile = BuildInfo(
-    BuildMode.profile,
-    null,
-    treeShakeIcons: kIconTreeShakerEnabledDefault,
-    packageConfigPath: '.dart_tool/package_config.json',
-  );
-
-  @visibleForTesting
-  static const BuildInfo jitRelease = BuildInfo(
-    BuildMode.jitRelease,
-    null,
-    treeShakeIcons: kIconTreeShakerEnabledDefault,
-    packageConfigPath: '.dart_tool/package_config.json',
-  );
-
-  @visibleForTesting
-  static const BuildInfo release = BuildInfo(
-    BuildMode.release,
-    null,
-    treeShakeIcons: kIconTreeShakerEnabledDefault,
-    packageConfigPath: '.dart_tool/package_config.json',
-  );
+  static const BuildInfo debug = BuildInfo(BuildMode.debug, null, trackWidgetCreation: true, treeShakeIcons: false);
+  static const BuildInfo profile = BuildInfo(BuildMode.profile, null, treeShakeIcons: kIconTreeShakerEnabledDefault);
+  static const BuildInfo jitRelease = BuildInfo(BuildMode.jitRelease, null, treeShakeIcons: kIconTreeShakerEnabledDefault);
+  static const BuildInfo release = BuildInfo(BuildMode.release, null, treeShakeIcons: kIconTreeShakerEnabledDefault);
 
   /// Returns whether a debug build is requested.
   ///
@@ -294,6 +251,7 @@ class BuildInfo {
       if (splitDebugInfoPath != null) kSplitDebugInfo: splitDebugInfoPath!,
       kTrackWidgetCreation: trackWidgetCreation.toString(),
       kIconTreeShakerFlag: treeShakeIcons.toString(),
+<<<<<<< HEAD
       if (bundleSkSLPath != null) kBundleSkSLPath: bundleSkSLPath!,
       if (codeSizeDirectory != null) kCodeSizeDirectory: codeSizeDirectory!,
       if (fileSystemRoots.isNotEmpty) kFileSystemRoots: fileSystemRoots.join(','),
@@ -301,6 +259,20 @@ class BuildInfo {
       if (buildName != null) kBuildName: buildName!,
       if (buildNumber != null) kBuildNumber: buildNumber!,
       if (useLocalCanvasKit) kUseLocalCanvasKitFlag: useLocalCanvasKit.toString(),
+=======
+      if (bundleSkSLPath != null)
+        kBundleSkSLPath: bundleSkSLPath!,
+      if (codeSizeDirectory != null)
+        kCodeSizeDirectory: codeSizeDirectory!,
+      if (fileSystemRoots.isNotEmpty)
+        kFileSystemRoots: fileSystemRoots.join(','),
+      if (fileSystemScheme != null)
+        kFileSystemScheme: fileSystemScheme!,
+      if (buildName != null)
+        kBuildName: buildName!,
+      if (buildNumber != null)
+        kBuildNumber: buildNumber!,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     };
   }
 
@@ -323,10 +295,20 @@ class BuildInfo {
       'TREE_SHAKE_ICONS': treeShakeIcons.toString(),
       if (performanceMeasurementFile != null)
         'PERFORMANCE_MEASUREMENT_FILE': performanceMeasurementFile!,
+<<<<<<< HEAD
       if (bundleSkSLPath != null) 'BUNDLE_SKSL_PATH': bundleSkSLPath!,
       'PACKAGE_CONFIG': packageConfigPath,
       if (codeSizeDirectory != null) 'CODE_SIZE_DIRECTORY': codeSizeDirectory!,
       if (flavor != null) 'FLAVOR': flavor!,
+=======
+      if (bundleSkSLPath != null)
+        'BUNDLE_SKSL_PATH': bundleSkSLPath!,
+      'PACKAGE_CONFIG': packagesPath,
+      if (codeSizeDirectory != null)
+        'CODE_SIZE_DIRECTORY': codeSizeDirectory!,
+      if (flavor != null)
+        'FLAVOR': flavor!,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     };
   }
 
@@ -699,6 +681,7 @@ DarwinArch getIOSArchForName(String arch) {
 }
 
 DarwinArch getDarwinArchForName(String arch) {
+<<<<<<< HEAD
   return switch (arch) {
     'arm64' => DarwinArch.arm64,
     'x86_64' => DarwinArch.x86_64,
@@ -759,6 +742,110 @@ AndroidArch getAndroidArchForName(String platform) {
     'android-x86' => AndroidArch.x86,
     _ => throw Exception('Unsupported Android arch name "$platform"'),
   };
+=======
+  switch (arch) {
+    case 'arm64':
+      return DarwinArch.arm64;
+    case 'x86_64':
+      return DarwinArch.x86_64;
+  }
+  throw Exception('Unsupported MacOS arch name "$arch"');
+}
+
+String getNameForTargetPlatform(TargetPlatform platform, {DarwinArch? darwinArch}) {
+  switch (platform) {
+    case TargetPlatform.android_arm:
+      return 'android-arm';
+    case TargetPlatform.android_arm64:
+      return 'android-arm64';
+    case TargetPlatform.android_x64:
+      return 'android-x64';
+    case TargetPlatform.android_x86:
+      return 'android-x86';
+    case TargetPlatform.ios:
+      if (darwinArch != null) {
+        return 'ios-${darwinArch.name}';
+      }
+      return 'ios';
+    case TargetPlatform.darwin:
+      if (darwinArch != null) {
+        return 'darwin-${darwinArch.name}';
+      }
+      return 'darwin';
+    case TargetPlatform.linux_x64:
+      return 'linux-x64';
+    case TargetPlatform.linux_arm64:
+      return 'linux-arm64';
+    case TargetPlatform.windows_x64:
+      return 'windows-x64';
+    case TargetPlatform.windows_arm64:
+      return 'windows-arm64';
+    case TargetPlatform.fuchsia_arm64:
+      return 'fuchsia-arm64';
+    case TargetPlatform.fuchsia_x64:
+      return 'fuchsia-x64';
+    case TargetPlatform.tester:
+      return 'flutter-tester';
+    case TargetPlatform.web_javascript:
+      return 'web-javascript';
+    case TargetPlatform.android:
+      return 'android';
+  }
+}
+
+TargetPlatform getTargetPlatformForName(String platform) {
+  switch (platform) {
+    case 'android':
+      return TargetPlatform.android;
+    case 'android-arm':
+      return TargetPlatform.android_arm;
+    case 'android-arm64':
+      return TargetPlatform.android_arm64;
+    case 'android-x64':
+      return TargetPlatform.android_x64;
+    case 'android-x86':
+      return TargetPlatform.android_x86;
+    case 'fuchsia-arm64':
+      return TargetPlatform.fuchsia_arm64;
+    case 'fuchsia-x64':
+      return TargetPlatform.fuchsia_x64;
+    case 'ios':
+      return TargetPlatform.ios;
+    case 'darwin':
+    // For backward-compatibility and also for Tester, where it must match
+    // host platform name (HostPlatform.darwin_x64)
+    case 'darwin-x64':
+    case 'darwin-arm64':
+      return TargetPlatform.darwin;
+    case 'linux-x64':
+      return TargetPlatform.linux_x64;
+   case 'linux-arm64':
+      return TargetPlatform.linux_arm64;
+    case 'windows-x64':
+      return TargetPlatform.windows_x64;
+    case 'windows-arm64':
+      return TargetPlatform.windows_arm64;
+    case 'web-javascript':
+      return TargetPlatform.web_javascript;
+    case 'flutter-tester':
+      return TargetPlatform.tester;
+  }
+  throw Exception('Unsupported platform name "$platform"');
+}
+
+AndroidArch getAndroidArchForName(String platform) {
+  switch (platform) {
+    case 'android-arm':
+      return AndroidArch.armeabi_v7a;
+    case 'android-arm64':
+      return AndroidArch.arm64_v8a;
+    case 'android-x64':
+      return AndroidArch.x86_64;
+    case 'android-x86':
+      return AndroidArch.x86;
+  }
+  throw Exception('Unsupported Android arch name "$platform"');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }
 
 DarwinArch getCurrentDarwinArch() {
@@ -972,9 +1059,6 @@ const String kCodesignIdentity = 'CodesignIdentity';
 /// only the glyphs used by the application.
 const String kIconTreeShakerFlag = 'TreeShakeIcons';
 
-/// Controls whether a web build should use local canvaskit or the CDN
-const String kUseLocalCanvasKitFlag = 'UseLocalCanvasKit';
-
 /// The input key for an SkSL bundle path.
 const String kBundleSkSLPath = 'BundleSkSLPath';
 
@@ -991,12 +1075,6 @@ const String kBuildNumber = 'BuildNumber';
 ///
 /// Will be "build" when building and "install" when archiving.
 const String kXcodeAction = 'Action';
-
-/// The define of the Xcode build Pre-action.
-///
-/// Will be "PrepareFramework" when copying the Flutter/FlutterMacOS framework
-/// to the BUILT_PRODUCTS_DIR prior to the build.
-const String kXcodePreAction = 'PreBuildAction';
 
 final Converter<String, String> _defineEncoder = utf8.encoder.fuse(base64.encoder);
 final Converter<String, String> _defineDecoder = base64.decoder.fuse(utf8.decoder);

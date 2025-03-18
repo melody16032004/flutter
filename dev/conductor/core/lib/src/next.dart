@@ -86,7 +86,10 @@ class NextContext extends Context {
     ];
     switch (state.currentPhase) {
       case pb.ReleasePhase.APPLY_ENGINE_CHERRYPICKS:
-        final Remote upstream = Remote.upstream(state.engine.upstream.url);
+        final Remote upstream = Remote(
+            name: RemoteName.upstream,
+            url: state.engine.upstream.url,
+        );
         final EngineRepository engine = EngineRepository(
           checkouts,
           initialRef: state.engine.workingBranch,
@@ -98,10 +101,12 @@ class NextContext extends Context {
           break;
         }
 
-        final List<pb.Cherrypick> unappliedCherrypicks = <pb.Cherrypick>[
-          for (final pb.Cherrypick cherrypick in state.engine.cherrypicks)
-            if (!finishedStates.contains(cherrypick.state)) cherrypick,
-        ];
+        final List<pb.Cherrypick> unappliedCherrypicks = <pb.Cherrypick>[];
+        for (final pb.Cherrypick cherrypick in state.engine.cherrypicks) {
+          if (!finishedStates.contains(cherrypick.state)) {
+            unappliedCherrypicks.add(cherrypick);
+          }
+        }
 
         if (unappliedCherrypicks.isEmpty) {
           stdio.printStatus('All engine cherrypicks have been auto-applied by the conductor.\n');
@@ -147,7 +152,10 @@ class NextContext extends Context {
           }
         }
       case pb.ReleasePhase.APPLY_FRAMEWORK_CHERRYPICKS:
-        final Remote engineUpstreamRemote = Remote.upstream(state.engine.upstream.url);
+        final Remote engineUpstreamRemote = Remote(
+            name: RemoteName.upstream,
+            url: state.engine.upstream.url,
+        );
         final EngineRepository engine = EngineRepository(
           checkouts,
           // We explicitly want to check out the merged version from upstream
@@ -158,7 +166,10 @@ class NextContext extends Context {
 
         final String engineRevision = await engine.reverseParse('HEAD');
 
-        final Remote upstream = Remote.upstream(state.framework.upstream.url);
+        final Remote upstream = Remote(
+          name: RemoteName.upstream,
+          url: state.framework.upstream.url,
+        );
         final FrameworkRepository framework = FrameworkRepository(
           checkouts,
           initialRef: state.framework.workingBranch,
@@ -196,10 +207,12 @@ class NextContext extends Context {
           );
         }
 
-        final List<pb.Cherrypick> unappliedCherrypicks = <pb.Cherrypick>[
-          for (final pb.Cherrypick cherrypick in state.framework.cherrypicks)
-            if (!finishedStates.contains(cherrypick.state)) cherrypick,
-        ];
+        final List<pb.Cherrypick> unappliedCherrypicks = <pb.Cherrypick>[];
+        for (final pb.Cherrypick cherrypick in state.framework.cherrypicks) {
+          if (!finishedStates.contains(cherrypick.state)) {
+            unappliedCherrypicks.add(cherrypick);
+          }
+        }
 
         if (state.framework.cherrypicks.isEmpty) {
           stdio.printStatus(

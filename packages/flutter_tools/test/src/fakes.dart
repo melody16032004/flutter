@@ -328,11 +328,6 @@ class FakePlistParser implements PlistParser {
   String? plistXmlContent(String plistFilePath) => throw UnimplementedError();
 
   @override
-  String? plistJsonContent(String filePath, {bool sorted = false}) {
-    throw UnimplementedError();
-  }
-
-  @override
   Map<String, Object> parseFile(String plistFilePath) {
     return _underlyingValues;
   }
@@ -488,8 +483,11 @@ class TestFeatureFlags implements FeatureFlags {
     this.isCliAnimationEnabled = true,
     this.isNativeAssetsEnabled = false,
     this.isPreviewDeviceEnabled = false,
+<<<<<<< HEAD
     this.isSwiftPackageManagerEnabled = false,
     this.isExplicitPackageDependenciesEnabled = false,
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   @override
@@ -526,12 +524,15 @@ class TestFeatureFlags implements FeatureFlags {
   final bool isPreviewDeviceEnabled;
 
   @override
+<<<<<<< HEAD
   final bool isSwiftPackageManagerEnabled;
 
   @override
   final bool isExplicitPackageDependenciesEnabled;
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   bool isEnabled(Feature feature) {
     return switch (feature) {
       flutterWebFeature => isWebEnabled,
@@ -774,6 +775,7 @@ class FakeDevtoolsLauncher extends Fake implements DevtoolsLauncher {
     closed = true;
   }
 }
+<<<<<<< HEAD
 
 /// A fake [Logger] that throws the [Invocation] for any method call.
 class FakeLogger implements Logger {
@@ -791,3 +793,5 @@ class ClosedStdinController extends Fake implements StreamSink<List<int>> {
     return null;
   }
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

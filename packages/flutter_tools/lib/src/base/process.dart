@@ -66,10 +66,13 @@ class _DefaultShutdownHooks implements ShutdownHooks {
     );
     _shutdownHooksRunning = true;
     try {
-      final List<Future<dynamic>> futures = <Future<dynamic>>[
-        for (final ShutdownHook shutdownHook in registeredHooks)
-          if (shutdownHook() case final Future<dynamic> result) result,
-      ];
+      final List<Future<dynamic>> futures = <Future<dynamic>>[];
+      for (final ShutdownHook shutdownHook in registeredHooks) {
+        final FutureOr<dynamic> result = shutdownHook();
+        if (result is Future<dynamic>) {
+          futures.add(result);
+        }
+      }
       await Future.wait<dynamic>(futures);
     } finally {
       _shutdownHooksRunning = false;
@@ -227,16 +230,12 @@ abstract class ProcessUtils {
   /// ```
   ///
   /// However it did not catch a [SocketException] on Linux.
-  ///
-  /// As part of making sure errors are caught, this function will call [flush]
-  /// on [stdin] to ensure that [line] is written to the pipe before this
-  /// function returns. This means completion will be blocked if the kernel
-  /// buffer of the pipe is full.
   static Future<void> writelnToStdinGuarded({
     required IOSink stdin,
     required String line,
     required void Function(Object, StackTrace) onError,
   }) async {
+<<<<<<< HEAD
     await _writeToStdinGuarded(stdin: stdin, content: line, onError: onError, isLine: true);
   }
 
@@ -296,6 +295,28 @@ abstract class ProcessUtils {
 
     runZonedGuarded(writeFlushAndComplete, handleError);
 
+=======
+    final Completer<void> completer = Completer<void>();
+
+    void writeFlushAndComplete() {
+      stdin.writeln(line);
+      stdin.flush().whenComplete(() {
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      });
+    }
+
+    runZonedGuarded(
+      writeFlushAndComplete,
+      (Object error, StackTrace stackTrace) {
+        onError(error, stackTrace);
+        if (!completer.isCompleted) {
+          completer.complete();
+        }
+      },
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return completer.future;
   }
 }

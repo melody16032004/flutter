@@ -29,7 +29,17 @@ void main() {
       openPicker,
     ];
 
+<<<<<<< HEAD
     await tester.pumpWidget(const example.ShowTimePickerApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: example.ShowTimePickerApp(),
+        ),
+      ),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     for (final String option in options) {
       expect(

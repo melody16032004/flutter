@@ -55,7 +55,7 @@ void main() {
         MaterialApp(
           key: appKey,
           home: Container(
-            color: Colors.blue,
+            color: Colors.orange,
             width: double.infinity,
             height: double.infinity,
             child: Stack(
@@ -66,7 +66,7 @@ void main() {
                   left: magnifierPosition.dx + magnifierFocalPoint.dx,
                   top: magnifierPosition.dy + magnifierFocalPoint.dy,
                   child: Container(
-                    color: Colors.black,
+                    color: Colors.pink,
                     // Since it is the size of the magnifier but over its
                     // magnificationScale, it should take up the whole magnifier.
                     width: (magnifierSize.width * 1.5) / magnificationScale,
@@ -80,18 +80,14 @@ void main() {
                     size: magnifierSize,
                     focalPointOffset: magnifierFocalPoint,
                     magnificationScale: magnificationScale,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: MagnifierDecoration(
-                      shadows: <BoxShadow>[
-                        BoxShadow(
-                          spreadRadius: 10.0,
-                          blurRadius: 10.0,
-                          color: Colors.yellow,
-                          offset: Offset(5.0, 5.0),
-                        ),
-                      ],
-                      opacity: 0.5,
-                    ),
+                    decoration: MagnifierDecoration(shadows: <BoxShadow>[
+                      BoxShadow(
+                        spreadRadius: 10,
+                        blurRadius: 10,
+                        color: Colors.green,
+                        offset: Offset(5, 5),
+                      ),
+                    ]),
                   ),
                 ),
               ],
@@ -100,11 +96,25 @@ void main() {
         ),
       );
 
+<<<<<<< HEAD
       // Should look like a blue screen, with two black boxes. The larger black
       // box is in the magnifier, is outlined in yellow, and is doubled in size
       // (from magnification). The magnifier should be slightly transparent.
       await expectLater(find.byKey(appKey), matchesGoldenFile('widgets.magnifier.styled.png'));
     }, skip: kIsWeb); // [intended] Bdf does not display on web.
+=======
+      await tester.pumpAndSettle();
+
+      // Should look like an orange screen, with two pink boxes.
+      // One pink box is in the magnifier (so has a green shadow) and is double
+      // size (from magnification). Also, the magnifier should be slightly orange
+      // since it has opacity.
+      await expectLater(
+        find.byKey(appKey),
+        matchesGoldenFile('widgets.magnifier.styled.png'),
+      );
+    }, skip: kIsWeb);  // [intended] Bdf does not display on web.
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     group('transition states', () {
       final AnimationController animationController = AnimationController(
@@ -313,6 +323,7 @@ void main() {
       }
     });
   });
+<<<<<<< HEAD
 
   testWidgets('MagnifierInfo.toString', (WidgetTester tester) async {
     expect(
@@ -321,4 +332,6 @@ void main() {
       'caret: Rect.fromLTRB(0.0, 0.0, 0.0, 0.0), field: Rect.fromLTRB(0.0, 0.0, 0.0, 0.0))',
     );
   });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 }

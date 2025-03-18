@@ -144,15 +144,13 @@ class TabController extends ChangeNotifier {
   }
 
   /// Creates a new [TabController] with `index`, `previousIndex`, `length`, and
-  /// `animationDuration` if they are non-null, and disposes current instance.
+  /// `animationDuration` if they are non-null.
   ///
   /// This method is used by [DefaultTabController].
   ///
   /// When [DefaultTabController.length] is updated, this method is called to
   /// create a new [TabController] without creating a new [AnimationController].
-  /// Instead the [_animationController] is nulled in current instance and
-  /// passed to the new instance.
-  TabController _copyWithAndDispose({
+  TabController _copyWith({
     required int? index,
     required int? length,
     required int? previousIndex,
@@ -161,16 +159,13 @@ class TabController extends ChangeNotifier {
     if (index != null) {
       _animationController!.value = index.toDouble();
     }
-    final TabController result = TabController._(
+    return TabController._(
       index: index ?? _index,
       length: length ?? this.length,
       animationController: _animationController,
       previousIndex: previousIndex ?? _previousIndex,
       animationDuration: animationDuration ?? _animationDuration,
     );
-    _animationController = null;
-    dispose();
-    return result;
   }
 
   /// An animation whose value represents the current position of the [TabBar]'s
@@ -500,7 +495,7 @@ class _DefaultTabControllerState extends State<DefaultTabController>
         newIndex = math.max(0, widget.length - 1);
         previousIndex = _controller.index;
       }
-      _controller = _controller._copyWithAndDispose(
+      _controller = _controller._copyWith(
         length: widget.length,
         animationDuration: widget.animationDuration,
         index: newIndex,
@@ -509,7 +504,7 @@ class _DefaultTabControllerState extends State<DefaultTabController>
     }
 
     if (oldWidget.animationDuration != widget.animationDuration) {
-      _controller = _controller._copyWithAndDispose(
+      _controller = _controller._copyWith(
         length: widget.length,
         animationDuration: widget.animationDuration,
         index: _controller.index,

@@ -66,6 +66,7 @@ class PlistParser {
     }
   }
 
+<<<<<<< HEAD
   /// Returns the content, converted to JSON, of the plist file located at
   /// [filePath].
   ///
@@ -85,6 +86,8 @@ class PlistParser {
     }
   }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   /// Replaces the string key in the given plist file with the given value.
   ///
   /// If the value is null, then the key will be removed.
@@ -157,6 +160,7 @@ class PlistParser {
   static final RegExp _nonBase64Pattern = RegExp('[^a-zA-Z0-9+/=]+');
 
   Object? _parseXmlNode(XmlElement node) {
+<<<<<<< HEAD
     return switch (node.name.local) {
       'string' => node.innerText,
       'real' => double.parse(node.innerText),
@@ -174,6 +178,29 @@ class PlistParser {
       'dict' => _parseXmlDict(node),
       _ => null,
     };
+=======
+    switch (node.name.local){
+      case 'string':
+        return node.innerText;
+      case 'real':
+        return double.parse(node.innerText);
+      case 'integer':
+        return int.parse(node.innerText);
+      case 'true':
+        return true;
+      case 'false':
+        return false;
+      case 'date':
+        return DateTime.parse(node.innerText);
+      case 'data':
+        return base64.decode(node.innerText.replaceAll(_nonBase64Pattern, ''));
+      case 'array':
+        return node.children.whereType<XmlElement>().map<Object?>(_parseXmlNode).whereType<Object>().toList();
+      case 'dict':
+        return _parseXmlDict(node);
+    }
+    return null;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   /// Parses the Plist file located at [plistFilePath] and returns the value

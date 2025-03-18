@@ -39,7 +39,7 @@ class ShowWindowMigration extends ProjectMigrator {
   final File _file;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     // Skip this migration if the affected file does not exist. This indicates
     // the app has done non-trivial changes to its runner and this migration
     // might not work as expected if applied.

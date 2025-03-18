@@ -11,6 +11,7 @@ import 'test_utils.dart';
 void main() {
   testWidgets('text button can run', (WidgetTester tester) async {
     await pumpsUseCase(tester, TextButtonUseCase());
+<<<<<<< HEAD
     expect(find.text('Submit'), findsOneWidget);
   });
 
@@ -33,5 +34,9 @@ void main() {
     final Finder findHeadingLevelOnes = find.bySemanticsLabel('TextButton Demo');
     await tester.pumpAndSettle();
     expect(findHeadingLevelOnes, findsOne);
+=======
+    expect(find.text('Text button'), findsOneWidget);
+    expect(find.text('Text button disabled'), findsOneWidget);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

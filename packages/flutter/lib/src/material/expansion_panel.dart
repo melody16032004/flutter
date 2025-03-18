@@ -9,7 +9,6 @@ import 'package:flutter/widgets.dart';
 
 import 'constants.dart';
 import 'expand_icon.dart';
-import 'icon_button.dart';
 import 'ink_well.dart';
 import 'material_localizations.dart';
 import 'mergeable_material.dart';
@@ -82,8 +81,6 @@ class ExpansionPanel {
     this.isExpanded = false,
     this.canTapOnHeader = false,
     this.backgroundColor,
-    this.splashColor,
-    this.highlightColor,
   });
 
   /// The widget builder that builds the expansion panels' header.
@@ -98,28 +95,6 @@ class ExpansionPanel {
   ///
   /// Defaults to false.
   final bool isExpanded;
-
-  /// Defines the splash color of the panel if [canTapOnHeader] is true,
-  /// or the splash color of the expand/collapse IconButton if [canTapOnHeader]
-  /// is false.
-  ///
-  /// If [canTapOnHeader] is false, and [ThemeData.useMaterial3] is
-  /// true, this field will be ignored, as [IconButton.splashColor]
-  /// will be ignored, and you should use [highlightColor] instead.
-  ///
-  /// If this is null, then the icon button will use its default splash color
-  /// [ThemeData.splashColor], and the panel will use its default splash color
-  /// [ThemeData.splashColor] (if [canTapOnHeader] is true).
-  final Color? splashColor;
-
-  /// Defines the highlight color of the panel if [canTapOnHeader] is true, or
-  /// the highlight color of the expand/collapse IconButton if [canTapOnHeader]
-  /// is false.
-  ///
-  /// If this is null, then the icon button will use its default highlight color
-  /// [ThemeData.highlightColor], and the panel will use its default highlight
-  /// color [ThemeData.highlightColor] (if [canTapOnHeader] is true).
-  final Color? highlightColor;
 
   /// Whether tapping on the panel's header will expand/collapse it.
   ///
@@ -151,8 +126,6 @@ class ExpansionPanelRadio extends ExpansionPanel {
     required super.body,
     super.canTapOnHeader,
     super.backgroundColor,
-    super.splashColor,
-    super.highlightColor,
   });
 
   /// The value that uniquely identifies a radio panel so that the currently
@@ -394,6 +367,7 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
       final ExpansionPanel child = widget.children[index];
       final Widget headerWidget = child.headerBuilder(context, _isChildExpanded(index));
 
+<<<<<<< HEAD
       Widget expandIconPadded = Padding(
         padding: const EdgeInsetsDirectional.only(end: 8.0),
         child: IgnorePointer(
@@ -406,9 +380,19 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
             highlightColor: child.highlightColor,
             onPressed: (bool isExpanded) => _handlePressed(isExpanded, index),
           ),
+=======
+      Widget expandIconContainer = Container(
+        margin: const EdgeInsetsDirectional.only(end: 8.0),
+        child: ExpandIcon(
+          color: widget.expandIconColor,
+          isExpanded: _isChildExpanded(index),
+          padding: _kExpandIconPadding,
+          onPressed: !child.canTapOnHeader
+              ? (bool isExpanded) => _handlePressed(isExpanded, index)
+              : null,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         ),
       );
-
       if (!child.canTapOnHeader) {
         final MaterialLocalizations localizations = MaterialLocalizations.of(context);
         expandIconPadded = Semantics(
@@ -439,8 +423,6 @@ class _ExpansionPanelListState extends State<ExpansionPanelList> {
       if (child.canTapOnHeader) {
         header = MergeSemantics(
           child: InkWell(
-            splashColor: child.splashColor,
-            highlightColor: child.highlightColor,
             onTap: () => _handlePressed(_isChildExpanded(index), index),
             child: header,
           ),

@@ -229,6 +229,7 @@ class _TabAlwaysKeepAliveWidgetState extends State<TabAlwaysKeepAliveWidget>
     return Text(TabAlwaysKeepAliveWidget.text);
   }
 }
+<<<<<<< HEAD
 
 // This decoration is used to test the indicator decoration image configuration.
 class TestIndicatorDecoration extends Decoration {
@@ -282,3 +283,5 @@ RRect tabIndicatorRRectElasticAnimation(
     topRight: const Radius.circular(indicatorWeight),
   );
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

@@ -326,7 +326,14 @@ void main() {
       expect(artifact1.didUpdate, true);
       // Don't continue when retrieval fails.
       expect(artifact2.didUpdate, false);
+<<<<<<< HEAD
       expect(logger.errorText, contains('https://flutter.dev/to/china-setup'));
+=======
+      expect(
+        logger.errorText,
+        contains('https://flutter.dev/community/china'),
+      );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     });
 
     testWithoutContext('Invalid URI for FLUTTER_STORAGE_BASE_URL throws ToolExit', () async {
@@ -391,6 +398,7 @@ void main() {
     );
   });
 
+<<<<<<< HEAD
   testWithoutContext(
     'EngineCachedArtifact makes binary dirs readable and executable by all',
     () async {
@@ -477,6 +485,8 @@ void main() {
     expect(dir.childDirectory('package_dir').existsSync(), isTrue);
   });
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   testWithoutContext('Try to remove without a parent', () async {
     final FileSystem fileSystem = MemoryFileSystem.test();
     final Directory parent = fileSystem.directory('dir');
@@ -1004,10 +1014,39 @@ void main() {
       location.childFile('foo').createSync();
     };
     webCacheDirectory.childFile('bar').createSync(recursive: true);
+<<<<<<< HEAD
     handler.addError(
       webCacheDirectory,
       FileSystemOp.delete,
       const FileSystemException('', '', OSError('', 2)),
+=======
+    handler.addError(webCacheDirectory, FileSystemOp.delete, const FileSystemException('', '', OSError('', 2)));
+
+    await expectLater(() => webSdk.updateInner(artifactUpdater, fileSystem, FakeOperatingSystemUtils()), throwsToolExit(
+      message: RegExp('The Flutter tool tried to delete the file or directory cache/bin/cache/flutter_web_sdk but was unable to'),
+    ));
+  });
+
+  testWithoutContext('LegacyCanvasKitRemover removes old canvaskit artifacts if they exist', () async {
+    final FileExceptionHandler handler = FileExceptionHandler();
+    final MemoryFileSystem fileSystem = MemoryFileSystem.test(opHandle: handler.opHandle);
+    final Cache cache = Cache.test(processManager: FakeProcessManager.any(), fileSystem: fileSystem);
+    final File canvasKitWasm = fileSystem.file(fileSystem.path.join(
+      cache.getRoot().path,
+      'canvaskit',
+      'canvaskit.wasm',
+    ));
+    canvasKitWasm.createSync(recursive: true);
+    canvasKitWasm.writeAsStringSync('hello world');
+
+    final LegacyCanvasKitRemover remover = LegacyCanvasKitRemover(cache);
+    expect(await remover.isUpToDate(fileSystem), false);
+    await remover.update(
+      FakeArtifactUpdater(),
+      BufferLogger.test(),
+      fileSystem,
+      FakeOperatingSystemUtils(),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
 
     await expectLater(

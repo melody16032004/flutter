@@ -78,12 +78,17 @@ void main() {
       expect(tester.getRect(findMenuPanels().first).size, equals(const Size(600.0, 60.0)));
 
       // MenuTheme affects menus.
+<<<<<<< HEAD
       if (!kIsWeb || isSkiaWeb) {
         // https://github.com/flutter/flutter/issues/99933
         expect(
           tester.getRect(findMenuPanels().at(1)),
           equals(const Rect.fromLTRB(104.0, 54.0, 204.0, 154.0)),
         );
+=======
+      if (!kIsWeb || isCanvasKit) { // https://github.com/flutter/flutter/issues/99933
+        expect(tester.getRect(findMenuPanels().at(1)), equals(const Rect.fromLTRB(104.0, 54.0, 204.0, 154.0)));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         expect(tester.getRect(findMenuPanels().at(1)).size, equals(const Size(100.0, 100.0)));
       }
     });
@@ -286,8 +291,13 @@ void main() {
       await tester.pump();
 
       expect(
+<<<<<<< HEAD
         tester.getRect(find.byType(MenuBar)),
         equals(const Rect.fromLTRB(228.0, 0.0, 572.0, 48.0)),
+=======
+        tester.getRect(find.text(TestMenu.subMenu10.label)),
+        equals(const Rect.fromLTRB(366.0, 68.0, 520.0, 82.0)),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       );
       expect(
         tester.getRect(find.text(TestMenu.subMenu10.label)),

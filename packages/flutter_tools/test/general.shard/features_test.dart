@@ -407,6 +407,7 @@ void main() {
       expect(nativeAssets.stable.enabledByDefault, false);
       expect(nativeAssets.stable.available, false);
     });
+<<<<<<< HEAD
 
     group('Swift Package Manager feature', () {
       test('availability and default enabled', () {
@@ -424,5 +425,7 @@ void main() {
         expect(featureFlags.isSwiftPackageManagerEnabled, isTrue);
       });
     });
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 }

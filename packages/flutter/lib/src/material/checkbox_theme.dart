@@ -241,13 +241,7 @@ class CheckboxThemeData with Diagnosticable {
     if (identical(a, b)) {
       return a;
     }
-    if (a is MaterialStateBorderSide) {
-      a = a.resolve(<WidgetState>{});
-    }
-    if (b is MaterialStateBorderSide) {
-      b = b.resolve(<WidgetState>{});
-    }
-    return BorderSide.lerp(a!, b!, t);
+    return BorderSide.lerp(a, b, t);
   }
 }
 

@@ -814,8 +814,7 @@ class RenderTable extends RenderBox {
   double? _baselineDistance;
   @override
   double? computeDistanceToActualBaseline(TextBaseline baseline) {
-    // returns the baseline offset of the cell in the first row with
-    // the lowest baseline, and uses `TableCellVerticalAlignment.baseline`.
+    // returns the baseline of the first cell that has a baseline in the first row
     assert(!debugNeedsLayout);
     return _baselineDistance;
   }
@@ -1042,6 +1041,7 @@ class RenderTable extends RenderBox {
   }
 
   @override
+<<<<<<< HEAD
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
     if (rows * columns == 0) {
       return null;
@@ -1073,6 +1073,8 @@ class RenderTable extends RenderBox {
   }
 
   @override
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   @protected
   Size computeDryLayout(covariant BoxConstraints constraints) {
     if (rows * columns == 0) {
@@ -1345,6 +1347,7 @@ class RenderTable extends RenderBox {
       return <DiagnosticsNode>[DiagnosticsNode.message('table is empty')];
     }
 
+<<<<<<< HEAD
     return <DiagnosticsNode>[
       for (int y = 0; y < rows; y += 1)
         for (int x = 0; x < columns; x += 1)
@@ -1358,5 +1361,21 @@ class RenderTable extends RenderBox {
               showSeparator: false,
             ),
     ];
+=======
+    final List<DiagnosticsNode> children = <DiagnosticsNode>[];
+    for (int y = 0; y < rows; y += 1) {
+      for (int x = 0; x < columns; x += 1) {
+        final int xy = x + y * columns;
+        final RenderBox? child = _children[xy];
+        final String name = 'child ($x, $y)';
+        if (child != null) {
+          children.add(child.toDiagnosticsNode(name: name));
+        } else {
+          children.add(DiagnosticsProperty<Object>(name, null, ifNull: 'is null', showSeparator: false));
+        }
+      }
+    }
+    return children;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 }

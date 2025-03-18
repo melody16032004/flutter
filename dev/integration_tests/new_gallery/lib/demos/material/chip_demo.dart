@@ -13,17 +13,43 @@ class ChipDemo extends StatelessWidget {
 
   String _title(BuildContext context) {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
+<<<<<<< HEAD
     return switch (type) {
       ChipDemoType.action => localizations.demoActionChipTitle,
       ChipDemoType.choice => localizations.demoChoiceChipTitle,
       ChipDemoType.filter => localizations.demoFilterChipTitle,
       ChipDemoType.input => localizations.demoInputChipTitle,
     };
+=======
+    switch (type) {
+      case ChipDemoType.action:
+        return localizations.demoActionChipTitle;
+      case ChipDemoType.choice:
+        return localizations.demoChoiceChipTitle;
+      case ChipDemoType.filter:
+        return localizations.demoFilterChipTitle;
+      case ChipDemoType.input:
+        return localizations.demoInputChipTitle;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget? buttons;
+    switch (type) {
+      case ChipDemoType.action:
+        buttons = _ActionChipDemo();
+      case ChipDemoType.choice:
+        buttons = _ChoiceChipDemo();
+      case ChipDemoType.filter:
+        buttons = _FilterChipDemo();
+      case ChipDemoType.input:
+        buttons = _InputChipDemo();
+    }
+
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar(automaticallyImplyLeading: false, title: Text(_title(context))),
       body: switch (type) {
         ChipDemoType.action => _ActionChipDemo(),
@@ -31,6 +57,13 @@ class ChipDemo extends StatelessWidget {
         ChipDemoType.filter => _FilterChipDemo(),
         ChipDemoType.input => _InputChipDemo(),
       },
+=======
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(_title(context)),
+      ),
+      body: buttons,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }

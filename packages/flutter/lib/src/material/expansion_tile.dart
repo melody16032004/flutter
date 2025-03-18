@@ -239,7 +239,6 @@ class ExpansionTile extends StatefulWidget {
     this.onExpansionChanged,
     this.children = const <Widget>[],
     this.trailing,
-    this.showTrailingIcon = true,
     this.initiallyExpanded = false,
     this.maintainState = false,
     this.tilePadding,
@@ -327,9 +326,6 @@ class ExpansionTile extends StatefulWidget {
   /// Depending on the value of [controlAffinity], the [trailing] widget
   /// may replace the rotating expansion arrow icon.
   final Widget? trailing;
-
-  /// Specifies if the [ExpansionTile] should build a default trailing icon if [trailing] is null.
-  final bool showTrailingIcon;
 
   /// Specifies if the list tile is initially expanded (true) or collapsed (false, the default).
   final bool initiallyExpanded;
@@ -547,11 +543,6 @@ class ExpansionTile extends StatefulWidget {
   /// from the [ExpansionTileThemeData.expansionAnimationStyle] will be used.
   /// Otherwise, defaults to [Curves.easeIn].
   ///
-  /// If [AnimationStyle.reverseCurve] is provided, it will be used to override
-  /// the collapse animation curve. If it is null, then [AnimationStyle.reverseCurve]
-  /// from the [ExpansionTileThemeData.expansionAnimationStyle] will be used.
-  /// Otherwise, the same curve will be used as for expansion.
-  ///
   /// To disable the theme animation, use [AnimationStyle.noAnimation].
   ///
   /// {@tool dartpad}
@@ -582,11 +573,11 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
   final ColorTween _headerColorTween = ColorTween();
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
-  final Tween<double> _heightFactorTween = Tween<double>(begin: 0.0, end: 1.0);
+  final CurveTween _heightFactorTween = CurveTween(curve: Curves.easeIn);
 
   late AnimationController _animationController;
   late Animation<double> _iconTurns;
-  late CurvedAnimation _heightFactor;
+  late Animation<double> _heightFactor;
   late Animation<ShapeBorder?> _border;
   late Animation<Color?> _headerColor;
   late Animation<Color?> _iconColor;
@@ -600,10 +591,7 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
   void initState() {
     super.initState();
     _animationController = AnimationController(duration: _kExpand, vsync: this);
-    _heightFactor = CurvedAnimation(
-      parent: _animationController.drive(_heightFactorTween),
-      curve: Curves.easeIn,
-    );
+    _heightFactor = _animationController.drive(_heightFactorTween);
     _iconTurns = _animationController.drive(_halfTween.chain(_easeInTween));
     _border = _animationController.drive(_borderTween.chain(_easeOutTween));
     _headerColor = _animationController.drive(_headerColorTween.chain(_easeInTween));
@@ -625,7 +613,6 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
   void dispose() {
     _tileController._state = null;
     _animationController.dispose();
-    _heightFactor.dispose();
     _timer?.cancel();
     _timer = null;
     super.dispose();
@@ -762,8 +749,12 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
                 leading: widget.leading ?? _buildLeadingIcon(context),
                 title: widget.title,
                 subtitle: widget.subtitle,
+<<<<<<< HEAD
                 trailing:
                     widget.showTrailingIcon ? widget.trailing ?? _buildTrailingIcon(context) : null,
+=======
+                trailing: widget.trailing ?? _buildTrailingIcon(context),
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
                 minTileHeight: widget.minTileHeight,
                 internalAddSemanticForOnTap: widget.internalAddSemanticForOnTap,
               ),
@@ -900,6 +891,7 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
   }
 
   void _updateHeightFactorCurve(ExpansionTileThemeData expansionTileTheme) {
+<<<<<<< HEAD
     _heightFactor.curve =
         widget.expansionAnimationStyle?.curve ??
         expansionTileTheme.expansionAnimationStyle?.curve ??
@@ -907,6 +899,11 @@ class _ExpansionTileState extends State<ExpansionTile> with SingleTickerProvider
     _heightFactor.reverseCurve =
         widget.expansionAnimationStyle?.reverseCurve ??
         expansionTileTheme.expansionAnimationStyle?.reverseCurve;
+=======
+    _heightFactorTween.curve = widget.expansionAnimationStyle?.curve
+      ?? expansionTileTheme.expansionAnimationStyle?.curve
+      ?? Curves.easeIn;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override

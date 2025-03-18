@@ -350,6 +350,8 @@ class WidgetsApp extends StatefulWidget {
     this.localeResolutionCallback,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
     this.showSemanticsDebugger = false,
     this.debugShowWidgetInspector = false,
     this.debugShowCheckedModeBanner = true,
@@ -441,6 +443,8 @@ class WidgetsApp extends StatefulWidget {
     this.localeResolutionCallback,
     this.supportedLocales = const <Locale>[Locale('en', 'US')],
     this.showPerformanceOverlay = false,
+    this.checkerboardRasterCacheImages = false,
+    this.checkerboardOffscreenLayers = false,
     this.showSemanticsDebugger = false,
     this.debugShowWidgetInspector = false,
     this.debugShowCheckedModeBanner = true,
@@ -1025,8 +1029,18 @@ class WidgetsApp extends StatefulWidget {
   ///
   /// See also:
   ///
-  ///  * <https://flutter.dev/to/performance-overlay>
+  ///  * <https://flutter.dev/debugging/#performance-overlay>
   final bool showPerformanceOverlay;
+
+  /// Checkerboards raster cache images.
+  ///
+  /// See [PerformanceOverlay.checkerboardRasterCacheImages].
+  final bool checkerboardRasterCacheImages;
+
+  /// Checkerboards layers rendered to offscreen bitmaps.
+  ///
+  /// See [PerformanceOverlay.checkerboardOffscreenLayers].
+  final bool checkerboardOffscreenLayers;
 
   /// Turns on an overlay that shows the accessibility information
   /// reported by the framework.
@@ -1704,6 +1718,7 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
         return true;
       }
 
+<<<<<<< HEAD
       FlutterError.reportError(
         FlutterErrorDetails(
           exception:
@@ -1740,6 +1755,39 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
               ],
         ),
       );
+=======
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: "Warning: This application's locale, $appLocale, is not supported by all of its localization delegates.",
+        library: 'widgets',
+        informationCollector: () => <DiagnosticsNode>[
+          for (final Type unsupportedType in unsupportedTypes)
+            ErrorDescription(
+              '• A $unsupportedType delegate that supports the $appLocale locale was not found.',
+            ),
+          ErrorSpacer(),
+          if (unsupportedTypes.length == 1 && unsupportedTypes.single.toString() == 'CupertinoLocalizations')
+            // We previously explicitly avoided checking for this class so it's not uncommon for applications
+            // to have omitted importing the required delegate.
+            ...<DiagnosticsNode>[
+              ErrorHint(
+                'If the application is built using GlobalMaterialLocalizations.delegate, consider using '
+                'GlobalMaterialLocalizations.delegates (plural) instead, as that will automatically declare '
+                'the appropriate Cupertino localizations.'
+              ),
+              ErrorSpacer(),
+            ],
+          ErrorHint(
+            'The declared supported locales for this app are: ${widget.supportedLocales.join(", ")}'
+          ),
+          ErrorSpacer(),
+          ErrorDescription(
+            'See https://flutter.dev/tutorials/internationalization/ for more '
+            "information about configuring an app's locale, supportedLocales, "
+            'and localizationsDelegates parameters.',
+          ),
+        ],
+      ));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       return true;
     }());
     return true;
@@ -1803,11 +1851,25 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
       result = DefaultTextStyle(style: widget.textStyle!, child: result);
     }
 
+    PerformanceOverlay? performanceOverlay;
+    // We need to push a performance overlay if any of the display or checkerboarding
+    // options are set.
     if (widget.showPerformanceOverlay || WidgetsApp.showPerformanceOverlayOverride) {
+      performanceOverlay = PerformanceOverlay.allEnabled(
+        checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+        checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
+      );
+    } else if (widget.checkerboardRasterCacheImages || widget.checkerboardOffscreenLayers) {
+      performanceOverlay = PerformanceOverlay(
+        checkerboardRasterCacheImages: widget.checkerboardRasterCacheImages,
+        checkerboardOffscreenLayers: widget.checkerboardOffscreenLayers,
+      );
+    }
+    if (performanceOverlay != null) {
       result = Stack(
         children: <Widget>[
           result,
-          Positioned(top: 0.0, left: 0.0, right: 0.0, child: PerformanceOverlay.allEnabled()),
+          Positioned(top: 0.0, left: 0.0, right: 0.0, child: performanceOverlay),
         ],
       );
     }

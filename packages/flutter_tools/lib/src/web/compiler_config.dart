@@ -33,6 +33,7 @@ sealed class WebCompilerConfig {
 
   /// The compiler optimization level specified by the user.
   ///
+<<<<<<< HEAD
   /// Valid values are O0 (lowest, debug default) to O4 (highest, release default).
   /// If the value is null, the user hasn't specified an optimization level and an
   /// appropriate default for the build mode will be used instead.
@@ -40,6 +41,10 @@ sealed class WebCompilerConfig {
 
   /// `true` if the compiler build should output source maps.
   final bool sourceMaps;
+=======
+  /// Valid values are O1 (lowest, profile default) to O4 (highest, release default).
+  final int optimizationLevel;
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   /// Returns which target this compiler outputs (js or wasm)
   CompileTarget get compileTarget;
@@ -53,7 +58,6 @@ sealed class WebCompilerConfig {
 
   Map<String, dynamic> get _buildKeyMap => <String, dynamic>{
     'optimizationLevel': optimizationLevel,
-    'webRenderer': renderer.name,
   };
 }
 
@@ -65,8 +69,13 @@ class JsCompilerConfig extends WebCompilerConfig {
     this.nativeNullAssertions = false,
     super.optimizationLevel,
     this.noFrequencyBasedMinification = false,
+<<<<<<< HEAD
     super.sourceMaps = true,
     super.renderer = WebRendererMode.defaultForJs,
+=======
+    this.sourceMaps = true,
+    super.renderer = WebRendererMode.auto,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   /// Instantiates [JsCompilerConfig] suitable for the `flutter run` command.
@@ -150,8 +159,12 @@ class WasmCompilerConfig extends WebCompilerConfig {
   const WasmCompilerConfig({
     super.optimizationLevel,
     this.stripWasm = true,
+<<<<<<< HEAD
     super.sourceMaps = true,
     super.renderer = WebRendererMode.defaultForWasm,
+=======
+    super.renderer = WebRendererMode.auto,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   });
 
   /// Build environment for [stripWasm].
@@ -166,10 +179,15 @@ class WasmCompilerConfig extends WebCompilerConfig {
   List<String> toCommandOptions(BuildMode buildMode) {
     final bool stripSymbols = buildMode == BuildMode.release && stripWasm;
     return <String>[
+<<<<<<< HEAD
       '-O${optimizationLevelForBuildMode(buildMode)}',
       '--${stripSymbols ? '' : 'no-'}strip-wasm',
       if (!sourceMaps) '--no-source-maps',
       if (buildMode == BuildMode.debug) '--extra-compiler-option=--enable-asserts',
+=======
+      '-O$optimizationLevel',
+      '--${stripSymbols ? 'no-' : ''}name-section',
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     ];
   }
 

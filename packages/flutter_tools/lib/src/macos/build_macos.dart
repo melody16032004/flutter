@@ -18,8 +18,11 @@ import '../globals.dart' as globals;
 import '../ios/migrations/metal_api_validation_migration.dart';
 import '../ios/xcode_build_settings.dart';
 import '../ios/xcodeproj.dart';
+<<<<<<< HEAD
 import '../migrations/swift_package_manager_gitignore_migration.dart';
 import '../migrations/swift_package_manager_integration_migration.dart';
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 import '../migrations/xcode_project_object_version_migration.dart';
 import '../migrations/xcode_script_build_phase_migration.dart';
 import '../migrations/xcode_thin_binary_build_phase_input_paths_migration.dart';
@@ -28,7 +31,6 @@ import 'application_package.dart';
 import 'cocoapod_utils.dart';
 import 'migrations/flutter_application_migration.dart';
 import 'migrations/macos_deployment_target_migration.dart';
-import 'migrations/nsapplicationmain_deprecation_migration.dart';
 import 'migrations/remove_macos_framework_link_and_embedding_migration.dart';
 import 'migrations/secure_restorable_state_migration.dart';
 import 'swift_package_manager.dart';
@@ -37,7 +39,7 @@ import 'swift_package_manager.dart';
 /// Passing this regexp to trace moves the stdout output to stderr.
 ///
 /// Filter out xcodebuild logging unrelated to macOS builds:
-/// ```none
+/// ```
 /// xcodebuild[2096:1927385] Requested but did not find extension point with identifier Xcode.IDEKit.ExtensionPointIdentifierToBundleIdentifier for extension Xcode.DebuggerFoundation.AppExtensionToBundleIdentifierMap.watchOS of plug-in com.apple.dt.IDEWatchSupportCore
 ///
 /// note: Using new build system
@@ -70,15 +72,20 @@ Future<void> buildMacOS({
   required bool verboseLogging,
   bool configOnly = false,
   SizeAnalyzer? sizeAnalyzer,
-  bool usingCISystem = false,
 }) async {
   final Directory? xcodeWorkspace = flutterProject.macos.xcodeWorkspace;
   if (xcodeWorkspace == null) {
+<<<<<<< HEAD
     throwToolExit(
       'No macOS desktop project configured. '
       'See https://flutter.dev/to/add-desktop-support '
       'to learn about adding macOS support to a project.',
     );
+=======
+    throwToolExit('No macOS desktop project configured. '
+      'See https://docs.flutter.dev/desktop#add-desktop-support-to-an-existing-flutter-app '
+      'to learn about adding macOS support to a project.');
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   final List<ProjectMigrator> migrators = <ProjectMigrator>[
@@ -93,6 +100,7 @@ Future<void> buildMacOS({
     XcodeScriptBuildPhaseMigration(flutterProject.macos, globals.logger),
     XcodeThinBinaryBuildPhaseInputPathsMigration(flutterProject.macos, globals.logger),
     FlutterApplicationMigration(flutterProject.macos, globals.logger),
+<<<<<<< HEAD
     NSApplicationMainDeprecationMigration(flutterProject.macos, globals.logger),
     SecureRestorableStateMigration(flutterProject.macos, globals.logger),
     SwiftPackageManagerIntegrationMigration(
@@ -107,15 +115,38 @@ Future<void> buildMacOS({
     ),
     SwiftPackageManagerGitignoreMigration(flutterProject, globals.logger),
     MetalAPIValidationMigrator.macos(flutterProject.macos, globals.logger),
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   ];
 
   final ProjectMigration migration = ProjectMigration(migrators);
-  await migration.run();
+  migration.run();
 
   final Directory flutterBuildDir = globals.fs.directory(getMacOSBuildDirectory());
   if (!flutterBuildDir.existsSync()) {
     flutterBuildDir.createSync(recursive: true);
   }
+<<<<<<< HEAD
+=======
+  // Write configuration to an xconfig file in a standard location.
+  await updateGeneratedXcodeProperties(
+    project: flutterProject,
+    buildInfo: buildInfo,
+    targetOverride: targetOverride,
+    useMacOSConfig: true,
+  );
+  await processPodsIfNeeded(flutterProject.macos, getMacOSBuildDirectory(), buildInfo.mode);
+  // If the xcfilelists do not exist, create empty version.
+  if (!flutterProject.macos.inputFileList.existsSync()) {
+    flutterProject.macos.inputFileList.createSync(recursive: true);
+  }
+  if (!flutterProject.macos.outputFileList.existsSync()) {
+    flutterProject.macos.outputFileList.createSync(recursive: true);
+  }
+  if (configOnly) {
+    return;
+  }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
   final Directory xcodeProject = flutterProject.macos.xcodeProject;
 
@@ -179,6 +210,7 @@ Future<void> buildMacOS({
   final Stopwatch sw = Stopwatch()..start();
   final Status status = globals.logger.startProgress('Building macOS application...');
   int result;
+<<<<<<< HEAD
 
   File? disabledSandboxEntitlementFile;
   if (usingCISystem) {
@@ -220,6 +252,31 @@ Future<void> buildMacOS({
       mapFunction:
           verboseLogging ? null : (String line) => _filteredOutput.hasMatch(line) ? line : null,
     );
+=======
+  try {
+    result = await globals.processUtils.stream(<String>[
+      '/usr/bin/env',
+      'xcrun',
+      'xcodebuild',
+      '-workspace', xcodeWorkspace.path,
+      '-configuration', configuration,
+      '-scheme', scheme,
+      '-derivedDataPath', flutterBuildDir.absolute.path,
+      '-destination', 'platform=macOS',
+      'OBJROOT=${globals.fs.path.join(flutterBuildDir.absolute.path, 'Build', 'Intermediates.noindex')}',
+      'SYMROOT=${globals.fs.path.join(flutterBuildDir.absolute.path, 'Build', 'Products')}',
+      if (verboseLogging)
+        'VERBOSE_SCRIPT_LOGGING=YES'
+      else
+        '-quiet',
+      'COMPILER_INDEX_STORE_ENABLE=NO',
+      ...environmentVariablesAsXcodeBuildSettings(globals.platform),
+    ],
+    trace: true,
+    stdoutErrorMatcher: verboseLogging ? null : _filteredOutput,
+    mapFunction: verboseLogging ? null : (String line) => _filteredOutput.hasMatch(line) ? line : null,
+  );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   } finally {
     status.cancel();
   }
@@ -324,6 +381,7 @@ Future<void> _writeCodeSizeAnalysis(BuildInfo buildInfo, SizeAnalyzer? sizeAnaly
     'dart devtools --appSizeBase=${outputFile.path}',
   );
 }
+<<<<<<< HEAD
 
 /// Finds and copies macOS entitlements file. In the copy, disables sandboxing.
 /// If entitlements file is not found, returns null.
@@ -367,3 +425,5 @@ File? _createDisabledSandboxEntitlementFile(MacOSProject macos, String configura
   );
   return disabledSandboxEntitlementFile;
 }
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8

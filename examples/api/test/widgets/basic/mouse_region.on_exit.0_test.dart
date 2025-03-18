@@ -9,7 +9,13 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('MouseRegion detects mouse hover', (WidgetTester tester) async {
+<<<<<<< HEAD
     await tester.pumpWidget(const example.MouseRegionApp());
+=======
+    await tester.pumpWidget(
+      const MaterialApp(home: example.MouseRegionApp()),
+    );
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
 
     Container container = tester.widget<Container>(find.byType(Container));
     expect(container.decoration, const BoxDecoration(color: Colors.blue));

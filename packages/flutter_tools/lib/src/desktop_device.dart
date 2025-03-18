@@ -16,8 +16,6 @@ import 'convert.dart';
 import 'devfs.dart';
 import 'device.dart';
 import 'device_port_forwarder.dart';
-import 'globals.dart' as globals;
-import 'macos/macos_device.dart';
 import 'protocol_discovery.dart';
 import 'vmservice.dart';
 
@@ -108,7 +106,6 @@ abstract class DesktopDevice extends Device {
       await buildForDevice(
         buildInfo: debuggingOptions.buildInfo,
         mainPath: mainPath,
-        usingCISystem: debuggingOptions.usingCISystem,
       );
     }
 
@@ -147,6 +144,7 @@ abstract class DesktopDevice extends Device {
       logger: _logger,
     );
     try {
+<<<<<<< HEAD
       Timer? timer;
       if (this is MacOSDevice) {
         if (await globals.isRunningOnBot) {
@@ -180,9 +178,10 @@ abstract class DesktopDevice extends Device {
         }
       }
 
+=======
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
       final Uri? vmServiceUri = await vmServiceDiscovery.uri;
       if (vmServiceUri != null) {
-        timer?.cancel();
         onAttached(package, buildInfo, process);
         return LaunchResult.succeeded(vmServiceUri: vmServiceUri);
       }
@@ -218,7 +217,6 @@ abstract class DesktopDevice extends Device {
   Future<void> buildForDevice({
     required BuildInfo buildInfo,
     String? mainPath,
-    bool usingCISystem = false,
   });
 
   /// Returns the path to the executable to run for [package] on this device for

@@ -180,9 +180,13 @@ void main() {
     skip: isBrowser,
   );
 
+<<<<<<< HEAD
   testWidgets('RangeSlider relayout upon system fonts changes more than once', (
     WidgetTester tester,
   ) async {
+=======
+  testWidgets('RangeSlider relayout upon system fonts changes', (WidgetTester tester) async {
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     await tester.pumpWidget(
       MaterialApp(
         home: Material(

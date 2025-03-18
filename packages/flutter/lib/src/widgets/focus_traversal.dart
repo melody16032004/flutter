@@ -749,8 +749,26 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
 
   @override
   FocusNode? findFirstFocusInDirection(FocusNode currentNode, TraversalDirection direction) {
+    switch (direction) {
+      case TraversalDirection.up:
+        // Find the bottom-most node so we can go up from there.
+        return _sortAndFindInitial(currentNode, vertical: true, first: false);
+      case TraversalDirection.down:
+        // Find the top-most node so we can go down from there.
+        return _sortAndFindInitial(currentNode, vertical: true, first: true);
+      case TraversalDirection.left:
+        // Find the right-most node so we can go left from there.
+        return _sortAndFindInitial(currentNode, vertical: false, first: false);
+      case TraversalDirection.right:
+        // Find the left-most node so we can go right from there.
+        return _sortAndFindInitial(currentNode, vertical: false, first: true);
+    }
+  }
+
+  FocusNode? _sortAndFindInitial(FocusNode currentNode, {required bool vertical, required bool first}) {
     final Iterable<FocusNode> nodes = currentNode.nearestScope!.traversalDescendants;
     final List<FocusNode> sorted = nodes.toList();
+<<<<<<< HEAD
     final (bool vertical, bool first) = switch (direction) {
       TraversalDirection.up => (true, false), // Start with the bottom-most node.
       TraversalDirection.down => (true, true), // Start with the topmost node.
@@ -766,6 +784,12 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
           } else {
             return b.rect.bottom.compareTo(a.rect.bottom);
           }
+=======
+    mergeSort<FocusNode>(sorted, compare: (FocusNode a, FocusNode b) {
+      if (vertical) {
+        if (first) {
+          return a.rect.top.compareTo(b.rect.top);
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
         } else {
           if (first) {
             return a.rect.left.compareTo(b.rect.left);
@@ -776,7 +800,11 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
       },
     );
 
-    return sorted.firstOrNull;
+    if (sorted.isNotEmpty) {
+      return sorted.first;
+    }
+
+    return null;
   }
 
   static int _verticalCompare(Offset target, Offset a, Offset b) {
@@ -909,6 +937,7 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
     Iterable<FocusNode> nodes,
   ) {
     assert(direction == TraversalDirection.left || direction == TraversalDirection.right);
+<<<<<<< HEAD
     final List<FocusNode> sorted =
         nodes.where(switch (direction) {
           TraversalDirection.left =>
@@ -918,6 +947,19 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
           TraversalDirection.up ||
           TraversalDirection.down => throw ArgumentError('Invalid direction $direction'),
         }).toList();
+=======
+    final Iterable<FocusNode> filtered;
+    switch (direction) {
+      case TraversalDirection.left:
+        filtered = nodes.where((FocusNode node) => node.rect != target && node.rect.center.dx <= target.left);
+      case TraversalDirection.right:
+        filtered = nodes.where((FocusNode node) => node.rect != target && node.rect.center.dx >= target.right);
+      case TraversalDirection.up:
+      case TraversalDirection.down:
+        throw ArgumentError('Invalid direction $direction');
+    }
+    final List<FocusNode> sorted = filtered.toList();
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     // Sort all nodes from left to right.
     mergeSort<FocusNode>(
       sorted,
@@ -935,6 +977,7 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
     Iterable<FocusNode> nodes,
   ) {
     assert(direction == TraversalDirection.up || direction == TraversalDirection.down);
+<<<<<<< HEAD
     final List<FocusNode> sorted =
         nodes.where(switch (direction) {
           TraversalDirection.up =>
@@ -948,6 +991,20 @@ mixin DirectionalFocusTraversalPolicyMixin on FocusTraversalPolicy {
       sorted,
       compare: (FocusNode a, FocusNode b) => a.rect.center.dy.compareTo(b.rect.center.dy),
     );
+=======
+    final Iterable<FocusNode> filtered;
+    switch (direction) {
+      case TraversalDirection.up:
+        filtered = nodes.where((FocusNode node) => node.rect != target && node.rect.center.dy <= target.top);
+      case TraversalDirection.down:
+        filtered = nodes.where((FocusNode node) => node.rect != target && node.rect.center.dy >= target.bottom);
+      case TraversalDirection.left:
+      case TraversalDirection.right:
+        throw ArgumentError('Invalid direction $direction');
+    }
+    final List<FocusNode> sorted = filtered.toList();
+    mergeSort<FocusNode>(sorted, compare: (FocusNode a, FocusNode b) => a.rect.center.dy.compareTo(b.rect.center.dy));
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     return sorted;
   }
 

@@ -26,7 +26,7 @@ class RemoveMacOSFrameworkLinkAndEmbeddingMigration extends ProjectMigrator {
   final Analytics _analytics;
 
   @override
-  Future<void> migrate() async {
+  void migrate() {
     if (!_xcodeProjectInfoFile.existsSync()) {
       logger.printTrace('Xcode project not found, skipping framework link and embedding migration');
       return;

@@ -13,6 +13,7 @@ class ButtonDemo extends StatelessWidget {
 
   String _title(BuildContext context) {
     final GalleryLocalizations localizations = GalleryLocalizations.of(context)!;
+<<<<<<< HEAD
     return switch (type) {
       ButtonDemoType.text => localizations.demoTextButtonTitle,
       ButtonDemoType.elevated => localizations.demoElevatedButtonTitle,
@@ -20,11 +21,40 @@ class ButtonDemo extends StatelessWidget {
       ButtonDemoType.toggle => localizations.demoToggleButtonTitle,
       ButtonDemoType.floating => localizations.demoFloatingButtonTitle,
     };
+=======
+    switch (type) {
+      case ButtonDemoType.text:
+        return localizations.demoTextButtonTitle;
+      case ButtonDemoType.elevated:
+        return localizations.demoElevatedButtonTitle;
+      case ButtonDemoType.outlined:
+        return localizations.demoOutlinedButtonTitle;
+      case ButtonDemoType.toggle:
+        return localizations.demoToggleButtonTitle;
+      case ButtonDemoType.floating:
+        return localizations.demoFloatingButtonTitle;
+    }
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget? buttons;
+    switch (type) {
+      case ButtonDemoType.text:
+        buttons = _TextButtonDemo();
+      case ButtonDemoType.elevated:
+        buttons = _ElevatedButtonDemo();
+      case ButtonDemoType.outlined:
+        buttons = _OutlinedButtonDemo();
+      case ButtonDemoType.toggle:
+        buttons = _ToggleButtonsDemo();
+      case ButtonDemoType.floating:
+        buttons = _FloatingActionButtonDemo();
+    }
+
     return Scaffold(
+<<<<<<< HEAD
       appBar: AppBar(automaticallyImplyLeading: false, title: Text(_title(context))),
       body: switch (type) {
         ButtonDemoType.text => _TextButtonDemo(),
@@ -33,6 +63,13 @@ class ButtonDemo extends StatelessWidget {
         ButtonDemoType.toggle => _ToggleButtonsDemo(),
         ButtonDemoType.floating => _FloatingActionButtonDemo(),
       },
+=======
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(_title(context)),
+      ),
+      body: buttons,
+>>>>>>> 0a545b201052d8de3d0d76a04bc0911a062242c8
     );
   }
 }
