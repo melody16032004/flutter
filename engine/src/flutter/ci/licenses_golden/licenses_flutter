@@ -42833,8 +42833,6 @@ ORIGIN: ../../../flutter/impeller/toolkit/android/native_window.cc + ../../../fl
 ORIGIN: ../../../flutter/impeller/toolkit/android/native_window.h + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/impeller/toolkit/android/proc_table.cc + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/impeller/toolkit/android/proc_table.h + ../../../flutter/LICENSE
-ORIGIN: ../../../flutter/impeller/toolkit/android/shadow_realm.cc + ../../../flutter/LICENSE
-ORIGIN: ../../../flutter/impeller/toolkit/android/shadow_realm.h + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/impeller/toolkit/android/surface_control.cc + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/impeller/toolkit/android/surface_control.h + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/impeller/toolkit/android/surface_transaction.cc + ../../../flutter/LICENSE
@@ -43609,6 +43607,7 @@ ORIGIN: ../../../flutter/shell/platform/android/io/flutter/Build.java + ../../..
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/BuildConfig.java + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/FlutterInjector.java + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/Log.java + ../../../flutter/LICENSE
+ORIGIN: ../../../flutter/shell/platform/android/io/flutter/app/FlutterApplication.java + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/embedding/android/ExclusiveAppComponent.java + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/embedding/android/FlutterActivity.java + ../../../flutter/LICENSE
 ORIGIN: ../../../flutter/shell/platform/android/io/flutter/embedding/android/FlutterActivityAndFragmentDelegate.java + ../../../flutter/LICENSE
@@ -45781,8 +45780,6 @@ FILE: ../../../flutter/impeller/toolkit/android/native_window.cc
 FILE: ../../../flutter/impeller/toolkit/android/native_window.h
 FILE: ../../../flutter/impeller/toolkit/android/proc_table.cc
 FILE: ../../../flutter/impeller/toolkit/android/proc_table.h
-FILE: ../../../flutter/impeller/toolkit/android/shadow_realm.cc
-FILE: ../../../flutter/impeller/toolkit/android/shadow_realm.h
 FILE: ../../../flutter/impeller/toolkit/android/surface_control.cc
 FILE: ../../../flutter/impeller/toolkit/android/surface_control.h
 FILE: ../../../flutter/impeller/toolkit/android/surface_transaction.cc
@@ -46561,6 +46558,7 @@ FILE: ../../../flutter/shell/platform/android/io/flutter/Build.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/BuildConfig.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/FlutterInjector.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/Log.java
+FILE: ../../../flutter/shell/platform/android/io/flutter/app/FlutterApplication.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/embedding/android/AndroidTouchProcessor.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/embedding/android/ExclusiveAppComponent.java
 FILE: ../../../flutter/shell/platform/android/io/flutter/embedding/android/FlutterActivity.java
